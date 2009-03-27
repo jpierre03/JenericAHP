@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>DTD Grammar Documentation</title>
+<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+</head>
+
+<!-- Generated on 27 mars 2009 by NetBeans XML module. -->
+<body>
+
+<hr />
+<h2>Element Index</h2>
+<ul><li><tt><a href="#criteria">criteria</a></tt></li>
+<li><tt><a href="#element">element</a></tt></li>
+<li><tt><a href="#indicator">indicator</a></tt></li>
+<li><tt><a href="#line">line</a></tt></li>
+<li><tt><a href="#name">name</a></tt></li>
+<li><tt><a href="#prefmatrix">prefmatrix</a></tt></li>
+<li><tt><a href="#root">root</a></tt></li>
+</ul>
+
+<hr />
+<h2>Element Details</h2>
+
+
+<hr />
+<h2><a name="root"></a>root</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#criteria">criteria</a>&nbsp;| <a href="#prefmatrix">prefmatrix</a>&nbsp;| <a href="#name">name</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt></tt></p>
+
+
+<hr />
+<h2><a name="name"></a>name</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(#PCDATA)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#root">root</a>, <a href="#criteria">criteria</a>, <a href="#indicator">indicator</a></tt></p>
+
+
+<hr />
+<h2><a name="prefmatrix"></a>prefmatrix</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#line">line</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#root">root</a></tt></p>
+
+
+<hr />
+<h2><a name="line"></a>line</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#element">element</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#prefmatrix">prefmatrix</a></tt></p>
+
+
+<hr />
+<h2><a name="element"></a>element</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>EMPTY</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#line">line</a></tt></p>
+
+
+<hr />
+<h2><a name="criteria"></a>criteria</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Declared Attributes</b></p>
+<ul><li><tt>#IMPLIED CDATA id</tt></li>
+</ul>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#indicator">indicator</a>&nbsp;| <a href="#name">name</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#root">root</a></tt></p>
+
+
+<hr />
+<h2><a name="indicator"></a>indicator</h2>
+<div>Put your DTDDoc comment here.</div>
+<p><b>Declared Attributes</b></p>
+<ul><li><tt>#IMPLIED CDATA id</tt></li>
+</ul>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#name">name</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#criteria">criteria</a></tt></p>
+</body></html>

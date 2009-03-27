@@ -15,8 +15,9 @@ public class Criteria {
     
     private ArrayList<Indicator> indicators;
     private PreferenceMatrix matrixInd;
-    private PriorityVector vectorICr;
-    private AlternativesPriorityVector vectorMCr;
+    private PriorityVector vectorICrk;
+    private AlternativesPriorityVector vectorAltCrk;
+    private ArrayList alternatives;
     
     
     /**
