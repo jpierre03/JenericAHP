@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary identification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/ahp_conf.dtd
+
+--><!--
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE root SYSTEM "ahp_conf.dtd">
+
+    <root>
+    ...
+    </root>
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT root (name,prefmatrix,criteria*)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT name (#PCDATA)>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT prefmatrix (row)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT row (elt)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT elt EMPTY>
+<!ATTLIST elt
+    value CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT criteria (name,prefmatrix,indicator*)>
+<!ATTLIST criteria
+    id CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT indicator (name)*>
+<!ATTLIST indicator
+    id CDATA #IMPLIED
+  >
