@@ -26,13 +26,13 @@
 			<row><elt value="0"/><elt value="0"/><elt value="0"/></row>
 			<row><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		</prefmatrix>
-		<indicator id="I11">
+		<indicator id="C1I1">
 			<name>Ligne en flow-shop ou en job-shop</name>
 		</indicator>
-		<indicator id="I12">
+		<indicator id="C1I2">
 			<name>Produit principal ou de complément</name>
 		</indicator>
-		<indicator id="I13">
+		<indicator id="C1I3">
 			<name>Produit pour assemblage ou de rechange</name>
 		</indicator>
 	</criteria>
@@ -42,10 +42,10 @@
 			<row><elt value="0"/><elt value="0"/></row>
 			<row><elt value="0"/><elt value="0"/></row>
 		</prefmatrix>
-		<indicator id="I21">
+		<indicator id="C2I1">
 			<name>Progression globale</name>
 		</indicator>
-		<indicator id="I22">
+		<indicator id="C2I2">
 			<name>Progression locale</name>
 		</indicator>
 	</criteria>
@@ -55,10 +55,10 @@
 			<row><elt value="0"/><elt value="0"/></row>
 			<row><elt value="0"/><elt value="0"/></row>
 		</prefmatrix>
-		<indicator id="I31">
+		<indicator id="C3I1">
 			<name>Marge restante</name>
 		</indicator>
-		<indicator id="I32">
+		<indicator id="C3I2">
 			<name>Marge restante pondérée</name>
 		</indicator>
 	</criteria>
@@ -67,7 +67,7 @@
 		<prefmatrix>
 			<row><elt value="0"/></row>
 		</prefmatrix>
-		<indicator id="I41">
+		<indicator id="C4I1">
 			<name>Temps d'attente</name>
 		</indicator>
 	</criteria>
@@ -76,7 +76,7 @@
 		<prefmatrix>
 			<row><elt value="0"/></row>
 		</prefmatrix>
-		<indicator id="I51">
+		<indicator id="C5I1">
 			<name>Charge de la ressource</name>
 		</indicator>
 	</criteria>

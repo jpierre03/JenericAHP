@@ -6,22 +6,35 @@
 package org.taeradan.ahp;
 
 import java.util.ArrayList;
+import org.jdom.Element;
 
 /**
- * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.
+ * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
+ * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
  * @author Yves Dubromelle
  */
 public abstract class Indicator {
-    
-    private AlternativesPriorityVector vectorAltIndk;
-    private ArrayList alternatives;
-    
-    
-    /**
-     * Class default constructor
-     */
-    public Indicator() {
-    }
+//	AHP static attributes
+	private String id;
+	private String name;
+//	AHP dynamic attributes
+	private AlternativesPriorityVector vectorAltIndk;
+	private ArrayList alternatives;
+
+
+	/**
+	* Class default constructor
+	*/
+	public Indicator() {
+	}
+	
+	/**
+	 * Creates an Indicator from a JDOM Element
+	 * @param xmlIndicator JDOM Element
+	 */
+	public Indicator(Element xmlIndicator){
+		
+	}
 	
 	/**
 	 * Method called by the criterias for the execution of the AHP algorithm.
