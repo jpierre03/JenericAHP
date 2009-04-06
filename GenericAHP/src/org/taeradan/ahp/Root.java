@@ -1,14 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* Copyright 2009 Yves Dubromelle
+ * 
+ * This file is part of GenericAHP.
+ * 
+ * GenericAHP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GenericAHP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.taeradan.ahp;
 
 import Jama.Matrix;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.DataConversionException;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -18,7 +31,6 @@ import org.jdom.input.SAXBuilder;
  * @author Yves Dubromelle
  */
 public class Root {
-
 //	AHP static attributes
 	private String name;
 	private PreferenceMatrix matrixCrCr;

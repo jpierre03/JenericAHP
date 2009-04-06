@@ -16,23 +16,17 @@
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.taeradan.ahp;
+package org.taeradan.ahp.ind;
 
-import Jama.Matrix;
+import org.taeradan.ahp.Indicator;
 
 /**
- *
+ * Dummy implementation of an AHP indicator
  * @author Yves Dubromelle
  */
-public class PriorityVector {
-
-    Matrix matrix = null;
-    
-    /**
-     * Method that give the Matrix contained in this class.
-     * @return matrix
-     */
-    public Matrix getMatrix() {
-	return matrix;
-    }
+public class IndicatorC1I1 extends Indicator{
+	@Override
+	public double calculateAlternativeIndicator(int i) {
+		return 1;
+	}
 }
