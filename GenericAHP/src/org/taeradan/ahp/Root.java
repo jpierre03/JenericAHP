@@ -20,10 +20,13 @@ package org.taeradan.ahp;
 
 import Jama.Matrix;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 /**
@@ -41,9 +44,9 @@ public class Root {
 	private ArrayList alternatives;
 	private Matrix matrixAltCr;
 //	XML configuration attributes
-	private String configurationFile = "conf/ahp_conf.xml";
+	private String configurationFile = getClass().getProtectionDomain().getCodeSource().getLocation().getPath()+"org/taeradan/ahp/conf/ahp_conf.xml";
 	private Document xmlDocument;
-
+	
 	/**
 	 * Class default constructor, creates the AHP tree from a configuration file.
 	 */
@@ -54,29 +57,47 @@ public class Root {
 //			JDOM document created from XML configuration file
 			File file = new File(configurationFile);
 			xmlDocument = parser.build(file);
-		} catch (Exception e) {
-			System.out.println("File not found :" + configurationFile);
+//			Extraction of the root element from the JDOM document
+			Element xmlRoot = xmlDocument.getRootElement();
+
+//			Initialisation of the AHP tree name
+			name=xmlRoot.getChildText("name");
+			System.out.println("Root.name="+name);
+
+//			Initialisation of the preference matrix
+			Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
+			matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
+			System.out.println("Root.matrixCrCr="+matrixCrCr);
+
+//			Initialisation of the criterias
+			List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");
+			List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
+			criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
+//			Verification that the number of criterias matches the size of th preference matrix
+			if(xmlCriteriasList.size()!=xmlRowsList.size()){
+				System.out.println("Error : the number of criterias and the size of the preference matrix does not match !");
+			}
+			for(int i=0; i<xmlCriteriasList.size(); i++){
+				Element xmlCriteria = xmlCriteriasList.get(i);
+				criterias.add(new Criteria(xmlCriteria));
+//				System.out.println("Root.criteria="+criterias.get(i));
+			}
+		}catch (FileNotFoundException e) {
+			System.out.println("File not found : " + configurationFile);
+			name = "unknow";
+			matrixCrCr = new PreferenceMatrix();
+			criterias = new ArrayList<Criteria>();
+		}catch(JDOMException e){
+			System.out.println(e);
+		}catch(IOException e){
+			System.out.println(e);
 		}
-//		Extraction of the root element from the JDOM document
-		Element xmlRoot = xmlDocument.getRootElement();
-		
-//		Initialisation of the AHP tree name
-		this.name=xmlRoot.getChildText("name");
-		
-//		Initialisation of the preference matrix
-		Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
-		matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
-		
-//		Initialisation of the criterias
-		List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");
-		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
-		if(xmlCriteriasList.size()!=xmlRowsList.size()){
-			System.out.println("Error : the number of criterias and the size of the preference matrix does not match !");
-		}
-		for(int i=0; i<xmlCriteriasList.size(); i++){
-			Element xmlCriteria = xmlCriteriasList.get(i);
-			criterias.add(new Criteria(xmlCriteria));
-		}
+	}
+
+	@Override
+	public String toString() {
+		String string = "Root : name="+name+", nbCriterias="+criterias.size();
+		return string;
 	}
 
 	/**

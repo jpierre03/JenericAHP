@@ -26,7 +26,7 @@ import org.jdom.Element;
  * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
  * @author Yves Dubromelle
  */
-public abstract class Indicator {
+public class Indicator {
 //	AHP static attributes
 	private String id;
 	private String name;
@@ -47,10 +47,12 @@ public abstract class Indicator {
 	 */
 	public Indicator(Element xmlIndicator){
 //		Initialisation of the id
-		id = xmlIndicator.getAttributeValue(id);
+		id = xmlIndicator.getAttributeValue("id");
+		System.out.println("\t\tIndicator.id="+id);
 		
 //		Initialisation of the name
-		name = xmlIndicator.getChildText(name);
+		name = xmlIndicator.getChildText("name");
+		System.out.println("\t\tIndicator.name="+name);
 	}
 	
 	/**
@@ -71,5 +73,7 @@ public abstract class Indicator {
 	 * @param i Alternative to be evaluated from the list
 	 * @return Indicator value
 	 */
-	abstract public double calculateAlternativeIndicator(int i);
+	public double calculateAlternativeIndicator(int i){
+		return 1;
+	}
 }

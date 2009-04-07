@@ -22,8 +22,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jdom.Element;
 
 /**
@@ -54,17 +52,21 @@ public class Criteria {
 	public Criteria(Element xmlCriteria) {
 //		Initialisation of the id of the criteria
 		id = xmlCriteria.getAttributeValue("id");
+		System.out.println("\tCriteria.id="+id);
 		
 //		Initialisation of the name
 		name = xmlCriteria.getChildText("name");
+		System.out.println("\tCriteria.name="+name);
 		
 //		Initialisation of the preference matrix
 		Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
 		matrixInd = new PreferenceMatrix(xmlPrefMatrix);
+		System.out.println("\tCriteria.matrixInd="+matrixInd);
 		
 //		Initialisation of the Indicators
 		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
 		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
+		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
 		if(xmlIndicatorsList.size()!=xmlRowsList.size()){
 			System.out.println("Error : the number of Indicators and the size of the preference matrix does not match !");
@@ -72,28 +74,33 @@ public class Criteria {
 //		For each indicator declared in the configuration file
 		for(int i=0; i<xmlIndicatorsList.size(); i++){
 				Element xmlIndicator = xmlIndicatorsList.get(i);
-				String indName = "org.taeradan.ahp.ind.Indicator" + xmlIndicator.getAttributeValue(id);
+//				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
+//				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
+				String indName = "org.taeradan.ahp.ind.Indicator" + xmlIndicator.getAttributeValue("id");
 				try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 					Class indClass = Class.forName(indName);
+//					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
-					Constructor<Indicator> indConstruct = indClass.getConstructor(Element.class);
+					Constructor<Indicator> indConstruct = indClass.getSuperclass().getConstructor(Element.class);
+//					System.out.println("\t\tCriteria.indConstruct="+indConstruct);
 //					Instanciation of the indicator with its constructor
 					indicators.add(indConstruct.newInstance(xmlIndicator));
+//					System.out.println("\tCriteria.indicator="+indicators.get(i));
 				} catch (NoSuchMethodException e) {
-					System.out.println("Error : no such constructor in " + indName + " :" + e.getMessage());
+					System.out.println("Error : no such constructor :" + e);
 				} catch (SecurityException e) {
-					System.out.println("Error :" + e.getMessage());
+					System.out.println("Error :" + e);
 				} catch (ClassNotFoundException e) {
-					System.out.println("Error : class " + indName + " not found :" + e.getMessage());
+					System.out.println("Error : class " + indName + " not found :" + e);
 				} catch (InstantiationException e) {
-					System.out.println("Error :" + e.getMessage());
+					System.out.println("Error :" + e);
 				} catch (IllegalAccessException e) {
-					System.out.println("Error :" + e.getMessage());
+					System.out.println("Error :" + e);
 				} catch (IllegalArgumentException e) {
-					System.out.println("Error :" + e.getMessage());
+					System.out.println("Error :" + e);
 				} catch (InvocationTargetException e) {
-					System.out.println("Error :" + e.getMessage());
+					System.out.println("Error :" + e);
 				}
 		}
 	}
