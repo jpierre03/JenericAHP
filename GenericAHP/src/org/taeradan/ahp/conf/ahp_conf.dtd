@@ -44,8 +44,12 @@ It must have as much rows and colums than the number of elements compared. -->
     id CDATA #IMPLIED
   >
 
-<!--- An indicator only contains a name. -->
-<!ELEMENT indicator (name)>
+<!--- An indicator contains a name, and is it has to be minimized or maximized. -->
+<!ELEMENT indicator (name,(minimize|maximize))>
 <!ATTLIST indicator
     id CDATA #IMPLIED
   >
+
+<!--- These elements are used to determine if an indicator has to be maximized or minimized. -->
+<!ELEMENT minimize EMPTY>
+<!ELEMENT maximize EMPTY>

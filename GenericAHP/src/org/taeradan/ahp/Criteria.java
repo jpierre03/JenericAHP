@@ -1,4 +1,4 @@
-/* Copyright 2009 Yves Dubromelle
+/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
  * 
  * This file is part of GenericAHP.
  * 

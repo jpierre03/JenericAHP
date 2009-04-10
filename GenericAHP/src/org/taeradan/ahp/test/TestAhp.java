@@ -3,11 +3,6 @@ package org.taeradan.ahp.test;
 
 import org.taeradan.ahp.Root;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Yves Dubromelle
