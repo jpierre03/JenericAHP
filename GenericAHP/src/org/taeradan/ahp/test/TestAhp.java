@@ -15,7 +15,6 @@ import org.taeradan.ahp.Root;
 public class TestAhp {
 	public static void main (String[] args){
 		Root racine = new Root();
-		System.out.println(racine);
-//		return 0;
+		System.out.println(racine.treeToString());
 	}
 }

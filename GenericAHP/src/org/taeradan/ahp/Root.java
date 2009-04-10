@@ -62,20 +62,20 @@ public class Root {
 
 //			Initialisation of the AHP tree name
 			name=xmlRoot.getChildText("name");
-			System.out.println("Root.name="+name);
+//			System.out.println("Root.name="+name);
 
 //			Initialisation of the preference matrix
 			Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
 			matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
-			System.out.println("Root.matrixCrCr="+matrixCrCr);
+//			System.out.println("Root.matrixCrCr="+matrixCrCr);
 
 //			Initialisation of the criterias
 			List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");
 			List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
 			criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
-//			Verification that the number of criterias matches the size of th preference matrix
+//			Verification that the number of criterias matches the size of the preference matrix
 			if(xmlCriteriasList.size()!=xmlRowsList.size()){
-				System.out.println("Error : the number of criterias and the size of the preference matrix does not match !");
+				System.err.println("Error : the number of criterias and the size of the preference matrix does not match !");
 			}
 			for(int i=0; i<xmlCriteriasList.size(); i++){
 				Element xmlCriteria = xmlCriteriasList.get(i);
@@ -83,20 +83,37 @@ public class Root {
 //				System.out.println("Root.criteria="+criterias.get(i));
 			}
 		}catch (FileNotFoundException e) {
-			System.out.println("File not found : " + configurationFile);
+			System.err.println("File not found : " + configurationFile);
 			name = "unknow";
 			matrixCrCr = new PreferenceMatrix();
 			criterias = new ArrayList<Criteria>();
 		}catch(JDOMException e){
-			System.out.println(e);
+			System.err.println(e);
 		}catch(IOException e){
-			System.out.println(e);
+			System.err.println(e);
 		}
 	}
 
+	/**
+	 * Returns a string describing the AHP root, and NOT its children.
+	 * @return Describing string
+	 */
 	@Override
 	public String toString() {
-		String string = "Root : name="+name+", nbCriterias="+criterias.size();
+		String string = " AHP Root : "+name+", "+criterias.size()+" criterias";
+		return string;
+	}
+	
+	/**
+	 * Returns a big string (multiple lines) containing recursively the description of the whole AHP tree. Best suited for testing purposes.
+	 * @return Multiline string describing the AHP tree
+	 */
+	public String treeToString(){
+		String string = this.toString();
+		string = string.concat("\n"+matrixCrCr);
+		for(int i=0; i<criterias.size();i++){
+			string = string.concat("\n\t"+criterias.get(i).treeToString());
+		}
 		return string;
 	}
 

@@ -48,11 +48,11 @@ public class Indicator {
 	public Indicator(Element xmlIndicator){
 //		Initialisation of the id
 		id = xmlIndicator.getAttributeValue("id");
-		System.out.println("\t\tIndicator.id="+id);
+//		System.out.println("\t\tIndicator.id="+id);
 		
 //		Initialisation of the name
 		name = xmlIndicator.getChildText("name");
-		System.out.println("\t\tIndicator.name="+name);
+//		System.out.println("\t\tIndicator.name="+name);
 	}
 	
 	/**
@@ -76,4 +76,11 @@ public class Indicator {
 	public double calculateAlternativeIndicator(int i){
 		return 1;
 	}
+
+	@Override
+	public String toString() {
+		String string = "Indicator "+id+" : "+name;
+		return string;
+	}
+	
 }

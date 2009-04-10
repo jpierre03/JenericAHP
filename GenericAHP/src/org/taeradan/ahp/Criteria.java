@@ -52,16 +52,16 @@ public class Criteria {
 	public Criteria(Element xmlCriteria) {
 //		Initialisation of the id of the criteria
 		id = xmlCriteria.getAttributeValue("id");
-		System.out.println("\tCriteria.id="+id);
+//		System.out.println("\tCriteria.id="+id);
 		
 //		Initialisation of the name
 		name = xmlCriteria.getChildText("name");
-		System.out.println("\tCriteria.name="+name);
+//		System.out.println("\tCriteria.name="+name);
 		
 //		Initialisation of the preference matrix
 		Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
 		matrixInd = new PreferenceMatrix(xmlPrefMatrix);
-		System.out.println("\tCriteria.matrixInd="+matrixInd);
+//		System.out.println("\tCriteria.matrixInd="+matrixInd);
 		
 //		Initialisation of the Indicators
 		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
@@ -69,7 +69,7 @@ public class Criteria {
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
 		if(xmlIndicatorsList.size()!=xmlRowsList.size()){
-			System.out.println("Error : the number of Indicators and the size of the preference matrix does not match !");
+			System.err.println("Error : the number of Indicators and the size of the preference matrix does not match !");
 		}
 //		For each indicator declared in the configuration file
 		for(int i=0; i<xmlIndicatorsList.size(); i++){
@@ -88,20 +88,29 @@ public class Criteria {
 					indicators.add(indConstruct.newInstance(xmlIndicator));
 //					System.out.println("\tCriteria.indicator="+indicators.get(i));
 				} catch (NoSuchMethodException e) {
-					System.out.println("Error : no such constructor :" + e);
+					System.err.println("Error : no such constructor :" + e);
 				} catch (SecurityException e) {
-					System.out.println("Error :" + e);
+					System.err.println("Error :" + e);
 				} catch (ClassNotFoundException e) {
-					System.out.println("Error : class " + indName + " not found :" + e);
+					System.err.println("Error : class " + indName + " not found :" + e);
 				} catch (InstantiationException e) {
-					System.out.println("Error :" + e);
+					System.err.println("Error :" + e);
 				} catch (IllegalAccessException e) {
-					System.out.println("Error :" + e);
+					System.err.println("Error :" + e);
 				} catch (IllegalArgumentException e) {
-					System.out.println("Error :" + e);
+					System.err.println("Error :" + e);
 				} catch (InvocationTargetException e) {
-					System.out.println("Error :" + e);
+					System.err.println("Error :" + e);
 				}
 		}
+	}
+	
+	public String treeToString(){
+		String string = "Criteria "+id+" : "+name;
+		string = string.concat("\n"+matrixInd);
+		for(int i=0; i<indicators.size(); i++){
+			string = string.concat("\n\t\t"+indicators.get(i));
+		}
+		return string;
 	}
 }

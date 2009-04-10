@@ -23,6 +23,7 @@ import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import org.nfunk.jep.JEP;
 
 /**
  * The PreferenceMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
@@ -54,12 +55,13 @@ public class PreferenceMatrix{
 //				Extraction of an element from a row
 				Element xmlElt = xmlEltsList.get(j);
 //				Setting of an element of the temporary matrix
-				try{
-					Attribute att = xmlElt.getAttribute("value");
-					matrix.set(i, j, att.getDoubleValue());
-				}catch(DataConversionException e){
-					System.out.println("Error with the value ("+i+","+j+") of prefmatrix :"+e.getMessage());
-				}
+				Attribute att = xmlElt.getAttribute("value");
+//				Creation of a math expression parser to handle fractions in the XML file
+				JEP myParser = new JEP();
+//				The expression contained in the String is passed to the parser and is evaluated
+				myParser.parseExpression(att.getValue());
+				double value = myParser.getValue();
+				matrix.set(i, j, value);
 			}
 		}
 	}
@@ -79,5 +81,24 @@ public class PreferenceMatrix{
 	public void setMatrix(Matrix matrix) {
 	this.matrix = matrix;
 	}
-    
+	
+	/**
+	 * Describes a preference matrix in a String
+	 * @return String description
+	 */
+	@Override
+	public String toString() {
+		String string = "";
+		int nRows = matrix.getRowDimension();
+		int nCols = matrix.getColumnDimension();
+		
+		for(int i=0; i<nRows; i++){
+			for(int j=0; j<nCols; j++){
+				string = string.concat("\t"+matrix.get(i, j));
+			}
+			if(i<nRows-1)
+				string = string.concat("\n");
+		}
+		return string;
+	}
 }
