@@ -35,19 +35,19 @@ It must have as much rows and colums than the number of elements compared. -->
 <!--- An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference. -->
 <!ELEMENT elt EMPTY>
 <!ATTLIST elt
-    value CDATA #IMPLIED
+    value CDATA #REQUIRED
   >
 
 <!--- A criteria contains a name, a preference matrix and an array of indicators. -->
 <!ELEMENT criteria (name,prefmatrix,indicator*)>
 <!ATTLIST criteria
-    id CDATA #IMPLIED
+    id CDATA #REQUIRED
   >
 
 <!--- An indicator contains a name, and is it has to be minimized or maximized. -->
 <!ELEMENT indicator (name,(minimize|maximize))>
 <!ATTLIST indicator
-    id CDATA #IMPLIED
+    id CDATA #REQUIRED
   >
 
 <!--- These elements are used to determine if an indicator has to be maximized or minimized. -->

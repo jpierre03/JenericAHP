@@ -4,7 +4,7 @@ package org.taeradan.ahp.test;
 import org.taeradan.ahp.Root;
 
 /**
- *
+ * Test class for the AHP tree
  * @author Yves Dubromelle
  */
 public class TestAhp {
