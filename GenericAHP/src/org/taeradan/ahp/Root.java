@@ -132,4 +132,8 @@ public class Root {
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
 		return rankedAlternatives;
 	}
+	
+	public ArrayList<Criteria> getCriterias() {
+		return criterias;
+	}
 }

@@ -1,21 +1,43 @@
-/*
- * ConfigurationFrame.java
+/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+ * 
+ * This file is part of GenericAHP.
+ * 
+ * GenericAHP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Created on 12 mai 2009, 10:02
+ * GenericAHP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp.gui;
 
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.Indicator;
+import org.taeradan.ahp.Root;
+
 /**
- *
- * @author  dubromelley
+ * Graphical user interface to configure the AHP tree and the preference matrix
+ * @author  Yves Dubromelle
  */
 public class ConfigurationFrame extends javax.swing.JFrame
 {
+	private DefaultTreeModel guiAhpTree;
 	
 	/** Creates new form ConfigurationFrame */
 	public ConfigurationFrame()
-	{
+	{	
+		Root ahpRoot = new Root();
+		guiAhpTree=new DefaultTreeModel(processAhpHierarchy(ahpRoot));
 		initComponents();
 	}
 	
@@ -34,23 +56,18 @@ public class ConfigurationFrame extends javax.swing.JFrame
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setTitle("AHP Tree Configuration");
 
+                jTree1.setModel(guiAhpTree);
                 jScrollPane1.setViewportView(jTree1);
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(680, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-                                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
                 );
 
                 pack();
@@ -69,10 +86,30 @@ public class ConfigurationFrame extends javax.swing.JFrame
 			}
 		});
 	}
-	
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTree jTree1;
         // End of variables declaration//GEN-END:variables
 	
+	/**
+	 * Takes an initialized AHP root element and produces a tree by processing the AHP hierarchy
+	 * @param ahpRoot Initialised AHP root
+	 * @return node containing a AHP tree
+	 */
+	public static DefaultMutableTreeNode  processAhpHierarchy(Root ahpRoot){
+		DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpRoot);
+		ArrayList<Criteria> ahpCriterias = ahpRoot.getCriterias();
+		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
+		for(int i=0; i<ahpCriterias.size(); i++){
+			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.get(i)));
+			guiRoot.add(guiCriterias.get(i));
+			ArrayList<Indicator> ahpIndicators = ahpCriterias.get(i).getIndicators();
+			ArrayList<DefaultMutableTreeNode> guiIndicators = new ArrayList<DefaultMutableTreeNode>();
+			for(int j=0; j<ahpIndicators.size(); j++){
+				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.get(j)));
+				guiCriterias.get(i).add(guiIndicators.get(j));
+			}
+		}
+		return guiRoot;
+	}
 }

@@ -105,6 +105,12 @@ public class Criteria {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		String string = "Criteria "+id+" : "+name;
+		return string;
+	}
+	
 	public String treeToString(){
 		String string = "Criteria "+id+" : "+name;
 		string = string.concat("\n"+matrixInd);
@@ -112,5 +118,9 @@ public class Criteria {
 			string = string.concat("\n\t\t"+indicators.get(i));
 		}
 		return string;
+	}
+
+	public ArrayList<Indicator> getIndicators() {
+		return indicators;
 	}
 }
