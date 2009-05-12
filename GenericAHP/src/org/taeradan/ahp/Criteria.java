@@ -33,9 +33,9 @@ public class Criteria {
 	private String id;
 	private String name;
 	private PreferenceMatrix matrixInd;
+	private PriorityVector vectorICrk;
 	private ArrayList<Indicator> indicators;
 //	AHP dynamic attributes
-	private PriorityVector vectorICrk;
 	private AlternativesPriorityVector vectorAltCrk;
 	private ArrayList alternatives;
 

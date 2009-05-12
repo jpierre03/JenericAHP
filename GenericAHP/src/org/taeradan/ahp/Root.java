@@ -19,7 +19,6 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,14 +36,14 @@ public class Root {
 //	AHP static attributes
 	private String name;
 	private PreferenceMatrix matrixCrCr;
+	private PriorityVector vectorCrOg;
 	private ArrayList<Criteria> criterias;
 //	AHP dynamic attributes
-	private PriorityVector vectorCrOg;
 	private AlternativesPriorityVector vectorMOg;
 	private ArrayList alternatives;
 	private Matrix matrixAltCr;
 //	XML configuration attributes
-	private String configurationFile = getClass().getProtectionDomain().getCodeSource().getLocation().getPath()+"org/taeradan/ahp/conf/ahp_conf.xml";
+	private String configurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
 	private Document xmlDocument;
 	
 	/**
@@ -55,8 +54,8 @@ public class Root {
 		SAXBuilder parser = new SAXBuilder();
 		try {
 //			JDOM document created from XML configuration file
-			File file = new File(configurationFile);
-			xmlDocument = parser.build(file);
+			
+			xmlDocument = parser.build(getClass().getResource(configurationFile));
 //			Extraction of the root element from the JDOM document
 			Element xmlRoot = xmlDocument.getRootElement();
 
