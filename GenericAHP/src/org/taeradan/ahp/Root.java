@@ -132,6 +132,22 @@ public class Root {
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
 		return rankedAlternatives;
 	}
+
+	public PreferenceMatrix getMatrixCrCr() {
+		return matrixCrCr;
+	}
+
+	public void setMatrixCrCr(PreferenceMatrix matrixCrCr) {
+		this.matrixCrCr = matrixCrCr;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public ArrayList<Criteria> getCriterias() {
 		return criterias;

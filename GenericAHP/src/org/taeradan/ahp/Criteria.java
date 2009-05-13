@@ -46,6 +46,18 @@ public class Criteria {
 	}
 
 	/**
+	 * Simple constructor to initialize a criteria by its ID, name and preference matrix
+	 * @param id The criteria's ID
+	 * @param name The criteria's name
+	 * @param matrixInd The criteria's preference matrix
+	 */
+	public Criteria(String id, String name, PreferenceMatrix matrixInd) {
+		this.id = id;
+		this.name = name;
+		this.matrixInd = matrixInd;
+	}
+
+	/**
 	 * Creates a AHP Criteria from a JDOM Element
 	 * @param xmlCriteria
 	 */
@@ -118,6 +130,30 @@ public class Criteria {
 			string = string.concat("\n\t\t"+indicators.get(i));
 		}
 		return string;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public PreferenceMatrix getMatrixInd() {
+		return matrixInd;
+	}
+
+	public void setMatrixInd(PreferenceMatrix matrixInd) {
+		this.matrixInd = matrixInd;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public ArrayList<Indicator> getIndicators() {

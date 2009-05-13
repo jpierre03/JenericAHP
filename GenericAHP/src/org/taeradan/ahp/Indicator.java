@@ -40,6 +40,16 @@ public class Indicator {
 	*/
 	public Indicator() {
 	}
+
+	/**
+	 * Simple constructor to initialize an indicator by its ID and name
+	 * @param id The indicator's ID
+	 * @param name The indicator's name
+	 */
+	public Indicator(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	
 	/**
 	 * Creates an Indicator from a JDOM Element
@@ -81,6 +91,22 @@ public class Indicator {
 	public String toString() {
 		String string = "Indicator "+id+" : "+name;
 		return string;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
