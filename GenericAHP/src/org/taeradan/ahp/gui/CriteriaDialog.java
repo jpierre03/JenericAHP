@@ -42,7 +42,8 @@ public class CriteriaDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
         // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-        private void initComponents() {
+        private void initComponents()
+        {
 
                 jLabelId = new javax.swing.JLabel();
                 jLabelName = new javax.swing.JLabel();
@@ -54,6 +55,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
                 jButtonSave = new javax.swing.JButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setTitle("Criteria properties");
                 setResizable(false);
 
                 jLabelId.setText("ID");
@@ -65,15 +67,19 @@ public class CriteriaDialog extends javax.swing.JDialog {
                 jScrollPane1.setViewportView(jTablePrefMatrix);
 
                 jButtonReload.setText("Reload");
-                jButtonReload.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReload.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
                                 jButtonReloadActionPerformed(evt);
                         }
                 });
 
                 jButtonSave.setText("Save");
-                jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSave.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
                                 jButtonSaveActionPerformed(evt);
                         }
                 });
@@ -92,8 +98,8 @@ public class CriteriaDialog extends javax.swing.JDialog {
                                                         .addComponent(jLabelId))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jTextFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                                                        .addComponent(jTextFieldId, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)))
+                                                        .addComponent(jTextFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                                                        .addComponent(jTextFieldId, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jButtonSave)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

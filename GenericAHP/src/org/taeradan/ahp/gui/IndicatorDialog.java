@@ -35,7 +35,8 @@ public class IndicatorDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
         // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-        private void initComponents() {
+        private void initComponents()
+        {
 
                 jTextFieldId = new javax.swing.JTextField();
                 jLabelId = new javax.swing.JLabel();
@@ -45,6 +46,7 @@ public class IndicatorDialog extends javax.swing.JDialog {
                 jButtonReload = new javax.swing.JButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                setTitle("Indicator properties");
                 setResizable(false);
 
                 jLabelId.setText("ID");
@@ -52,15 +54,19 @@ public class IndicatorDialog extends javax.swing.JDialog {
                 jLabelName.setText("Name");
 
                 jButtonSave.setText("Save");
-                jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSave.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
                                 jButtonSaveActionPerformed(evt);
                         }
                 });
 
                 jButtonReload.setText("Reload");
-                jButtonReload.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReload.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
                                 jButtonReloadActionPerformed(evt);
                         }
                 });

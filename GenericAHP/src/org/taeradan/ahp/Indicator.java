@@ -92,6 +92,13 @@ public class Indicator {
 		String string = "Indicator "+id+" : "+name;
 		return string;
 	}
+	
+	public Element toXml(){
+		Element xmlIndicator = new Element("indicator");
+		xmlIndicator.setAttribute("id", id);
+		xmlIndicator.addContent(new Element("name",name));
+		return xmlIndicator;
+	}
 
 	public String getId() {
 		return id;

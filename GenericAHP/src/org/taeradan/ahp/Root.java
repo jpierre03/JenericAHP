@@ -43,7 +43,8 @@ public class Root {
 	private ArrayList alternatives;
 	private Matrix matrixAltCr;
 //	XML configuration attributes
-	private String configurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
+	private String inConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
+	private String outConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf_out.xml";
 	private Document xmlDocument;
 	
 	/**
@@ -55,7 +56,7 @@ public class Root {
 		try {
 //			JDOM document created from XML configuration file
 			
-			xmlDocument = parser.build(getClass().getResource(configurationFile));
+			xmlDocument = parser.build(getClass().getResource(inConfigurationFile));
 //			Extraction of the root element from the JDOM document
 			Element xmlRoot = xmlDocument.getRootElement();
 
@@ -82,7 +83,7 @@ public class Root {
 //				System.out.println("Root.criteria="+criterias.get(i));
 			}
 		}catch (FileNotFoundException e) {
-			System.err.println("File not found : " + configurationFile);
+			System.err.println("File not found : " + inConfigurationFile);
 			name = "unknow";
 			matrixCrCr = new PreferenceMatrix();
 			criterias = new ArrayList<Criteria>();
