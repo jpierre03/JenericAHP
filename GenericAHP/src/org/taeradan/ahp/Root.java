@@ -19,14 +19,21 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
@@ -45,20 +52,30 @@ public class Root {
 //	XML configuration attributes
 	private String inConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
 	private String outConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf_out.xml";
-	private Document xmlDocument;
+	private Document inXmlDocument;
+	private Document outXmlDocument;
 	
 	/**
-	 * Class default constructor, creates the AHP tree from a configuration file.
+	 * Class default constructor.
 	 */
 	public Root() {
+		name = new String();
+		matrixCrCr = new PreferenceMatrix();
+		criterias = new ArrayList<Criteria>();
+	}
+	
+	/**
+	 * Class constructor that creates the AHP tree from a configuration file given in argument.
+	 * @param inFile Path to the configuration file
+	 */
+	public Root(String inFile) {
 //		XML parser creation
 		SAXBuilder parser = new SAXBuilder();
 		try {
 //			JDOM document created from XML configuration file
-			
-			xmlDocument = parser.build(getClass().getResource(inConfigurationFile));
+			inXmlDocument = parser.build(new File(inFile));
 //			Extraction of the root element from the JDOM document
-			Element xmlRoot = xmlDocument.getRootElement();
+			Element xmlRoot = inXmlDocument.getRootElement();
 
 //			Initialisation of the AHP tree name
 			name=xmlRoot.getChildText("name");
@@ -108,13 +125,43 @@ public class Root {
 	 * Returns a big string (multiple lines) containing recursively the description of the whole AHP tree. Best suited for testing purposes.
 	 * @return Multiline string describing the AHP tree
 	 */
-	public String treeToString(){
+	public String toStringRecursive(){
 		String string = this.toString();
 		string = string.concat("\n"+matrixCrCr);
 		for(int i=0; i<criterias.size();i++){
-			string = string.concat("\n\t"+criterias.get(i).treeToString());
+			string = string.concat("\n\t"+criterias.get(i).toStringRecursive());
 		}
 		return string;
+	}
+	
+	/**
+	 * Returns a JDOM element that represents the AHP root and its children
+	 * @return JDOM Element representing the whole AHP tree
+	 */
+	public Element toXml(){
+		Element xmlRoot = new Element("root");
+		xmlRoot.addContent(new Element("name").setText(name));
+		xmlRoot.addContent(matrixCrCr.toXml());
+		for(int i=0; i<criterias.size(); i++)
+			xmlRoot.addContent(criterias.get(i).toXml());
+		return xmlRoot;
+	}
+	
+	/**
+	 * Saves the whole AHP tree in a XML file
+	 * @param outputFile Output XML file path
+	 */
+	public void saveConfig(String outputFile){
+		try {
+//			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
+			outXmlDocument = new Document(toXml(), new DocType("root", getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+//			Use a write format easily readable by a human
+			XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
+//			Write the output into the specified file
+			output.output(outXmlDocument, new FileOutputStream(outputFile));
+		} catch (IOException ex) {
+			Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	/**

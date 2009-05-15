@@ -19,8 +19,11 @@
 package org.taeradan.ahp.gui;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JPopupMenu;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import org.taeradan.ahp.Criteria;
@@ -35,12 +38,19 @@ import org.taeradan.ahp.Root;
 public class ConfigurationFrame extends javax.swing.JFrame
 {
 	private DefaultTreeModel guiAhpTree;
+	private File currentFile = new File(System.getProperty("user.home"));
+	private Root ahpRoot;
+	private boolean fileOpened = false;
 	
 	/** Creates new form ConfigurationFrame */
 	public ConfigurationFrame()
 	{	
-		Root ahpRoot = new Root();
-		guiAhpTree=new DefaultTreeModel(processAhpHierarchy(ahpRoot));
+//		Instanciation of an empty TreeModel
+		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
+//		Instantiation of an empty AHP root to use as default while no file is loaded
+		ahpRoot = new Root();
+//		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
+		guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 		initComponents();
 	}
 	
@@ -53,8 +63,15 @@ public class ConfigurationFrame extends javax.swing.JFrame
         private void initComponents()
         {
 
+                jFileChooser = new javax.swing.JFileChooser();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTreeAhp = new javax.swing.JTree();
+                jMenuBar1 = new javax.swing.JMenuBar();
+                jMenuFile = new javax.swing.JMenu();
+                jMenuItemOpen = new javax.swing.JMenuItem();
+                jMenuItemSave = new javax.swing.JMenuItem();
+                jMenuItemSaveUnder = new javax.swing.JMenuItem();
+                jMenuItemQuit = new javax.swing.JMenuItem();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setTitle("AHP Tree Configuration");
@@ -69,6 +86,45 @@ public class ConfigurationFrame extends javax.swing.JFrame
                 });
                 jScrollPane1.setViewportView(jTreeAhp);
 
+                jMenuFile.setText("File");
+
+                jMenuItemOpen.setText("Open");
+                jMenuItemOpen.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                jMenuItemOpenActionPerformed(evt);
+                        }
+                });
+                jMenuFile.add(jMenuItemOpen);
+
+                jMenuItemSave.setText("Save");
+                jMenuItemSave.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                jMenuItemSaveActionPerformed(evt);
+                        }
+                });
+                jMenuFile.add(jMenuItemSave);
+
+                jMenuItemSaveUnder.setText("Save under...");
+                jMenuItemSaveUnder.addActionListener(new java.awt.event.ActionListener()
+                {
+                        public void actionPerformed(java.awt.event.ActionEvent evt)
+                        {
+                                jMenuItemSaveUnderActionPerformed(evt);
+                        }
+                });
+                jMenuFile.add(jMenuItemSaveUnder);
+
+                jMenuItemQuit.setText("Quit");
+                jMenuFile.add(jMenuItemQuit);
+
+                jMenuBar1.add(jMenuFile);
+
+                setJMenuBar(jMenuBar1);
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
@@ -77,17 +133,23 @@ public class ConfigurationFrame extends javax.swing.JFrame
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 );
 
                 pack();
         }// </editor-fold>//GEN-END:initComponents
 
+		/**
+		 * Handles the actions of the mouse clicks.
+		 * @param evt
+		 */
 		private void jTreeAhpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeAhpMouseClicked
-			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
+//			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
+//			If the mouse is over a valid tree node...
 			if(jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null){
+//				Retrieve the selected node
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)jTreeAhp.getPathForLocation(evt.getX(), evt.getY()).getLastPathComponent();
-				System.out.println();
+//				Handling of the the left button double click
 				if(evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2){
 					Object object = node.getUserObject();
 					if(object instanceof Root){
@@ -106,34 +168,82 @@ public class ConfigurationFrame extends javax.swing.JFrame
 						dialog.setVisible(true);
 					}
 				}
+//				Handling of the right button double click
 				if(evt.getButton() == MouseEvent.BUTTON3){
 					Object object = node.getUserObject();
 					JPopupMenu contextMenu = new JPopupMenu();
-	//				contextMenu.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
 					if(object instanceof Root){
 						Root root = (Root)object;
 						contextMenu.add("Add criteria");
 						contextMenu.add("Edit");
 						contextMenu.add("Delete");
-	//					contextMenu.setVisible(true);
 					}
 					if(object instanceof Criteria){
 						Criteria criteria = (Criteria)object;
 						contextMenu.add("Add indicator");
 						contextMenu.add("Edit");
 						contextMenu.add("Delete");
-	//					contextMenu.setVisible(true);
 					}
 					if(object instanceof Indicator){
 						Indicator indicator = (Indicator)object;
 						contextMenu.add("Edit");
 						contextMenu.add("Delete");
-	//					contextMenu.setVisible(true);
 					}
 					contextMenu.show(jTreeAhp, evt.getX(),evt.getY());
 				}
 			}
 		}//GEN-LAST:event_jTreeAhpMouseClicked
+
+		/**
+		 * Handles the event of the "Open" menu.
+		 * Launch a file selector to choose a configuration file to open.
+		 * @param evt
+		 */
+		private void jMenuItemOpenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemOpenActionPerformed
+		{//GEN-HEADEREND:event_jMenuItemOpenActionPerformed
+			jFileChooser = new JFileChooser(currentFile);
+			jFileChooser.setApproveButtonText("Open");
+			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
+			if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			{
+				currentFile = jFileChooser.getSelectedFile();
+				ahpRoot = new Root(currentFile.getAbsolutePath());
+				guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+				fileOpened = true;
+			}
+		}//GEN-LAST:event_jMenuItemOpenActionPerformed
+
+		/**
+		 * Handles the event of the "Save" menu.
+		 * It just save to the file previously opened.
+		 * If no file is opened, lauch the "Save under" action.
+		 * @param evt
+		 */
+		private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
+		{//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
+			if (fileOpened)
+			{	ahpRoot.saveConfig(currentFile.getAbsolutePath());
+			}
+			else
+				jMenuItemSaveUnderActionPerformed(evt);
+		}//GEN-LAST:event_jMenuItemSaveActionPerformed
+
+		/**
+		 * Handles the event of the "Save under" menu.
+		 * Launch a file selector to choose a file to write.
+		 * @param evt
+		 */
+		private void jMenuItemSaveUnderActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveUnderActionPerformed
+		{//GEN-HEADEREND:event_jMenuItemSaveUnderActionPerformed
+			jFileChooser = new JFileChooser(currentFile);
+			jFileChooser.setApproveButtonText("Save");
+			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
+			if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			{
+				currentFile = jFileChooser.getSelectedFile();
+				ahpRoot.saveConfig(currentFile.getAbsolutePath());
+			}
+		}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
 	
 	/**
 	 * @param args the command line arguments
@@ -149,6 +259,13 @@ public class ConfigurationFrame extends javax.swing.JFrame
 		});
 	}
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JFileChooser jFileChooser;
+        private javax.swing.JMenuBar jMenuBar1;
+        private javax.swing.JMenu jMenuFile;
+        private javax.swing.JMenuItem jMenuItemOpen;
+        private javax.swing.JMenuItem jMenuItemQuit;
+        private javax.swing.JMenuItem jMenuItemSave;
+        private javax.swing.JMenuItem jMenuItemSaveUnder;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTree jTreeAhp;
         // End of variables declaration//GEN-END:variables
@@ -159,16 +276,23 @@ public class ConfigurationFrame extends javax.swing.JFrame
 	 * @return node containing a AHP tree
 	 */
 	public static DefaultMutableTreeNode  processAhpHierarchy(Root ahpRoot){
+//		Creation of the root node
 		DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpRoot);
 		ArrayList<Criteria> ahpCriterias = ahpRoot.getCriterias();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
+//		For each criteria in root
 		for(int i=0; i<ahpCriterias.size(); i++){
+//			Real criteria attached to a criteria node
 			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.get(i)));
+//			Criteria node attached to the root node
 			guiRoot.add(guiCriterias.get(i));
 			ArrayList<Indicator> ahpIndicators = ahpCriterias.get(i).getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators = new ArrayList<DefaultMutableTreeNode>();
+//			For each indicator in the criteria
 			for(int j=0; j<ahpIndicators.size(); j++){
+//				Real indicator attached to an indicator node
 				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.get(j)));
+//				Indicator node attached to the criteria node
 				guiCriterias.get(i).add(guiIndicators.get(j));
 			}
 		}

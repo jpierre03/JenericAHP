@@ -18,28 +18,27 @@
 
 package org.taeradan.ahp.gui;
 
-import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.Root;
 import Jama.Matrix;
 import org.nfunk.jep.JEP;
 
 /**
- * Dialog used to configure a Criteria's informations and preference matrix
+ * Dialog used to configure Root's informations and preference matrix
  * @author Yves Dubromelle
  */
-public class CriteriaDialog extends javax.swing.JDialog {
-	private Criteria criteria;
+public class RootDialog extends javax.swing.JDialog {
+	private Root root;
 	private PrefMatrixTableModel guiPrefMatrix;
 
     /** Creates new form CriteriaDialog */
-    public CriteriaDialog(java.awt.Frame parent, boolean modal,Criteria criteria) {
+    public RootDialog(java.awt.Frame parent, boolean modal,Root root) {
         super(parent, modal);
-	this.criteria = criteria;
+	this.root = root;
 	guiPrefMatrix = new PrefMatrixTableModel();
 	initTable();
         initComponents();
 	guiPrefMatrix.addTableModelListener( new PrefMatrixChangeListener());
-	jTextFieldId.setText(criteria.getId());
-	jTextFieldName.setText(criteria.getName());
+	jTextFieldObjective.setText(root.getName());
     }
 
     /** This method is called from within the constructor to
@@ -52,10 +51,8 @@ public class CriteriaDialog extends javax.swing.JDialog {
         private void initComponents()
         {
 
-                jLabelId = new javax.swing.JLabel();
-                jLabelName = new javax.swing.JLabel();
-                jTextFieldId = new javax.swing.JTextField();
-                jTextFieldName = new javax.swing.JTextField();
+                jLabelObjective = new javax.swing.JLabel();
+                jTextFieldObjective = new javax.swing.JTextField();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 jTablePrefMatrix = new javax.swing.JTable();
                 jButtonReload = new javax.swing.JButton();
@@ -65,9 +62,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
                 setTitle("Criteria properties");
                 setResizable(false);
 
-                jLabelId.setText("ID");
-
-                jLabelName.setText("Name");
+                jLabelObjective.setText("Global objective");
 
                 jTablePrefMatrix.setModel(guiPrefMatrix);
                 jTablePrefMatrix.setRowHeight(22);
@@ -98,19 +93,15 @@ public class CriteriaDialog extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabelName)
-                                                        .addComponent(jLabelId))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jTextFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                                                        .addComponent(jTextFieldId, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jButtonSave)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonReload)))
+                                                .addComponent(jButtonReload))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabelObjective)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextFieldObjective, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)))
                                 .addContainerGap())
                 );
                 layout.setVerticalGroup(
@@ -118,14 +109,10 @@ public class CriteriaDialog extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabelId)
-                                        .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabelName)
-                                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                                        .addComponent(jLabelObjective)
+                                        .addComponent(jTextFieldObjective, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButtonReload)
@@ -138,15 +125,12 @@ public class CriteriaDialog extends javax.swing.JDialog {
 
 	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
 		initTable();
-		jTextFieldId.setText(criteria.getId());
-		jTextFieldName.setText(criteria.getName());
+		jTextFieldObjective.setText(root.getName());
 	}//GEN-LAST:event_jButtonReloadActionPerformed
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		criteria.setId(jTextFieldId.getText());
-		criteria.setName(jTextFieldName.getText());
+		root.setName(jTextFieldObjective.getText());
 		Matrix matrix = new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
-		System.out.println(guiPrefMatrix.getValueAt(1, 1).getClass());
 		for(int i=0; i<guiPrefMatrix.getRowCount(); i++){
 			for(int j=0; j<guiPrefMatrix.getColumnCount(); j++){
 				double value = 0;
@@ -160,7 +144,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
 				matrix.set(i, j, value);
 			}
 		}
-		criteria.getMatrixInd().setMatrix(matrix);
+		root.getMatrixCrCr().setMatrix(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -170,7 +154,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CriteriaDialog dialog = new CriteriaDialog(new javax.swing.JFrame(), true,null);
+                RootDialog dialog = new RootDialog(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -184,28 +168,26 @@ public class CriteriaDialog extends javax.swing.JDialog {
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButtonReload;
         private javax.swing.JButton jButtonSave;
-        private javax.swing.JLabel jLabelId;
-        private javax.swing.JLabel jLabelName;
+        private javax.swing.JLabel jLabelObjective;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTable jTablePrefMatrix;
-        private javax.swing.JTextField jTextFieldId;
-        private javax.swing.JTextField jTextFieldName;
+        private javax.swing.JTextField jTextFieldObjective;
         // End of variables declaration//GEN-END:variables
 
-		private void initTable(){
-			int matrixSize = criteria.getIndicators().size();
-			String[] columnNames = new String[matrixSize];
-			Double[][] data = new Double[matrixSize][matrixSize];
-			for(int i=0; i<matrixSize; i++){
-				columnNames[i] = criteria.getIndicators().get(i).getId();
-				for(int j=0; j<matrixSize; j++){
-					data[i][j] = criteria.getMatrixInd().getMatrix().get(i, j);
-				}
+	private void initTable(){
+		int matrixSize = root.getCriterias().size();
+		String[] columnNames = new String[matrixSize];
+		Double[][] data = new Double[matrixSize][matrixSize];
+		for(int i=0; i<matrixSize; i++){
+			columnNames[i] = root.getCriterias().get(i).getId();
+			for(int j=0; j<matrixSize; j++){
+				data[i][j] = root.getMatrixCrCr().getMatrix().get(i, j);
 			}
-			guiPrefMatrix.setDataVector(data, columnNames);
 		}
+		guiPrefMatrix.setDataVector(data, columnNames);
+	}
 	public void reloadCell(int row, int column){
-		guiPrefMatrix.setValueAt(criteria.getMatrixInd().getMatrix().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(root.getMatrixCrCr().getMatrix().get(row, column), row, column);
 	}
 
 	public PrefMatrixTableModel getGuiPrefMatrix() {

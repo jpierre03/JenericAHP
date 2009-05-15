@@ -64,23 +64,7 @@ public class PreferenceMatrix{
 			}
 		}
 	}
-    
-	/**
-	* Method that give the Matrix contained in this class.
-	* @return matrix
-	*/
-	public Matrix getMatrix() {
-	return matrix;
-	}
 
-	/**
-	* Method that overwrite the matrix contained in this class.
-	* @param matrix
-	*/
-	public void setMatrix(Matrix matrix) {
-	this.matrix = matrix;
-	}
-	
 	/**
 	 * Describes a preference matrix in a String
 	 * @return String description
@@ -90,14 +74,52 @@ public class PreferenceMatrix{
 		String string = "";
 		int nRows = matrix.getRowDimension();
 		int nCols = matrix.getColumnDimension();
-		
+//		For each row in the matrix
 		for(int i=0; i<nRows; i++){
+//			For each element of the row
 			for(int j=0; j<nCols; j++){
 				string = string.concat("\t"+matrix.get(i, j));
 			}
+//			Last row line return
 			if(i<nRows-1)
 				string = string.concat("\n");
 		}
 		return string;
+	}
+	
+	/**
+	 * Returns a JDOM element that represents the preference matrix
+	 * @return JDOM element representing the preference matrix
+	 */
+	public Element toXml(){
+		Element xmlPrefMatrix = new Element("prefmatrix");
+//		For each row in the matrix
+		for(int i=0; i<matrix.getRowDimension(); i++){
+			Element xmlRow = new Element("row");
+//			For each element in the row
+			for(int j=0; j<matrix.getColumnDimension();j++){
+				Element xmlElt = new Element("elt");
+				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
+				xmlRow.addContent(xmlElt);
+			}
+			xmlPrefMatrix.addContent(xmlRow);
+		}
+		return xmlPrefMatrix;
+	}
+	
+	/**
+	* Method that give the Matrix contained in this class.
+	* @return matrix
+	*/
+	public Matrix getMatrix() {
+		return matrix;
+	}
+
+	/**
+	* Method that overwrite the matrix contained in this class.
+	* @param matrix
+	*/
+	public void setMatrix(Matrix matrix) {
+		this.matrix = matrix;
 	}
 }

@@ -43,6 +43,10 @@ public class Criteria {
 	 * Class default constructor
 	 */
 	public Criteria() {
+		id = new String();
+		name = new String();
+		matrixInd = new PreferenceMatrix();
+		indicators = new ArrayList<Indicator>();
 	}
 
 	/**
@@ -117,19 +121,41 @@ public class Criteria {
 		}
 	}
 	
+	/**
+	 * Returns a string describing the criteria, but not its children
+	 * @return Criteria as a String
+	 */
 	@Override
 	public String toString() {
 		String string = "Criteria "+id+" : "+name;
 		return string;
 	}
 	
-	public String treeToString(){
+	/**
+	 * Returns a string describing the criteria and all its children
+	 * @return Criteria and children as a String
+	 */
+	public String toStringRecursive(){
 		String string = "Criteria "+id+" : "+name;
 		string = string.concat("\n"+matrixInd);
 		for(int i=0; i<indicators.size(); i++){
 			string = string.concat("\n\t\t"+indicators.get(i));
 		}
 		return string;
+	}
+	
+	/**
+	 * Returns a JDOM element that represents the criteria and all its children
+	 * @return JDOM Element representing the criteria and children
+	 */
+	public Element toXml(){
+		Element xmlCriteria = new Element("criteria");
+		xmlCriteria.setAttribute("id", id);
+		xmlCriteria.addContent(new Element("name").setText(name));
+		xmlCriteria.addContent(matrixInd.toXml());
+		for(int i=0; i<indicators.size(); i++)
+			xmlCriteria.addContent(indicators.get(i).toXml());
+		return xmlCriteria;
 	}
 
 	public String getId() {

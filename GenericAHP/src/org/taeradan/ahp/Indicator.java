@@ -39,6 +39,8 @@ public class Indicator {
 	* Class default constructor
 	*/
 	public Indicator() {
+		id = new String();
+		name = new String();
 	}
 
 	/**
@@ -87,16 +89,24 @@ public class Indicator {
 		return 1;
 	}
 
+	/**
+	 * Returns a string describing the indicator
+	 * @return String describing the indicator
+	 */
 	@Override
 	public String toString() {
 		String string = "Indicator "+id+" : "+name;
 		return string;
 	}
 	
+	/**
+	 * Returns a JDOM element that represents the indicator
+	 * @return JDOM Element representing the indicator
+	 */
 	public Element toXml(){
 		Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", id);
-		xmlIndicator.addContent(new Element("name",name));
+		xmlIndicator.addContent(new Element("name").setText(name));
 		return xmlIndicator;
 	}
 

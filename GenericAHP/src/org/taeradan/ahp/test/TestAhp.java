@@ -19,6 +19,7 @@
 package org.taeradan.ahp.test;
 
 
+import java.util.Scanner;
 import org.taeradan.ahp.Root;
 
 /**
@@ -27,7 +28,13 @@ import org.taeradan.ahp.Root;
  */
 public class TestAhp {
 	public static void main (String[] args){
-		Root racine = new Root();
-		System.out.println(racine.treeToString());
+		Scanner inScan = new Scanner(System.in);
+		System.out.println("Entrez le nom du fichier d'entrée :\n");
+		String file = inScan.nextLine();
+		Root root = new Root(file);
+		System.out.println(root.toStringRecursive());
+		System.out.println("Entrez le nom du fichier de sortie :\n");
+		file = inScan.nextLine();
+		root.saveConfig(file);
 	}
 }

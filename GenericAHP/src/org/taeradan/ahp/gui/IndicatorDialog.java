@@ -1,12 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * IndicatorDialog.java
+/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+ * 
+ * This file is part of GenericAHP.
+ * 
+ * GenericAHP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Created on 12 mai 2009, 18:47:35
+ * GenericAHP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp.gui;
@@ -14,18 +21,18 @@ package org.taeradan.ahp.gui;
 import org.taeradan.ahp.Indicator;
 
 /**
- *
- * @author taeradan
+ * Dialog used to configure an Indicator's informations
+ * @author Yves Dubromelle
  */
 public class IndicatorDialog extends javax.swing.JDialog {
 	Indicator indicator;
     /** Creates new form IndicatorDialog */
     public IndicatorDialog(java.awt.Frame parent, boolean modal, Indicator indicator) {
         super(parent, modal);
-		this.indicator = indicator;
+	this.indicator = indicator;
         initComponents();
-		jTextFieldId.setText(indicator.getId());
-		jTextFieldName.setText(indicator.getName());
+	jTextFieldId.setText(indicator.getId());
+	jTextFieldName.setText(indicator.getName());
     }
 
     /** This method is called from within the constructor to
