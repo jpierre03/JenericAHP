@@ -122,4 +122,26 @@ public class PreferenceMatrix{
 	public void setMatrix(Matrix matrix) {
 		this.matrix = matrix;
 	}
+
+	public void remove(int index) {
+		int newDimension = matrix.getRowDimension() - 1;
+		Matrix newMatrix = new Matrix(newDimension, newDimension);
+		System.out.println("Ancienne dimension ="+matrix.getRowDimension()+", nouvelle="+newDimension+"\n");
+		int newI = 0;
+		int newJ = 0;
+		for(int i=0; i<matrix.getRowDimension(); i++){
+			if(i!=index){
+				for(int j=0; j<matrix.getColumnDimension(); j++){
+					if(j!=index){
+						double newValue = matrix.get(i, j);
+						System.out.print("i="+i+"j="+j+"value="+newValue+"newI="+newI+"newJ="+newJ+"\n");
+						newMatrix.set(newI, newJ, newValue);
+						newJ++;
+					}
+				}
+				newJ = 0;
+				newI++;
+			}
+		}
+	}
 }

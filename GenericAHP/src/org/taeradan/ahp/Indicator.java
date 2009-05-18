@@ -30,6 +30,7 @@ public class Indicator {
 //	AHP static attributes
 	private String id;
 	private String name;
+	private boolean maximization = true;
 //	AHP dynamic attributes
 	private AlternativesPriorityVector vectorAltIndk;
 	private ArrayList alternatives;
@@ -41,6 +42,8 @@ public class Indicator {
 	public Indicator() {
 		id = new String();
 		name = new String();
+//		We consider that a criteria must be maximized by default
+		maximization = true;
 	}
 
 	/**
@@ -48,9 +51,10 @@ public class Indicator {
 	 * @param id The indicator's ID
 	 * @param name The indicator's name
 	 */
-	public Indicator(String id, String name) {
+	public Indicator(String id, String name, boolean maximization) {
 		this.id = id;
 		this.name = name;
+		this.maximization = maximization;
 	}
 	
 	/**
@@ -65,6 +69,12 @@ public class Indicator {
 //		Initialisation of the name
 		name = xmlIndicator.getChildText("name");
 //		System.out.println("\t\tIndicator.name="+name);
+		
+//		Initialisation of the maximization
+		if(xmlIndicator.isAncestor(new Element("maximize")))
+			maximization = true;
+		if(xmlIndicator.isAncestor(new Element("minimize")))
+			maximization = false;
 	}
 	
 	/**
@@ -95,7 +105,7 @@ public class Indicator {
 	 */
 	@Override
 	public String toString() {
-		String string = "Indicator "+id+" : "+name;
+		String string = "Indicator "+id+" : "+name+" (maximization="+maximization+")";
 		return string;
 	}
 	
@@ -107,6 +117,10 @@ public class Indicator {
 		Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", id);
 		xmlIndicator.addContent(new Element("name").setText(name));
+		if(maximization)
+			xmlIndicator.addContent(new Element("maximize"));
+		else
+			xmlIndicator.addContent(new Element("maximize"));
 		return xmlIndicator;
 	}
 
@@ -124,6 +138,14 @@ public class Indicator {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isMaximization() {
+		return maximization;
+	}
+
+	public void setMaximization(boolean maximization) {
+		this.maximization = maximization;
 	}
 	
 }

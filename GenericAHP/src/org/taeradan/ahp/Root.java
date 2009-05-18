@@ -111,6 +111,16 @@ public class Root {
 		}
 	}
 
+	public void delCriteria(Criteria crit) {
+		if(criterias.contains(crit)){
+			int i = criterias.lastIndexOf(crit);
+			criterias.remove(i);
+			matrixCrCr.remove(i);
+		}
+		else
+			System.err.println("Criteria not found");
+	}
+
 	/**
 	 * Returns a string describing the AHP root, and NOT its children.
 	 * @return Describing string

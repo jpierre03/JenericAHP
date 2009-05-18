@@ -18,10 +18,13 @@
 
 package org.taeradan.ahp.gui;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -152,42 +155,74 @@ public class ConfigurationFrame extends javax.swing.JFrame
 //				Handling of the the left button double click
 				if(evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2){
 					Object object = node.getUserObject();
-					if(object instanceof Root){
-						Root root = (Root)object;
-						RootDialog dialog = new RootDialog(this, true, root);
-						dialog.setVisible(true);
-					}
-					if(object instanceof Criteria){
-						Criteria criteria = (Criteria)object;
-						CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
-						dialog.setVisible(true);
-					}
-					if(object instanceof Indicator){
-						Indicator indicator = (Indicator)object;
-						IndicatorDialog dialog = new IndicatorDialog(this, true, indicator);
-						dialog.setVisible(true);
-					}
+					editActionPerformed(object);
 				}
 //				Handling of the right button double click
 				if(evt.getButton() == MouseEvent.BUTTON3){
-					Object object = node.getUserObject();
+					final Object object = node.getUserObject();
 					JPopupMenu contextMenu = new JPopupMenu();
 					if(object instanceof Root){
-						Root root = (Root)object;
-						contextMenu.add("Add criteria");
-						contextMenu.add("Edit");
-						contextMenu.add("Delete");
+						final Root root = (Root)object;
+						JMenuItem addItem = new JMenuItem("Add criteria");
+						addItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+							}
+						});
+//						addItem.addActionListener(this);
+						contextMenu.add(addItem);
+						JMenuItem editItem = new JMenuItem("Edit");
+						editItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+								editActionPerformed(object);
+							}
+						});
+						contextMenu.add(editItem);
+						JMenuItem delItem = new JMenuItem("Delete");
+						delItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+								delRootActionPerformed(root);
+							}
+						});
+						contextMenu.add(delItem);
 					}
 					if(object instanceof Criteria){
-						Criteria criteria = (Criteria)object;
-						contextMenu.add("Add indicator");
-						contextMenu.add("Edit");
-						contextMenu.add("Delete");
+						final Criteria criteria = (Criteria)object;
+						JMenuItem addItem = new JMenuItem("Add indicator");
+						addItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+							}
+						});
+						contextMenu.add(addItem);
+						JMenuItem editItem = new JMenuItem("Edit");
+						editItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+								editActionPerformed(object);
+							}
+						});
+						contextMenu.add(editItem);
+						JMenuItem delItem = new JMenuItem("Delete");
+						delItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+								delCriteriaActionPerformed(criteria);
+							}
+						});
+						contextMenu.add(delItem);
 					}
 					if(object instanceof Indicator){
 						Indicator indicator = (Indicator)object;
-						contextMenu.add("Edit");
-						contextMenu.add("Delete");
+						JMenuItem editItem = new JMenuItem("Edit");
+						editItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+							}
+						});
+						contextMenu.add(editItem);
+						JMenuItem delItem = new JMenuItem("Delete");
+						delItem.addActionListener(new java.awt.event.ActionListener(){
+							public void actionPerformed(java.awt.event.ActionEvent evt){
+								editActionPerformed(object);
+							}
+						});
+						contextMenu.add(delItem);
 					}
 					contextMenu.show(jTreeAhp, evt.getX(),evt.getY());
 				}
@@ -244,6 +279,45 @@ public class ConfigurationFrame extends javax.swing.JFrame
 				ahpRoot.saveConfig(currentFile.getAbsolutePath());
 			}
 		}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
+	
+	private void editActionPerformed(Object object){
+		if(object instanceof Root){
+			Root root = (Root)object;
+			RootDialog dialog = new RootDialog(this, true, root);
+			dialog.setVisible(true);
+		}
+		if(object instanceof Criteria){
+			Criteria criteria = (Criteria)object;
+			CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
+			dialog.setVisible(true);
+		}
+		if(object instanceof Indicator){
+			Indicator indicator = (Indicator)object;
+			IndicatorDialog dialog = new IndicatorDialog(this, true, indicator);
+			dialog.setVisible(true);
+		}
+	}
+
+	private void delRootActionPerformed(Root root) {
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
+			ahpRoot = new Root();
+			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+			editActionPerformed(ahpRoot);
+		}
+	}
+	
+	private void delCriteriaActionPerformed(Criteria criteria){
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The criteria and its indicators will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
+			ahpRoot.delCriteria(criteria);
+			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+		}
+	}
+	
+	private void delIndicatorActionPerformed(Indicator indicator){
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The indicator will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
+			
+		}
+	}
 	
 	/**
 	 * @param args the command line arguments

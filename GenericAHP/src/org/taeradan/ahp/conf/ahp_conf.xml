@@ -62,11 +62,11 @@
 		</prefmatrix>
 		<indicator id="C3I1">
 			<name>Marge restante</name>
-			<maximize/>
+			<minimize/>
 		</indicator>
 		<indicator id="C3I2">
 			<name>Marge restante pondérée</name>
-			<maximize/>
+			<minimize/>
 		</indicator>
 	</criteria>
 	<criteria id="C4">
@@ -86,7 +86,7 @@
 		</prefmatrix>
 		<indicator id="C5I1">
 			<name>Charge de la ressource</name>
-			<maximize/>
+			<minimize/>
 		</indicator>
 	</criteria>
 </root>
