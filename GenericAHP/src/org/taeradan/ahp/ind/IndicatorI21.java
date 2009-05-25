@@ -26,9 +26,9 @@ import org.taeradan.ahp.Indicator;
  * Dummy implementation of an AHP indicator
  * @author Yves Dubromelle
  */
-public class IndicatorC3I1 extends Indicator{
+public class IndicatorI21 extends Indicator{
 	
-	public IndicatorC3I1(Element xmlIndicator){
+	public IndicatorI21(Element xmlIndicator){
 		super.fromXml(xmlIndicator);
 	}
 	

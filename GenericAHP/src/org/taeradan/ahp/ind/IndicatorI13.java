@@ -26,16 +26,14 @@ import org.taeradan.ahp.Indicator;
  * Dummy implementation of an AHP indicator
  * @author Yves Dubromelle
  */
-public class IndicatorC1I1 extends Indicator{
+public class IndicatorI13 extends Indicator{
 	
-	public IndicatorC1I1(Element xmlIndicator){
+	public IndicatorI13(Element xmlIndicator){
 		super.fromXml(xmlIndicator);
 	}
 	
 	@Override
 	public double calculateAlternativeValue(int i,ArrayList alternatives) {
-		Double alt = (Double)alternatives.get(i);
-		System.out.println(alt.doubleValue());
-		return alt.doubleValue();
+		return 5;
 	}
 }

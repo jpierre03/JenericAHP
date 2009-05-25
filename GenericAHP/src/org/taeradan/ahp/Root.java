@@ -204,19 +204,19 @@ public class Root {
 //		FIN POUR
 		ArrayList sortedAlternatives = (ArrayList)alternatives.clone();
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
-		int maxIndex;
+		int minIndex;
 		for(int i=0; i<alternatives.size(); i++){
-			maxIndex = i;
+			minIndex = i;
 			for(int j=i+1; j<alternatives.size(); j++){
-				if(sortedvectorAltOg.get(j, 0)<sortedvectorAltOg.get(maxIndex, 0))
-				    maxIndex = j;
+				if(sortedvectorAltOg.get(j, 0)>sortedvectorAltOg.get(minIndex, 0))
+				    minIndex = j;
 			}
 			Object tempAlt = sortedAlternatives.get(i);
-			sortedAlternatives.set(i, sortedAlternatives.get(maxIndex));
-			sortedAlternatives.set(maxIndex, tempAlt);
+			sortedAlternatives.set(i, sortedAlternatives.get(minIndex));
+			sortedAlternatives.set(minIndex, tempAlt);
 			double tempValue =  sortedvectorAltOg.get(i, 0);
-			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(maxIndex, 0));
-			sortedvectorAltOg.set(maxIndex, 0, tempValue);
+			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(minIndex, 0));
+			sortedvectorAltOg.set(minIndex, 0, tempValue);
 		}
 		return sortedAlternatives;
 	}

@@ -21,19 +21,22 @@ package org.taeradan.ahp.ind;
 import java.util.ArrayList;
 import org.jdom.Element;
 import org.taeradan.ahp.Indicator;
+import org.taeradan.ahp.test.TestingAlternative;
 
 /**
  * Dummy implementation of an AHP indicator
  * @author Yves Dubromelle
  */
-public class IndicatorC2I2 extends Indicator{
+public class IndicatorI11 extends Indicator{
 	
-	public IndicatorC2I2(Element xmlIndicator){
+	public IndicatorI11(Element xmlIndicator){
 		super.fromXml(xmlIndicator);
 	}
 	
 	@Override
 	public double calculateAlternativeValue(int i,ArrayList alternatives) {
-		return 1;
+		TestingAlternative alt = (TestingAlternative)alternatives.get(i);
+		System.out.println(alt.valueI11);
+		return alt.valueI11;
 	}
 }
