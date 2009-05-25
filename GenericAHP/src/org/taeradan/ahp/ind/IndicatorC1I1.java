@@ -18,6 +18,8 @@
 
 package org.taeradan.ahp.ind;
 
+import java.util.ArrayList;
+import org.jdom.Element;
 import org.taeradan.ahp.Indicator;
 
 /**
@@ -25,8 +27,15 @@ import org.taeradan.ahp.Indicator;
  * @author Yves Dubromelle
  */
 public class IndicatorC1I1 extends Indicator{
+	
+	public IndicatorC1I1(Element xmlIndicator){
+		super.fromXml(xmlIndicator);
+	}
+	
 	@Override
-	public double calculateAlternativeIndicator(int i) {
-		return 1;
+	public double calculateAlternativeValue(int i,ArrayList alternatives) {
+		Double alt = (Double)alternatives.get(i);
+		System.out.println(alt.doubleValue());
+		return alt.doubleValue();
 	}
 }

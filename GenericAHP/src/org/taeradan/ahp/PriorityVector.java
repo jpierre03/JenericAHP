@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+import java.math.BigDecimal;
 
 /**
  *
@@ -26,13 +26,63 @@ import Jama.Matrix;
  */
 public class PriorityVector {
 
-    Matrix matrix = null;
-    
-    /**
-     * Method that give the Matrix contained in this class.
-     * @return matrix
-     */
-    public Matrix getMatrix() {
-	return matrix;
-    }
+	private Matrix vector = null;
+	boolean isUnderTreshold = true;
+
+	public PriorityVector(PreferenceMatrix prefMatrix) {
+		 constructVector(prefMatrix.getMatrix());
+	}
+
+	public PriorityVector(Matrix matrix) {
+		constructVector(matrix);
+	}
+
+	PriorityVector() {
+	}
+	
+	private void constructVector(Matrix matrix){
+		Matrix multMatrix = (Matrix)matrix.clone();
+//		matrix.print(5, 4);
+		Matrix oldVector;
+		int dimension = matrix.getRowDimension();
+		Matrix e = new Matrix(1, dimension, 1);
+//		System.out.println("e=" + PreferenceMatrix.toString(e));
+		do {
+//			System.out.println("Séparateur d'itération ");
+			oldVector = vector;
+			multMatrix = multMatrix.times(matrix);
+			Matrix numerator = matrix.times(e.transpose());
+//			System.out.println("\tNumerator=" + PreferenceMatrix.toString(numerator));
+			Matrix denominator = e.times(matrix).times(e.transpose());
+//			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
+			vector = numerator.timesEquals(1/denominator.get(0, 0));
+//			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
+			if(oldVector!=null){
+				Matrix difference = vector.minus(oldVector);
+//				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
+				isUnderTreshold = true;
+				for(int i=0; i<dimension; i++){
+					if(new BigDecimal(difference.get(i, 0)).abs().doubleValue()>1E-16){
+						isUnderTreshold = false;
+//						System.out.println("dirrefence en dessous du seuil");
+					}
+				}
+			}
+			else
+				isUnderTreshold = false;
+		} while (!isUnderTreshold);
+//		vector.print(5, 4);
+	}
+
+	/**
+	 * Method that give the Matrix contained in this class.
+	 * @return vector
+	 */
+	public Matrix getVector() {
+		return vector;
+	}
+
+	public void setVector(Matrix vector) {
+		this.vector = vector;
+	}
 }

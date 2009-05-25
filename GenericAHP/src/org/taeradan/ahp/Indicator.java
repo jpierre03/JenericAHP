@@ -18,6 +18,8 @@
 
 package org.taeradan.ahp;
 
+import Jama.Matrix;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.jdom.Element;
 
@@ -32,7 +34,8 @@ public class Indicator {
 	private String name;
 	private boolean maximization = true;
 //	AHP dynamic attributes
-	private AlternativesPriorityVector vectorAltIndk;
+	private PriorityVector vectorAltInd;
+	private Matrix matrixAltAlt;
 	private ArrayList alternatives;
 
 
@@ -62,32 +65,42 @@ public class Indicator {
 	 * @param xmlIndicator JDOM Element
 	 */
 	public Indicator(Element xmlIndicator){
-//		Initialisation of the id
-		id = xmlIndicator.getAttributeValue("id");
-//		System.out.println("\t\tIndicator.id="+id);
-		
-//		Initialisation of the name
-		name = xmlIndicator.getChildText("name");
-//		System.out.println("\t\tIndicator.name="+name);
-		
-//		Initialisation of the maximization
-		if(xmlIndicator.isAncestor(new Element("maximize")))
-			maximization = true;
-		if(xmlIndicator.isAncestor(new Element("minimize")))
-			maximization = false;
+		fromXml(xmlIndicator);
 	}
 	
 	/**
 	 * Method called by the criterias for the execution of the AHP algorithm.
 	 * @return MCr vector
 	 */
-	public AlternativesPriorityVector calculatePriorityVector(){
-//		For each alternative, evaluation of its value for the indicator
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts,Method calculateValue){
+		System.out.println(this.toString());
+		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
+		int dimension = altValues.length;
+		matrixAltAlt = new Matrix(dimension, dimension);
+//		For each alternative, evaluation of its value for the indicator
 		for(int i=0;i<alternatives.size();i++){
-			altValues[i]=calculateAlternativeIndicator(i);
+			altValues[i]=calculateAlternativeValue(i,alternatives);
 		}
-		return vectorAltIndk;
+//		Construction of the alternative/altervative matrix
+		for(int i=0; i<dimension; i++){
+			matrixAltAlt.set(i, i, 1);
+			for(int j=0; j<i; j++){
+				if(maximization){
+					matrixAltAlt.set(i, j, altValues[i]/altValues[j]);
+					matrixAltAlt.set(j, i, altValues[j]/altValues[i]);
+				}
+				else{
+					matrixAltAlt.set(j, i, altValues[i]/altValues[j]);
+					matrixAltAlt.set(i, j, altValues[j]/altValues[i]);
+				}
+			}
+		}
+		System.out.println("matrixAltAlt=\n"+PreferenceMatrix.toString(matrixAltAlt));
+//		Conversion from pairwise matrix to priority vector
+		vectorAltInd = new PriorityVector(matrixAltAlt);
+		System.out.println("vectorAltInd=\n"+PreferenceMatrix.toString(vectorAltInd.getVector()));
+		return vectorAltInd;
 	}
 	
 	/**
@@ -95,7 +108,7 @@ public class Indicator {
 	 * @param i Alternative to be evaluated from the list
 	 * @return Indicator value
 	 */
-	public double calculateAlternativeIndicator(int i){
+	public double calculateAlternativeValue(int i,ArrayList alternatives){
 		return 1;
 	}
 
@@ -105,7 +118,11 @@ public class Indicator {
 	 */
 	@Override
 	public String toString() {
-		String string = "Indicator "+id+" : "+name+" (maximization="+maximization+")";
+		String string = "Indicator "+id+" : "+name;
+		if(maximization)
+			string = string.concat(", maximize");
+		else
+			string = string.concat(", minimize");
 		return string;
 	}
 	
@@ -122,6 +139,26 @@ public class Indicator {
 		else
 			xmlIndicator.addContent(new Element("maximize"));
 		return xmlIndicator;
+	}
+	
+	protected void fromXml(Element xmlIndicator){
+		
+//		Initialisation of the id
+		id = xmlIndicator.getAttributeValue("id");
+//		System.out.println("\t\tIndicator.id="+id);
+		
+//		Initialisation of the name
+		name = xmlIndicator.getChildText("name");
+//		System.out.println("\t\tIndicator.name="+name);
+		
+//		Initialisation of the maximization/minimization parameter
+//		System.out.println("Maximise="+xmlIndicator.getChild("maximize")+", minimize="+xmlIndicator.getChild("minimize"));
+		Element maximize = xmlIndicator.getChild("maximize");
+		Element minimize = xmlIndicator.getChild("minimize");
+		if(maximize!=null)
+			maximization = true;
+		if(minimize!=null)
+			maximization = false;
 	}
 
 	public String getId() {

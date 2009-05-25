@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,7 +47,7 @@ public class Root {
 	private PriorityVector vectorCrOg;
 	private ArrayList<Criteria> criterias;
 //	AHP dynamic attributes
-	private AlternativesPriorityVector vectorMOg;
+	private PriorityVector vectorAltOg;
 	private ArrayList alternatives;
 	private Matrix matrixAltCr;
 //	XML configuration attributes
@@ -85,6 +86,7 @@ public class Root {
 			Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
 			matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
 //			System.out.println("Root.matrixCrCr="+matrixCrCr);
+			vectorCrOg = new PriorityVector(matrixCrCr);
 
 //			Initialisation of the criterias
 			List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");
@@ -138,8 +140,9 @@ public class Root {
 	public String toStringRecursive(){
 		String string = this.toString();
 		string = string.concat("\n"+matrixCrCr);
+		DecimalFormat printFormat = new DecimalFormat("0.000");
 		for(int i=0; i<criterias.size();i++){
-			string = string.concat("\n\t"+criterias.get(i).toStringRecursive());
+			string = string.concat("\n\t("+printFormat.format(vectorCrOg.getVector().get(i, 0))+") "+criterias.get(i).toStringRecursive());
 		}
 		return string;
 	}
@@ -179,16 +182,43 @@ public class Root {
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
 	 * @return ArrayList containing the ranked alternatives.
 	 */
-	public ArrayList calculateRanking() {
-		ArrayList rankedAlternatives = null;
-//		Concatenation in a matrix of the arrays calculated by the criterias
-		for (int k = 0; k < criterias.size(); k++) {
-
+	public ArrayList calculateRanking(ArrayList alts) {
+		alternatives = alts;
+		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
+//		Concatenation in a matrix of the vectors calculated by the criterias
+		for (int i = 0; i < criterias.size(); i++) {
+			matrixAltCr.setMatrix(0, alternatives.size()-1, i, i, criterias.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
 		}
 //		Calculation of the final alternatives priority vector
-		vectorMOg.setMatrix(vectorCrOg.getMatrix().times(matrixAltCr));
+		vectorAltOg = new PriorityVector();
+		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
+		System.out.println("vectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector()));
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
-		return rankedAlternatives;
+//		VARIABLE indice_max : ENTIER;
+//		POUR i VARIANT DE 1 A n-1 FAIRE
+//			indice_max <- i;
+//			POUR j VARIANT DE i+1 A N FAIRE
+//				SI a[j]<max ALORS indice_max <- j; 
+//			FIN POUR
+//			echanger a[i] et a[indice_max];
+//		FIN POUR
+		ArrayList sortedAlternatives = (ArrayList)alternatives.clone();
+		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
+		int maxIndex;
+		for(int i=0; i<alternatives.size(); i++){
+			maxIndex = i;
+			for(int j=i+1; j<alternatives.size(); j++){
+				if(sortedvectorAltOg.get(j, 0)<sortedvectorAltOg.get(maxIndex, 0))
+				    maxIndex = j;
+			}
+			Object tempAlt = sortedAlternatives.get(i);
+			sortedAlternatives.set(i, sortedAlternatives.get(maxIndex));
+			sortedAlternatives.set(maxIndex, tempAlt);
+			double tempValue =  sortedvectorAltOg.get(i, 0);
+			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(maxIndex, 0));
+			sortedvectorAltOg.set(maxIndex, 0, tempValue);
+		}
+		return sortedAlternatives;
 	}
 
 	public PreferenceMatrix getMatrixCrCr() {

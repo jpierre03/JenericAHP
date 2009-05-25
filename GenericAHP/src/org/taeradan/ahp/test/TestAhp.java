@@ -19,6 +19,7 @@
 package org.taeradan.ahp.test;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import org.taeradan.ahp.Root;
 
@@ -29,12 +30,23 @@ import org.taeradan.ahp.Root;
 public class TestAhp {
 	public static void main (String[] args){
 		Scanner inScan = new Scanner(System.in);
-		System.out.println("Entrez le nom du fichier d'entrée :\n");
-		String file = inScan.nextLine();
-		Root root = new Root(file);
-		System.out.println(root.toStringRecursive());
-		System.out.println("Entrez le nom du fichier de sortie :\n");
-		file = inScan.nextLine();
-		root.saveConfig(file);
+//		System.out.println("Entrez le nom du fichier d'entrée :\n");
+//		String file = inScan.nextLine();
+		Root root = new Root("build/classes/org/taeradan/ahp/conf/ahp_conf.xml");
+//		System.out.println(root.toStringRecursive());
+		ArrayList alts = new ArrayList(4);
+		alts.add(new Double(1));
+		alts.add(new Double(2));
+		alts.add(new Double(3));
+		alts.add(new Double(4));
+		ArrayList resultat = root.calculateRanking(alts);
+		System.out.println("Resultat=");
+		for(int i=0; i<resultat.size(); i++){
+			Double doubleRes = (Double)resultat.get(i);
+			System.out.println(doubleRes.doubleValue());
+		}
+//		System.out.println("Entrez le nom du fichier de sortie :\n");
+//		file = inScan.nextLine();
+//		root.saveConfig(file);
 	}
 }

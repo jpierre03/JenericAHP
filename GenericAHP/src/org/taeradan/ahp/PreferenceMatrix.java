@@ -19,6 +19,8 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -74,11 +76,31 @@ public class PreferenceMatrix{
 		String string = "";
 		int nRows = matrix.getRowDimension();
 		int nCols = matrix.getColumnDimension();
+		DecimalFormat printFormat = new DecimalFormat("0.000");
 //		For each row in the matrix
 		for(int i=0; i<nRows; i++){
 //			For each element of the row
 			for(int j=0; j<nCols; j++){
-				string = string.concat("\t"+matrix.get(i, j));
+				string = string.concat(" "+printFormat.format(matrix.get(i, j)));
+			}
+//			Last row line return
+			if(i<nRows-1)
+				string = string.concat("\n");
+		}
+		return string;
+	}
+	
+	
+	public static String toString(Matrix matrix) {
+		String string = "";
+		int nRows = matrix.getRowDimension();
+		int nCols = matrix.getColumnDimension();
+		DecimalFormat printFormat = new DecimalFormat("0.000");
+//		For each row in the matrix
+		for(int i=0; i<nRows; i++){
+//			For each element of the row
+			for(int j=0; j<nCols; j++){
+				string = string.concat(" "+printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
 			if(i<nRows-1)
