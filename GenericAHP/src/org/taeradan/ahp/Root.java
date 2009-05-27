@@ -192,7 +192,7 @@ public class Root {
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
-		System.out.println("vectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector()));
+		System.out.println("vectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector(),null));
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
 //		VARIABLE indice_max : ENTIER;
 //		POUR i VARIANT DE 1 A n-1 FAIRE

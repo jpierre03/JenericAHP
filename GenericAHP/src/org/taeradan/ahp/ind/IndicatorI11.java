@@ -36,7 +36,6 @@ public class IndicatorI11 extends Indicator{
 	@Override
 	public double calculateAlternativeValue(int i,ArrayList alternatives) {
 		TestingAlternative alt = (TestingAlternative)alternatives.get(i);
-		System.out.println(alt.valueI11);
 		return alt.valueI11;
 	}
 }

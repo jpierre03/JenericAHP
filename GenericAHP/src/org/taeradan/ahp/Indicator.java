@@ -19,7 +19,6 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.jdom.Element;
 
@@ -72,7 +71,7 @@ public class Indicator {
 	 * Method called by the criterias for the execution of the AHP algorithm.
 	 * @return MCr vector
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts,Method calculateValue){
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts){
 		System.out.println(this.toString());
 		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
@@ -96,10 +95,10 @@ public class Indicator {
 				}
 			}
 		}
-		System.out.println("matrixAltAlt=\n"+PreferenceMatrix.toString(matrixAltAlt));
+		System.out.println("matrixAltAlt=\n"+PreferenceMatrix.toString(matrixAltAlt,"\t"));
 //		Conversion from pairwise matrix to priority vector
 		vectorAltInd = new PriorityVector(matrixAltAlt);
-		System.out.println("vectorAltInd=\n"+PreferenceMatrix.toString(vectorAltInd.getVector()));
+		System.out.println("vectorAltInd=\n"+PreferenceMatrix.toString(vectorAltInd.getVector(),"\t"));
 		return vectorAltInd;
 	}
 	
