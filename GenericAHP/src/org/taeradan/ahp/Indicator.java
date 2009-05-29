@@ -72,7 +72,6 @@ public class Indicator {
 	 * @return MCr vector
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts){
-		System.out.println(this.toString());
 		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
 		int dimension = altValues.length;
@@ -95,10 +94,8 @@ public class Indicator {
 				}
 			}
 		}
-		System.out.println("matrixAltAlt=\n"+PreferenceMatrix.toString(matrixAltAlt,"\t"));
 //		Conversion from pairwise matrix to priority vector
 		vectorAltInd = new PriorityVector(matrixAltAlt);
-		System.out.println("vectorAltInd=\n"+PreferenceMatrix.toString(vectorAltInd.getVector(),"\t"));
 		return vectorAltInd;
 	}
 	
@@ -158,6 +155,13 @@ public class Indicator {
 			maximization = true;
 		if(minimize!=null)
 			maximization = false;
+	}
+	
+	public String resultToString(){
+		String string = this.toString();
+		string = string.concat("\n\t\tmatrixAltAlt=\n"+PreferenceMatrix.toString(matrixAltAlt,"\t\t"));
+		string = string.concat("\n\t\tvectorAltInd=\n"+PreferenceMatrix.toString(vectorAltInd.getVector(),"\t\t"));
+		return string;
 	}
 
 	public String getId() {

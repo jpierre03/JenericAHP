@@ -136,7 +136,6 @@ public class Criteria {
 		for(int i=0; i<indicators.size(); i++){
 			try {
 				Method calculateValue = indicators.get(i).getClass().getMethod("calculateAlternativeValue", int.class, ArrayList.class);
-				System.out.println(indicators.get(i).getClass());
 				matrixAltInd.setMatrix(0, alternatives.size() - 1, i, i, indicators.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
 			} catch (NoSuchMethodException ex) {
 				Logger.getLogger(Criteria.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,7 +146,6 @@ public class Criteria {
 //		Calculation of the criteria's alternatives vector
 		vectorAltCr = new PriorityVector();
 		vectorAltCr.setVector(matrixAltInd.times(vectorIndCr.getVector()));
-		System.out.println("vectorAltCr=\n"+PreferenceMatrix.toString(vectorAltCr.getVector(),null));
 		return vectorAltCr;
 	}
 	
@@ -166,7 +164,7 @@ public class Criteria {
 	 * @return Criteria and children as a String
 	 */
 	public String toStringRecursive(){
-		String string = "Criteria "+id+" : "+name;
+		String string = this.toString();
 		string = string.concat("\n"+matrixIndInd.toString("\t"));
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		for(int i=0; i<indicators.size(); i++){
@@ -187,6 +185,15 @@ public class Criteria {
 		for(int i=0; i<indicators.size(); i++)
 			xmlCriteria.addContent(indicators.get(i).toXml());
 		return xmlCriteria;
+	}
+	
+	public String resultToString(){
+		String string = this.toString();
+		for(int i=0; i<indicators.size(); i++){
+			string = string.concat("\n\t\t"+indicators.get(i).resultToString());
+		}
+		string = string.concat("\n\tvectorAltCr=\n"+PreferenceMatrix.toString(vectorAltCr.getVector(),"\t"));
+		return string;
 	}
 
 	public String getId() {

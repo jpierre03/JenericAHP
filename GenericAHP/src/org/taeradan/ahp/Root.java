@@ -55,6 +55,8 @@ public class Root {
 	private String outConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf_out.xml";
 	private Document inXmlDocument;
 	private Document outXmlDocument;
+//	Control attributes
+	private boolean calculationOccured = false;
 	
 	/**
 	 * Class default constructor.
@@ -160,6 +162,20 @@ public class Root {
 		return xmlRoot;
 	}
 	
+	public String resultToString(){
+		String string;
+		if(calculationOccured){
+			string = this.toString();
+			for(int i=0; i<criterias.size();i++){
+				string = string.concat("\n\t"+criterias.get(i).resultToString());
+			}
+			string = string.concat("\nvectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector(),null));
+		}
+		else
+			string = "There is no result, please do a ranking first";
+		return string;
+	}
+	
 	/**
 	 * Saves the whole AHP tree in a XML file
 	 * @param outputFile Output XML file path
@@ -192,16 +208,7 @@ public class Root {
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
-		System.out.println("vectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector(),null));
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
-//		VARIABLE indice_max : ENTIER;
-//		POUR i VARIANT DE 1 A n-1 FAIRE
-//			indice_max <- i;
-//			POUR j VARIANT DE i+1 A N FAIRE
-//				SI a[j]<max ALORS indice_max <- j; 
-//			FIN POUR
-//			echanger a[i] et a[indice_max];
-//		FIN POUR
 		ArrayList sortedAlternatives = (ArrayList)alternatives.clone();
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
 		int minIndex;
@@ -218,6 +225,7 @@ public class Root {
 			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(minIndex, 0));
 			sortedvectorAltOg.set(minIndex, 0, tempValue);
 		}
+		calculationOccured = true;
 		return sortedAlternatives;
 	}
 
