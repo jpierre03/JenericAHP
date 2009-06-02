@@ -86,6 +86,11 @@ public class Criteria {
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
 		vectorIndCr = new PriorityVector(matrixIndInd);
 		
+//		Consistency verification
+		if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)){
+			System.err.println("Is not consistent (criteria "+id+")");
+		}
+		
 //		Initialisation of the Indicators
 		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
 		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");

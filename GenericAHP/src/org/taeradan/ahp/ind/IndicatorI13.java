@@ -21,6 +21,7 @@ package org.taeradan.ahp.ind;
 import java.util.ArrayList;
 import org.jdom.Element;
 import org.taeradan.ahp.Indicator;
+import org.taeradan.ahp.test.TestingAlternative;
 
 /**
  * Dummy implementation of an AHP indicator
@@ -34,6 +35,7 @@ public class IndicatorI13 extends Indicator{
 	
 	@Override
 	public double calculateAlternativeValue(int i,ArrayList alternatives) {
-		return 5;
+		TestingAlternative alt = (TestingAlternative)alternatives.get(i);
+		return alt.valueI13;
 	}
 }

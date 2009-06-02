@@ -89,6 +89,10 @@ public class Root {
 			matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
 //			System.out.println("Root.matrixCrCr="+matrixCrCr);
 			vectorCrOg = new PriorityVector(matrixCrCr);
+//			Consistency verification
+			if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)){
+				System.err.println("Is not consistent (root)");
+			}
 
 //			Initialisation of the criterias
 			List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");

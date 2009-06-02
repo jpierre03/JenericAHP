@@ -33,18 +33,18 @@ public class TestAhp {
 //		System.out.println("Entrez le nom du fichier d'entrée :\n");
 //		String file = inScan.nextLine();
 		Root root = new Root("build/classes/org/taeradan/ahp/conf/ahp_conf.xml");
-		System.out.println(root.toStringRecursive());
+//		System.out.println(root.toStringRecursive());
 		ArrayList alts = new ArrayList(4);
-		alts.add(new TestingAlternative("Alternative 1",3, 1 ,1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 2",1, 1 ,1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 3",4, 1 ,1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 4",2, 1 ,1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 1",3, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 2",1, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 3",4, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 4",2, 1, 1, 1, 1, 1, 1, 1, 1));
 		ArrayList resultat = root.calculateRanking(alts);
-		System.out.println(root.resultToString());
+//		System.out.println(root.resultToString());
 		System.out.println("Resultat=");
 		for(int i=0; i<resultat.size(); i++){
 			TestingAlternative currentRes = (TestingAlternative)resultat.get(i);
-			System.out.println(currentRes.name+" = "+currentRes.valueI11+", "+currentRes.valueI12);
+			System.out.println(currentRes.name+" = "+currentRes.valueI11);
 		}
 //		System.out.println("Entrez le nom du fichier de sortie :\n");
 //		file = inScan.nextLine();
