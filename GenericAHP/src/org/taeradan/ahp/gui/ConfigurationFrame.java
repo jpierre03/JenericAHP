@@ -41,7 +41,8 @@ import org.taeradan.ahp.Root;
 public class ConfigurationFrame extends javax.swing.JFrame
 {
 	private DefaultTreeModel guiAhpTree;
-	private File currentFile = new File(System.getProperty("user.home"));
+//	private File currentFile = new File(System.getProperty("user.home"));
+	private File currentFile = new File(this.getClass().getResource("/org/taeradan/ahp/conf").getFile());
 	private Root ahpRoot;
 	private boolean fileOpened = false;
 	
@@ -242,7 +243,7 @@ public class ConfigurationFrame extends javax.swing.JFrame
 			if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			{
 				currentFile = jFileChooser.getSelectedFile();
-				ahpRoot = new Root(currentFile.getAbsolutePath());
+				ahpRoot = new Root(new File(currentFile.getAbsolutePath()));
 				guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 				fileOpened = true;
 			}

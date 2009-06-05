@@ -71,12 +71,13 @@ public class Root {
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
 	 * @param inFile Path to the configuration file
 	 */
-	public Root(String inFile) {
+	public Root(File inFile) {
 //		XML parser creation
 		SAXBuilder parser = new SAXBuilder();
 		try {
 //			JDOM document created from XML configuration file
-			inXmlDocument = parser.build(new File(inFile));
+			//inXmlDocument = parser.build(new File(inFile));
+			inXmlDocument = parser.build(inFile);
 //			Extraction of the root element from the JDOM document
 			Element xmlRoot = inXmlDocument.getRootElement();
 

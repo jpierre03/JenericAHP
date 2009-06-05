@@ -19,6 +19,7 @@
 package org.taeradan.ahp.test;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.taeradan.ahp.Root;
@@ -32,7 +33,7 @@ public class TestAhp {
 		Scanner inScan = new Scanner(System.in);
 //		System.out.println("Entrez le nom du fichier d'entrée :\n");
 //		String file = inScan.nextLine();
-		Root root = new Root("build/classes/org/taeradan/ahp/conf/ahp_conf.xml");
+		Root root = new Root(new File("build/classes/org/taeradan/ahp/conf/ahp_conf.xml"));
 //		System.out.println(root.toStringRecursive());
 		ArrayList alts = new ArrayList(4);
 		alts.add(new TestingAlternative("Alternative 1",3, 1, 1, 1, 1, 1, 1, 1, 1));
