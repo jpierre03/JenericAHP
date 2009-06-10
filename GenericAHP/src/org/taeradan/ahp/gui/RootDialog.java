@@ -59,7 +59,7 @@ public class RootDialog extends javax.swing.JDialog {
                 jButtonSave = new javax.swing.JButton();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-                setTitle("Criteria properties");
+                setTitle("Root properties");
                 setResizable(false);
 
                 jLabelObjective.setText("Global objective");

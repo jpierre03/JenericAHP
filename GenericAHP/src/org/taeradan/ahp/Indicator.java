@@ -72,6 +72,7 @@ public class Indicator {
 	 * @return MCr vector
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts){
+//		System.out.println(this.toString());
 		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
 		int dimension = altValues.length;

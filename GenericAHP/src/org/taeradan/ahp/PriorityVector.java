@@ -62,7 +62,9 @@ public class PriorityVector {
 //				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
 				isUnderTreshold = true;
 				for(int i=0; i<dimension; i++){
-					if(new BigDecimal(difference.get(i, 0)).abs().doubleValue()>1E-16){
+					double diff = difference.get(i, 0);
+//					System.out.println("diff ="+diff);
+					if(new BigDecimal(diff).abs().doubleValue()>1E-16){
 						isUnderTreshold = false;
 //						System.out.println("dirrefence en dessous du seuil");
 					}
