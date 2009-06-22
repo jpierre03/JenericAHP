@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE root SYSTEM "/home2/promo2009/dubromelley/genericahp/trunk/GenericAHP/build/classes/org/taeradan/ahp/conf/ahp_conf.dtd">
+<!DOCTYPE root SYSTEM "/home2/promo2009/dubromelley/genericahp/trunk/GenericANP/build/classes/org/taeradan/ahp/conf/ahp_conf.dtd">
 
 <root>
   <name>Choix d'un produit à traiter dans un WIP</name>

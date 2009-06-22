@@ -17,39 +17,41 @@
     </root>
 -->
 
-<!--- The root element of the XML document is the root element of the AHP tree.
-It must contain a name, a preference matrix and an array of criterias elements. -->
-<!ELEMENT root (name,prefmatrix,criteria*)>
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT root (criteria|prefmatrix|name)*>
 
-<!--- The name of the AHP tree (or the goal of this AHP instance). -->
+<!--- Put your DTDDoc comment here. -->
 <!ELEMENT name (#PCDATA)>
 
-<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criteria.
-Contains rows.
-It must have as much rows and colums than the number of elements compared. -->
+<!--- Put your DTDDoc comment here. -->
 <!ELEMENT prefmatrix (row)*>
 
-<!--- A row of the preference matrix, contains elements. -->
+<!--- Put your DTDDoc comment here. -->
 <!ELEMENT row (elt)*>
 
-<!--- An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference. -->
+<!--- Put your DTDDoc comment here. -->
 <!ELEMENT elt EMPTY>
 <!ATTLIST elt
-    value CDATA #REQUIRED
+    value CDATA #IMPLIED
   >
 
-<!--- A criteria contains a name, a preference matrix and an array of indicators. -->
-<!ELEMENT criteria (name,prefmatrix,indicator*)>
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT criteria (indicator|depmatrix|prefmatrix|name)*>
 <!ATTLIST criteria
-    id CDATA #REQUIRED
+    id CDATA #IMPLIED
   >
 
-<!--- An indicator contains a name, and is it has to be minimized or maximized. -->
-<!ELEMENT indicator (name,(minimize|maximize))>
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT depmatrix (row)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT indicator (minimize|maximize|depmatrix|name)*>
 <!ATTLIST indicator
-    id CDATA #REQUIRED
+    id CDATA #IMPLIED
   >
 
-<!--- These elements are used to determine if an indicator has to be maximized or minimized. -->
-<!ELEMENT minimize EMPTY>
+<!--- Put your DTDDoc comment here. -->
 <!ELEMENT maximize EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT minimize EMPTY>

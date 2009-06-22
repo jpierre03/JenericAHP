@@ -1,19 +1,19 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+/* Copyright 2009 Yves Dubromelle, Thamer Louati @ LSIS(www.lsis.org)
  * 
- * This file is part of GenericAHP.
+ * This file is part of GenericANP.
  * 
- * GenericAHP is free software: you can redistribute it and/or modify
+ * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GenericAHP is distributed in the hope that it will be useful,
+ * GenericANP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
-
+import org.taeradan.ahp.Root;
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
  * @author Yves Dubromelle
@@ -38,13 +38,15 @@ public class Criteria {
 	private String id;
 	private String name;
 	private PreferenceMatrix matrixIndInd;
+        private DependanceMatrix matrixCrCr;
 	private PriorityVector vectorIndCr;
+        private PriorityVector vectorCrCr;
 	private ArrayList<Indicator> indicators;
 //	AHP dynamic attributes
 	private PriorityVector vectorAltCr;
 	private Matrix matrixAltInd;
 	private ArrayList alternatives;
-
+        private Root root;
 	/**
 	 * Class default constructor
 	 */
@@ -52,6 +54,7 @@ public class Criteria {
 		id = new String();
 		name = new String();
 		matrixIndInd = new PreferenceMatrix();
+                matrixCrCr = new DependanceMatrix();
 		indicators = new ArrayList<Indicator>();
 	}
 
@@ -61,10 +64,11 @@ public class Criteria {
 	 * @param name The criteria's name
 	 * @param matrixIndInd The criteria's preference matrix
 	 */
-	public Criteria(String id, String name, PreferenceMatrix matrixInd) {
+	public Criteria(String id, String name, PreferenceMatrix matrixInd, DependanceMatrix matrixCr) {
 		this.id = id;
 		this.name = name;
 		this.matrixIndInd = matrixInd;
+                this.matrixCrCr = matrixCr;
 	}
 
 	/**
@@ -86,11 +90,21 @@ public class Criteria {
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
 		vectorIndCr = new PriorityVector(matrixIndInd);
 		
-//		Consistency verification
+//              Initialisation of the dependance matrix
+                Element xmlDepMatrix = xmlCriteria.getChild("depmatrix");
+		matrixCrCr = new DependanceMatrix(xmlDepMatrix);
+//		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
+		vectorCrCr = new PriorityVector(matrixCrCr);
+                
+//		Consistency verification for the Perf Matrix
 		if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)){
 			System.err.println("Is not consistent (criteria "+id+")");
 		}
 		
+//              Consistency verification for the dependance Matrix
+		if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrCr)){
+			System.err.println("Is not consistent (criteria "+id+")");
+		}
 //		Initialisation of the Indicators
 		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
 		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
@@ -170,10 +184,15 @@ public class Criteria {
 	 */
 	public String toStringRecursive(){
 		String string = this.toString();
-		string = string.concat("\n"+matrixIndInd.toString("\t"));
+		//string = string.concat("\n"+matrixIndInd.toString("\t"));
+		//string = string.concat("\n\n"+matrixCrCr.toString("\t"));
+                
+                string = string.concat("\n\n"+PreferenceMatrix.toString(vectorIndCr.getVector(), "\t"));
+                string = string.concat("\n\n"+PreferenceMatrix.toString(vectorCrCr.getVector(), "\t"));
+                //root.supermatrix.setMatrix(arg0, arg1, arg2, arg3, matrixAltInd)
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		for(int i=0; i<indicators.size(); i++){
-			string = string.concat("\n\t\t("+printFormat.format(vectorIndCr.getVector().get(i, 0))+") "+indicators.get(i));
+			string = string.concat("\n\t\t("+printFormat.format(vectorIndCr.getVector().get(i, 0))+") "+indicators.get(i).toStringRecursive());
 		}
 		return string;
 	}
@@ -217,6 +236,19 @@ public class Criteria {
 		this.matrixIndInd = matrixInd;
 	}
 
+        public DependanceMatrix getMatrixCr() {
+		return matrixCrCr;
+	}
+        public PriorityVector getVectorCr() {
+		return vectorCrCr;
+	}
+        public PriorityVector getVectorIndCr() {
+		return vectorIndCr;
+	}
+        public void setMatrixCr(DependanceMatrix matrixCr) {
+		this.matrixCrCr = matrixCr;
+	}
+        
 	public String getName() {
 		return name;
 	}

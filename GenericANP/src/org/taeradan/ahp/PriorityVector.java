@@ -1,19 +1,19 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+/* Copyright 2009 Yves Dubromelle, Thamer Louati @ LSIS(www.lsis.org)
  * 
- * This file is part of GenericAHP.
+ * This file is part of GenericANP.
  * 
- * GenericAHP is free software: you can redistribute it and/or modify
+ * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GenericAHP is distributed in the hope that it will be useful,
+ * GenericANP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.taeradan.ahp;
 
@@ -33,6 +33,9 @@ public class PriorityVector {
 		 constructVector(prefMatrix.getMatrix());
 	}
 
+        public PriorityVector(DependanceMatrix depMatrix) {
+		 constructVector(depMatrix.getMatrix());
+	}
 	public PriorityVector(Matrix matrix) {
 		constructVector(matrix);
 	}
@@ -42,12 +45,23 @@ public class PriorityVector {
 	
 	private void constructVector(Matrix matrix){
 		Matrix multMatrix = (Matrix)matrix.clone();
-//		matrix.print(5, 4);
+                boolean nulle =true;
 		Matrix oldVector;
 		int dimension = matrix.getRowDimension();
 		Matrix e = new Matrix(1, dimension, 1);
+                
 //		System.out.println("e=" + PreferenceMatrix.toString(e));
-		do {
+                //if( matrix.equals(new ))
+		for (int i=0;i<matrix.getColumnDimension();i++)
+                     {
+                       for (int j=0;j<matrix.getColumnDimension();j++){
+                           if (matrix.get(i, j)!=0){
+                               nulle= false;
+                           }
+                       } 
+                }
+                if (nulle==false){
+                do {
 //			System.out.println("Séparateur d'itération ");
 			oldVector = vector;
 			multMatrix = multMatrix.times(matrix);
@@ -62,9 +76,8 @@ public class PriorityVector {
 //				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
 				isUnderTreshold = true;
 				for(int i=0; i<dimension; i++){
-					double diff = difference.get(i, 0);
-//					System.out.println("diff ="+diff);
-					if(new BigDecimal(diff).abs().doubleValue()>1E-16){
+                                        //System.out.println(difference.get(i, 0));
+					if(new BigDecimal(difference.get(i, 0)).abs().doubleValue()>1E-16){
 						isUnderTreshold = false;
 //						System.out.println("dirrefence en dessous du seuil");
 					}
@@ -73,7 +86,13 @@ public class PriorityVector {
 			else
 				isUnderTreshold = false;
 		} while (!isUnderTreshold);
-//		vector.print(5, 4);
+                } else{
+                       vector = new Matrix(dimension,1);
+                       for (int j=0;j< dimension;j++){
+                           vector.set(j, 0, 0);
+                           
+                       } 
+                }
 	}
 
 	/**
@@ -87,4 +106,5 @@ public class PriorityVector {
 	public void setVector(Matrix vector) {
 		this.vector = vector;
 	}
+        
 }

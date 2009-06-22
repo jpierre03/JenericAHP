@@ -1,7 +1,7 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+/* Copyright 2009 Thamer Louati @ LSIS(www.lsis.org)
+ *
  * This file is part of GenericANP.
- * 
+ *
  * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -22,24 +22,22 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.JOptionPane;
 import org.nfunk.jep.JEP;
-
 /**
- * Class that listen for changes in the graphical JTable showing a preference matrix.
- * It is used to verify that the value entered is correct and to automatically fill the second half of the matrix.
- * @author Yves Dubromelle
+ *
+ * @author Louati
  */
-public class PrefMatrixChangeListener implements TableModelListener {
+public class DepMatrixChangeListener implements TableModelListener{
 
-	/**
+    /**
 	 * Handle of the event launched every time the JTable changes
 	 * @param evt
 	 */
 	public void tableChanged(TableModelEvent evt) {
 		System.out.println("row="+evt.getFirstRow()+",column"+evt.getColumn());
 		if(evt.getFirstRow()>=evt.getColumn()){
-			PrefMatrixTableModel prefMatrix = (PrefMatrixTableModel)evt.getSource();
+			DepMatrixTableModel DepMatrix = (DepMatrixTableModel)evt.getSource();
 			Double value = null;
-			Object nonParsedValue = prefMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
+			Object nonParsedValue = DepMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
 			System.out.println("Non parsed value = "+nonParsedValue);
 			JEP myParser = new JEP();
 //			If the changed value is a String, convert to Double
@@ -59,7 +57,7 @@ public class PrefMatrixChangeListener implements TableModelListener {
 				if(newValue == null)
 					newValue = "1";
 				myParser.parseExpression((String)newValue);
-				prefMatrix.setValueAt(myParser.getValue(),evt.getFirstRow(), evt.getColumn());
+				DepMatrix.setValueAt(myParser.getValue(),evt.getFirstRow(), evt.getColumn());
 			}
 //			Case where the value is not entered : DON'T WORK FOR NOW
 			if(value == Double.NaN){
@@ -67,10 +65,9 @@ public class PrefMatrixChangeListener implements TableModelListener {
 				if(newValue == null)
 					newValue = "1";
 				myParser.parseExpression((String)newValue);
-				prefMatrix.setValueAt(myParser.getValue(),evt.getFirstRow(), evt.getColumn());
+				DepMatrix.setValueAt(myParser.getValue(),evt.getFirstRow(), evt.getColumn());
 			}
-			prefMatrix.setValueAt((1/value), evt.getColumn(), evt.getFirstRow());
+			DepMatrix.setValueAt((1/value), evt.getColumn(), evt.getFirstRow());
 		}
 	}
-
 }

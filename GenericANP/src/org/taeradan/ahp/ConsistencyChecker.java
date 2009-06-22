@@ -1,6 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* Copyright 2009 Yves Dubromelle, Thamer Louati @ LSIS(www.lsis.org)
+ *
+ * This file is part of GenericANP.
+ *
+ * GenericANP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GenericANP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp;
@@ -51,4 +64,39 @@ public class ConsistencyChecker {
 		return consistent;
 	}
 	
+        public static boolean isConsistent(DependanceMatrix depMatrix, PriorityVector prioVector){
+		boolean consistent = false;
+		Matrix matrix = depMatrix.getMatrix();
+		Matrix vector = prioVector.getVector();
+		double[] lambdas ;
+		int dimension = 0;
+		if(depMatrix.getMatrix().getRowDimension()==prioVector.getVector().getRowDimension()){
+			dimension = depMatrix.getMatrix().getRowDimension();
+			if(dimension==1)
+				consistent = true;
+			if(dimension<15 && dimension>0){
+				lambdas = new double[dimension];
+				for(int i=0; i<dimension; i++){
+					double sum = 0;
+					for(int j=0; j<dimension; j++){
+						sum = sum + matrix.get(i, j)*vector.get(j, 0);
+					}
+					lambdas[i]=sum/vector.get(i, 0);
+				}
+				double lambdaMax = Double.MIN_VALUE;
+				for(int index=0; index<dimension; index++)
+					if(lambdas[index]>lambdaMax)
+						lambdaMax = lambdas[index];
+				double CI = (lambdaMax - dimension)/(dimension -1);
+				double CR = CI/randomIndex[dimension];
+				if(CR<0.1)
+					consistent = true;
+			}
+			else
+				System.err.println("Preference matrix and priority vector are too wide (15 max) or empty !!"+dimension);
+		}
+		else
+			System.err.println("The matrix and vector dimension does not match !!"+depMatrix.getMatrix().getRowDimension()+","+prioVector.getVector().getRowDimension());
+		return consistent;
+	}
 }

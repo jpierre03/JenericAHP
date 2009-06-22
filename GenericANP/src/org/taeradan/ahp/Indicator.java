@@ -1,19 +1,19 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+/* Copyright 2009 Yves Dubromelle, Thamer Louati @ LSIS(www.lsis.org)
  * 
- * This file is part of GenericAHP.
+ * This file is part of GenericANP.
  * 
- * GenericAHP is free software: you can redistribute it and/or modify
+ * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GenericAHP is distributed in the hope that it will be useful,
+ * GenericANP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp;
@@ -31,6 +31,8 @@ public class Indicator {
 //	AHP static attributes
 	private String id;
 	private String name;
+        private DependanceMatrix matrixIndInd;
+        private PriorityVector vectorIndInd;
 	private boolean maximization = true;
 //	AHP dynamic attributes
 	private PriorityVector vectorAltInd;
@@ -44,6 +46,7 @@ public class Indicator {
 	public Indicator() {
 		id = new String();
 		name = new String();
+                matrixIndInd = new DependanceMatrix();
 //		We consider that a criteria must be maximized by default
 		maximization = true;
 	}
@@ -53,10 +56,11 @@ public class Indicator {
 	 * @param id The indicator's ID
 	 * @param name The indicator's name
 	 */
-	public Indicator(String id, String name, boolean maximization) {
+	public Indicator(String id, String name, boolean maximization,DependanceMatrix matrixInd) {
 		this.id = id;
 		this.name = name;
 		this.maximization = maximization;
+                this.matrixIndInd = matrixInd;
 	}
 	
 	/**
@@ -65,6 +69,7 @@ public class Indicator {
 	 */
 	public Indicator(Element xmlIndicator){
 		fromXml(xmlIndicator);
+                
 	}
 	
 	/**
@@ -72,7 +77,6 @@ public class Indicator {
 	 * @return MCr vector
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts){
-//		System.out.println(this.toString());
 		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
 		int dimension = altValues.length;
@@ -122,6 +126,18 @@ public class Indicator {
 			string = string.concat(", minimize");
 		return string;
 	}
+        
+        
+	public String toStringRecursive() {
+		String string = "Indicator "+id+" : "+name;
+		if(maximization)
+			string = string.concat(", maximize");
+		else
+			string = string.concat(", minimize");
+		//string = string.concat("\n\n"+matrixIndInd.toString("\t"));
+                string = string.concat("\n\n"+PreferenceMatrix.toString(vectorIndInd.getVector(), "\t"));
+		return string;
+        }
 	
 	/**
 	 * Returns a JDOM element that represents the indicator
@@ -156,6 +172,15 @@ public class Indicator {
 			maximization = true;
 		if(minimize!=null)
 			maximization = false;
+               // Initialisation of the dependance matrix of indicator
+                Element xmlDepMatrix = xmlIndicator.getChild("depmatrix");
+		matrixIndInd = new DependanceMatrix(xmlDepMatrix);
+		//System.out.println("\tIndicator.matrixIndInd="+matrixIndInd);
+		vectorIndInd = new PriorityVector(matrixIndInd);
+                
+                if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndInd)){
+			System.err.println("Is not consistent (Indicator "+id+")");
+		}
 	}
 	
 	public String resultToString(){
@@ -189,4 +214,14 @@ public class Indicator {
 		this.maximization = maximization;
 	}
 	
+        public DependanceMatrix getMatrixInd() {
+		return matrixIndInd;
+	}
+        
+        public void setMatrixInd(DependanceMatrix matrixInd) {
+		this.matrixIndInd = matrixInd;
+	}
+        public PriorityVector getVectorIndInd() {
+		return vectorIndInd;
+	}
 }

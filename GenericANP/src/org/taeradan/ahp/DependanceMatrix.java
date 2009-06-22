@@ -1,7 +1,7 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+/* Copyright 2009 Thamer Louati @ LSIS(www.lsis.org)
+ *
  * This file is part of GenericANP.
- * 
+ *
  * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -24,32 +24,30 @@ import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
-
 /**
- * The PreferenceMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
- * @author Yves Dubromelle
+ *
+ * @author Louati
  */
-public class PreferenceMatrix{
+public class DependanceMatrix {
+ 
+    Matrix matrix = null;
     
-	Matrix matrix = null;
-
-	/**
-	* Class default Constructor.
-	*/
-	public PreferenceMatrix(){
+    //Default Constructor/
+    
+    public DependanceMatrix(){
 	}
-
-	/**
+    
+    /**
 	 * Creates a PreferenceMatrix from a JDOM Element
 	 * @param xmlPrefMatrix JDOM Element
 	 */
-	public PreferenceMatrix(Element xmlPrefMatrix) {
-		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
-		int size = xmlRowsList.size();
+    public DependanceMatrix(Element xmlDepMatrix) {
+		List<Element> xmlRowsList1 = xmlDepMatrix.getChildren("row");
+		int size = xmlRowsList1.size();
 		matrix = new Matrix(size, size);
-		for(int i=0; i<xmlRowsList.size(); i++){
+		for(int i=0; i<xmlRowsList1.size(); i++){
 //			Extraction of a row from the matrix
-			Element xmlRow = xmlRowsList.get(i);
+			Element xmlRow = xmlRowsList1.get(i);
 			List<Element> xmlEltsList = xmlRow.getChildren("elt");
 			for(int j=0; j<xmlEltsList.size();j++){
 //				Extraction of an element from a row
@@ -65,8 +63,7 @@ public class PreferenceMatrix{
 			}
 		}
 	}
-
-	/**
+/**
 	 * Describes a preference matrix in a String
 	 * @return String description
 	 */
@@ -102,13 +99,12 @@ public class PreferenceMatrix{
 		}
 		return string;
 	}
-	
-	/**
+/**
 	 * Returns a JDOM element that represents the preference matrix
 	 * @return JDOM element representing the preference matrix
 	 */
 	public Element toXml(){
-		Element xmlPrefMatrix = new Element("prefmatrix");
+		Element xmlDepMatrix = new Element("depmatrix");
 //		For each row in the matrix
 		for(int i=0; i<matrix.getRowDimension(); i++){
 			Element xmlRow = new Element("row");
@@ -118,9 +114,9 @@ public class PreferenceMatrix{
 				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
 				xmlRow.addContent(xmlElt);
 			}
-			xmlPrefMatrix.addContent(xmlRow);
+			xmlDepMatrix.addContent(xmlRow);
 		}
-		return xmlPrefMatrix;
+		return xmlDepMatrix;
 	}
 	
 	/**
@@ -159,5 +155,7 @@ public class PreferenceMatrix{
 				newI++;
 			}
 		}
-	}
+	}	
+    
+    
 }

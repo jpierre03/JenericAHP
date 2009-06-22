@@ -1,7 +1,7 @@
-/* Copyright 2009 Yves Dubromelle
- * 
+/* Copyright 2009 Thamer Louati @ LSIS(www.lsis.org)
+ *
  * This file is part of GenericANP.
- * 
+ *
  * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,26 +16,24 @@
  * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.taeradan.ahp.ind;
+package org.taeradan.ahp.gui;
 
-import java.util.ArrayList;
-import org.jdom.Element;
-import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.test.TestingAlternative;
-
+import javax.swing.table.DefaultTableModel;
 /**
- * Dummy implementation of an AHP indicator
- * @author Yves Dubromelle
+ *
+ * @author Louati
  */
-public class IndicatorI51 extends Indicator{
-	
-	public IndicatorI51(Element xmlIndicator){
-		super.fromXml(xmlIndicator);
+public class DepMatrixTableModel extends  DefaultTableModel{
+
+//      We override this method to make editable only half of the matrix.
+//	The other half will be filled automatically by an event listener on the table.
+
+    @Override
+	public boolean isCellEditable(int row,int column){
+		//Define wich cells are editable
+		if(column >= row)
+			return false;
+		return true;
 	}
-	
-	@Override
-	public double calculateAlternativeValue(int i,ArrayList alternatives) {
-		TestingAlternative alt = (TestingAlternative)alternatives.get(i);
-		return alt.valueI51;
-	}
+
 }

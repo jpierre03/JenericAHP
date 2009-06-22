@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE root SYSTEM "ahp_conf.dtd">
 
 <!--
-    Document   : ahp_conf.xml
-    Created on : 27 mars 2009, 15:05
-    Author     : Yves Dubromelle, Thamer Louati
+    Document   : newXMLDocument.xml
+    Created on : 18 juin 2009, 16:46
+    Author     : Thamer Louati
     Description:
-		This document is the configuration file of the org.taeradan.ahp package, a new generic Java implementation of the AHP algorithm.
-		For syntax information, just have a look at the ahp_conf.dtd file.
+        Purpose of the document follows.
 -->
 
 <root>
-	<name>Choix d'un produit à traiter dans un WIP</name>
+<name>Choix d'un produit à traiter dans un WIP</name>
 	<prefmatrix>
 		<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/></row>
 		<row><elt value="3"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="3"/></row>
@@ -27,7 +25,7 @@
 			<row><elt value="1"/><elt value="1"/><elt value="1"/></row>
 		</prefmatrix>
                 <depmatrix>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -36,9 +34,9 @@
                 <indicator id="I11">
 			<name>Ligne en flow-shop ou en job-shop</name>
                         <depmatrix>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="1"/><elt value="5"/><elt value="3"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="1/5"/><elt value="1"/><elt value="3"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="1/3"/><elt value="1/3"/><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -51,8 +49,8 @@
 			<name>Produit principal ou de complément</name>
                         <depmatrix>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="1"/><elt value="5"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="0"/><elt value="1/5"/><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -66,7 +64,7 @@
                         <depmatrix>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="0"/><elt value="0"/><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -84,8 +82,8 @@
 		</prefmatrix>
                 <depmatrix>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="1"/><elt value="5"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="1/5"/><elt value="1"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		</depmatrix>
@@ -95,9 +93,9 @@
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="0"/><elt value="5"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1/5"/><elt value="0"/><elt value="1"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         </depmatrix>
@@ -110,7 +108,7 @@
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -124,7 +122,7 @@
 			<row><elt value="1"/></row>	
 		</prefmatrix>
                 <depmatrix>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="1"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
@@ -138,7 +136,7 @@
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         </depmatrix>
@@ -154,8 +152,8 @@
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="5"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1/5"/><elt value="1"/></row>
 		</depmatrix>
 		<indicator id="I41">
 			<name>Temps d'attente</name>
@@ -166,8 +164,8 @@
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="5"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1/5"/><elt value="1"/></row>
                         </depmatrix>
 			<maximize/>
 		</indicator>
@@ -181,8 +179,8 @@
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="1/2"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="2"/><elt value="1"/></row>
 		</depmatrix>
 		<indicator id="I51">
 			<name>Charge de la ressource</name>
@@ -193,8 +191,8 @@
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
                         <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
 		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
-		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/></row>
+                        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="1"/><elt value="1/2"/></row>
+		        <row><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="0"/><elt value="2"/><elt value="1"/></row>
                         </depmatrix>
 			<minimize/>
 		</indicator>

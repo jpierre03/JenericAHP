@@ -1,19 +1,19 @@
-/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+/* Copyright 2009 Yves Dubromelle, Thamer Louati @ LSIS(www.lsis.org)
  * 
- * This file is part of GenericAHP.
+ * This file is part of GenericANP.
  * 
- * GenericAHP is free software: you can redistribute it and/or modify
+ * GenericANP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GenericAHP is distributed in the hope that it will be useful,
+ * GenericANP is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.taeradan.ahp.gui;
@@ -44,6 +44,7 @@ public class ConfigurationFrame extends javax.swing.JFrame
 //	private File currentFile = new File(System.getProperty("user.home"));
 	private File currentFile = new File(this.getClass().getResource("/org/taeradan/ahp/conf").getFile());
 	private Root ahpRoot;
+        //private Criteria criteria;
 	private boolean fileOpened = false;
 	
 	/** Creates new form ConfigurationFrame */
@@ -289,12 +290,13 @@ public class ConfigurationFrame extends javax.swing.JFrame
 		}
 		if(object instanceof Criteria){
 			Criteria criteria = (Criteria)object;
-			CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
+			CriteriaDialog dialog = new CriteriaDialog(this, true, criteria, ahpRoot);
 			dialog.setVisible(true);
 		}
 		if(object instanceof Indicator){
 			Indicator indicator = (Indicator)object;
-			IndicatorDialog dialog = new IndicatorDialog(this, true, indicator);
+                        //criteria =new Criteria(); 
+			IndicatorDialog dialog = new IndicatorDialog(this, true, indicator,ahpRoot);
 			dialog.setVisible(true);
 		}
 	}
