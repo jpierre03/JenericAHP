@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
-import org.taeradan.ahp.Root;
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
  * @author Yves Dubromelle

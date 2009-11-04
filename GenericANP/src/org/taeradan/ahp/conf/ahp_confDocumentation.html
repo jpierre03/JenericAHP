@@ -5,14 +5,18 @@
 <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
 </head>
 
-<!-- Generated on 6 avr. 2009 by NetBeans XML module. -->
+<!-- Generated on 4 nov. 2009 by NetBeans XML module. -->
 <body>
 
 <hr />
 <h2>Element Index</h2>
-<ul><li><tt><a href="#criteria">criteria</a></tt></li>
+<ul><li><tt><a href="#algorithm">algorithm</a></tt></li>
+<li><tt><a href="#criteria">criteria</a></tt></li>
+<li><tt><a href="#depmatrix">depmatrix</a></tt></li>
 <li><tt><a href="#elt">elt</a></tt></li>
 <li><tt><a href="#indicator">indicator</a></tt></li>
+<li><tt><a href="#maximize">maximize</a></tt></li>
+<li><tt><a href="#minimize">minimize</a></tt></li>
 <li><tt><a href="#name">name</a></tt></li>
 <li><tt><a href="#prefmatrix">prefmatrix</a></tt></li>
 <li><tt><a href="#root">root</a></tt></li>
@@ -28,9 +32,18 @@
 <div>The root element of the XML document is the root element of the AHP tree.
 It must contain a name, a preference matrix and an array of criterias elements.</div>
 <p><b>Element Content Model</b></p>
-<p><tt>(<a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#criteria">criteria</a>*)</tt></p>
+<p><tt>(<a href="#algorithm">algorithm</a>, <a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#criteria">criteria</a>*)</tt></p>
 <p><b>Referenced by</b></p>
 <p><tt></tt></p>
+
+
+<hr />
+<h2><a name="algorithm"></a>algorithm</h2>
+<div>The algorithm that will be used (ie "AHP", "ANP",...).</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(#PCDATA)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#root">root</a></tt></p>
 
 
 <hr />
@@ -54,19 +67,28 @@ It must have as much rows and colums than the number of elements compared.</div>
 
 
 <hr />
+<h2><a name="depmatrix"></a>depmatrix</h2>
+<div>The dependance matrix is used in the ANP extension of AHP to set the pairwise relationship between elements of the same level.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>(<a href="#row">row</a>)*</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#criteria">criteria</a>, <a href="#indicator">indicator</a></tt></p>
+
+
+<hr />
 <h2><a name="row"></a>row</h2>
 <div>A row of the preference matrix, contains elements.</div>
 <p><b>Element Content Model</b></p>
 <p><tt>(<a href="#elt">elt</a>)*</tt></p>
 <p><b>Referenced by</b></p>
-<p><tt><a href="#prefmatrix">prefmatrix</a></tt></p>
+<p><tt><a href="#prefmatrix">prefmatrix</a>, <a href="#depmatrix">depmatrix</a></tt></p>
 
 
 <hr />
 <h2><a name="elt"></a>elt</h2>
 <div>An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference.</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA value</tt></li>
+<ul><li><tt>#REQUIRED CDATA value</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
 <p><tt>EMPTY</tt></p>
@@ -78,22 +100,40 @@ It must have as much rows and colums than the number of elements compared.</div>
 <h2><a name="criteria"></a>criteria</h2>
 <div>A criteria contains a name, a preference matrix and an array of indicators.</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA id</tt></li>
+<ul><li><tt>#REQUIRED CDATA id</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
-<p><tt>(<a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#indicator">indicator</a>*)</tt></p>
+<p><tt>(<a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#depmatrix">depmatrix</a>?, <a href="#indicator">indicator</a>*)</tt></p>
 <p><b>Referenced by</b></p>
 <p><tt><a href="#root">root</a></tt></p>
 
 
 <hr />
 <h2><a name="indicator"></a>indicator</h2>
-<div>An indicator only contains a name.</div>
+<div>An indicator contains a name, and is it has to be minimized or maximized.</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA id</tt></li>
+<ul><li><tt>#REQUIRED CDATA id</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
-<p><tt>(<a href="#name">name</a>)</tt></p>
+<p><tt>(<a href="#name">name</a>, <a href="#depmatrix">depmatrix</a>?, (<a href="#minimize">minimize</a>&nbsp;| <a href="#maximize">maximize</a>))</tt></p>
 <p><b>Referenced by</b></p>
 <p><tt><a href="#criteria">criteria</a></tt></p>
+
+
+<hr />
+<h2><a name="minimize"></a>minimize</h2>
+<div>These elements are used to determine if an indicator has to be maximized or minimized.</div>
+<p><b>Element Content Model</b></p>
+<p><tt>EMPTY</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#indicator">indicator</a></tt></p>
+
+
+<hr />
+<h2><a name="maximize"></a>maximize</h2>
+
+<p><b>Element Content Model</b></p>
+<p><tt>EMPTY</tt></p>
+<p><b>Referenced by</b></p>
+<p><tt><a href="#indicator">indicator</a></tt></p>
 </body></html>

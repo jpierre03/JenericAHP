@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "ahp_conf.dtd">
 
 <!--
-    Document   : newXMLDocument.xml
+    Document   : anp_conf.xml
     Created on : 18 juin 2009, 16:46
-    Author     : Thamer Louati
+    Author     : Yves Dubromelle, Thamer Louati
     Description:
-        Purpose of the document follows.
+        This document is the configuration file of the org.taeradan.ahp package, a new generic Java implementation of the AHP algorithm.
+	For syntax information, just have a look at the ahp_conf.dtd file.
 -->
 
-<root>
-<name>Choix d'un produit à traiter dans un WIP</name>
+<root algorithm="ANP">
+        <name>Choix d'un produit à traiter dans un WIP</name>
 	<prefmatrix>
 		<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/></row>
 		<row><elt value="3"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="3"/></row>

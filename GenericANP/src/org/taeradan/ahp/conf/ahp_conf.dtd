@@ -17,41 +17,45 @@
     </root>
 -->
 
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT root (criteria|prefmatrix|name)*>
+<!--- The root element of the XML document is the root element of the AHP tree.
+It must contain a name, a preference matrix and an array of criterias elements. -->
+<!ELEMENT root (name,prefmatrix,criteria*)>
+<!ATTLIST root
+    algorithm (AHP|ANP) #REQUIRED
+  >
 
-<!--- Put your DTDDoc comment here. -->
+<!--- The name of the AHP tree (or the goal of this AHP instance). -->
 <!ELEMENT name (#PCDATA)>
 
-<!--- Put your DTDDoc comment here. -->
+<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criteria.
+Contains rows.
+It must have as much rows and colums than the number of elements compared. -->
 <!ELEMENT prefmatrix (row)*>
 
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT row (elt)*>
-
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT elt EMPTY>
-<!ATTLIST elt
-    value CDATA #IMPLIED
-  >
-
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT criteria (indicator|depmatrix|prefmatrix|name)*>
-<!ATTLIST criteria
-    id CDATA #IMPLIED
-  >
-
-<!--- Put your DTDDoc comment here. -->
+<!--- The dependance matrix is used in the ANP extension of AHP to set the pairwise relationship between elements of the same level. -->
 <!ELEMENT depmatrix (row)*>
 
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT indicator (minimize|maximize|depmatrix|name)*>
-<!ATTLIST indicator
-    id CDATA #IMPLIED
+<!--- A row of the preference matrix, contains elements. -->
+<!ELEMENT row (elt)*>
+
+<!--- An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference. -->
+<!ELEMENT elt EMPTY>
+<!ATTLIST elt
+    value CDATA #REQUIRED
   >
 
-<!--- Put your DTDDoc comment here. -->
-<!ELEMENT maximize EMPTY>
+<!--- A criteria contains a name, a preference matrix and an array of indicators. -->
+<!ELEMENT criteria (name,prefmatrix,depmatrix?,indicator*)>
+<!ATTLIST criteria
+    id CDATA #REQUIRED
+  >
 
-<!--- Put your DTDDoc comment here. -->
+<!--- An indicator contains a name, and is it has to be minimized or maximized. -->
+<!ELEMENT indicator (name,depmatrix?,(minimize|maximize))>
+<!ATTLIST indicator
+    id CDATA #REQUIRED
+  >
+
+<!--- These elements are used to determine if an indicator has to be maximized or minimized. -->
 <!ELEMENT minimize EMPTY>
+<!ELEMENT maximize EMPTY>
