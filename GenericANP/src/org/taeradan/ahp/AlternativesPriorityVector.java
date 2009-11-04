@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp;
 
 import Jama.Matrix;
@@ -25,19 +24,17 @@ import Jama.Matrix;
  * @author Yves Dubromelle
  */
 public class AlternativesPriorityVector {
+	private Matrix matrix = null;
 
-    private Matrix matrix = null;
-    
-    /**
-     * Method that give the Matrix contained in this class.
-     * @return matrix
-     */
-    public Matrix getMatrix() {
-	return matrix;
-    }
+	/**
+	 * Method that give the Matrix contained in this class.
+	 * @return matrix
+	 */
+	public Matrix getMatrix() {
+		return matrix;
+	}
 
-    public void setMatrix(Matrix matrix) {
-	this.matrix=matrix;
-    }
-
+	public void setMatrix(Matrix matrix) {
+		this.matrix = matrix;
+	}
 }

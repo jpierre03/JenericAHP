@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp.test;
 
 /**
@@ -34,7 +33,7 @@ public class TestingAlternative {
 	public final double valueI41;
 	public final double valueI51;
 
-	public TestingAlternative(String name,double valueI11, double valueI12, double valueI13, double valueI21, double valueI22, double valueI31, double valueI32, double valueI41, double valueI51) {
+	public TestingAlternative(String name, double valueI11, double valueI12, double valueI13, double valueI21, double valueI22, double valueI31, double valueI32, double valueI41, double valueI51) {
 		this.name = name;
 		this.valueI11 = valueI11;
 		this.valueI12 = valueI12;
@@ -46,5 +45,4 @@ public class TestingAlternative {
 		this.valueI41 = valueI41;
 		this.valueI51 = valueI51;
 	}
-	
 }

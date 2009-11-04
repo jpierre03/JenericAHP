@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericANP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp;
 
 import Jama.Matrix;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
+
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
  * @author Yves Dubromelle
@@ -46,7 +46,7 @@ public class Criteria {
 	private Matrix matrixAltInd;
 	private ArrayList alternatives;
 	private Root root;
-	
+
 	/**
 	 * Class default constructor
 	 */
@@ -54,7 +54,7 @@ public class Criteria {
 		id = new String();
 		name = new String();
 		matrixIndInd = new PreferenceMatrix();
-                matrixCrCr = new DependanceMatrix();
+		matrixCrCr = new DependanceMatrix();
 		indicators = new ArrayList<Indicator>();
 	}
 
@@ -68,7 +68,7 @@ public class Criteria {
 		this.id = id;
 		this.name = name;
 		this.matrixIndInd = matrixInd;
-                this.matrixCrCr = matrixCr;
+		this.matrixCrCr = matrixCr;
 	}
 
 	/**
@@ -79,86 +79,86 @@ public class Criteria {
 //		Initialisation of the id of the criteria
 		id = xmlCriteria.getAttributeValue("id");
 //		System.out.println("\tCriteria.id="+id);
-		
+
 //		Initialisation of the name
 		name = xmlCriteria.getChildText("name");
 //		System.out.println("\tCriteria.name="+name);
-		
+
 //		Initialisation of the preference matrix
 		Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
 		matrixIndInd = new PreferenceMatrix(xmlPrefMatrix);
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
 		vectorIndCr = new PriorityVector(matrixIndInd);
-		
+
 //              Initialisation of the dependance matrix
-                Element xmlDepMatrix = xmlCriteria.getChild("depmatrix");
+		Element xmlDepMatrix = xmlCriteria.getChild("depmatrix");
 		matrixCrCr = new DependanceMatrix(xmlDepMatrix);
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
 		vectorCrCr = new PriorityVector(matrixCrCr);
-                
+
 //		Consistency verification for the Perf Matrix
-		if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)){
-			System.err.println("Is not consistent (criteria "+id+")");
+		if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
+			System.err.println("Is not consistent (criteria " + id + ")");
 		}
-		
+
 //              Consistency verification for the dependance Matrix
-		if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrCr)){
-			System.err.println("Is not consistent (criteria "+id+")");
+		if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrCr)) {
+			System.err.println("Is not consistent (criteria " + id + ")");
 		}
 //		Initialisation of the Indicators
 		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
 		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
-		if(xmlIndicatorsList.size()!=xmlRowsList.size()){
+		if(xmlIndicatorsList.size() != xmlRowsList.size()) {
 			System.err.println("Error : the number of Indicators and the size of the preference matrix does not match !");
 		}
 //		For each indicator declared in the configuration file
-		for(int i=0; i<xmlIndicatorsList.size(); i++){
-				Element xmlIndicator = xmlIndicatorsList.get(i);
+		for(int i = 0; i < xmlIndicatorsList.size(); i++) {
+			Element xmlIndicator = xmlIndicatorsList.get(i);
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
-				String indName = "org.taeradan.ahp.ind.Indicator" + xmlIndicator.getAttributeValue("id");
-				try {
+			String indName = "org.taeradan.ahp.ind.Indicator" + xmlIndicator.getAttributeValue("id");
+			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
-					Class indClass = Class.forName(indName);
+				Class indClass = Class.forName(indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
-					Constructor<Indicator> indConstruct = indClass.getConstructor(Element.class);
+				Constructor<Indicator> indConstruct = indClass.getConstructor(Element.class);
 //					System.out.println("\t\tCriteria.indConstruct="+indConstruct);
 //					Instanciation of the indicator with its constructor
-					indicators.add(indConstruct.newInstance(xmlIndicator));
-					
+				indicators.add(indConstruct.newInstance(xmlIndicator));
+
 //					System.out.println("\tCriteria.indicator="+indicators.get(i));
-				} catch (NoSuchMethodException e) {
-					System.err.println("Error : no such constructor :" + e);
-				} catch (SecurityException e) {
-					System.err.println("Error :" + e);
-				} catch (ClassNotFoundException e) {
-					System.err.println("Error : class " + indName + " not found :" + e);
-				} catch (InstantiationException e) {
-					System.err.println("Error :" + e);
-				} catch (IllegalAccessException e) {
-					System.err.println("Error :" + e);
-				} catch (IllegalArgumentException e) {
-					System.err.println("Error :" + e);
-				} catch (InvocationTargetException e) {
-					System.err.println("Error :" + e);
-				}
+				}catch(NoSuchMethodException e) {
+				System.err.println("Error : no such constructor :" + e);
+			}catch(SecurityException e) {
+				System.err.println("Error :" + e);
+			}catch(ClassNotFoundException e) {
+				System.err.println("Error : class " + indName + " not found :" + e);
+			}catch(InstantiationException e) {
+				System.err.println("Error :" + e);
+			}catch(IllegalAccessException e) {
+				System.err.println("Error :" + e);
+			}catch(IllegalArgumentException e) {
+				System.err.println("Error :" + e);
+			}catch(InvocationTargetException e) {
+				System.err.println("Error :" + e);
+			}
 		}
 	}
-	
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts){
+
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts) {
 		alternatives = alts;
 		matrixAltInd = new Matrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
-		for(int i=0; i<indicators.size(); i++){
+		for(int i = 0; i < indicators.size(); i++) {
 			try {
 				Method calculateValue = indicators.get(i).getClass().getMethod("calculateAlternativeValue", int.class, ArrayList.class);
 				matrixAltInd.setMatrix(0, alternatives.size() - 1, i, i, indicators.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
-			} catch (NoSuchMethodException ex) {
+			}catch(NoSuchMethodException ex) {
 				Logger.getLogger(Criteria.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (SecurityException ex) {
+			}catch(SecurityException ex) {
 				Logger.getLogger(Criteria.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
@@ -167,56 +167,57 @@ public class Criteria {
 		vectorAltCr.setVector(matrixAltInd.times(vectorIndCr.getVector()));
 		return vectorAltCr;
 	}
-	
+
 	/**
 	 * Returns a string describing the criteria, but not its children
 	 * @return Criteria as a String
 	 */
 	@Override
 	public String toString() {
-		String string = "Criteria "+id+" : "+name;
+		String string = "Criteria " + id + " : " + name;
 		return string;
 	}
-	
+
 	/**
 	 * Returns a string describing the criteria and all its children
 	 * @return Criteria and children as a String
 	 */
-	public String toStringRecursive(){
+	public String toStringRecursive() {
 		String string = this.toString();
 		//string = string.concat("\n"+matrixIndInd.toString("\t"));
 		//string = string.concat("\n\n"+matrixCrCr.toString("\t"));
-                
-                string = string.concat("\n\n"+PreferenceMatrix.toString(vectorIndCr.getVector(), "\t"));
-                string = string.concat("\n\n"+PreferenceMatrix.toString(vectorCrCr.getVector(), "\t"));
-                //root.supermatrix.setMatrix(arg0, arg1, arg2, arg3, matrixAltInd)
+
+		string = string.concat("\n\n" + PreferenceMatrix.toString(vectorIndCr.getVector(), "\t"));
+		string = string.concat("\n\n" + PreferenceMatrix.toString(vectorCrCr.getVector(), "\t"));
+		//root.supermatrix.setMatrix(arg0, arg1, arg2, arg3, matrixAltInd)
 		DecimalFormat printFormat = new DecimalFormat("0.000");
-		for(int i=0; i<indicators.size(); i++){
-			string = string.concat("\n\t\t("+printFormat.format(vectorIndCr.getVector().get(i, 0))+") "+indicators.get(i).toStringRecursive());
+		for(int i = 0; i < indicators.size(); i++) {
+			string = string.concat("\n\t\t(" + printFormat.format(vectorIndCr.getVector().get(i, 0)) + ") " + indicators.get(i).toStringRecursive());
 		}
 		return string;
 	}
-	
+
 	/**
 	 * Returns a JDOM element that represents the criteria and all its children
 	 * @return JDOM Element representing the criteria and children
 	 */
-	public Element toXml(){
+	public Element toXml() {
 		Element xmlCriteria = new Element("criteria");
 		xmlCriteria.setAttribute("id", id);
 		xmlCriteria.addContent(new Element("name").setText(name));
 		xmlCriteria.addContent(matrixIndInd.toXml());
-		for(int i=0; i<indicators.size(); i++)
+		for(int i = 0; i < indicators.size(); i++) {
 			xmlCriteria.addContent(indicators.get(i).toXml());
+		}
 		return xmlCriteria;
 	}
-	
-	public String resultToString(){
+
+	public String resultToString() {
 		String string = this.toString();
-		for(int i=0; i<indicators.size(); i++){
-			string = string.concat("\n\t\t"+indicators.get(i).resultToString());
+		for(int i = 0; i < indicators.size(); i++) {
+			string = string.concat("\n\t\t" + indicators.get(i).resultToString());
 		}
-		string = string.concat("\n\tvectorAltCr=\n"+PreferenceMatrix.toString(vectorAltCr.getVector(),"\t"));
+		string = string.concat("\n\tvectorAltCr=\n" + PreferenceMatrix.toString(vectorAltCr.getVector(), "\t"));
 		return string;
 	}
 
@@ -236,19 +237,22 @@ public class Criteria {
 		this.matrixIndInd = matrixInd;
 	}
 
-        public DependanceMatrix getMatrixCr() {
+	public DependanceMatrix getMatrixCr() {
 		return matrixCrCr;
 	}
-        public PriorityVector getVectorCr() {
+
+	public PriorityVector getVectorCr() {
 		return vectorCrCr;
 	}
-        public PriorityVector getVectorIndCr() {
+
+	public PriorityVector getVectorIndCr() {
 		return vectorIndCr;
 	}
-        public void setMatrixCr(DependanceMatrix matrixCr) {
+
+	public void setMatrixCr(DependanceMatrix matrixCr) {
 		this.matrixCrCr = matrixCr;
 	}
-        
+
 	public String getName() {
 		return name;
 	}
