@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 public class PriorityVector {
 
 	private Matrix vector = null;
-	boolean isUnderTreshold = true;
+	private boolean isUnderTreshold = true;
 
 	public PriorityVector(PreferenceMatrix prefMatrix) {
 		 constructVector(prefMatrix.getMatrix());

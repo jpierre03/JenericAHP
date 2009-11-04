@@ -37,15 +37,16 @@ public class Criteria {
 	private String id;
 	private String name;
 	private PreferenceMatrix matrixIndInd;
-        private DependanceMatrix matrixCrCr;
+	private DependanceMatrix matrixCrCr;
 	private PriorityVector vectorIndCr;
-        private PriorityVector vectorCrCr;
+	private PriorityVector vectorCrCr;
 	private ArrayList<Indicator> indicators;
 //	AHP dynamic attributes
 	private PriorityVector vectorAltCr;
 	private Matrix matrixAltInd;
 	private ArrayList alternatives;
-        private Root root;
+	private Root root;
+	
 	/**
 	 * Class default constructor
 	 */

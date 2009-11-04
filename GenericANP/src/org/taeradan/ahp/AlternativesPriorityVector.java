@@ -26,7 +26,7 @@ import Jama.Matrix;
  */
 public class AlternativesPriorityVector {
 
-    Matrix matrix = null;
+    private Matrix matrix = null;
     
     /**
      * Method that give the Matrix contained in this class.

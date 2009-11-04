@@ -31,7 +31,7 @@ import org.nfunk.jep.JEP;
  */
 public class PreferenceMatrix{
     
-	Matrix matrix = null;
+	private Matrix matrix = null;
 
 	/**
 	* Class default Constructor.

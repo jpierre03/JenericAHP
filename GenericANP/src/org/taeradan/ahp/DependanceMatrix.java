@@ -30,7 +30,7 @@ import org.nfunk.jep.JEP;
  */
 public class DependanceMatrix {
  
-    Matrix matrix = null;
+    private Matrix matrix = null;
     
     //Default Constructor/
     

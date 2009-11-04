@@ -43,6 +43,7 @@ import java.math.BigDecimal;
  */
 public class Root {
 //	AHP static attributes
+	private String algorithm;
 	private String name;
 	private PreferenceMatrix matrixCrCr;
 	private PriorityVector vectorCrOg;
@@ -51,10 +52,10 @@ public class Root {
 	private PriorityVector vectorAltOg;
 	private ArrayList alternatives;
 	private Matrix matrixAltCr;
-        public Matrix supermatrix, supermatrixStock, supermatrixLim,supermatrixinter,vectorRank;
-        public TestAhp testahp;
-        public int sizesupermatrix, nbralt;
-        int nbrind=0;
+	private Matrix supermatrix, supermatrixStock, supermatrixLim, supermatrixinter, vectorRank;
+	private TestAhp testahp;
+	private int sizesupermatrix, nbralt;
+	private int nbrind = 0;
 //	XML configuration attributes
 	private Document inXmlDocument;
 	private Document outXmlDocument;

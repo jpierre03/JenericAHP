@@ -31,8 +31,8 @@ public class Indicator {
 //	AHP static attributes
 	private String id;
 	private String name;
-        private DependanceMatrix matrixIndInd;
-        private PriorityVector vectorIndInd;
+	private DependanceMatrix matrixIndInd;
+	private PriorityVector vectorIndInd;
 	private boolean maximization = true;
 //	AHP dynamic attributes
 	private PriorityVector vectorAltInd;
