@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "/home2/promo2009/dubromelley/genericahp/trunk/GenericAHP/build/classes/org/taeradan/ahp/conf/ahp_conf.dtd">
+
+<root>
+  <name>Choix d'un produit à traiter dans un WIP</name>
+  <prefmatrix>
+    <row>
+      <elt value="1.0" />
+      <elt value="0.3333333333333333" />
+      <elt value="0.3333333333333333" />
+      <elt value="3.0" />
+      <elt value="1.0" />
+    </row>
+    <row>
+      <elt value="3.0" />
+      <elt value="1.0" />
+      <elt value="1.0" />
+      <elt value="9.0" />
+      <elt value="3.0" />
+    </row>
+    <row>
+      <elt value="3.0" />
+      <elt value="1.0" />
+      <elt value="1.0" />
+      <elt value="9.0" />
+      <elt value="3.0" />
+    </row>
+    <row>
+      <elt value="0.3333333333333333" />
+      <elt value="0.1111111111111111" />
+      <elt value="0.1111111111111111" />
+      <elt value="1.0" />
+      <elt value="0.3333333333333333" />
+    </row>
+    <row>
+      <elt value="1.0" />
+      <elt value="0.3333333333333333" />
+      <elt value="0.3333333333333333" />
+      <elt value="3.0" />
+      <elt value="1.0" />
+    </row>
+  </prefmatrix>
+  <criteria id="C1">
+    <name>Type de produit</name>
+    <prefmatrix>
+      <row>
+        <elt value="1.0" />
+        <elt value="0.3333333333333333" />
+        <elt value="1.0" />
+      </row>
+      <row>
+        <elt value="3.0" />
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+      <row>
+        <elt value="1.0" />
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+    </prefmatrix>
+    <indicator id="C1I1">
+      <name>Ligne en flow-shop ou en job-shop</name>
+    </indicator>
+    <indicator id="C1I2">
+      <name>Produit principal ou de complément</name>
+    </indicator>
+    <indicator id="C1I3">
+      <name>Produit pour assemblage ou de rechange</name>
+    </indicator>
+  </criteria>
+  <criteria id="C2">
+    <name>Progression du produit</name>
+    <prefmatrix>
+      <row>
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+      <row>
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+    </prefmatrix>
+    <indicator id="C2I1">
+      <name>Progression globale</name>
+    </indicator>
+    <indicator id="C2I2">
+      <name>Progression locale</name>
+    </indicator>
+  </criteria>
+  <criteria id="C3">
+    <name>Marge restante</name>
+    <prefmatrix>
+      <row>
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+      <row>
+        <elt value="1.0" />
+        <elt value="1.0" />
+      </row>
+    </prefmatrix>
+    <indicator id="C3I1">
+      <name>Marge restante</name>
+    </indicator>
+    <indicator id="C3I2">
+      <name>Marge restante pondérée</name>
+    </indicator>
+  </criteria>
+  <criteria id="C4">
+    <name>Temps dans la file d'attente</name>
+    <prefmatrix>
+      <row>
+        <elt value="1.0" />
+      </row>
+    </prefmatrix>
+    <indicator id="C4I1">
+      <name>Temps d'attente</name>
+    </indicator>
+  </criteria>
+  <criteria id="C5">
+    <name>Charge de la ressource</name>
+    <prefmatrix>
+      <row>
+        <elt value="1.0" />
+      </row>
+    </prefmatrix>
+    <indicator id="C5I1">
+      <name>Charge de la ressource</name>
+    </indicator>
+  </criteria>
+</root>
+
