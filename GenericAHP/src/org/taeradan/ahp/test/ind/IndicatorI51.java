@@ -15,10 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.ind;
+package org.taeradan.ahp.test.ind;
 
 import java.util.ArrayList;
 import org.jdom.Element;
+import org.taeradan.ahp.Alternative;
 import org.taeradan.ahp.Indicator;
 import org.taeradan.ahp.test.TestingAlternative;
 
@@ -26,19 +27,19 @@ import org.taeradan.ahp.test.TestingAlternative;
  * Dummy implementation of an AHP indicator
  * @author Yves Dubromelle
  */
-public class IndicatorI11 extends Indicator {
+public class IndicatorI51 extends Indicator {
 
 	/**
 	 * 
 	 * @param xmlIndicator
 	 */
-	public IndicatorI11(Element xmlIndicator) {
+	public IndicatorI51(Element xmlIndicator) {
 		super.fromXml(xmlIndicator);
 	}
 
 	@Override
-	public double calculateAlternativeValue(int i, ArrayList alternatives) {
+	public double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives) {
 		TestingAlternative alt = (TestingAlternative) alternatives.get(i);
-		return alt.valueI11;
+		return alt.valueI51;
 	}
 }

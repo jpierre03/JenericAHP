@@ -40,8 +40,12 @@ import org.jdom.output.XMLOutputter;
  * @author Yves Dubromelle
  */
 public class Root {
-//	AHP static attributes
 
+	/**
+	 * Contains the path to access indicators
+	 */
+	public static String INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+//	AHP static attributes
 	/**
 	 *
 	 */
@@ -66,7 +70,7 @@ public class Root {
 	/**
 	 *
 	 */
-	private ArrayList alternatives;
+	private ArrayList<? extends Alternative> alternatives;
 	/**
 	 *
 	 */
@@ -76,10 +80,6 @@ public class Root {
 	 *
 	 */
 	private String inConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
-	/**
-	 *
-	 */
-	private String outConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf_out.xml";
 	/**
 	 *
 	 */
@@ -95,63 +95,64 @@ public class Root {
 	private boolean calculationOccured = false;
 
 	/**
-	 * Class default constructor.
-	 */
-	public Root() {
-		name = new String();
-		matrixCrCr = new PreferenceMatrix();
-		criterias = new ArrayList<Criteria>();
-	}
-
-	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
 	 * @param inFile Path to the configuration file
+	 * @param indicatorPath
 	 */
-	public Root(File inFile) {
+	public Root(File inFile, String indicatorPath) {
+		if(inFile == null) {
+			name = new String();
+			matrixCrCr = new PreferenceMatrix();
+			criterias = new ArrayList<Criteria>();
+		}
+		else {
+			Root.INDICATOR_PATH = indicatorPath;
 //		XML parser creation
-		SAXBuilder parser = new SAXBuilder();
-		try {
+			SAXBuilder parser = new SAXBuilder();
+			try {
 //			JDOM document created from XML configuration file
-			inXmlDocument = parser.build(inFile);
+				inXmlDocument = parser.build(inFile);
 //			Extraction of the root element from the JDOM document
-			Element xmlRoot = inXmlDocument.getRootElement();
+				Element xmlRoot = inXmlDocument.getRootElement();
 
 //			Initialisation of the AHP tree name
-			name = xmlRoot.getChildText("name");
+				name = xmlRoot.getChildText("name");
 //			System.out.println("Root.name="+name);
 
 //			Initialisation of the preference matrix
-			Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
-			matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
+				Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
+				matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
 //			System.out.println("Root.matrixCrCr="+matrixCrCr);
-			vectorCrOg = new PriorityVector(matrixCrCr);
+				vectorCrOg = new PriorityVector(matrixCrCr);
 //			Consistency verification
-			if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
-				System.err.println("Is not consistent (root)");
-			}
-
+				if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
+					System.err.println("Is not consistent (root)");
+				}
 //			Initialisation of the criterias
-			List<Element> xmlCriteriasList = xmlRoot.getChildren("criteria");
-			List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
-			criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
+				@SuppressWarnings("unchecked")
+				List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren("criteria");
+				@SuppressWarnings("unchecked")
+				List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //			Verification that the number of criterias matches the size of the preference matrix
-			if(xmlCriteriasList.size() != xmlRowsList.size()) {
-				System.err.println("Error : the number of criterias and the size of the preference matrix does not match !");
-			}
-			for(int i = 0; i < xmlCriteriasList.size(); i++) {
-				Element xmlCriteria = xmlCriteriasList.get(i);
-				criterias.add(new Criteria(xmlCriteria));
+				if(xmlCriteriasList.size() != xmlRowsList.size()) {
+					System.err.println("Error : the number of criterias and the size of the preference matrix does not match !");
+				}
+				for(int i = 0; i < xmlCriteriasList.size(); i++) {
+					Element xmlCriteria = xmlCriteriasList.get(i);
+					criterias.add(new Criteria(xmlCriteria));
 //				System.out.println("Root.criteria="+criterias.get(i));
+				}
+			}catch(FileNotFoundException e) {
+				System.err.println("File not found : " + inConfigurationFile);
+				name = "unknow";
+				matrixCrCr = new PreferenceMatrix();
+				criterias = new ArrayList<Criteria>();
+			}catch(JDOMException e) {
+				System.err.println(e);
+			}catch(IOException e) {
+				System.err.println(e);
 			}
-		}catch(FileNotFoundException e) {
-			System.err.println("File not found : " + inConfigurationFile);
-			name = "unknow";
-			matrixCrCr = new PreferenceMatrix();
-			criterias = new ArrayList<Criteria>();
-		}catch(JDOMException e) {
-			System.err.println(e);
-		}catch(IOException e) {
-			System.err.println(e);
 		}
 	}
 
@@ -248,9 +249,8 @@ public class Root {
 	 * Root method of the AHP execution.
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
 	 * @param alts
-	 * @return ArrayList containing the ranked alternatives.
 	 */
-	public ArrayList calculateRanking(ArrayList alts) {
+	public void calculateRanking(ArrayList<? extends Alternative> alts) {
 		alternatives = alts;
 		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
@@ -260,26 +260,27 @@ public class Root {
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
-//		Ranking of the alternatives with the initial alternatives array and  the MOg vector
-		ArrayList sortedAlternatives = (ArrayList) alternatives.clone();
+//		Ranking of the alternatives with the MOg vector
+		@SuppressWarnings("unchecked")
+		ArrayList<? extends Alternative> sortedAlternatives = (ArrayList<? extends Alternative>) alternatives.clone();
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
-		int minIndex;
-		for(int i = 0; i < alternatives.size(); i++) {
-			minIndex = i;
-			for(int j = i + 1; j < alternatives.size(); j++) {
-				if(sortedvectorAltOg.get(j, 0) > sortedvectorAltOg.get(minIndex, 0)) {
-					minIndex = j;
+		double lastAltOgValue = Double.POSITIVE_INFINITY;
+//		For each rank to be given to the alternatives
+		for(int rank = 0; rank < alternatives.size(); rank++) {
+//			We search which alternative has the highest priority (AltOg value), but lower than the previous priority found
+			double maxAltOgValue = Double.NEGATIVE_INFINITY;
+			int maxAltOgIndex = 0;
+			for(int altOgIndex = 0; altOgIndex < alternatives.size(); altOgIndex++) {
+				double altOgValue = sortedvectorAltOg.get(altOgIndex, 0);
+				if((altOgValue > maxAltOgValue) && (altOgValue < lastAltOgValue)) {
+					maxAltOgValue = altOgValue;
+					maxAltOgIndex = altOgIndex;
 				}
 			}
-			Object tempAlt = sortedAlternatives.get(i);
-			sortedAlternatives.set(i, sortedAlternatives.get(minIndex));
-			sortedAlternatives.set(minIndex, tempAlt);
-			double tempValue = sortedvectorAltOg.get(i, 0);
-			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(minIndex, 0));
-			sortedvectorAltOg.set(minIndex, 0, tempValue);
+			lastAltOgValue = maxAltOgValue;
+			alts.get(maxAltOgIndex).setRank(rank + 1);
 		}
 		calculationOccured = true;
-		return sortedAlternatives;
 	}
 
 	/**

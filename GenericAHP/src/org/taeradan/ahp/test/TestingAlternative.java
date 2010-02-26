@@ -4,16 +4,22 @@
  */
 package org.taeradan.ahp.test;
 
+import org.taeradan.ahp.Alternative;
+
 /**
  *
  * @author Yves Dubromelle
  */
-public class TestingAlternative {
+public class TestingAlternative implements Alternative {
 
 	/**
 	 *
 	 */
 	public final String name;
+	/**
+	 *
+	 */
+	private int rank;
 	/**
 	 *
 	 */
@@ -75,5 +81,15 @@ public class TestingAlternative {
 		this.valueI32 = valueI32;
 		this.valueI41 = valueI41;
 		this.valueI51 = valueI51;
+	}
+
+	@Override
+	public int getRank() {
+		return rank;
+	}
+
+	@Override
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 }

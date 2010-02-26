@@ -60,7 +60,7 @@ public class PrefMatrixChangeListener implements TableModelListener {
 				if(newValue == null) {
 					newValue = "1";
 				}
-				myParser.parseExpression((String) newValue);
+				myParser.parseExpression(newValue);
 				prefMatrix.setValueAt(myParser.getValue(), evt.getFirstRow(), evt.getColumn());
 			}
 //			Case where the value is not entered : DON'T WORK FOR NOW
@@ -69,7 +69,7 @@ public class PrefMatrixChangeListener implements TableModelListener {
 				if(newValue == null) {
 					newValue = "1";
 				}
-				myParser.parseExpression((String) newValue);
+				myParser.parseExpression(newValue);
 				prefMatrix.setValueAt(myParser.getValue(), evt.getFirstRow(), evt.getColumn());
 			}
 			prefMatrix.setValueAt((1 / value), evt.getColumn(), evt.getFirstRow());

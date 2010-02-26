@@ -53,7 +53,7 @@ public class Indicator {
 	/**
 	 *
 	 */
-	private ArrayList alternatives;
+	private ArrayList<? extends Alternative> alternatives;
 
 	/**
 	 * Class default constructor
@@ -90,7 +90,7 @@ public class Indicator {
 	 * @param alts
 	 * @return MCr vector
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts) {
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList<? extends Alternative> alts) {
 		alternatives = alts;
 		double[] altValues = new double[alternatives.size()];
 		int dimension = altValues.length;
@@ -124,7 +124,7 @@ public class Indicator {
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public double calculateAlternativeValue(int i, ArrayList alternatives) {
+	public double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives) {
 		return 1;
 	}
 

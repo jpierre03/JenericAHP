@@ -48,7 +48,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 	/**
 	 *
 	 */
-	private File currentFile = new File(System.getProperty("user.home"));
+	private File currentFile = new File(System.getProperty("user.dir"));
 	/**
 	 *
 	 */
@@ -63,7 +63,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded
-		ahpRoot = new Root();
+		ahpRoot = new Root(null, Root.INDICATOR_PATH);
 //		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
 		guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 		initComponents();
@@ -269,7 +269,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				currentFile = jFileChooser.getSelectedFile();
-				ahpRoot = new Root(new File(currentFile.getAbsolutePath()));
+				ahpRoot = new Root(new File(currentFile.getAbsolutePath()), Root.INDICATOR_PATH);
 				guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 				fileOpened = true;
 			}
@@ -335,7 +335,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 	 */
 	private void delRootActionPerformed(Root root) {
 		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpRoot = new Root();
+			ahpRoot = new Root(null, Root.INDICATOR_PATH);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 			editActionPerformed(ahpRoot);
 		}

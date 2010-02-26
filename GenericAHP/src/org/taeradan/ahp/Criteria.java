@@ -67,7 +67,7 @@ public class Criteria {
 	/**
 	 *
 	 */
-	private ArrayList alternatives;
+	private ArrayList<? extends Alternative> alternatives;
 
 	/**
 	 * Class default constructor
@@ -114,10 +114,11 @@ public class Criteria {
 		if(!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
 			System.err.println("Is not consistent (criteria " + id + ")");
 		}
-
 //		Initialisation of the Indicators
-		List<Element> xmlIndicatorsList = xmlCriteria.getChildren("indicator");
-		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
+		@SuppressWarnings("unchecked")
+		List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
+		@SuppressWarnings("unchecked")
+		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
 		if(xmlIndicatorsList.size() != xmlRowsList.size()) {
@@ -128,13 +129,14 @@ public class Criteria {
 			Element xmlIndicator = xmlIndicatorsList.get(i);
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
-			String indName = "org.taeradan.ahp.ind.Indicator" + xmlIndicator.getAttributeValue("id");
+			String indName = Root.INDICATOR_PATH + Indicator.class.getSimpleName() + xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
-				Class indClass = Class.forName(indName);
+				@SuppressWarnings("unchecked")
+				Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
-				Constructor<Indicator> indConstruct = indClass.getConstructor(Element.class);
+				Constructor<? extends Indicator> indConstruct = (Constructor<? extends Indicator>) indClass.getConstructor(Element.class);
 //					System.out.println("\t\tCriteria.indConstruct="+indConstruct);
 //					Instanciation of the indicator with its constructor
 				indicators.add(indConstruct.newInstance(xmlIndicator));
@@ -163,7 +165,7 @@ public class Criteria {
 	 * @param alts
 	 * @return
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList alts) {
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList<? extends Alternative> alts) {
 		alternatives = alts;
 		matrixAltInd = new Matrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors

@@ -1,7 +1,7 @@
-/* Copyright 2009 Yves Dubromelle
- * 
+/* Copyright 2009 Yves Dubromelle @ LSIS(www.lsis.org)
+ *
  * This file is part of GenericAHP.
- * 
+ *
  * GenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,30 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.ind;
-
-import java.util.ArrayList;
-import org.jdom.Element;
-import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.test.TestingAlternative;
+package org.taeradan.ahp;
 
 /**
- * Dummy implementation of an AHP indicator
+ * Alternative to be processed by AHP
  * @author Yves Dubromelle
  */
-public class IndicatorI13 extends Indicator {
+public interface Alternative {
 
 	/**
-	 * 
-	 * @param xmlIndicator
+	 * Méthod that returns the current rank of the alternative.
+	 * @return Rank value.
 	 */
-	public IndicatorI13(Element xmlIndicator) {
-		super.fromXml(xmlIndicator);
-	}
+	public abstract int getRank();
 
-	@Override
-	public double calculateAlternativeValue(int i, ArrayList alternatives) {
-		TestingAlternative alt = (TestingAlternative) alternatives.get(i);
-		return alt.valueI13;
-	}
+	/**
+	 * Méthod that writes the rank of the alternative.
+	 * @param rank Rank value.
+	 */
+	public abstract void setRank(int rank);
 }

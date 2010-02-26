@@ -46,13 +46,15 @@ public class PreferenceMatrix {
 	 * @param xmlPrefMatrix JDOM Element
 	 */
 	public PreferenceMatrix(Element xmlPrefMatrix) {
-		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
+		@SuppressWarnings("unchecked")
+		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		int size = xmlRowsList.size();
 		matrix = new Matrix(size, size);
 		for(int i = 0; i < xmlRowsList.size(); i++) {
 //			Extraction of a row from the matrix
 			Element xmlRow = xmlRowsList.get(i);
-			List<Element> xmlEltsList = xmlRow.getChildren("elt");
+			@SuppressWarnings("unchecked")
+			List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
 			for(int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
 				Element xmlElt = xmlEltsList.get(j);
