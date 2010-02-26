@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp;
 
 import Jama.Matrix;
@@ -42,22 +41,59 @@ import org.jdom.output.XMLOutputter;
  */
 public class Root {
 //	AHP static attributes
+
+	/**
+	 *
+	 */
 	private String name;
+	/**
+	 *
+	 */
 	private PreferenceMatrix matrixCrCr;
+	/**
+	 *
+	 */
 	private PriorityVector vectorCrOg;
+	/**
+	 *
+	 */
 	private ArrayList<Criteria> criterias;
 //	AHP dynamic attributes
+	/**
+	 *
+	 */
 	private PriorityVector vectorAltOg;
+	/**
+	 *
+	 */
 	private ArrayList alternatives;
+	/**
+	 *
+	 */
 	private Matrix matrixAltCr;
 //	XML configuration attributes
+	/**
+	 *
+	 */
 	private String inConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
+	/**
+	 *
+	 */
 	private String outConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf_out.xml";
+	/**
+	 *
+	 */
 	private Document inXmlDocument;
+	/**
+	 *
+	 */
 	private Document outXmlDocument;
 //	Control attributes
+	/**
+	 *
+	 */
 	private boolean calculationOccured = false;
-	
+
 	/**
 	 * Class default constructor.
 	 */
@@ -66,22 +102,22 @@ public class Root {
 		matrixCrCr = new PreferenceMatrix();
 		criterias = new ArrayList<Criteria>();
 	}
-	
+
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
 	 * @param inFile Path to the configuration file
 	 */
-	public Root(String inFile) {
+	public Root(File inFile) {
 //		XML parser creation
 		SAXBuilder parser = new SAXBuilder();
 		try {
 //			JDOM document created from XML configuration file
-			inXmlDocument = parser.build(new File(inFile));
+			inXmlDocument = parser.build(inFile);
 //			Extraction of the root element from the JDOM document
 			Element xmlRoot = inXmlDocument.getRootElement();
 
 //			Initialisation of the AHP tree name
-			name=xmlRoot.getChildText("name");
+			name = xmlRoot.getChildText("name");
 //			System.out.println("Root.name="+name);
 
 //			Initialisation of the preference matrix
@@ -90,7 +126,7 @@ public class Root {
 //			System.out.println("Root.matrixCrCr="+matrixCrCr);
 			vectorCrOg = new PriorityVector(matrixCrCr);
 //			Consistency verification
-			if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)){
+			if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
 				System.err.println("Is not consistent (root)");
 			}
 
@@ -99,34 +135,39 @@ public class Root {
 			List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
 			criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //			Verification that the number of criterias matches the size of the preference matrix
-			if(xmlCriteriasList.size()!=xmlRowsList.size()){
+			if(xmlCriteriasList.size() != xmlRowsList.size()) {
 				System.err.println("Error : the number of criterias and the size of the preference matrix does not match !");
 			}
-			for(int i=0; i<xmlCriteriasList.size(); i++){
+			for(int i = 0; i < xmlCriteriasList.size(); i++) {
 				Element xmlCriteria = xmlCriteriasList.get(i);
 				criterias.add(new Criteria(xmlCriteria));
 //				System.out.println("Root.criteria="+criterias.get(i));
 			}
-		}catch (FileNotFoundException e) {
+		}catch(FileNotFoundException e) {
 			System.err.println("File not found : " + inConfigurationFile);
 			name = "unknow";
 			matrixCrCr = new PreferenceMatrix();
 			criterias = new ArrayList<Criteria>();
-		}catch(JDOMException e){
+		}catch(JDOMException e) {
 			System.err.println(e);
-		}catch(IOException e){
+		}catch(IOException e) {
 			System.err.println(e);
 		}
 	}
 
+	/**
+	 *
+	 * @param crit
+	 */
 	public void delCriteria(Criteria crit) {
-		if(criterias.contains(crit)){
+		if(criterias.contains(crit)) {
 			int i = criterias.lastIndexOf(crit);
 			criterias.remove(i);
 			matrixCrCr.remove(i);
 		}
-		else
+		else {
 			System.err.println("Criteria not found");
+		}
 	}
 
 	/**
@@ -135,56 +176,62 @@ public class Root {
 	 */
 	@Override
 	public String toString() {
-		String string = " AHP Root : "+name+", "+criterias.size()+" criterias";
+		String string = " AHP Root : " + name + ", " + criterias.size() + " criterias";
 		return string;
 	}
-	
+
 	/**
 	 * Returns a big string (multiple lines) containing recursively the description of the whole AHP tree. Best suited for testing purposes.
 	 * @return Multiline string describing the AHP tree
 	 */
-	public String toStringRecursive(){
+	public String toStringRecursive() {
 		String string = this.toString();
-		string = string.concat("\n"+matrixCrCr);
+		string = string.concat("\n" + matrixCrCr);
 		DecimalFormat printFormat = new DecimalFormat("0.000");
-		for(int i=0; i<criterias.size();i++){
-			string = string.concat("\n\t("+printFormat.format(vectorCrOg.getVector().get(i, 0))+") "+criterias.get(i).toStringRecursive());
+		for(int i = 0; i < criterias.size(); i++) {
+			string = string.concat("\n\t(" + printFormat.format(vectorCrOg.getVector().get(i, 0)) + ") " + criterias.get(i).toStringRecursive());
 		}
 		return string;
 	}
-	
+
 	/**
 	 * Returns a JDOM element that represents the AHP root and its children
 	 * @return JDOM Element representing the whole AHP tree
 	 */
-	public Element toXml(){
+	public Element toXml() {
 		Element xmlRoot = new Element("root");
 		xmlRoot.addContent(new Element("name").setText(name));
 		xmlRoot.addContent(matrixCrCr.toXml());
-		for(int i=0; i<criterias.size(); i++)
+		for(int i = 0; i < criterias.size(); i++) {
 			xmlRoot.addContent(criterias.get(i).toXml());
+		}
 		return xmlRoot;
 	}
-	
-	public String resultToString(){
+
+	/**
+	 *
+	 * @return
+	 */
+	public String resultToString() {
 		String string;
-		if(calculationOccured){
+		if(calculationOccured) {
 			string = this.toString();
-			for(int i=0; i<criterias.size();i++){
-				string = string.concat("\n\t"+criterias.get(i).resultToString());
+			for(int i = 0; i < criterias.size(); i++) {
+				string = string.concat("\n\t" + criterias.get(i).resultToString());
 			}
-			string = string.concat("\nvectorAltOg="+PreferenceMatrix.toString(vectorAltOg.getVector(),null));
+			string = string.concat("\nvectorAltOg=" + PreferenceMatrix.toString(vectorAltOg.getVector(), null));
 		}
-		else
+		else {
 			string = "There is no result, please do a ranking first";
+		}
 		return string;
 	}
-	
+
 	/**
 	 * Saves the whole AHP tree in a XML file
 	 * @param outputFile Output XML file path
 	 */
-	public void saveConfig(String outputFile){
+	public void saveConfig(String outputFile) {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			outXmlDocument = new Document(toXml(), new DocType("root", getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
@@ -192,7 +239,7 @@ public class Root {
 			XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file
 			output.output(outXmlDocument, new FileOutputStream(outputFile));
-		} catch (IOException ex) {
+		}catch(IOException ex) {
 			Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
@@ -200,32 +247,34 @@ public class Root {
 	/**
 	 * Root method of the AHP execution.
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
+	 * @param alts
 	 * @return ArrayList containing the ranked alternatives.
 	 */
 	public ArrayList calculateRanking(ArrayList alts) {
 		alternatives = alts;
 		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
-		for (int i = 0; i < criterias.size(); i++) {
-			matrixAltCr.setMatrix(0, alternatives.size()-1, i, i, criterias.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
+		for(int i = 0; i < criterias.size(); i++) {
+			matrixAltCr.setMatrix(0, alternatives.size() - 1, i, i, criterias.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
 //		Ranking of the alternatives with the initial alternatives array and  the MOg vector
-		ArrayList sortedAlternatives = (ArrayList)alternatives.clone();
+		ArrayList sortedAlternatives = (ArrayList) alternatives.clone();
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
 		int minIndex;
-		for(int i=0; i<alternatives.size(); i++){
+		for(int i = 0; i < alternatives.size(); i++) {
 			minIndex = i;
-			for(int j=i+1; j<alternatives.size(); j++){
-				if(sortedvectorAltOg.get(j, 0)>sortedvectorAltOg.get(minIndex, 0))
-				    minIndex = j;
+			for(int j = i + 1; j < alternatives.size(); j++) {
+				if(sortedvectorAltOg.get(j, 0) > sortedvectorAltOg.get(minIndex, 0)) {
+					minIndex = j;
+				}
 			}
 			Object tempAlt = sortedAlternatives.get(i);
 			sortedAlternatives.set(i, sortedAlternatives.get(minIndex));
 			sortedAlternatives.set(minIndex, tempAlt);
-			double tempValue =  sortedvectorAltOg.get(i, 0);
+			double tempValue = sortedvectorAltOg.get(i, 0);
 			sortedvectorAltOg.set(i, 0, sortedvectorAltOg.get(minIndex, 0));
 			sortedvectorAltOg.set(minIndex, 0, tempValue);
 		}
@@ -233,22 +282,42 @@ public class Root {
 		return sortedAlternatives;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public PreferenceMatrix getMatrixCrCr() {
 		return matrixCrCr;
 	}
 
+	/**
+	 *
+	 * @param matrixCrCr
+	 */
 	public void setMatrixCrCr(PreferenceMatrix matrixCrCr) {
 		this.matrixCrCr = matrixCrCr;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Criteria> getCriterias() {
 		return criterias;
 	}

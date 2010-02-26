@@ -15,10 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp.gui;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -33,21 +31,35 @@ import org.taeradan.ahp.Criteria;
 import org.taeradan.ahp.Indicator;
 import org.taeradan.ahp.Root;
 
-
 /**
  * Graphical user interface to configure the AHP tree and the preference matrix
  * @author  Yves Dubromelle
  */
-public class ConfigurationFrame extends javax.swing.JFrame
-{
+public class ConfigurationFrame extends javax.swing.JFrame {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 *
+	 */
 	private DefaultTreeModel guiAhpTree;
+	/**
+	 *
+	 */
 	private File currentFile = new File(System.getProperty("user.home"));
+	/**
+	 *
+	 */
 	private Root ahpRoot;
+	/**
+	 *
+	 */
 	private boolean fileOpened = false;
-	
+
 	/** Creates new form ConfigurationFrame */
-	public ConfigurationFrame()
-	{	
+	public ConfigurationFrame() {
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded
@@ -56,7 +68,7 @@ public class ConfigurationFrame extends javax.swing.JFrame
 		guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 		initComponents();
 	}
-	
+
 	/** This method is called from within the constructor to
 	 * initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is
@@ -142,192 +154,221 @@ public class ConfigurationFrame extends javax.swing.JFrame
                 pack();
         }// </editor-fold>//GEN-END:initComponents
 
-		/**
-		 * Handles the actions of the mouse clicks.
-		 * @param evt
-		 */
+	/**
+	 * Handles the actions of the mouse clicks.
+	 * @param evt
+	 */
 		private void jTreeAhpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeAhpMouseClicked
 //			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
 //			If the mouse is over a valid tree node...
-			if(jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null){
+			if(jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null) {
 //				Retrieve the selected node
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)jTreeAhp.getPathForLocation(evt.getX(), evt.getY()).getLastPathComponent();
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTreeAhp.getPathForLocation(evt.getX(), evt.getY()).getLastPathComponent();
 //				Handling of the the left button double click
-				if(evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2){
+				if(evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
 					Object object = node.getUserObject();
 					editActionPerformed(object);
 				}
 //				Handling of the right button double click
-				if(evt.getButton() == MouseEvent.BUTTON3){
+				if(evt.getButton() == MouseEvent.BUTTON3) {
 					final Object object = node.getUserObject();
 					JPopupMenu contextMenu = new JPopupMenu();
-					if(object instanceof Root){
-						final Root root = (Root)object;
+					if(object instanceof Root) {
+						final Root root = (Root) object;
 						JMenuItem addItem = new JMenuItem("Add criteria");
-						addItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						addItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 							}
 						});
 //						addItem.addActionListener(this);
 						contextMenu.add(addItem);
 						JMenuItem editItem = new JMenuItem("Edit");
-						editItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						editItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 								editActionPerformed(object);
 							}
 						});
 						contextMenu.add(editItem);
 						JMenuItem delItem = new JMenuItem("Delete");
-						delItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						delItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 								delRootActionPerformed(root);
 							}
 						});
 						contextMenu.add(delItem);
 					}
-					if(object instanceof Criteria){
-						final Criteria criteria = (Criteria)object;
+					if(object instanceof Criteria) {
+						final Criteria criteria = (Criteria) object;
 						JMenuItem addItem = new JMenuItem("Add indicator");
-						addItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						addItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 							}
 						});
 						contextMenu.add(addItem);
 						JMenuItem editItem = new JMenuItem("Edit");
-						editItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						editItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 								editActionPerformed(object);
 							}
 						});
 						contextMenu.add(editItem);
 						JMenuItem delItem = new JMenuItem("Delete");
-						delItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						delItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 								delCriteriaActionPerformed(criteria);
 							}
 						});
 						contextMenu.add(delItem);
 					}
-					if(object instanceof Indicator){
-						Indicator indicator = (Indicator)object;
+					if(object instanceof Indicator) {
+						Indicator indicator = (Indicator) object;
 						JMenuItem editItem = new JMenuItem("Edit");
-						editItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						editItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 							}
 						});
 						contextMenu.add(editItem);
 						JMenuItem delItem = new JMenuItem("Delete");
-						delItem.addActionListener(new java.awt.event.ActionListener(){
-							public void actionPerformed(java.awt.event.ActionEvent evt){
+						delItem.addActionListener(new java.awt.event.ActionListener() {
+
+							@Override
+							public void actionPerformed(java.awt.event.ActionEvent evt) {
 								editActionPerformed(object);
 							}
 						});
 						contextMenu.add(delItem);
 					}
-					contextMenu.show(jTreeAhp, evt.getX(),evt.getY());
+					contextMenu.show(jTreeAhp, evt.getX(), evt.getY());
 				}
 			}
 		}//GEN-LAST:event_jTreeAhpMouseClicked
 
-		/**
-		 * Handles the event of the "Open" menu.
-		 * Launch a file selector to choose a configuration file to open.
-		 * @param evt
-		 */
+	/**
+	 * Handles the event of the "Open" menu.
+	 * Launch a file selector to choose a configuration file to open.
+	 * @param evt
+	 */
 		private void jMenuItemOpenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemOpenActionPerformed
 		{//GEN-HEADEREND:event_jMenuItemOpenActionPerformed
 			jFileChooser = new JFileChooser(currentFile);
 			jFileChooser.setApproveButtonText("Open");
 			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
-			if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-			{
+			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				currentFile = jFileChooser.getSelectedFile();
-				ahpRoot = new Root(currentFile.getAbsolutePath());
+				ahpRoot = new Root(new File(currentFile.getAbsolutePath()));
 				guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 				fileOpened = true;
 			}
 		}//GEN-LAST:event_jMenuItemOpenActionPerformed
 
-		/**
-		 * Handles the event of the "Save" menu.
-		 * It just save to the file previously opened.
-		 * If no file is opened, lauch the "Save under" action.
-		 * @param evt
-		 */
+	/**
+	 * Handles the event of the "Save" menu.
+	 * It just save to the file previously opened.
+	 * If no file is opened, lauch the "Save under" action.
+	 * @param evt
+	 */
 		private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
 		{//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
-			if (fileOpened)
-			{	ahpRoot.saveConfig(currentFile.getAbsolutePath());
+			if(fileOpened) {
+				ahpRoot.saveConfig(currentFile.getAbsolutePath());
 			}
-			else
+			else {
 				jMenuItemSaveUnderActionPerformed(evt);
+			}
 		}//GEN-LAST:event_jMenuItemSaveActionPerformed
 
-		/**
-		 * Handles the event of the "Save under" menu.
-		 * Launch a file selector to choose a file to write.
-		 * @param evt
-		 */
+	/**
+	 * Handles the event of the "Save under" menu.
+	 * Launch a file selector to choose a file to write.
+	 * @param evt
+	 */
 		private void jMenuItemSaveUnderActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveUnderActionPerformed
 		{//GEN-HEADEREND:event_jMenuItemSaveUnderActionPerformed
 			jFileChooser = new JFileChooser(currentFile);
 			jFileChooser.setApproveButtonText("Save");
 			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
-			if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-			{
+			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				currentFile = jFileChooser.getSelectedFile();
 				ahpRoot.saveConfig(currentFile.getAbsolutePath());
 			}
 		}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
-	
-	private void editActionPerformed(Object object){
-		if(object instanceof Root){
-			Root root = (Root)object;
+
+	/**
+	 *
+	 * @param object
+	 */
+	private void editActionPerformed(Object object) {
+		if(object instanceof Root) {
+			Root root = (Root) object;
 			RootDialog dialog = new RootDialog(this, true, root);
 			dialog.setVisible(true);
 		}
-		if(object instanceof Criteria){
-			Criteria criteria = (Criteria)object;
+		if(object instanceof Criteria) {
+			Criteria criteria = (Criteria) object;
 			CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
 			dialog.setVisible(true);
 		}
-		if(object instanceof Indicator){
-			Indicator indicator = (Indicator)object;
+		if(object instanceof Indicator) {
+			Indicator indicator = (Indicator) object;
 			IndicatorDialog dialog = new IndicatorDialog(this, true, indicator);
 			dialog.setVisible(true);
 		}
 	}
 
+	/**
+	 *
+	 * @param root
+	 */
 	private void delRootActionPerformed(Root root) {
-		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
 			ahpRoot = new Root();
 			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 			editActionPerformed(ahpRoot);
 		}
 	}
-	
-	private void delCriteriaActionPerformed(Criteria criteria){
-		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The criteria and its indicators will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
+
+	/**
+	 *
+	 * @param criteria
+	 */
+	private void delCriteriaActionPerformed(Criteria criteria) {
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The criteria and its indicators will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
 			ahpRoot.delCriteria(criteria);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 		}
 	}
-	
-	private void delIndicatorActionPerformed(Indicator indicator){
-		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The indicator will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION)==0){
-			
+
+	/**
+	 *
+	 * @param indicator
+	 */
+	private void delIndicatorActionPerformed(Indicator indicator) {
+		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The indicator will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
 		}
 	}
-	
+
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[])
-	{
-		java.awt.EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
+	public static void main(String args[]) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
 				new ConfigurationFrame().setVisible(true);
 			}
 		});
@@ -343,19 +384,19 @@ public class ConfigurationFrame extends javax.swing.JFrame
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTree jTreeAhp;
         // End of variables declaration//GEN-END:variables
-	
+
 	/**
 	 * Takes an initialized AHP root element and produces a tree by processing the AHP hierarchy
 	 * @param ahpRoot Initialised AHP root
 	 * @return node containing a AHP tree
 	 */
-	public static DefaultMutableTreeNode  processAhpHierarchy(Root ahpRoot){
+	public static DefaultMutableTreeNode processAhpHierarchy(Root ahpRoot) {
 //		Creation of the root node
 		DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpRoot);
 		ArrayList<Criteria> ahpCriterias = ahpRoot.getCriterias();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
 //		For each criteria in root
-		for(int i=0; i<ahpCriterias.size(); i++){
+		for(int i = 0; i < ahpCriterias.size(); i++) {
 //			Real criteria attached to a criteria node
 			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.get(i)));
 //			Criteria node attached to the root node
@@ -363,7 +404,7 @@ public class ConfigurationFrame extends javax.swing.JFrame
 			ArrayList<Indicator> ahpIndicators = ahpCriterias.get(i).getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators = new ArrayList<DefaultMutableTreeNode>();
 //			For each indicator in the criteria
-			for(int j=0; j<ahpIndicators.size(); j++){
+			for(int j = 0; j < ahpIndicators.size(); j++) {
 //				Real indicator attached to an indicator node
 				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.get(j)));
 //				Indicator node attached to the criteria node

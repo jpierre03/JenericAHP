@@ -26,22 +26,43 @@ import java.math.BigDecimal;
  */
 public class PriorityVector {
 
+	/**
+	 *
+	 */
 	private Matrix vector = null;
+	/**
+	 *
+	 */
 	boolean isUnderTreshold = true;
 
+	/**
+	 *
+	 * @param prefMatrix
+	 */
 	public PriorityVector(PreferenceMatrix prefMatrix) {
-		 constructVector(prefMatrix.getMatrix());
+		constructVector(prefMatrix.getMatrix());
 	}
 
+	/**
+	 *
+	 * @param matrix
+	 */
 	public PriorityVector(Matrix matrix) {
 		constructVector(matrix);
 	}
 
+	/**
+	 *
+	 */
 	PriorityVector() {
 	}
-	
-	private void constructVector(Matrix matrix){
-		Matrix multMatrix = (Matrix)matrix.clone();
+
+	/**
+	 *
+	 * @param matrix
+	 */
+	private void constructVector(Matrix matrix) {
+		Matrix multMatrix = (Matrix) matrix.clone();
 //		matrix.print(5, 4);
 		Matrix oldVector;
 		int dimension = matrix.getRowDimension();
@@ -55,22 +76,23 @@ public class PriorityVector {
 //			System.out.println("\tNumerator=" + PreferenceMatrix.toString(numerator));
 			Matrix denominator = e.times(matrix).times(e.transpose());
 //			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
-			vector = numerator.timesEquals(1/denominator.get(0, 0));
+			vector = numerator.timesEquals(1 / denominator.get(0, 0));
 //			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
-			if(oldVector!=null){
+			if(oldVector != null) {
 				Matrix difference = vector.minus(oldVector);
 //				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
 				isUnderTreshold = true;
-				for(int i=0; i<dimension; i++){
-					if(new BigDecimal(difference.get(i, 0)).abs().doubleValue()>1E-16){
+				for(int i = 0; i < dimension; i++) {
+					if(new BigDecimal(difference.get(i, 0)).abs().doubleValue() > 1E-16) {
 						isUnderTreshold = false;
 //						System.out.println("dirrefence en dessous du seuil");
 					}
 				}
 			}
-			else
+			else {
 				isUnderTreshold = false;
-		} while (!isUnderTreshold);
+			}
+		}while(!isUnderTreshold);
 //		vector.print(5, 4);
 	}
 
@@ -82,6 +104,10 @@ public class PriorityVector {
 		return vector;
 	}
 
+	/**
+	 * 
+	 * @param vector
+	 */
 	public void setVector(Matrix vector) {
 		this.vector = vector;
 	}

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp;
 
 import Jama.Matrix;
@@ -29,14 +28,17 @@ import org.nfunk.jep.JEP;
  * The PreferenceMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
  * @author Yves Dubromelle
  */
-public class PreferenceMatrix{
-    
+public class PreferenceMatrix {
+
+	/**
+	 *
+	 */
 	Matrix matrix = null;
 
 	/**
-	* Class default Constructor.
-	*/
-	public PreferenceMatrix(){
+	 * Class default Constructor.
+	 */
+	public PreferenceMatrix() {
 	}
 
 	/**
@@ -47,11 +49,11 @@ public class PreferenceMatrix{
 		List<Element> xmlRowsList = xmlPrefMatrix.getChildren("row");
 		int size = xmlRowsList.size();
 		matrix = new Matrix(size, size);
-		for(int i=0; i<xmlRowsList.size(); i++){
+		for(int i = 0; i < xmlRowsList.size(); i++) {
 //			Extraction of a row from the matrix
 			Element xmlRow = xmlRowsList.get(i);
 			List<Element> xmlEltsList = xmlRow.getChildren("elt");
-			for(int j=0; j<xmlEltsList.size();j++){
+			for(int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
 				Element xmlElt = xmlEltsList.get(j);
 //				Setting of an element of the temporary matrix
@@ -74,46 +76,65 @@ public class PreferenceMatrix{
 	public String toString() {
 		return makeString(this.matrix, null);
 	}
-	
+
+	/**
+	 *
+	 * @param prefix
+	 * @return
+	 */
 	public String toString(String prefix) {
 		return makeString(this.matrix, prefix);
 	}
-	
+
+	/**
+	 *
+	 * @param matrix
+	 * @param prefix
+	 * @return
+	 */
 	public static String toString(Matrix matrix, String prefix) {
 		return makeString(matrix, prefix);
 	}
-	
-	private static String makeString(Matrix matrix, String prefix){
+
+	/**
+	 * 
+	 * @param matrix
+	 * @param prefix
+	 * @return
+	 */
+	private static String makeString(Matrix matrix, String prefix) {
 		String string = "";
 		int nRows = matrix.getRowDimension();
 		int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 //		For each row in the matrix
-		for(int i=0; i<nRows; i++){
-			if(prefix!=null)
+		for(int i = 0; i < nRows; i++) {
+			if(prefix != null) {
 				string = string.concat(prefix);
+			}
 //			For each element of the row
-			for(int j=0; j<nCols; j++){
-				string = string.concat(" "+printFormat.format(matrix.get(i, j)));
+			for(int j = 0; j < nCols; j++) {
+				string = string.concat(" " + printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
-			if(i<nRows-1)
+			if(i < nRows - 1) {
 				string = string.concat("\n");
+			}
 		}
 		return string;
 	}
-	
+
 	/**
 	 * Returns a JDOM element that represents the preference matrix
 	 * @return JDOM element representing the preference matrix
 	 */
-	public Element toXml(){
+	public Element toXml() {
 		Element xmlPrefMatrix = new Element("prefmatrix");
 //		For each row in the matrix
-		for(int i=0; i<matrix.getRowDimension(); i++){
+		for(int i = 0; i < matrix.getRowDimension(); i++) {
 			Element xmlRow = new Element("row");
 //			For each element in the row
-			for(int j=0; j<matrix.getColumnDimension();j++){
+			for(int j = 0; j < matrix.getColumnDimension(); j++) {
 				Element xmlElt = new Element("elt");
 				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
 				xmlRow.addContent(xmlElt);
@@ -122,35 +143,39 @@ public class PreferenceMatrix{
 		}
 		return xmlPrefMatrix;
 	}
-	
+
 	/**
-	* Method that give the Matrix contained in this class.
-	* @return matrix
-	*/
+	 * Method that give the Matrix contained in this class.
+	 * @return matrix
+	 */
 	public Matrix getMatrix() {
 		return matrix;
 	}
 
 	/**
-	* Method that overwrite the matrix contained in this class.
-	* @param matrix
-	*/
+	 * Method that overwrite the matrix contained in this class.
+	 * @param matrix
+	 */
 	public void setMatrix(Matrix matrix) {
 		this.matrix = matrix;
 	}
 
+	/**
+	 * 
+	 * @param index
+	 */
 	public void remove(int index) {
 		int newDimension = matrix.getRowDimension() - 1;
 		Matrix newMatrix = new Matrix(newDimension, newDimension);
-		System.out.println("Ancienne dimension ="+matrix.getRowDimension()+", nouvelle="+newDimension+"\n");
+		System.out.println("Ancienne dimension =" + matrix.getRowDimension() + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
-		for(int i=0; i<matrix.getRowDimension(); i++){
-			if(i!=index){
-				for(int j=0; j<matrix.getColumnDimension(); j++){
-					if(j!=index){
+		for(int i = 0; i < matrix.getRowDimension(); i++) {
+			if(i != index) {
+				for(int j = 0; j < matrix.getColumnDimension(); j++) {
+					if(j != index) {
 						double newValue = matrix.get(i, j);
-						System.out.print("i="+i+"j="+j+"value="+newValue+"newI="+newI+"newJ="+newJ+"\n");
+						System.out.print("i=" + i + "j=" + j + "value=" + newValue + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

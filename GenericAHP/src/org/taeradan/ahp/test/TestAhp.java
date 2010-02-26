@@ -15,10 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with GenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.taeradan.ahp.test;
 
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.taeradan.ahp.Root;
@@ -28,23 +27,28 @@ import org.taeradan.ahp.Root;
  * @author Yves Dubromelle
  */
 public class TestAhp {
-	public static void main (String[] args){
+
+	/**
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		Scanner inScan = new Scanner(System.in);
 //		System.out.println("Entrez le nom du fichier d'entrée :\n");
 //		String file = inScan.nextLine();
-		Root root = new Root("build/classes/org/taeradan/ahp/conf/ahp_conf.xml");
+		Root root = new Root(new File("build/classes/org/taeradan/ahp/conf/ahp_conf.xml"));
 //		System.out.println(root.toStringRecursive());
 		ArrayList alts = new ArrayList(4);
-		alts.add(new TestingAlternative("Alternative 1",3, 1, 1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 2",1, 1, 1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 3",4, 1, 1, 1, 1, 1, 1, 1, 1));
-		alts.add(new TestingAlternative("Alternative 4",2, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1, 1));
+		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1, 1));
 		ArrayList resultat = root.calculateRanking(alts);
 //		System.out.println(root.resultToString());
 		System.out.println("Resultat=");
-		for(int i=0; i<resultat.size(); i++){
-			TestingAlternative currentRes = (TestingAlternative)resultat.get(i);
-			System.out.println(currentRes.name+" = "+currentRes.valueI11);
+		for(int i = 0; i < resultat.size(); i++) {
+			TestingAlternative currentRes = (TestingAlternative) resultat.get(i);
+			System.out.println(currentRes.name + " = " + currentRes.valueI11);
 		}
 //		System.out.println("Entrez le nom du fichier de sortie :\n");
 //		file = inScan.nextLine();

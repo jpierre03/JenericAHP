@@ -2,10 +2,10 @@
 <!DOCTYPE root SYSTEM "ahp_conf.dtd">
 
 <!--
-    Document   : ahp_conf.xml
-    Created on : 27 mars 2009, 15:05
-    Author     : Yves Dubromelle
-    Description:
+	Document   : ahp_conf.xml
+	Created on : 27 mars 2009, 15:05
+	Author     : Yves Dubromelle
+	Description:
 		This document is the configuration file of the org.taeradan.ahp package, a new generic Java implementation of the AHP algorithm.
 		For syntax information, just have a look at the ahp_conf.dtd file.
 -->
