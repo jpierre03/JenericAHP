@@ -33,11 +33,8 @@ public class TestAhp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Scanner inScan = new Scanner(System.in);
-//		System.out.println("Entrez le nom du fichier d'entrée :\n");
-//		String file = inScan.nextLine();
 		Root root = new Root(new File("build/classes/org/taeradan/ahp/conf/ahp_conf.xml"),Root.INDICATOR_PATH);
-//		System.out.println(root.toStringRecursive());
+		System.out.println(root.toStringRecursive());
 		ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
 		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1, 1));
 		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1, 1));
@@ -48,15 +45,12 @@ public class TestAhp {
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		root.calculateRanking(alts);
-
-//		System.out.println(root.resultToString());
+		System.out.println("======================================================");
+		System.out.println(root.resultToString());
 		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
 		for(int i = 0; i < alts.size(); i++) {
 			TestingAlternative currentRes = alts.get(i);
 			System.out.println(currentRes.name + " = " + currentRes.getRank());
 		}
-//		System.out.println("Entrez le nom du fichier de sortie :\n");
-//		file = inScan.nextLine();
-//		root.saveConfig(file);
 	}
 }

@@ -33,8 +33,8 @@ import org.jdom.Element;
  * @author Yves Dubromelle
  */
 public class Criteria {
-//	AHP static attributes
 
+//	AHP configuration attributes
 	/**
 	 * 
 	 */
@@ -55,7 +55,7 @@ public class Criteria {
 	 *
 	 */
 	private ArrayList<Indicator> indicators;
-//	AHP dynamic attributes
+//	AHP execution attributes
 	/**
 	 *
 	 */

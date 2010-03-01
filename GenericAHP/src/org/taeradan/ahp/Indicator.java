@@ -27,8 +27,8 @@ import org.jdom.Element;
  * @author Yves Dubromelle
  */
 public class Indicator {
-//	AHP static attributes
 
+//	AHP configuration attributes
 	/**
 	 *
 	 */
@@ -41,7 +41,7 @@ public class Indicator {
 	 *
 	 */
 	private boolean maximization = true;
-//	AHP dynamic attributes
+//	AHP execution attributes
 	/**
 	 *
 	 */

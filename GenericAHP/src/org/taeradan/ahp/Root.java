@@ -45,7 +45,7 @@ public class Root {
 	 * Contains the path to access indicators
 	 */
 	public static String INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
-//	AHP static attributes
+//	AHP configuration attributes
 	/**
 	 *
 	 */
@@ -62,7 +62,7 @@ public class Root {
 	 *
 	 */
 	private ArrayList<Criteria> criterias;
-//	AHP dynamic attributes
+//	AHP execution attributes
 	/**
 	 *
 	 */
@@ -75,20 +75,7 @@ public class Root {
 	 *
 	 */
 	private Matrix matrixAltCr;
-//	XML configuration attributes
-	/**
-	 *
-	 */
-	private String inConfigurationFile = "/org/taeradan/ahp/conf/ahp_conf.xml";
-	/**
-	 *
-	 */
-	private Document inXmlDocument;
-	/**
-	 *
-	 */
-	private Document outXmlDocument;
-//	Control attributes
+//	Execution control attributes
 	/**
 	 *
 	 */
@@ -107,34 +94,30 @@ public class Root {
 		}
 		else {
 			Root.INDICATOR_PATH = indicatorPath;
-//		XML parser creation
+//			XML parser creation
 			SAXBuilder parser = new SAXBuilder();
 			try {
-//			JDOM document created from XML configuration file
-				inXmlDocument = parser.build(inFile);
-//			Extraction of the root element from the JDOM document
+//				JDOM document created from XML configuration file
+				Document inXmlDocument = parser.build(inFile);
+//				Extraction of the root element from the JDOM document
 				Element xmlRoot = inXmlDocument.getRootElement();
-
-//			Initialisation of the AHP tree name
+//				Initialisation of the AHP tree name
 				name = xmlRoot.getChildText("name");
-//			System.out.println("Root.name="+name);
-
-//			Initialisation of the preference matrix
+//				Initialisation of the preference matrix
 				Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
 				matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
-//			System.out.println("Root.matrixCrCr="+matrixCrCr);
 				vectorCrOg = new PriorityVector(matrixCrCr);
-//			Consistency verification
+//				Consistency verification
 				if(!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
 					System.err.println("Is not consistent (root)");
 				}
-//			Initialisation of the criterias
+//				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
 				List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren("criteria");
 				@SuppressWarnings("unchecked")
 				List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
-//			Verification that the number of criterias matches the size of the preference matrix
+//				Verification that the number of criterias matches the size of the preference matrix
 				if(xmlCriteriasList.size() != xmlRowsList.size()) {
 					System.err.println("Error : the number of criterias and the size of the preference matrix does not match !");
 				}
@@ -144,7 +127,7 @@ public class Root {
 //				System.out.println("Root.criteria="+criterias.get(i));
 				}
 			}catch(FileNotFoundException e) {
-				System.err.println("File not found : " + inConfigurationFile);
+				System.err.println("File not found : " + inFile.getAbsolutePath());
 				name = "unknow";
 				matrixCrCr = new PreferenceMatrix();
 				criterias = new ArrayList<Criteria>();
@@ -220,7 +203,7 @@ public class Root {
 			for(int i = 0; i < criterias.size(); i++) {
 				string = string.concat("\n\t" + criterias.get(i).resultToString());
 			}
-			string = string.concat("\nvectorAltOg=" + PreferenceMatrix.toString(vectorAltOg.getVector(), null));
+			string = string.concat("\nvectorAltOg=\n" + PreferenceMatrix.toString(vectorAltOg.getVector(), null));
 		}
 		else {
 			string = "There is no result, please do a ranking first";
@@ -235,7 +218,7 @@ public class Root {
 	public void saveConfig(String outputFile) {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
-			outXmlDocument = new Document(toXml(), new DocType("root", getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+			Document outXmlDocument = new Document(toXml(), new DocType("root", getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 //			Use a write format easily readable by a human
 			XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file
@@ -261,8 +244,6 @@ public class Root {
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
 //		Ranking of the alternatives with the MOg vector
-		@SuppressWarnings("unchecked")
-		ArrayList<? extends Alternative> sortedAlternatives = (ArrayList<? extends Alternative>) alternatives.clone();
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
 		double lastAltOgValue = Double.POSITIVE_INFINITY;
 //		For each rank to be given to the alternatives
@@ -289,14 +270,6 @@ public class Root {
 	 */
 	public PreferenceMatrix getMatrixCrCr() {
 		return matrixCrCr;
-	}
-
-	/**
-	 *
-	 * @param matrixCrCr
-	 */
-	public void setMatrixCrCr(PreferenceMatrix matrixCrCr) {
-		this.matrixCrCr = matrixCrCr;
 	}
 
 	/**
