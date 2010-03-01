@@ -193,7 +193,9 @@ public class Indicator {
 	 */
 	public String resultToString() {
 		String string = this.toString();
-		string = string.concat("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
+		if(alternatives.size() < 30) {
+			string = string.concat("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
+		}
 		string = string.concat("\n\t\tvectorAltInd=\n" + PreferenceMatrix.toString(vectorAltInd.getVector(), "\t\t"));
 		return string;
 	}

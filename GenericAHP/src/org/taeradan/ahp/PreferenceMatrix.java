@@ -105,25 +105,26 @@ public class PreferenceMatrix {
 	 * @return
 	 */
 	private static String makeString(Matrix matrix, String prefix) {
-		String string = "";
+		StringBuilder string = new StringBuilder();
 		int nRows = matrix.getRowDimension();
 		int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 //		For each row in the matrix
 		for(int i = 0; i < nRows; i++) {
 			if(prefix != null) {
-				string = string.concat(prefix);
+				string.append(prefix);
 			}
 //			For each element of the row
 			for(int j = 0; j < nCols; j++) {
-				string = string.concat(" " + printFormat.format(matrix.get(i, j)));
+				string.append(" ");
+				string.append(printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
 			if(i < nRows - 1) {
-				string = string.concat("\n");
+				string.append("\n");
 			}
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**
