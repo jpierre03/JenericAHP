@@ -78,7 +78,10 @@ public class PriorityVector {
 //			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
 			vector = numerator.timesEquals(1 / denominator.get(0, 0));
 //			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
-			if(oldVector != null) {
+			if(oldVector == null) {
+				isUnderTreshold = false;
+			}
+			else {
 				Matrix difference = vector.minus(oldVector);
 //				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
 				isUnderTreshold = true;
@@ -88,9 +91,6 @@ public class PriorityVector {
 //						System.out.println("dirrefence en dessous du seuil");
 					}
 				}
-			}
-			else {
-				isUnderTreshold = false;
 			}
 		}while(!isUnderTreshold);
 //		vector.print(5, 4);

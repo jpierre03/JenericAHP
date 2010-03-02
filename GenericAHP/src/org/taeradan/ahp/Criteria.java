@@ -20,12 +20,9 @@ package org.taeradan.ahp;
 import Jama.Matrix;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jdom.Element;
 
 /**
@@ -50,46 +47,16 @@ public class Criteria {
 	/**
 	 *
 	 */
-	private PriorityVector vectorIndCr;
+	private final PriorityVector vectorIndCr;
 	/**
 	 *
 	 */
-	private ArrayList<Indicator> indicators;
+	private final ArrayList<Indicator> indicators;
 //	AHP execution attributes
 	/**
 	 *
 	 */
 	private PriorityVector vectorAltCr;
-	/**
-	 *
-	 */
-	private Matrix matrixAltInd;
-	/**
-	 *
-	 */
-	private ArrayList<? extends Alternative> alternatives;
-
-	/**
-	 * Class default constructor
-	 */
-	public Criteria() {
-		id = new String();
-		name = new String();
-		matrixIndInd = new PreferenceMatrix();
-		indicators = new ArrayList<Indicator>();
-	}
-
-	/**
-	 * Simple constructor to initialize a criteria by its ID, name and preference matrix
-	 * @param id The criteria's ID
-	 * @param name The criteria's name
-	 * @param matrixInd
-	 */
-	public Criteria(String id, String name, PreferenceMatrix matrixInd) {
-		this.id = id;
-		this.name = name;
-		this.matrixIndInd = matrixInd;
-	}
 
 	/**
 	 * Creates a AHP Criteria from a JDOM Element
@@ -162,22 +129,15 @@ public class Criteria {
 
 	/**
 	 *
-	 * @param alts
+	 * @param alternatives
 	 * @return
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList<? extends Alternative> alts) {
-		alternatives = alts;
+	public PriorityVector calculateAlternativesPriorityVector(ArrayList<? extends Alternative> alternatives) {
+		Matrix matrixAltInd;
 		matrixAltInd = new Matrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
 		for(int i = 0; i < indicators.size(); i++) {
-			try {
-				Method calculateValue = indicators.get(i).getClass().getMethod("calculateAlternativeValue", int.class, ArrayList.class);
-				matrixAltInd.setMatrix(0, alternatives.size() - 1, i, i, indicators.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
-			}catch(NoSuchMethodException ex) {
-				Logger.getLogger(Criteria.class.getName()).log(Level.SEVERE, null, ex);
-			}catch(SecurityException ex) {
-				Logger.getLogger(Criteria.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			matrixAltInd.setMatrix(0, alternatives.size() - 1, i, i, indicators.get(i).calculateAlternativesPriorityVector(alternatives).getVector());
 		}
 //		Calculation of the criteria's alternatives vector
 		vectorAltCr = new PriorityVector();
@@ -191,8 +151,7 @@ public class Criteria {
 	 */
 	@Override
 	public String toString() {
-		String string = "Criteria " + id + " : " + name;
-		return string;
+		return "Criteria " + id + " : " + name;
 	}
 
 	/**

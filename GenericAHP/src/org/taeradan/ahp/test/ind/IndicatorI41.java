@@ -34,12 +34,11 @@ public class IndicatorI41 extends Indicator {
 	 * @param xmlIndicator
 	 */
 	public IndicatorI41(Element xmlIndicator) {
-		super.fromXml(xmlIndicator);
+		super(xmlIndicator);
 	}
 
 	@Override
 	public double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives) {
-		TestingAlternative alt = (TestingAlternative) alternatives.get(i);
-		return alt.valueI41;
+		return ((TestingAlternative) alternatives.get(i)).valueI41;
 	}
 }

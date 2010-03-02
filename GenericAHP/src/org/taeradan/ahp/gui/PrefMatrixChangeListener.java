@@ -61,16 +61,18 @@ public class PrefMatrixChangeListener implements TableModelListener {
 					newValue = "1";
 				}
 				myParser.parseExpression(newValue);
-				prefMatrix.setValueAt(myParser.getValue(), evt.getFirstRow(), evt.getColumn());
+				value=myParser.getValue();
+				prefMatrix.setValueAt(value, evt.getFirstRow(), evt.getColumn());
 			}
 //			Case where the value is not entered : DON'T WORK FOR NOW
-			if(value == Double.NaN) {
+			if(Double.isNaN(value)) {
 				String newValue = JOptionPane.showInputDialog("This can't be leaved blank\nPlease enter a value :");
 				if(newValue == null) {
 					newValue = "1";
 				}
 				myParser.parseExpression(newValue);
-				prefMatrix.setValueAt(myParser.getValue(), evt.getFirstRow(), evt.getColumn());
+				value=myParser.getValue();
+				prefMatrix.setValueAt(value, evt.getFirstRow(), evt.getColumn());
 			}
 			prefMatrix.setValueAt((1 / value), evt.getColumn(), evt.getFirstRow());
 		}

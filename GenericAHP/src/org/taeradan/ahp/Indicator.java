@@ -26,7 +26,7 @@ import org.jdom.Element;
  * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
  * @author Yves Dubromelle
  */
-public class Indicator {
+public abstract class Indicator {
 
 //	AHP configuration attributes
 	/**
@@ -56,33 +56,11 @@ public class Indicator {
 	private ArrayList<? extends Alternative> alternatives;
 
 	/**
-	 * Class default constructor
-	 */
-	public Indicator() {
-		id = new String();
-		name = new String();
-//		We consider that a criteria must be maximized by default
-		maximization = true;
-	}
-
-	/**
-	 * Simple constructor to initialize an indicator by its ID and name
-	 * @param id The indicator's ID
-	 * @param name The indicator's name
-	 * @param maximization 
-	 */
-	public Indicator(String id, String name, boolean maximization) {
-		this.id = id;
-		this.name = name;
-		this.maximization = maximization;
-	}
-
-	/**
 	 * Creates an Indicator from a JDOM Element
 	 * @param xmlIndicator JDOM Element
 	 */
 	public Indicator(Element xmlIndicator) {
-		fromXml(xmlIndicator);
+		this.fromXml(xmlIndicator);
 	}
 
 	/**
@@ -124,9 +102,7 @@ public class Indicator {
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives) {
-		return 1;
-	}
+	public abstract double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives);
 
 	/**
 	 * Returns a string describing the indicator
@@ -165,7 +141,7 @@ public class Indicator {
 	 *
 	 * @param xmlIndicator
 	 */
-	protected void fromXml(Element xmlIndicator) {
+	protected final void fromXml(Element xmlIndicator) {
 
 //		Initialisation of the id
 		id = xmlIndicator.getAttributeValue("id");
@@ -236,7 +212,7 @@ public class Indicator {
 	 *
 	 * @return
 	 */
-	public boolean isMaximization() {
+	public boolean isMaximized() {
 		return maximization;
 	}
 

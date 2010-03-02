@@ -70,10 +70,6 @@ public class Root {
 	/**
 	 *
 	 */
-	private ArrayList<? extends Alternative> alternatives;
-	/**
-	 *
-	 */
 	private Matrix matrixAltCr;
 //	Execution control attributes
 	/**
@@ -160,8 +156,7 @@ public class Root {
 	 */
 	@Override
 	public String toString() {
-		String string = " AHP Root : " + name + ", " + criterias.size() + " criterias";
-		return string;
+		return " AHP Root : " + name + ", " + criterias.size() + " criterias";
 	}
 
 	/**
@@ -231,10 +226,9 @@ public class Root {
 	/**
 	 * Root method of the AHP execution.
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
-	 * @param alts
+	 * @param alternatives
 	 */
-	public void calculateRanking(ArrayList<? extends Alternative> alts) {
-		alternatives = alts;
+	public void calculateRanking(ArrayList<? extends Alternative> alternatives) {
 		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		for(int i = 0; i < criterias.size(); i++) {
@@ -246,6 +240,7 @@ public class Root {
 //		Ranking of the alternatives with the MOg vector
 		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().getArrayCopy());
 		double lastAltOgValue = Double.POSITIVE_INFINITY;
+		int lastAltOgIndex = Integer.MIN_VALUE;
 //		For each rank to be given to the alternatives
 		for(int rank = 0; rank < alternatives.size(); rank++) {
 //			We search which alternative has the highest priority (AltOg value), but lower than the previous priority found
@@ -253,13 +248,14 @@ public class Root {
 			int maxAltOgIndex = 0;
 			for(int altOgIndex = 0; altOgIndex < alternatives.size(); altOgIndex++) {
 				double altOgValue = sortedvectorAltOg.get(altOgIndex, 0);
-				if((altOgValue > maxAltOgValue) && (altOgValue < lastAltOgValue)) {
+				if((altOgValue > maxAltOgValue) && (altOgValue <= lastAltOgValue) && (altOgIndex > lastAltOgIndex)) {
 					maxAltOgValue = altOgValue;
 					maxAltOgIndex = altOgIndex;
 				}
 			}
 			lastAltOgValue = maxAltOgValue;
-			alts.get(maxAltOgIndex).setRank(rank + 1);
+			lastAltOgIndex = maxAltOgIndex;
+			alternatives.get(maxAltOgIndex).setRank(rank + 1);
 		}
 		calculationOccured = true;
 	}
