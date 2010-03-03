@@ -19,11 +19,13 @@ package org.taeradan.ahp;
 
 import Jama.Matrix;
 import java.util.ArrayList;
+import java.util.Collection;
 import org.jdom.Element;
 
 /**
  * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
  * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
+ * @author jpierre03
  * @author Yves Dubromelle
  */
 public abstract class Indicator {
@@ -53,7 +55,7 @@ public abstract class Indicator {
 	/**
 	 *
 	 */
-	private ArrayList<? extends Alternative> alternatives;
+	private Collection<? extends Alternative> alternatives;
 
 	/**
 	 * Creates an Indicator from a JDOM Element
@@ -102,7 +104,7 @@ public abstract class Indicator {
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public abstract double calculateAlternativeValue(int i, ArrayList<? extends Alternative> alternatives);
+	public abstract double calculateAlternativeValue(int i, Collection<? extends Alternative> alternatives);
 
 	/**
 	 * Returns a string describing the indicator
