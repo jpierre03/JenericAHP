@@ -11,47 +11,47 @@ public class TestingAlternative implements Alternative {
 	/**
 	 *
 	 */
-	public final String name;
+	transient public final String name;
 	/**
 	 *
 	 */
-	private int rank;
+	transient private int rank;
 	/**
 	 *
 	 */
-	public final double valueI11;
+	transient public final double valueI11;
 	/**
 	 *
 	 */
-	public final double valueI12;
+	transient public final double valueI12;
 	/**
 	 *
 	 */
-	public final double valueI13;
+	transient public final double valueI13;
 	/**
 	 *
 	 */
-	public final double valueI21;
+	transient public final double valueI21;
 	/**
 	 *
 	 */
-	public final double valueI22;
+	transient public final double valueI22;
 	/**
 	 *
 	 */
-	public final double valueI31;
+	transient public final double valueI31;
 	/**
 	 *
 	 */
-	public final double valueI32;
+	transient public final double valueI32;
 	/**
 	 * 
 	 */
-	public final double valueI41;
+	transient public final double valueI41;
 	/**
 	 *
 	 */
-	public final double valueI51;
+	transient public final double valueI51;
 
 	/**
 	 * 

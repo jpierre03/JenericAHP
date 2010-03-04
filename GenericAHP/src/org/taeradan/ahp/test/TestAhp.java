@@ -32,9 +32,9 @@ public class TestAhp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Root root = new Root(new File("build/classes/org/taeradan/ahp/conf/ahp_conf.xml"),Root.INDICATOR_PATH);
+		Root root = new Root(new File("build/classes/org/taeradan/ahp/conf/ahp_conf.xml"),Root.indicatorPath);
 		System.out.println(root.toStringRecursive());
-		ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
+		final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
 		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1, 1));
 		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1, 1));
 		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1, 1));

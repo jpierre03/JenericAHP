@@ -20,6 +20,7 @@ package org.taeradan.ahp;
 import Jama.Matrix;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
@@ -33,7 +34,7 @@ public class PreferenceMatrix {
 	/**
 	 *
 	 */
-	Matrix matrix = null;
+	private Matrix matrix = null;
 
 	/**
 	 * Class default Constructor.
@@ -59,7 +60,7 @@ public class PreferenceMatrix {
 //				Extraction of an element from a row
 				Element xmlElt = xmlEltsList.get(j);
 //				Setting of an element of the temporary matrix
-				Attribute att = xmlElt.getAttribute("value");
+				final Attribute att = xmlElt.getAttribute("value");
 //				Creation of a math expression parser to handle fractions in the XML file
 				JEP myParser = new JEP();
 //				The expression contained in the String is passed to the parser and is evaluated
@@ -170,7 +171,7 @@ public class PreferenceMatrix {
 	public void remove(int index) {
 		int newDimension = matrix.getRowDimension() - 1;
 		Matrix newMatrix = new Matrix(newDimension, newDimension);
-		System.out.println("Ancienne dimension =" + matrix.getRowDimension() + ", nouvelle=" + newDimension + "\n");
+		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension() + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for(int i = 0; i < matrix.getRowDimension(); i++) {
@@ -178,7 +179,7 @@ public class PreferenceMatrix {
 				for(int j = 0; j < matrix.getColumnDimension(); j++) {
 					if(j != index) {
 						double newValue = matrix.get(i, j);
-						System.out.print("i=" + i + "j=" + j + "value=" + newValue + "newI=" + newI + "newJ=" + newJ + "\n");
+						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

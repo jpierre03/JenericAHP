@@ -18,7 +18,6 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.util.ArrayList;
 import java.util.Collection;
 import org.jdom.Element;
 
@@ -42,20 +41,20 @@ public abstract class Indicator {
 	/**
 	 *
 	 */
-	private boolean maximization = true;
+	transient private boolean maximization = true;
 //	AHP execution attributes
 	/**
 	 *
 	 */
-	private PriorityVector vectorAltInd;
+	transient private PriorityVector vectorAltInd;
 	/**
 	 *
 	 */
-	private Matrix matrixAltAlt;
+	transient private Matrix matrixAltAlt;
 	/**
 	 *
 	 */
-	private Collection<? extends Alternative> alternatives;
+	transient private Collection<? extends Alternative> alternatives;
 
 	/**
 	 * Creates an Indicator from a JDOM Element
@@ -70,10 +69,11 @@ public abstract class Indicator {
 	 * @param alts
 	 * @return MCr vector
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(ArrayList<? extends Alternative> alts) {
+	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alts) {
 		alternatives = alts;
+//		double[] altValues = new double[alternatives.size()];
 		double[] altValues = new double[alternatives.size()];
-		int dimension = altValues.length;
+		final int dimension = altValues.length;
 		matrixAltAlt = new Matrix(dimension, dimension);
 //		For each alternative, evaluation of its value for the indicator
 		for(int i = 0; i < alternatives.size(); i++) {

@@ -17,6 +17,7 @@
  */
 package org.taeradan.ahp.gui;
 
+import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.JOptionPane;
@@ -35,12 +36,12 @@ public class PrefMatrixChangeListener implements TableModelListener {
 	 */
 	@Override
 	public void tableChanged(TableModelEvent evt) {
-		System.out.println("row=" + evt.getFirstRow() + ",column" + evt.getColumn());
+		Logger.getAnonymousLogger().info("row=" + evt.getFirstRow() + ",column" + evt.getColumn());
 		if(evt.getFirstRow() >= evt.getColumn()) {
 			PrefMatrixTableModel prefMatrix = (PrefMatrixTableModel) evt.getSource();
 			Double value = null;
 			Object nonParsedValue = prefMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
-			System.out.println("Non parsed value = " + nonParsedValue);
+			Logger.getAnonymousLogger().info("Non parsed value = " + nonParsedValue);
 			JEP myParser = new JEP();
 //			If the changed value is a String, convert to Double
 			if(nonParsedValue instanceof String) {
@@ -52,7 +53,7 @@ public class PrefMatrixChangeListener implements TableModelListener {
 			if(nonParsedValue instanceof Double) {
 				value = (Double) nonParsedValue;
 			}
-			System.out.println("Parsed value = " + value.doubleValue());
+			Logger.getAnonymousLogger().info("Parsed value = " + value.doubleValue());
 
 //			Case where the value is "0". Must be avoid because there will be a division later
 			if(value == 0) {

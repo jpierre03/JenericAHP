@@ -25,19 +25,20 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PrefMatrixTableModel extends DefaultTableModel {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
 //	We override this method to make editable only half of the matrix.
 //	The other half will be filled automatically by an event listener on the table.
-	@Override
-	public boolean isCellEditable(int row, int column) {
-		//Define wich cells are editable
-		if(column >= row) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        //Define wich cells are editable
+        boolean editable = true;
+        if (column >= row) {
+            editable=false;
+        }
+        return editable;
+    }
 }

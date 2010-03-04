@@ -32,7 +32,7 @@ public class IndicatorDialog extends javax.swing.JDialog {
 	/**
 	 *
 	 */
-	Indicator indicator;
+	transient private Indicator indicator;
 
 	/** Creates new form IndicatorDialog
 	 * @param parent

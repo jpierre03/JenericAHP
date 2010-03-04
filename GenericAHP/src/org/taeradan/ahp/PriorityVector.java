@@ -33,7 +33,7 @@ public class PriorityVector {
 	/**
 	 *
 	 */
-	boolean isUnderTreshold = true;
+	transient private boolean isUnderTreshold = true;
 
 	/**
 	 *

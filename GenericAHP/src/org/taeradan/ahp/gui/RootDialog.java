@@ -20,6 +20,7 @@ package org.taeradan.ahp.gui;
 import org.taeradan.ahp.Root;
 import Jama.Matrix;
 import org.nfunk.jep.JEP;
+import org.taeradan.ahp.Criteria;
 
 /**
  * Dialog used to configure Root's informations and preference matrix
@@ -180,7 +181,7 @@ public class RootDialog extends javax.swing.JDialog {
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
 		for(int i = 0; i < matrixSize; i++) {
-			columnNames[i] = root.getCriterias().get(i).getId();
+			columnNames[i] = ((Criteria)root.getCriterias().toArray()[i]).getId();
 			for(int j = 0; j < matrixSize; j++) {
 				data[i][j] = root.getMatrixCrCr().getMatrix().get(i, j);
 			}

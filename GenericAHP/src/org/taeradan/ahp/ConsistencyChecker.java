@@ -1,6 +1,7 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,18 +46,18 @@ public class ConsistencyChecker {
 						lambdaMax = lambdas[index];
 					}
 				}
-				double CI = (lambdaMax - dimension) / (dimension - 1);
-				double CR = CI / randomIndex[dimension];
+				final double CI = (lambdaMax - dimension) / (dimension - 1);
+				final double CR = CI / randomIndex[dimension];
 				if(CR < 0.1) {
 					consistent = true;
 				}
 			}
 			else {
-				System.err.println("Preference matrix and priority vector are too wide (15 max) or empty !!" + dimension);
+				Logger.getAnonymousLogger().severe("Preference matrix and priority vector are too wide (15 max) or empty !!" + dimension);
 			}
 		}
 		else {
-			System.err.println("The matrix and vector dimension does not match !!" + prefMatrix.getMatrix().getRowDimension() + "," + prioVector.getVector().getRowDimension());
+			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.getMatrix().getRowDimension() + "," + prioVector.getVector().getRowDimension());
 		}
 		return consistent;
 	}

@@ -20,6 +20,7 @@ package org.taeradan.ahp.gui;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -44,26 +45,26 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 	/**
 	 *
 	 */
-	private DefaultTreeModel guiAhpTree;
+	transient private DefaultTreeModel guiAhpTree;
 	/**
 	 *
 	 */
-	private File currentFile = new File(System.getProperty("user.dir"));
+	transient private File currentFile = new File(System.getProperty("user.dir"));
 	/**
 	 *
 	 */
-	private Root ahpRoot;
+	transient private Root ahpRoot;
 	/**
 	 *
 	 */
-	private boolean fileOpened = false;
+	transient private boolean fileOpened = false;
 
 	/** Creates new form ConfigurationFrame */
 	public ConfigurationFrame() {
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded
-		ahpRoot = new Root(null, Root.INDICATOR_PATH);
+		ahpRoot = new Root(null, Root.indicatorPath);
 //		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
 		guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 		initComponents();
@@ -172,10 +173,10 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 //				Handling of the right button double click
 				if(evt.getButton() == MouseEvent.BUTTON3) {
 					final Object object = node.getUserObject();
-					JPopupMenu contextMenu = new JPopupMenu();
+					final JPopupMenu contextMenu = new JPopupMenu();
 					if(object instanceof Root) {
 						final Root root = (Root) object;
-						JMenuItem addItem = new JMenuItem("Add criteria");
+						final JMenuItem addItem = new JMenuItem("Add criteria");
 						addItem.addActionListener(new java.awt.event.ActionListener() {
 
 							@Override
@@ -205,7 +206,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 					}
 					if(object instanceof Criteria) {
 						final Criteria criteria = (Criteria) object;
-						JMenuItem addItem = new JMenuItem("Add indicator");
+						final JMenuItem addItem = new JMenuItem("Add indicator");
 						addItem.addActionListener(new java.awt.event.ActionListener() {
 
 							@Override
@@ -269,7 +270,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 			jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 			if(jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				currentFile = jFileChooser.getSelectedFile();
-				ahpRoot = new Root(new File(currentFile.getAbsolutePath()), Root.INDICATOR_PATH);
+				ahpRoot = new Root(new File(currentFile.getAbsolutePath()), Root.indicatorPath);
 				guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 				fileOpened = true;
 			}
@@ -318,7 +319,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 			dialog.setVisible(true);
 		}
 		if(object instanceof Criteria) {
-			Criteria criteria = (Criteria) object;
+			final Criteria criteria = (Criteria) object;
 			CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
 			dialog.setVisible(true);
 		}
@@ -335,7 +336,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 	 */
 	private void delRootActionPerformed(Root root) {
 		if(JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.", "Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpRoot = new Root(null, Root.INDICATOR_PATH);
+			ahpRoot = new Root(null, Root.indicatorPath);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
 			editActionPerformed(ahpRoot);
 		}
@@ -393,20 +394,20 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 	public static DefaultMutableTreeNode processAhpHierarchy(Root ahpRoot) {
 //		Creation of the root node
 		DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpRoot);
-		ArrayList<Criteria> ahpCriterias = ahpRoot.getCriterias();
+		final Collection<Criteria> ahpCriterias = ahpRoot.getCriterias();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
 //		For each criteria in root
 		for(int i = 0; i < ahpCriterias.size(); i++) {
 //			Real criteria attached to a criteria node
-			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.get(i)));
+			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.toArray()[i]));
 //			Criteria node attached to the root node
 			guiRoot.add(guiCriterias.get(i));
-			ArrayList<Indicator> ahpIndicators = ahpCriterias.get(i).getIndicators();
+			final Collection<Indicator> ahpIndicators = ((Criteria)ahpCriterias.toArray()[i]).getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators = new ArrayList<DefaultMutableTreeNode>();
 //			For each indicator in the criteria
 			for(int j = 0; j < ahpIndicators.size(); j++) {
 //				Real indicator attached to an indicator node
-				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.get(j)));
+				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.toArray()[i]));
 //				Indicator node attached to the criteria node
 				guiCriterias.get(i).add(guiIndicators.get(j));
 			}

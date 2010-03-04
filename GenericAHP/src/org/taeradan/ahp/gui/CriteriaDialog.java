@@ -19,7 +19,9 @@ package org.taeradan.ahp.gui;
 
 import org.taeradan.ahp.Criteria;
 import Jama.Matrix;
+import java.util.logging.Logger;
 import org.nfunk.jep.JEP;
+import org.taeradan.ahp.Indicator;
 
 /**
  * Dialog used to configure a Criteria's informations and preference matrix
@@ -160,7 +162,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
 		criteria.setId(jTextFieldId.getText());
 		criteria.setName(jTextFieldName.getText());
 		Matrix matrix = new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
-		System.out.println(guiPrefMatrix.getValueAt(1, 1).getClass());
+		Logger.getAnonymousLogger().info(guiPrefMatrix.getValueAt(1, 1).getClass().getCanonicalName());
 		for(int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
 			for(int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
@@ -198,7 +200,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
 		for(int i = 0; i < matrixSize; i++) {
-			columnNames[i] = criteria.getIndicators().get(i).getId();
+			columnNames[i] = ((Indicator)criteria.getIndicators().toArray()[i]).getId();
 			for(int j = 0; j < matrixSize; j++) {
 				data[i][j] = criteria.getMatrixInd().getMatrix().get(i, j);
 			}
