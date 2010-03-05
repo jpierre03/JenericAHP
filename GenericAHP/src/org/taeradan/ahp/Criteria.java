@@ -37,7 +37,7 @@ public class Criteria {
     /**
      *
      */
-    private String id;
+    private String identifier;
     /**
      *
      */
@@ -66,7 +66,7 @@ public class Criteria {
      */
     public Criteria(Element xmlCriteria) {
 //		Initialisation of the id of the criteria
-        id = xmlCriteria.getAttributeValue("id");
+        identifier = xmlCriteria.getAttributeValue("id");
 //		System.out.println("\tCriteria.id="+id);
 
 //		Initialisation of the name
@@ -81,7 +81,7 @@ public class Criteria {
 
 //		Consistency verification
         if (!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
-            Logger.getAnonymousLogger().severe("Is not consistent (criteria " + id + ")");
+            Logger.getAnonymousLogger().severe("Is not consistent (criteria " + identifier + ")");
         }
 //		Initialisation of the Indicators
         @SuppressWarnings("unchecked")
@@ -153,7 +153,7 @@ public class Criteria {
      */
     @Override
     public String toString() {
-        return "Criteria " + id + " : " + name;
+        return "Criteria " + identifier + " : " + name;
     }
 
     /**
@@ -176,7 +176,7 @@ public class Criteria {
      */
     public Element toXml() {
         Element xmlCriteria = new Element("criteria");
-        xmlCriteria.setAttribute("id", id);
+        xmlCriteria.setAttribute("id", identifier);
         xmlCriteria.addContent(new Element("name").setText(name));
         xmlCriteria.addContent(matrixIndInd.toXml());
         for (int i = 0; i < indicators.size(); i++) {
@@ -203,15 +203,15 @@ public class Criteria {
      * @return
      */
     public String getId() {
-        return id;
+        return identifier;
     }
 
     /**
      *
-     * @param id
+     * @param identifier
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String identifier) {
+        this.identifier = identifier;
     }
 
     /**

@@ -39,7 +39,7 @@ public class IndicatorI41 extends Indicator {
 	}
 
 	@Override
-	public double calculateAlternativeValue(int i, Collection<? extends Alternative> alternatives) {
-		return ((TestingAlternative) alternatives.toArray()[i]).valueI41;
+	public double calculateAlternativeValue(int altIndex, Collection<? extends Alternative> alternatives) {
+		return ((TestingAlternative) alternatives.toArray()[altIndex]).valueI41;
 	}
 }

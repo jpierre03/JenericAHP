@@ -33,7 +33,7 @@ public abstract class Indicator {
 	/**
 	 *
 	 */
-	private String id;
+	private String identifier;
 	/**
 	 *
 	 */
@@ -100,11 +100,11 @@ public abstract class Indicator {
 
 	/**
 	 * Method that calculates the value (floating point) of the indicator for an alternative i.
-	 * @param i Alternative to be evaluated from the list
+	 * @param altIndex Alternative to be evaluated from the list
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public abstract double calculateAlternativeValue(int i, Collection<? extends Alternative> alternatives);
+	public abstract double calculateAlternativeValue(int altIndex, Collection<? extends Alternative> alternatives);
 
 	/**
 	 * Returns a string describing the indicator
@@ -112,7 +112,7 @@ public abstract class Indicator {
 	 */
 	@Override
 	public String toString() {
-		String string = "Indicator " + id + " : " + name;
+		String string = "Indicator " + identifier + " : " + name;
 		if(maximization) {
 			string = string.concat(", maximize");
 		}
@@ -128,7 +128,7 @@ public abstract class Indicator {
 	 */
 	public Element toXml() {
 		Element xmlIndicator = new Element("indicator");
-		xmlIndicator.setAttribute("id", id);
+		xmlIndicator.setAttribute("id", identifier);
 		xmlIndicator.addContent(new Element("name").setText(name));
 		if(maximization) {
 			xmlIndicator.addContent(new Element("maximize"));
@@ -146,7 +146,7 @@ public abstract class Indicator {
 	protected final void fromXml(Element xmlIndicator) {
 
 //		Initialisation of the id
-		id = xmlIndicator.getAttributeValue("id");
+		identifier = xmlIndicator.getAttributeValue("id");
 //		System.out.println("\t\tIndicator.id="+id);
 
 //		Initialisation of the name
@@ -183,15 +183,15 @@ public abstract class Indicator {
 	 * @return
 	 */
 	public String getId() {
-		return id;
+		return identifier;
 	}
 
 	/**
 	 *
-	 * @param id
+	 * @param identifier
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String identifier) {
+		this.identifier = identifier;
 	}
 
 	/**

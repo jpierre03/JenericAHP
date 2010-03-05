@@ -61,6 +61,7 @@ public class ConfigurationFrame extends javax.swing.JFrame {
 
 	/** Creates new form ConfigurationFrame */
 	public ConfigurationFrame() {
+		super();
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded

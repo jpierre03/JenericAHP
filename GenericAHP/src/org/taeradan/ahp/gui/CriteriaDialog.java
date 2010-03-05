@@ -36,11 +36,11 @@ public class CriteriaDialog extends javax.swing.JDialog {
 	/**
 	 *
 	 */
-	private Criteria criteria;
+	final private Criteria criteria;
 	/**
 	 *
 	 */
-	private PrefMatrixTableModel guiPrefMatrix;
+	private final PrefMatrixTableModel guiPrefMatrix;
 
 	/** Creates new form CriteriaDialog
 	 * @param parent

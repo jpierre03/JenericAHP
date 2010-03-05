@@ -142,9 +142,9 @@ public class Root {
      */
     public void delCriteria(Criteria crit) {
         if (criterias.contains(crit)) {
-            int i = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
+            int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
             criterias.remove(crit);
-            matrixCrCr.remove(i);
+            matrixCrCr.remove(critIndex);
         } else {
             Logger.getAnonymousLogger().severe("Criteria not found");
         }
