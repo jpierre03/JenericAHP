@@ -50,7 +50,7 @@ public class ConsistencyChecker {
 			}
 			if(dimension < 15 && dimension > 0) {
 				lambdas = new double[dimension];
-				for(int i = 0; i < dimension; i++) {
+				for (int i = 0; i < dimension; i++) {
 					double sum = 0;
 					for(int j = 0; j < dimension; j++) {
 						sum = sum + matrix.get(i, j) * vector.get(j, 0);

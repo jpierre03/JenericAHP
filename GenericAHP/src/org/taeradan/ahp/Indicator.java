@@ -19,6 +19,7 @@ package org.taeradan.ahp;
 
 import Jama.Matrix;
 import java.util.Collection;
+import java.util.Iterator;
 import org.jdom.Element;
 
 /**
@@ -69,25 +70,24 @@ public abstract class Indicator {
 	 * @param alts
 	 * @return MCr vector
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alts) {
+	public PriorityVector calculateAlternativesPriorityVector(
+			final Collection<? extends Alternative> alts) {
 		alternatives = alts;
-//		double[] altValues = new double[alternatives.size()];
-		double[] altValues = new double[alternatives.size()];
-		final int dimension = altValues.length;
+		final int dimension = alternatives.size();
+		double[] altValues = new double[dimension];
 		matrixAltAlt = new Matrix(dimension, dimension);
 //		For each alternative, evaluation of its value for the indicator
-		for(int i = 0; i < alternatives.size(); i++) {
+		for (int i = 0; i < alternatives.size(); i++) {
 			altValues[i] = calculateAlternativeValue(i, alternatives);
 		}
 //		Construction of the alternative/altervative matrix
-		for(int i = 0; i < dimension; i++) {
+		for (int i = 0; i < dimension; i++) {
 			matrixAltAlt.set(i, i, 1);
-			for(int j = 0; j < i; j++) {
-				if(maximization) {
+			for (int j = 0; j < i; j++) {
+				if (maximization) {
 					matrixAltAlt.set(i, j, altValues[i] / altValues[j]);
 					matrixAltAlt.set(j, i, altValues[j] / altValues[i]);
-				}
-				else {
+				} else {
 					matrixAltAlt.set(j, i, altValues[i] / altValues[j]);
 					matrixAltAlt.set(i, j, altValues[j] / altValues[i]);
 				}
@@ -104,7 +104,8 @@ public abstract class Indicator {
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public abstract double calculateAlternativeValue(int altIndex, Collection<? extends Alternative> alternatives);
+	public abstract double calculateAlternativeValue(int altIndex,
+													 Collection<? extends Alternative> alternatives);
 
 	/**
 	 * Returns a string describing the indicator
@@ -113,10 +114,9 @@ public abstract class Indicator {
 	@Override
 	public String toString() {
 		String string = "Indicator " + identifier + " : " + name;
-		if(maximization) {
+		if (maximization) {
 			string = string.concat(", maximize");
-		}
-		else {
+		} else {
 			string = string.concat(", minimize");
 		}
 		return string;
@@ -130,10 +130,9 @@ public abstract class Indicator {
 		Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
 		xmlIndicator.addContent(new Element("name").setText(name));
-		if(maximization) {
+		if (maximization) {
 			xmlIndicator.addContent(new Element("maximize"));
-		}
-		else {
+		} else {
 			xmlIndicator.addContent(new Element("maximize"));
 		}
 		return xmlIndicator;
@@ -157,10 +156,10 @@ public abstract class Indicator {
 //		System.out.println("Maximise="+xmlIndicator.getChild("maximize")+", minimize="+xmlIndicator.getChild("minimize"));
 		Element maximize = xmlIndicator.getChild("maximize");
 		Element minimize = xmlIndicator.getChild("minimize");
-		if(maximize != null) {
+		if (maximize != null) {
 			maximization = true;
 		}
-		if(minimize != null) {
+		if (minimize != null) {
 			maximization = false;
 		}
 	}
@@ -171,10 +170,12 @@ public abstract class Indicator {
 	 */
 	public String resultToString() {
 		String string = this.toString();
-		if(alternatives.size() < 30) {
-			string = string.concat("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
+		if (alternatives.size() < 30) {
+			string = string.concat("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.
+					toString(matrixAltAlt, "\t\t"));
 		}
-		string = string.concat("\n\t\tvectorAltInd=\n" + PreferenceMatrix.toString(vectorAltInd.getVector(), "\t\t"));
+		string = string.concat("\n\t\tvectorAltInd=\n" + PreferenceMatrix.
+				toString(vectorAltInd.getVector(), "\t\t"));
 		return string;
 	}
 
