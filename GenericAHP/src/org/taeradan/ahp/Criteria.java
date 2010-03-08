@@ -87,8 +87,7 @@ public class Criteria {
 		}
 //		Initialisation of the Indicators
 		@SuppressWarnings("unchecked")
-		List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.
-				getChildren("indicator");
+		List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
 		@SuppressWarnings("unchecked")
 		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(
 				"row");
@@ -105,13 +104,13 @@ public class Criteria {
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
 			String indName = Root.indicatorPath
-							 + Indicator.class.getSimpleName() + xmlIndicator.
-					getAttributeValue("id");
+							 + Indicator.class.getSimpleName()
+							 + xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 				@SuppressWarnings("unchecked")
-				Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.
-						forName(indName);
+				Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(
+						indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
 				Constructor<? extends Indicator> indConstruct = (Constructor<? extends Indicator>) indClass.
@@ -154,8 +153,8 @@ public class Criteria {
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.
-					next().calculateAlternativesPriorityVector(alternatives).
+			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.next().
+					calculateAlternativesPriorityVector(alternatives).
 					getVector());
 			index++;
 		}
@@ -179,17 +178,17 @@ public class Criteria {
 	 * @return Criteria and children as a String
 	 */
 	public String toStringRecursive() {
-		String string = this.toString();
-		string = string.concat("\n" + matrixIndInd.toString("\t"));
+		final StringBuilder string = new StringBuilder(this.toString());
+		string.append("\n" + matrixIndInd.toString("\t"));
 		DecimalFormat printFormat = new DecimalFormat("0.000");
-		Iterator<Indicator> itIndicators = indicators.iterator();
+		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			string = string.concat("\n\t\t(" + printFormat.format(vectorIndCr.
-					getVector().get(index, 0)) + ") " + itIndicators.next());
+			string.append("\n\t\t(" + printFormat.format(vectorIndCr.getVector().get(index, 0))
+						  + ") " + itIndicators.next());
 			index++;
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**
@@ -213,15 +212,15 @@ public class Criteria {
 	 * @return
 	 */
 	public String resultToString() {
-		String string = this.toString();
-		Iterator<Indicator> itIndicators = indicators.iterator();
+		final StringBuilder string = new StringBuilder(this.toString());
+		final Iterator<Indicator> itIndicators = indicators.iterator();
 		while (itIndicators.hasNext()) {
-			string = string.concat("\n\t\t" + itIndicators.next().
+			string.append("\n\t\t" + itIndicators.next().
 					resultToString());
 		}
-		string = string.concat("\n\tvectorAltCr=\n" + PreferenceMatrix.toString(vectorAltCr.
-				getVector(), "\t"));
-		return string;
+		string.append("\n\tvectorAltCr=\n"
+					  + PreferenceMatrix.toString(vectorAltCr.getVector(), "\t"));
+		return string.toString();
 	}
 
 	/**

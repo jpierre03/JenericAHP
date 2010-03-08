@@ -19,7 +19,6 @@ package org.taeradan.ahp;
 
 import Jama.Matrix;
 import java.util.Collection;
-import java.util.Iterator;
 import org.jdom.Element;
 
 /**
@@ -113,13 +112,13 @@ public abstract class Indicator {
 	 */
 	@Override
 	public String toString() {
-		String string = "Indicator " + identifier + " : " + name;
+		StringBuilder string = new StringBuilder("Indicator " + identifier + " : " + name);
 		if (maximization) {
-			string = string.concat(", maximize");
+			string.append(", maximize");
 		} else {
-			string = string.concat(", minimize");
+			string.append(", minimize");
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**
@@ -169,14 +168,13 @@ public abstract class Indicator {
 	 * @return
 	 */
 	public String resultToString() {
-		String string = this.toString();
+		final StringBuilder string = new StringBuilder(this.toString());
 		if (alternatives.size() < 30) {
-			string = string.concat("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.
-					toString(matrixAltAlt, "\t\t"));
+			string.append("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
 		}
-		string = string.concat("\n\t\tvectorAltInd=\n" + PreferenceMatrix.
-				toString(vectorAltInd.getVector(), "\t\t"));
-		return string;
+		string.append("\n\t\tvectorAltInd=\n" + PreferenceMatrix.toString(vectorAltInd.getVector(),
+																		  "\t\t"));
+		return string.toString();
 	}
 
 	/**

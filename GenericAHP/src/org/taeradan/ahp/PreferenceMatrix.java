@@ -51,18 +51,18 @@ public class PreferenceMatrix {
 		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		int size = xmlRowsList.size();
 		matrix = new Matrix(size, size);
-		for(int i = 0; i < xmlRowsList.size(); i++) {
+		final JEP myParser = new JEP();
+		for (int i = 0; i < xmlRowsList.size(); i++) {
 //			Extraction of a row from the matrix
 			Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
 			List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
-			for(int j = 0; j < xmlEltsList.size(); j++) {
+			for (int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
 				Element xmlElt = xmlEltsList.get(j);
 //				Setting of an element of the temporary matrix
 				final Attribute att = xmlElt.getAttribute("value");
 //				Creation of a math expression parser to handle fractions in the XML file
-				JEP myParser = new JEP();
 //				The expression contained in the String is passed to the parser and is evaluated
 				myParser.parseExpression(att.getValue());
 				double value = myParser.getValue();
@@ -111,17 +111,17 @@ public class PreferenceMatrix {
 		int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 //		For each row in the matrix
-		for(int i = 0; i < nRows; i++) {
-			if(prefix != null) {
+		for (int i = 0; i < nRows; i++) {
+			if (prefix != null) {
 				string.append(prefix);
 			}
 //			For each element of the row
-			for(int j = 0; j < nCols; j++) {
+			for (int j = 0; j < nCols; j++) {
 				string.append(" ");
 				string.append(printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
-			if(i < nRows - 1) {
+			if (i < nRows - 1) {
 				string.append("\n");
 			}
 		}
@@ -135,10 +135,10 @@ public class PreferenceMatrix {
 	public Element toXml() {
 		Element xmlPrefMatrix = new Element("prefmatrix");
 //		For each row in the matrix
-		for(int i = 0; i < matrix.getRowDimension(); i++) {
+		for (int i = 0; i < matrix.getRowDimension(); i++) {
 			Element xmlRow = new Element("row");
 //			For each element in the row
-			for(int j = 0; j < matrix.getColumnDimension(); j++) {
+			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 				Element xmlElt = new Element("elt");
 				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
 				xmlRow.addContent(xmlElt);
@@ -171,15 +171,17 @@ public class PreferenceMatrix {
 	public void remove(int index) {
 		int newDimension = matrix.getRowDimension() - 1;
 		Matrix newMatrix = new Matrix(newDimension, newDimension);
-		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension() + ", nouvelle=" + newDimension + "\n");
+		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension()
+										 + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
-		for(int i = 0; i < matrix.getRowDimension(); i++) {
-			if(i != index) {
-				for(int j = 0; j < matrix.getColumnDimension(); j++) {
-					if(j != index) {
+		for (int i = 0; i < matrix.getRowDimension(); i++) {
+			if (i != index) {
+				for (int j = 0; j < matrix.getColumnDimension(); j++) {
+					if (j != index) {
 						double newValue = matrix.get(i, j);
-						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue + "newI=" + newI + "newJ=" + newJ + "\n");
+						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
+														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

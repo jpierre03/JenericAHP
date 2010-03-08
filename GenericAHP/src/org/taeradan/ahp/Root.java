@@ -111,11 +111,9 @@ public class Root {
 				}
 //				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
-				List<Element> xmlCriteriasList = (List<Element>) xmlRoot.
-						getChildren("criteria");
+				List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren("criteria");
 				@SuppressWarnings("unchecked")
-				List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.
-						getChildren("row");
+				List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //				Verification that the number of criterias matches the size of the preference matrix
 				if (xmlCriteriasList.size() != xmlRowsList.size()) {
@@ -128,8 +126,7 @@ public class Root {
 					criterias.add(new Criteria(xmlCriteria));
 				}
 			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().severe("File not found : " + inFile.
-						getAbsolutePath());
+				Logger.getAnonymousLogger().severe("File not found : " + inFile.getAbsolutePath());
 				name = "unknow";
 				matrixCrCr = new PreferenceMatrix();
 				criterias = new ArrayList<Criteria>();
@@ -169,20 +166,20 @@ public class Root {
 	 * @return Multiline string describing the AHP tree
 	 */
 	public String toStringRecursive() {
-		String string = this.toString();
-		string = string.concat("\n" + matrixCrCr);
+		StringBuilder string = new StringBuilder(this.toString());
+		string.append("\n" + matrixCrCr);
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
-			string = string.concat("\n\t("
-								   + printFormat.format(vectorCrOg.getVector().
+			string.append("\n\t("
+						  + printFormat.format(vectorCrOg.getVector().
 					get(index, 0))
-								   + ") "
-								   + itCriterias.next().toStringRecursive());
+						  + ") "
+						  + itCriterias.next().toStringRecursive());
 			index++;
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**
@@ -205,20 +202,20 @@ public class Root {
 	 * @return
 	 */
 	public String resultToString() {
-		String string;
+		final StringBuilder string = new StringBuilder();
 		if (calculationOccured) {
-			string = this.toString();
-			Iterator<Criteria> itCriterias = criterias.iterator();
+			string.append(this.toString());
+			final Iterator<Criteria> itCriterias = criterias.iterator();
 			while (itCriterias.hasNext()) {
-				string = string.concat("\n\t" + itCriterias.next().
+				string.append("\n\t" + itCriterias.next().
 						resultToString());
 			}
-			string = string.concat("\nvectorAltOg=\n" + PreferenceMatrix.
-					toString(vectorAltOg.getVector(), null));
+			string.append("\nvectorAltOg=\n" + PreferenceMatrix.toString(vectorAltOg.getVector(),
+																		 null));
 		} else {
-			string = "There is no result, please do a ranking first";
+			string.append("There is no result, please do a ranking first");
 		}
-		return string;
+		return string.toString();
 	}
 
 	/**
@@ -252,7 +249,8 @@ public class Root {
 		Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
-			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, itCriterias.next().calculateAlternativesPriorityVector(
+			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, itCriterias.next().
+					calculateAlternativesPriorityVector(
 					alternatives).getVector());
 			index++;
 		}
