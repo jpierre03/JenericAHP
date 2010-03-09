@@ -26,7 +26,8 @@ import org.taeradan.ahp.Criteria;
  * Dialog used to configure Root's informations and preference matrix
  * @author Yves Dubromelle
  */
-public class RootDialog extends javax.swing.JDialog {
+public class RootDialog
+		extends javax.swing.JDialog {
 
 	/**
 	 *
@@ -35,11 +36,11 @@ public class RootDialog extends javax.swing.JDialog {
 	/**
 	 *
 	 */
-	private Root root;
+	final private Root root;
 	/**
 	 *
 	 */
-	private PrefMatrixTableModel guiPrefMatrix;
+	final private PrefMatrixTableModel guiPrefMatrix;
 
 	/** Creates new form CriteriaDialog
 	 * @param parent
@@ -145,15 +146,16 @@ public class RootDialog extends javax.swing.JDialog {
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 		root.setName(jTextFieldObjective.getText());
-		Matrix matrix = new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
-		for(int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
-			for(int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
+		final Matrix matrix =
+					 new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
+			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
-				if(guiPrefMatrix.getValueAt(i, j) instanceof Double) {
+				if (guiPrefMatrix.getValueAt(i, j) instanceof Double) {
 					value = (Double) guiPrefMatrix.getValueAt(i, j);
 				}
-				if(guiPrefMatrix.getValueAt(i, j) instanceof String) {
-					JEP myParser = new JEP();
+				if (guiPrefMatrix.getValueAt(i, j) instanceof String) {
+					final JEP myParser = new JEP();
 					myParser.parseExpression((String) guiPrefMatrix.getValueAt(i, j));
 					value = myParser.getValue();
 				}
@@ -163,7 +165,6 @@ public class RootDialog extends javax.swing.JDialog {
 		root.getMatrixCrCr().setMatrix(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
-
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButtonReload;
         private javax.swing.JButton jButtonSave;
@@ -177,12 +178,12 @@ public class RootDialog extends javax.swing.JDialog {
 	 * 
 	 */
 	private void initTable() {
-		int matrixSize = root.getCriterias().size();
+		final int matrixSize = root.getCriterias().size();
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
-		for(int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Criteria)root.getCriterias().toArray()[i]).getId();
-			for(int j = 0; j < matrixSize; j++) {
+		for (int i = 0; i < matrixSize; i++) {
+			columnNames[i] = ((Criteria) root.getCriterias().toArray()[i]).getIdentifier();
+			for (int j = 0; j < matrixSize; j++) {
 				data[i][j] = root.getMatrixCrCr().getMatrix().get(i, j);
 			}
 		}
@@ -194,7 +195,7 @@ public class RootDialog extends javax.swing.JDialog {
 	 * @param row
 	 * @param column
 	 */
-	public void reloadCell(int row, int column) {
+	public void reloadCell(final int row, final int column) {
 		guiPrefMatrix.setValueAt(root.getMatrixCrCr().getMatrix().get(row, column), row, column);
 	}
 

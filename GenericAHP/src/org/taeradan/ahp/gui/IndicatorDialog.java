@@ -23,7 +23,8 @@ import org.taeradan.ahp.Indicator;
  * Dialog used to configure an Indicator's informations
  * @author Yves Dubromelle
  */
-public class IndicatorDialog extends javax.swing.JDialog {
+public class IndicatorDialog
+		extends javax.swing.JDialog {
 
 	/**
 	 * 
@@ -32,18 +33,19 @@ public class IndicatorDialog extends javax.swing.JDialog {
 	/**
 	 *
 	 */
-	transient private Indicator indicator;
+	transient final private Indicator indicator;
 
 	/** Creates new form IndicatorDialog
 	 * @param parent
 	 * @param modal
 	 * @param indicator
 	 */
-	public IndicatorDialog(java.awt.Frame parent, boolean modal, Indicator indicator) {
+	public IndicatorDialog(final java.awt.Frame parent, final boolean modal,
+						   final Indicator indicator) {
 		super(parent, modal);
 		this.indicator = indicator;
 		initComponents();
-		jTextFieldId.setText(indicator.getId());
+		jTextFieldId.setText(indicator.getIdentifier());
 		jTextFieldName.setText(indicator.getName());
 	}
 
@@ -133,13 +135,13 @@ public class IndicatorDialog extends javax.swing.JDialog {
         }// </editor-fold>//GEN-END:initComponents
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		indicator.setId(jTextFieldId.getText());
+		indicator.setIdentifier(jTextFieldId.getText());
 		indicator.setName(jTextFieldName.getText());
 		this.dispose();
 }//GEN-LAST:event_jButtonSaveActionPerformed
 
 	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
-		jTextFieldId.setText(indicator.getId());
+		jTextFieldId.setText(indicator.getIdentifier());
 		jTextFieldName.setText(indicator.getName());
 }//GEN-LAST:event_jButtonReloadActionPerformed
         // Variables declaration - do not modify//GEN-BEGIN:variables

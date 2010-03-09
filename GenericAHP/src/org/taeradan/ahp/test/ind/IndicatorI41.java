@@ -28,18 +28,20 @@ import org.taeradan.ahp.test.TestingAlternative;
  * @author jpierre03
  * @author Yves Dubromelle
  */
-public class IndicatorI41 extends Indicator {
+public class IndicatorI41
+		extends Indicator {
 
 	/**
 	 * 
 	 * @param xmlIndicator
 	 */
-	public IndicatorI41(Element xmlIndicator) {
+	public IndicatorI41(final Element xmlIndicator) {
 		super(xmlIndicator);
 	}
 
 	@Override
-	public double calculateAlternativeValue(int altIndex, Collection<? extends Alternative> alternatives) {
+	public double calculateAlternativeValue(final int altIndex,
+											final Collection<? extends Alternative> alternatives) {
 		return ((TestingAlternative) alternatives.toArray()[altIndex]).valueI41;
 	}
 }

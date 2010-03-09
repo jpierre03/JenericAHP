@@ -46,26 +46,26 @@ public class PreferenceMatrix {
 	 * Creates a PreferenceMatrix from a JDOM Element
 	 * @param xmlPrefMatrix JDOM Element
 	 */
-	public PreferenceMatrix(Element xmlPrefMatrix) {
+	public PreferenceMatrix(final Element xmlPrefMatrix) {
 		@SuppressWarnings("unchecked")
-		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
-		int size = xmlRowsList.size();
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+		final int size = xmlRowsList.size();
 		matrix = new Matrix(size, size);
 		final JEP myParser = new JEP();
 		for (int i = 0; i < xmlRowsList.size(); i++) {
 //			Extraction of a row from the matrix
-			Element xmlRow = xmlRowsList.get(i);
+			final Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
-			List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
+			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
 			for (int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
-				Element xmlElt = xmlEltsList.get(j);
+				final Element xmlElt = xmlEltsList.get(j);
 //				Setting of an element of the temporary matrix
 				final Attribute att = xmlElt.getAttribute("value");
 //				Creation of a math expression parser to handle fractions in the XML file
 //				The expression contained in the String is passed to the parser and is evaluated
 				myParser.parseExpression(att.getValue());
-				double value = myParser.getValue();
+				final double value = myParser.getValue();
 				matrix.set(i, j, value);
 			}
 		}
@@ -85,7 +85,7 @@ public class PreferenceMatrix {
 	 * @param prefix
 	 * @return
 	 */
-	public String toString(String prefix) {
+	public String toString(final String prefix) {
 		return makeString(this.matrix, prefix);
 	}
 
@@ -95,7 +95,7 @@ public class PreferenceMatrix {
 	 * @param prefix
 	 * @return
 	 */
-	public static String toString(Matrix matrix, String prefix) {
+	public static String toString(final Matrix matrix, final String prefix) {
 		return makeString(matrix, prefix);
 	}
 
@@ -105,10 +105,10 @@ public class PreferenceMatrix {
 	 * @param prefix
 	 * @return
 	 */
-	private static String makeString(Matrix matrix, String prefix) {
-		StringBuilder string = new StringBuilder();
-		int nRows = matrix.getRowDimension();
-		int nCols = matrix.getColumnDimension();
+	private static String makeString(final Matrix matrix, final String prefix) {
+		final StringBuilder string = new StringBuilder();
+		final int nRows = matrix.getRowDimension();
+		final int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 //		For each row in the matrix
 		for (int i = 0; i < nRows; i++) {
@@ -133,13 +133,13 @@ public class PreferenceMatrix {
 	 * @return JDOM element representing the preference matrix
 	 */
 	public Element toXml() {
-		Element xmlPrefMatrix = new Element("prefmatrix");
+		final Element xmlPrefMatrix = new Element("prefmatrix");
 //		For each row in the matrix
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
-			Element xmlRow = new Element("row");
+			final Element xmlRow = new Element("row");
 //			For each element in the row
 			for (int j = 0; j < matrix.getColumnDimension(); j++) {
-				Element xmlElt = new Element("elt");
+				final Element xmlElt = new Element("elt");
 				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
 				xmlRow.addContent(xmlElt);
 			}
@@ -160,7 +160,7 @@ public class PreferenceMatrix {
 	 * Method that overwrite the matrix contained in this class.
 	 * @param matrix
 	 */
-	public void setMatrix(Matrix matrix) {
+	public void setMatrix(final Matrix matrix) {
 		this.matrix = matrix;
 	}
 
@@ -168,8 +168,8 @@ public class PreferenceMatrix {
 	 * 
 	 * @param index
 	 */
-	public void remove(int index) {
-		int newDimension = matrix.getRowDimension() - 1;
+	public void remove(final int index) {
+		final int newDimension = matrix.getRowDimension() - 1;
 		Matrix newMatrix = new Matrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension()
 										 + ", nouvelle=" + newDimension + "\n");
@@ -179,7 +179,7 @@ public class PreferenceMatrix {
 			if (i != index) {
 				for (int j = 0; j < matrix.getColumnDimension(); j++) {
 					if (j != index) {
-						double newValue = matrix.get(i, j);
+						final double newValue = matrix.get(i, j);
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
 														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);

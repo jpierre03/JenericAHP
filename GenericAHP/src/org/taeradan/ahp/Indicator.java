@@ -60,7 +60,7 @@ public abstract class Indicator {
 	 * Creates an Indicator from a JDOM Element
 	 * @param xmlIndicator JDOM Element
 	 */
-	public Indicator(Element xmlIndicator) {
+	public Indicator(final Element xmlIndicator) {
 		this.fromXml(xmlIndicator);
 	}
 
@@ -112,7 +112,7 @@ public abstract class Indicator {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder string = new StringBuilder("Indicator " + identifier + " : " + name);
+		final StringBuilder string = new StringBuilder("Indicator " + identifier + " : " + name);
 		if (maximization) {
 			string.append(", maximize");
 		} else {
@@ -126,7 +126,7 @@ public abstract class Indicator {
 	 * @return JDOM Element representing the indicator
 	 */
 	public Element toXml() {
-		Element xmlIndicator = new Element("indicator");
+		final Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
 		xmlIndicator.addContent(new Element("name").setText(name));
 		if (maximization) {
@@ -141,7 +141,7 @@ public abstract class Indicator {
 	 *
 	 * @param xmlIndicator
 	 */
-	protected final void fromXml(Element xmlIndicator) {
+	protected final void fromXml(final Element xmlIndicator) {
 
 //		Initialisation of the id
 		identifier = xmlIndicator.getAttributeValue("id");
@@ -153,8 +153,8 @@ public abstract class Indicator {
 
 //		Initialisation of the maximization/minimization parameter
 //		System.out.println("Maximise="+xmlIndicator.getChild("maximize")+", minimize="+xmlIndicator.getChild("minimize"));
-		Element maximize = xmlIndicator.getChild("maximize");
-		Element minimize = xmlIndicator.getChild("minimize");
+		final Element maximize = xmlIndicator.getChild("maximize");
+		final Element minimize = xmlIndicator.getChild("minimize");
 		if (maximize != null) {
 			maximization = true;
 		}
@@ -181,7 +181,7 @@ public abstract class Indicator {
 	 *
 	 * @return
 	 */
-	public String getId() {
+	public String getIdentifier() {
 		return identifier;
 	}
 
@@ -189,7 +189,7 @@ public abstract class Indicator {
 	 *
 	 * @param identifier
 	 */
-	public void setId(String identifier) {
+	public void setIdentifier(final String identifier) {
 		this.identifier = identifier;
 	}
 
@@ -205,7 +205,7 @@ public abstract class Indicator {
 	 *
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -221,7 +221,7 @@ public abstract class Indicator {
 	 *
 	 * @param maximization
 	 */
-	public void setMaximization(boolean maximization) {
+	public void setMaximization(final boolean maximization) {
 		this.maximization = maximization;
 	}
 }

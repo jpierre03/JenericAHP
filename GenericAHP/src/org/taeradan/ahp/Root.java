@@ -84,7 +84,7 @@ public class Root {
 	 * @param inFile Path to the configuration file
 	 * @param indicatorPath
 	 */
-	public Root(File inFile, String indicatorPath) {
+	public Root(final File inFile, final String indicatorPath) {
 		if (inFile == null) {
 			name = "";
 			matrixCrCr = new PreferenceMatrix();
@@ -92,16 +92,16 @@ public class Root {
 		} else {
 			Root.indicatorPath = indicatorPath;
 //			XML parser creation
-			SAXBuilder parser = new SAXBuilder();
+			final SAXBuilder parser = new SAXBuilder();
 			try {
 //				JDOM document created from XML configuration file
-				Document inXmlDocument = parser.build(inFile);
+				final Document inXmlDocument = parser.build(inFile);
 //				Extraction of the root element from the JDOM document
-				Element xmlRoot = inXmlDocument.getRootElement();
+				final Element xmlRoot = inXmlDocument.getRootElement();
 //				Initialisation of the AHP tree name
 				name = xmlRoot.getChildText("name");
 //				Initialisation of the preference matrix
-				Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
+				final Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
 				matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
 				vectorCrOg = new PriorityVector(matrixCrCr);
 //				Consistency verification
@@ -111,18 +111,19 @@ public class Root {
 				}
 //				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
-				List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren("criteria");
+				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren(
+						"criteria");
 				@SuppressWarnings("unchecked")
-				List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //				Verification that the number of criterias matches the size of the preference matrix
 				if (xmlCriteriasList.size() != xmlRowsList.size()) {
 					Logger.getAnonymousLogger().severe(
 							"Error : the number of criterias and the size of the preference matrix does not match !");
 				}
-				Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
+				final Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
 				while (itXmlCritList.hasNext()) {
-					Element xmlCriteria = itXmlCritList.next();
+					final Element xmlCriteria = itXmlCritList.next();
 					criterias.add(new Criteria(xmlCriteria));
 				}
 			} catch (FileNotFoundException e) {
@@ -142,9 +143,9 @@ public class Root {
 	 *
 	 * @param crit
 	 */
-	public void delCriteria(Criteria crit) {
+	public void delCriteria(final Criteria crit) {
 		if (criterias.contains(crit)) {
-			int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
+			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
 			criterias.remove(crit);
 			matrixCrCr.remove(critIndex);
 		} else {
@@ -166,10 +167,10 @@ public class Root {
 	 * @return Multiline string describing the AHP tree
 	 */
 	public String toStringRecursive() {
-		StringBuilder string = new StringBuilder(this.toString());
+		final StringBuilder string = new StringBuilder(this.toString());
 		string.append("\n" + matrixCrCr);
 		DecimalFormat printFormat = new DecimalFormat("0.000");
-		Iterator<Criteria> itCriterias = criterias.iterator();
+		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
 			string.append("\n\t("
@@ -187,10 +188,10 @@ public class Root {
 	 * @return JDOM Element representing the whole AHP tree
 	 */
 	public Element toXml() {
-		Element xmlRoot = new Element("root");
+		final Element xmlRoot = new Element("root");
 		xmlRoot.addContent(new Element("name").setText(name));
 		xmlRoot.addContent(matrixCrCr.toXml());
-		Iterator<Criteria> itCriterias = criterias.iterator();
+		final Iterator<Criteria> itCriterias = criterias.iterator();
 		while (itCriterias.hasNext()) {
 			xmlRoot.addContent(itCriterias.next().toXml());
 		}
@@ -222,15 +223,15 @@ public class Root {
 	 * Saves the whole AHP tree in a XML file
 	 * @param outputFile Output XML file path
 	 */
-	public void saveConfig(String outputFile) {
+	public void saveConfig(final String outputFile) {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
-			Document outXmlDocument =
-					 new Document(toXml(),
-								  new DocType("root", getClass().getResource(
+			final Document outXmlDocument =
+						   new Document(toXml(),
+										new DocType("root", getClass().getResource(
 					"/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 //			Use a write format easily readable by a human
-			XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
+			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file
 			output.output(outXmlDocument, new FileOutputStream(outputFile));
 		} catch (IOException ex) {
@@ -243,10 +244,10 @@ public class Root {
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
 	 * @param alternatives
 	 */
-	public void calculateRanking(Collection<? extends Alternative> alternatives) {
+	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
 		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
-		Iterator<Criteria> itCriterias = criterias.iterator();
+		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
 			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, itCriterias.next().
@@ -305,7 +306,7 @@ public class Root {
 	 *
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 

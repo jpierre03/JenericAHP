@@ -34,7 +34,7 @@ public class ConsistencyChecker {
 	/**
 	 * 
 	 */
-	private static double CR = 0;
+	private static double consistenceCrit = 0;
 
 	/**
 	 *
@@ -42,7 +42,7 @@ public class ConsistencyChecker {
 	 * @param prioVector
 	 * @return
 	 */
-	public static boolean isConsistent(PreferenceMatrix prefMatrix, PriorityVector prioVector) {
+	public static boolean isConsistent(final PreferenceMatrix prefMatrix, final PriorityVector prioVector) {
 		boolean consistent = false;
 		Matrix matrix = prefMatrix.getMatrix();
 		Matrix vector = prioVector.getVector();
@@ -69,8 +69,8 @@ public class ConsistencyChecker {
 					}
 				}
 				final double CI = (lambdaMax - dimension) / (dimension - 1);
-				CR = CI / randomIndex[dimension];
-				if (CR < 0.1) {
+				consistenceCrit = CI / randomIndex[dimension];
+				if (consistenceCrit < 0.1) {
 					consistent = true;
 				}
 			} else {
@@ -88,6 +88,6 @@ public class ConsistencyChecker {
 	 * @return
 	 */
 	public static double getCrResult(){
-		return CR;
+		return consistenceCrit;
 	}
 }

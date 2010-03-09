@@ -27,7 +27,8 @@ import org.taeradan.ahp.Indicator;
  * Dialog used to configure a Criteria's informations and preference matrix
  * @author Yves Dubromelle
  */
-public class CriteriaDialog extends javax.swing.JDialog {
+public class CriteriaDialog
+		extends javax.swing.JDialog {
 
 	/**
 	 *
@@ -47,14 +48,14 @@ public class CriteriaDialog extends javax.swing.JDialog {
 	 * @param modal
 	 * @param criteria
 	 */
-	public CriteriaDialog(java.awt.Frame parent, boolean modal, Criteria criteria) {
+	public CriteriaDialog(final java.awt.Frame parent, final boolean modal, final Criteria criteria) {
 		super(parent, modal);
 		this.criteria = criteria;
 		guiPrefMatrix = new PrefMatrixTableModel();
 		initTable();
 		initComponents();
 		guiPrefMatrix.addTableModelListener(new PrefMatrixChangeListener());
-		jTextFieldId.setText(criteria.getId());
+		jTextFieldId.setText(criteria.getIdentifier());
 		jTextFieldName.setText(criteria.getName());
 	}
 
@@ -154,23 +155,25 @@ public class CriteriaDialog extends javax.swing.JDialog {
 
 	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
 		initTable();
-		jTextFieldId.setText(criteria.getId());
+		jTextFieldId.setText(criteria.getIdentifier());
 		jTextFieldName.setText(criteria.getName());
 	}//GEN-LAST:event_jButtonReloadActionPerformed
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		criteria.setId(jTextFieldId.getText());
+		criteria.setIdentifier(jTextFieldId.getText());
 		criteria.setName(jTextFieldName.getText());
-		Matrix matrix = new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
-		Logger.getAnonymousLogger().info(guiPrefMatrix.getValueAt(1, 1).getClass().getCanonicalName());
-		for(int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
-			for(int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
+		final Matrix matrix =
+					 new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+		Logger.getAnonymousLogger().info(
+				guiPrefMatrix.getValueAt(1, 1).getClass().getCanonicalName());
+		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
+			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
-				if(guiPrefMatrix.getValueAt(i, j) instanceof Double) {
+				if (guiPrefMatrix.getValueAt(i, j) instanceof Double) {
 					value = (Double) guiPrefMatrix.getValueAt(i, j);
 				}
-				if(guiPrefMatrix.getValueAt(i, j) instanceof String) {
-					JEP myParser = new JEP();
+				if (guiPrefMatrix.getValueAt(i, j) instanceof String) {
+					final JEP myParser = new JEP();
 					myParser.parseExpression((String) guiPrefMatrix.getValueAt(i, j));
 					value = myParser.getValue();
 				}
@@ -180,7 +183,6 @@ public class CriteriaDialog extends javax.swing.JDialog {
 		criteria.getMatrixInd().setMatrix(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
-
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButtonReload;
         private javax.swing.JButton jButtonSave;
@@ -196,12 +198,12 @@ public class CriteriaDialog extends javax.swing.JDialog {
 	 *
 	 */
 	private void initTable() {
-		int matrixSize = criteria.getIndicators().size();
+		final int matrixSize = criteria.getIndicators().size();
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
-		for(int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Indicator)criteria.getIndicators().toArray()[i]).getId();
-			for(int j = 0; j < matrixSize; j++) {
+		for (int i = 0; i < matrixSize; i++) {
+			columnNames[i] = ((Indicator) criteria.getIndicators().toArray()[i]).getIdentifier();
+			for (int j = 0; j < matrixSize; j++) {
 				data[i][j] = criteria.getMatrixInd().getMatrix().get(i, j);
 			}
 		}
@@ -213,7 +215,7 @@ public class CriteriaDialog extends javax.swing.JDialog {
 	 * @param row
 	 * @param column
 	 */
-	public void reloadCell(int row, int column) {
+	public void reloadCell(final int row, final int column) {
 		guiPrefMatrix.setValueAt(criteria.getMatrixInd().getMatrix().get(row, column), row, column);
 	}
 

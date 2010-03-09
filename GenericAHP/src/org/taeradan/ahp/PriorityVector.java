@@ -39,7 +39,7 @@ public class PriorityVector {
 	 *
 	 * @param prefMatrix
 	 */
-	public PriorityVector(PreferenceMatrix prefMatrix) {
+	public PriorityVector(final PreferenceMatrix prefMatrix) {
 		constructVector(prefMatrix.getMatrix());
 	}
 
@@ -47,7 +47,7 @@ public class PriorityVector {
 	 *
 	 * @param matrix
 	 */
-	public PriorityVector(Matrix matrix) {
+	public PriorityVector(final Matrix matrix) {
 		constructVector(matrix);
 	}
 
@@ -61,20 +61,20 @@ public class PriorityVector {
 	 *
 	 * @param matrix
 	 */
-	private void constructVector(Matrix matrix) {
+	private void constructVector(final Matrix matrix) {
 		Matrix multMatrix = (Matrix) matrix.clone();
 //		matrix.print(5, 4);
 		Matrix oldVector;
-		int dimension = matrix.getRowDimension();
+		final int dimension = matrix.getRowDimension();
 		Matrix e = new Matrix(1, dimension, 1);
 //		System.out.println("e=" + PreferenceMatrix.toString(e));
 		do {
 //			System.out.println("Séparateur d'itération ");
 			oldVector = vector;
 			multMatrix = multMatrix.times(matrix);
-			Matrix numerator = matrix.times(e.transpose());
+			final Matrix numerator = matrix.times(e.transpose());
 //			System.out.println("\tNumerator=" + PreferenceMatrix.toString(numerator));
-			Matrix denominator = e.times(matrix).times(e.transpose());
+			final Matrix denominator = e.times(matrix).times(e.transpose());
 //			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
 			vector = numerator.timesEquals(1 / denominator.get(0, 0));
 //			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
@@ -107,7 +107,7 @@ public class PriorityVector {
 	 * 
 	 * @param vector
 	 */
-	public void setVector(Matrix vector) {
+	public void setVector(final Matrix vector) {
 		this.vector = vector;
 	}
 }

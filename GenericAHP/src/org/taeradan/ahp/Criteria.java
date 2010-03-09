@@ -65,7 +65,7 @@ public class Criteria {
 	 * Creates a AHP Criteria from a JDOM Element
 	 * @param xmlCriteria
 	 */
-	public Criteria(Element xmlCriteria) {
+	public Criteria(final Element xmlCriteria) {
 //		Initialisation of the id of the criteria
 		identifier = xmlCriteria.getAttributeValue("id");
 //		System.out.println("\tCriteria.id="+id);
@@ -75,7 +75,7 @@ public class Criteria {
 //		System.out.println("\tCriteria.name="+name);
 
 //		Initialisation of the preference matrix
-		Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
+		final Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
 		matrixIndInd = new PreferenceMatrix(xmlPrefMatrix);
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
 		vectorIndCr = new PriorityVector(matrixIndInd);
@@ -87,9 +87,9 @@ public class Criteria {
 		}
 //		Initialisation of the Indicators
 		@SuppressWarnings("unchecked")
-		List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
+		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
 		@SuppressWarnings("unchecked")
-		List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(
 				"row");
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
@@ -98,22 +98,22 @@ public class Criteria {
 					"Error : the number of Indicators and the size of the preference matrix does not match !");
 		}
 //		For each indicator declared in the configuration file
-		Iterator<Element> itxmlIndList = xmlIndicatorsList.iterator();
+		final Iterator<Element> itxmlIndList = xmlIndicatorsList.iterator();
 		while (itxmlIndList.hasNext()) {
-			Element xmlIndicator = itxmlIndList.next();
+			final Element xmlIndicator = itxmlIndList.next();
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
-			String indName = Root.indicatorPath
+			final String indName = Root.indicatorPath
 							 + Indicator.class.getSimpleName()
 							 + xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 				@SuppressWarnings("unchecked")
-				Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(
+				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(
 						indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
-				Constructor<? extends Indicator> indConstruct = (Constructor<? extends Indicator>) indClass.
+				final Constructor<? extends Indicator> indConstruct = (Constructor<? extends Indicator>) indClass.
 						getConstructor(Element.class);
 //					System.out.println("\t\tCriteria.indConstruct="+indConstruct);
 //					Instanciation of the indicator with its constructor
@@ -146,7 +146,7 @@ public class Criteria {
 	 * @return
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(
-			Collection<? extends Alternative> alternatives) {
+			final Collection<? extends Alternative> alternatives) {
 		Matrix matrixAltInd;
 		matrixAltInd = new Matrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
@@ -196,11 +196,11 @@ public class Criteria {
 	 * @return JDOM Element representing the criteria and children
 	 */
 	public Element toXml() {
-		Element xmlCriteria = new Element("criteria");
+		final Element xmlCriteria = new Element("criteria");
 		xmlCriteria.setAttribute("id", identifier);
 		xmlCriteria.addContent(new Element("name").setText(name));
 		xmlCriteria.addContent(matrixIndInd.toXml());
-		Iterator<Indicator> itIndicators = indicators.iterator();
+		final Iterator<Indicator> itIndicators = indicators.iterator();
 		while (itIndicators.hasNext()) {
 			xmlCriteria.addContent(itIndicators.next().toXml());
 		}
@@ -227,7 +227,7 @@ public class Criteria {
 	 *
 	 * @return
 	 */
-	public String getId() {
+	public String getIdentifier() {
 		return identifier;
 	}
 
@@ -235,7 +235,7 @@ public class Criteria {
 	 *
 	 * @param identifier
 	 */
-	public void setId(String identifier) {
+	public void setIdentifier(final String identifier) {
 		this.identifier = identifier;
 	}
 
@@ -251,7 +251,7 @@ public class Criteria {
 	 *
 	 * @param matrixInd
 	 */
-	public void setMatrixInd(PreferenceMatrix matrixInd) {
+	public void setMatrixInd(final PreferenceMatrix matrixInd) {
 		this.matrixIndInd = matrixInd;
 	}
 
@@ -267,7 +267,7 @@ public class Criteria {
 	 *
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 

@@ -33,7 +33,7 @@ public class TestAhp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Root root = new Root(new File(
+		final Root root = new Root(new File(
 				"build/classes/org/taeradan/ahp/conf/ahp_conf.xml"),
 							 Root.indicatorPath);
 		System.out.println(root.toStringRecursive());
@@ -248,9 +248,9 @@ public class TestAhp {
 				"======================================================");
 		System.out.println(root.resultToString());
 		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
-		Iterator<TestingAlternative> itAlts = alts.iterator();
+		final Iterator<TestingAlternative> itAlts = alts.iterator();
 		while (itAlts.hasNext()) {
-			TestingAlternative currentRes = itAlts.next();
+			final TestingAlternative currentRes = itAlts.next();
 			System.out.println(currentRes.name + " = " + currentRes.getRank());
 		}
 	}

@@ -38,9 +38,9 @@ public class PrefMatrixChangeListener implements TableModelListener {
 	public void tableChanged(TableModelEvent evt) {
 		Logger.getAnonymousLogger().info("row=" + evt.getFirstRow() + ",column" + evt.getColumn());
 		if(evt.getFirstRow() >= evt.getColumn()) {
-			PrefMatrixTableModel prefMatrix = (PrefMatrixTableModel) evt.getSource();
+			final PrefMatrixTableModel prefMatrix = (PrefMatrixTableModel) evt.getSource();
 			Double value = null;
-			Object nonParsedValue = prefMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
+			final Object nonParsedValue = prefMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
 			Logger.getAnonymousLogger().info("Non parsed value = " + nonParsedValue);
 			JEP myParser = new JEP();
 //			If the changed value is a String, convert to Double

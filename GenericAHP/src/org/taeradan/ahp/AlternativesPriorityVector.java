@@ -42,7 +42,7 @@ public class AlternativesPriorityVector {
 	 *
 	 * @param matrix
 	 */
-	public void setMatrix(Matrix matrix) {
+	public void setMatrix(final Matrix matrix) {
 		this.matrix = matrix;
 	}
 }

@@ -27,11 +27,11 @@ public interface Alternative {
 	 * Méthod that returns the current rank of the alternative.
 	 * @return Rank value.
 	 */
-	public abstract int getRank();
+	int getRank();
 
 	/**
 	 * Méthod that writes the rank of the alternative.
 	 * @param rank Rank value.
 	 */
-	public abstract void setRank(int rank);
+	void setRank(int rank);
 }
