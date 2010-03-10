@@ -251,37 +251,46 @@ public class Root {
 		int index = 0;
 		while (itCriterias.hasNext()) {
 			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, itCriterias.next().
-					calculateAlternativesPriorityVector(
-					alternatives).getVector());
+					calculateAlternativesPriorityVector(alternatives).getVector());
 			index++;
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
 		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
 //		Ranking of the alternatives with the MOg vector
-		Matrix sortedvectorAltOg = new Matrix(vectorAltOg.getVector().
-				getArrayCopy());
-		double lastAltOgValue = Double.POSITIVE_INFINITY;
-		int lastAltOgIndex = Integer.MIN_VALUE;
-//		For each rank to be given to the alternatives
-		for (int rank = 0; rank < alternatives.size(); rank++) {
-//			We search which alternative has the highest priority (AltOg value), but lower than the previous priority found
-			double maxAltOgValue = Double.NEGATIVE_INFINITY;
-			int maxAltOgIndex = 0;
-			for (int altOgIndex = 0; altOgIndex < alternatives.size();
-				 altOgIndex++) {
-				final double altOgValue = sortedvectorAltOg.get(altOgIndex, 0);
-				if ((altOgValue > maxAltOgValue) && (altOgValue
-													 <= lastAltOgValue)
-					&& (altOgIndex > lastAltOgIndex)) {
-					maxAltOgValue = altOgValue;
-					maxAltOgIndex = altOgIndex;
+		double[][] sortedVectorAltOg = vectorAltOg.getVector().getArrayCopy();
+//		vectorAltOg.getVector().print(6, 4);
+		int[] originIndexes = new int[alternatives.size()];
+		for (int i = 0; i < originIndexes.length; i++) {
+			originIndexes[i] = i;
+		}
+		int minIndex;
+		double tmpValue;
+		int tmpIndex;
+		int[] ranks = new int[alternatives.size()];
+		for (int i = 0; i < alternatives.size(); i++) {
+			minIndex = i;
+			for (int j = i + 1; j < alternatives.size(); j++) {
+				if (sortedVectorAltOg[j][0] < sortedVectorAltOg[minIndex][0]) {
+					minIndex = j;
 				}
 			}
-			lastAltOgValue = maxAltOgValue;
-			lastAltOgIndex = maxAltOgIndex;
-			((Alternative) alternatives.toArray()[maxAltOgIndex]).setRank(rank
-																		  + 1);
+//			indexes[i] <-> indexes[minIndex]
+			tmpIndex = originIndexes[i];
+			originIndexes[i] = originIndexes[minIndex];
+			originIndexes[minIndex] = tmpIndex;
+			tmpValue = sortedVectorAltOg[i][0];
+//			vector[i] <-> vector[minIndex]
+			sortedVectorAltOg[i][0] = sortedVectorAltOg[minIndex][0];
+			sortedVectorAltOg[minIndex][0] = tmpValue;
+			ranks[alternatives.size() - i -1] = originIndexes[i];
+//			System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
+//							   + sortedVectorAltOg[i][0]);
+		}
+		index = 0;
+		for (int i : ranks) {
+			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
+			index++;
 		}
 		calculationOccured = true;
 	}

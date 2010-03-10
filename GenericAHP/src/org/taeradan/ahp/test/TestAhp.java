@@ -35,210 +35,16 @@ public class TestAhp {
 	public static void main(String[] args) {
 		final Root root = new Root(new File(
 				"build/classes/org/taeradan/ahp/conf/ahp_conf.xml"),
-							 Root.indicatorPath);
-		System.out.println(root.toStringRecursive());
-		final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(
-				4);
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 1", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 3", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 4", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 5", 3, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 6", 1, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 7", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 8", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 9", 4, 1, 1, 1, 1, 1, 1, 1,
-										1));
-		alts.add(new TestingAlternative("Alternative 10", 2, 1, 1, 1, 1, 1, 1, 1,
-										1));
+								   Root.indicatorPath);
+//		System.out.println(root.toStringRecursive());
+		final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
+		for (int index = 0; index < 2; index++) {
+			alts.add(new TestingAlternative("Alternative 1", 3, 3, 3, 3, 3, 3, 3, 3, 3));
+			alts.add(new TestingAlternative("Alternative 2", 1, 1, 1, 1, 1, 1, 1, 1, 1));
+			alts.add(new TestingAlternative("Alternative 3", 4, 4, 4, 4, 4, 4, 4, 4, 4));
+			alts.add(new TestingAlternative("Alternative 4", 2, 2, 2, 2, 2, 2, 2, 2, 2));
+			alts.add(new TestingAlternative("Alternative 5", 5, 5, 5, 5, 5, 5, 5, 5, 5));
+		}
 		root.calculateRanking(alts);
 
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
@@ -246,12 +52,10 @@ public class TestAhp {
 //		root.calculateRanking(alts);
 		System.out.println(
 				"======================================================");
-		System.out.println(root.resultToString());
+//		System.out.println(root.resultToString());
 		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
-		final Iterator<TestingAlternative> itAlts = alts.iterator();
-		while (itAlts.hasNext()) {
-			final TestingAlternative currentRes = itAlts.next();
-			System.out.println(currentRes.name + " = " + currentRes.getRank());
+		for (TestingAlternative currentAlt : alts) {
+			System.out.println(currentAlt.name + " = " + currentAlt.getRank());
 		}
 	}
 }
