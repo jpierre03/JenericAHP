@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "ahp_conf.dtd">
+
+<!--
+	Document   : ahp_conf.xml
+	Created on : 27 mars 2009, 15:05
+	Author     : Yves Dubromelle
+	Description:
+		This document is the configuration file of the org.taeradan.ahp package, a new generic Java implementation of the AHP algorithm.
+		For syntax information, just have a look at the ahp_conf.dtd file.
+-->
+
+<root>
+	<name>Arbre de test de normalisation</name>
+	<prefmatrix>
+		<row><elt value="1"/></row>
+	</prefmatrix>
+	<criteria id="C">
+		<name>Critère unique pour se concentrer sur les indicateurs</name>
+		<prefmatrix>
+			<row><elt value="1"/><elt value="1"/></row>
+			<row><elt value="1"/><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="IT">
+			<name>Indicateur témoin (valeur={1-1000})</name>
+			<maximize/>
+		</indicator>
+		<indicator id="IV">
+			<name>Indicateur variable</name>
+			<maximize/>
+		</indicator>
+	</criteria>
+</root>
