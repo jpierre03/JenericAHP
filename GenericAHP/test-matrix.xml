@@ -38,12 +38,72 @@
 	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
 </root>-->
 
-<!-- Précédente avec (C2->C3)=3 CR=0.21991341991341998-->
+<!-- M2
 <root>
-	<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
-	<row><elt value="3"/><elt value="1"/><elt value="3"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
 	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
 	<row><elt value="1/3"/><elt value="1/9"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
 	<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
 	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
-</root>
+</root>-->
+
+<!-- M3
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="7"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/7"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->
+
+<!-- M4
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="9"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/9"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->
+
+<!-- M5
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/9"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/3"/><elt value="1/5"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->
+
+<!-- M6
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="7"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/7"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->
+
+<!-- M7
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="7"/><elt value="3"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/7"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/3"/><elt value="1/5"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->
+
+<!-- M8
+<root>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/5"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="3"/><elt value="7"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="3"/><elt value="1/3"/><elt value="1"/><elt value="9"/><elt value="5"/><elt value="1"/></row>
+	<row><elt value="1/3"/><elt value="1/7"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/><elt value="1/9"/></row>
+	<row><elt value="1"/><elt value="1/5"/><elt value="1/5"/><elt value="3"/><elt value="1"/><elt value="1/7"/></row>
+	<row><elt value="5"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="7"/><elt value="1"/></row>
+</root>-->

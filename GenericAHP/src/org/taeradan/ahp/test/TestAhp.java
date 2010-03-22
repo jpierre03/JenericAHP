@@ -44,6 +44,10 @@ public class TestAhp {
 			alts.add(new TestingAlternative("Alternative 4", 2, 2, 2, 2, 2, 2, 2, 2, 2));
 			alts.add(new TestingAlternative("Alternative 5", 5, 5, 5, 5, 5, 5, 5, 5, 5));
 		}
+//		alts.add(new TestingAlternative("Alternative 1", 3, 5, 3, 1 / 2., 3, 1200, 1, 100, 1));
+//		alts.add(new TestingAlternative("Alternative 2", 3, 5, 3, 1 / 2., 1, 8638, 1, 250, 1));
+//		alts.add(new TestingAlternative("Alternative 3", 5, 5, 5, 2 / 3., 3, 1800, 1, 30, 1));
+//		alts.add(new TestingAlternative("Alternative 4", 3, 3, 3, 3 / 4., 3, 7136, 1, 300, 1));
 		root.calculateRanking(alts);
 
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
