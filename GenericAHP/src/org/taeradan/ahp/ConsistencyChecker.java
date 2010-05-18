@@ -69,7 +69,7 @@ public class ConsistencyChecker {
 					}
 				}
 				final double CI = (lambdaMax - dimension) / (dimension - 1);
-				consistenceCrit = CI / randomIndex[dimension];
+				consistenceCrit = CI / randomIndex[dimension -1];
 				if (consistenceCrit < 0.1) {
 					consistent = true;
 				}
