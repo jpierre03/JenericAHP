@@ -71,10 +71,9 @@ public class PriorityVector {
 		do {
 //			System.out.println("Séparateur d'itération ");
 			oldVector = vector;
-			multMatrix = multMatrix.times(matrix);
-			final Matrix numerator = matrix.times(e.transpose());
+			final Matrix numerator = multMatrix.times(e.transpose());
 //			System.out.println("\tNumerator=" + PreferenceMatrix.toString(numerator));
-			final Matrix denominator = e.times(matrix).times(e.transpose());
+			final Matrix denominator = e.times(multMatrix).times(e.transpose());
 //			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
 			vector = numerator.timesEquals(1 / denominator.get(0, 0));
 //			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
@@ -91,6 +90,7 @@ public class PriorityVector {
 					}
 				}
 			}
+			multMatrix = multMatrix.times(matrix);
 		} while (!isUnderTreshold);
 //		vector.print(5, 4);
 	}
