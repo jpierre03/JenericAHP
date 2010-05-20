@@ -42,7 +42,8 @@ public class ConsistencyChecker {
 	 * @param prioVector
 	 * @return
 	 */
-	public static boolean isConsistent(final PreferenceMatrix prefMatrix, final PriorityVector prioVector) {
+	public static boolean isConsistent(final PreferenceMatrix prefMatrix,
+									   final PriorityVector prioVector) {
 		boolean consistent = false;
 		Matrix matrix = prefMatrix.getMatrix();
 		Matrix vector = prioVector.getVector();
@@ -52,8 +53,13 @@ public class ConsistencyChecker {
 			dimension = prefMatrix.getMatrix().getRowDimension();
 			if (dimension == 1) {
 				consistent = true;
-			}
-			if (dimension < 15 && dimension > 0) {
+			} else if (dimension == 2) {
+				if (prefMatrix.getMatrix().get(0, 1) == (1 / prefMatrix.getMatrix().get(1, 0))) {
+					consistent = true;
+				} else {
+					consistent = false;
+				}
+			} else if (dimension < 15 && dimension > 0) {
 				lambdas = new double[dimension];
 				for (int i = 0; i < dimension; i++) {
 					double sum = 0;
@@ -69,7 +75,7 @@ public class ConsistencyChecker {
 					}
 				}
 				final double CI = (lambdaMax - dimension) / (dimension - 1);
-				consistenceCrit = CI / randomIndex[dimension -1];
+				consistenceCrit = CI / randomIndex[dimension - 1];
 				if (consistenceCrit < 0.1) {
 					consistent = true;
 				}
@@ -83,11 +89,12 @@ public class ConsistencyChecker {
 		}
 		return consistent;
 	}
+
 	/**
 	 *
 	 * @return
 	 */
-	public static double getCrResult(){
+	public static double getCrResult() {
 		return consistenceCrit;
 	}
 }

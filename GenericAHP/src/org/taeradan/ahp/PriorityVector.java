@@ -62,6 +62,9 @@ public class PriorityVector {
 	 * @param matrix
 	 */
 	private void constructVector(final Matrix matrix) {
+		if (matrix.getRowDimension() < 2) {
+			this.vector = new Matrix(matrix.getRowDimension(), 1);
+		}
 		Matrix multMatrix = (Matrix) matrix.clone();
 //		matrix.print(5, 4);
 		Matrix oldVector;
