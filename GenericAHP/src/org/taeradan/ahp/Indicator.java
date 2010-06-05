@@ -164,16 +164,17 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String resultToString() {
 		final StringBuilder string = new StringBuilder(this.toString());
 		if (alternatives.size() < 30) {
-			string.append("\n\t\tmatrixAltAlt=\n" + PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
+			string.append("\n\t\tmatrixAltAlt=\n");
+			string.append(PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
 		}
-		string.append("\n\t\tvectorAltInd=\n" + PreferenceMatrix.toString(vectorAltInd.getVector(),
-																		  "\t\t"));
+		string.append("\n\t\tvectorAltInd=\n");
+		string.append(PreferenceMatrix.toString(vectorAltInd.getVector(),
+												"\t\t"));
 		return string.toString();
 	}
 
