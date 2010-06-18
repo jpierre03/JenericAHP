@@ -415,7 +415,7 @@ public class ConfigurationFrame
 //			For each indicator in the criteria
 			for (int j = 0; j < ahpIndicators.size(); j++) {
 //				Real indicator attached to an indicator node
-				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.toArray()[i]));
+				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.toArray()[j]));
 //				Indicator node attached to the criteria node
 				guiCriterias.get(i).add(guiIndicators.get(j));
 			}
