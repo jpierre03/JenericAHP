@@ -53,9 +53,6 @@ public class IterationSaaty {
 			}
 		}
 
-		//epsilon.print(5, 5);
-
-
 		/*Recherche de la valeur maximale */
 		for (int i = 0; i < preferencesMatrix.getColumnDimension(); i++) {
 			for (int j = 0; j < preferencesMatrix.getColumnDimension(); j++) {
@@ -72,12 +69,18 @@ public class IterationSaaty {
 	/**
 	 * This method gives the best location in preference matrix for which you
 	 * have to change the preference weight.
-	 * @param Collection<Point>
+	 * @param Collection<Point>,int
 	 * @return Point
 	 */
-	public Point showBestInconsistency(Collection<Point> ranking) {
+	public Point showBestInconsistency(Collection<Point> ranking,int i) {
+		Point temp = new Point();
 		Iterator iterator = ranking.iterator();
-		return (Point) iterator.next();
+
+		for (int cptr=0;cptr<i;cptr++){
+		temp=(Point) iterator.next();
+		}
+
+		return temp;
 
 	}
 
@@ -126,7 +129,7 @@ public class IterationSaaty {
 		return false;
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
@@ -154,7 +157,7 @@ public class IterationSaaty {
 
 		IterationSaaty s = new IterationSaaty();
 		System.out.println("Réviser jugement" + s.showBestInconsistency(
-				s.rankingOfInconsistencies(m, w)));
+				s.rankingOfInconsistencies(m, w),7));
 
-	}
+	}*/
 }
