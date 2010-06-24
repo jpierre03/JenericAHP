@@ -32,17 +32,16 @@ public class IterationRandom {
 		while (posX > posY || posX < 1 || posX > sizeOfMatrix || posY < 1 || posY > sizeOfMatrix) {
 			posX = 10*Math.random();
 			posY = 10*Math.random();
-			System.out.println("X = "+posX);
 		}
 		return location = new Point((int)posX,(int)posY);
 	}
 
 
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		IterationRandom r = new IterationRandom();
 		Point p = r.getRandomLocation(3);
 		System.out.println("X = "+p.getX()+"Y = "+p.getY());
-	}
+	}*/
 }
