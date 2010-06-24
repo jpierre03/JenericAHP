@@ -24,7 +24,6 @@ public class IterationSaaty {
 	public IterationSaaty() {
 	}
 
-
 	/**
 	 * This method uses Saaty's algorithm to show where the most important 
 	 * inconsistency is.
@@ -47,16 +46,14 @@ public class IterationSaaty {
 				epsilon.set(i, j, preferencesMatrix.get(i, j) * priorityVector.get(j, 0) / priorityVector.
 						get(i, 0));
 
-			/*	epsilon.set(i, j, preferencesMatrix.get(i, j)- priorityVector.get(i, 0) / priorityVector.
-						get(j, 0));*/
-
-			/*	epsilon.identity(preferencesMatrix.getColumnDimension(), preferencesMatrix.getColumnDimension());*/
+				/*epsilon.set(i, j, preferencesMatrix.get(i, j)- priorityVector.get(i, 0) / priorityVector.
+				get(j, 0));*/
 
 
 			}
 		}
 
-		epsilon.print(5, 5);
+		//epsilon.print(5, 5);
 
 
 		/*Recherche de la valeur maximale */
@@ -69,9 +66,6 @@ public class IterationSaaty {
 			}
 		}
 
-		for (Point point : cp) {
-			System.out.println(preferencesMatrix.get((int)point.getX(), (int)point.getY()));
-		}
 		return cp;
 	}
 
@@ -84,9 +78,8 @@ public class IterationSaaty {
 	public Point showBestInconsistency(Collection<Point> ranking) {
 		Iterator iterator = ranking.iterator();
 		return (Point) iterator.next();
-		
-	}
 
+	}
 
 	/**
 	 * Returns the location in a matrix of the greatest value
@@ -160,7 +153,8 @@ public class IterationSaaty {
 
 
 		IterationSaaty s = new IterationSaaty();
-		System.out.println(s.showBestInconsistency(s.rankingOfInconsistencies(m, w)));
-		
+		System.out.println("Réviser jugement" + s.showBestInconsistency(
+				s.rankingOfInconsistencies(m, w)));
+
 	}
 }

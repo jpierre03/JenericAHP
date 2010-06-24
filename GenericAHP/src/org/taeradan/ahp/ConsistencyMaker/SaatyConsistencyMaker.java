@@ -73,7 +73,7 @@ public class SaatyConsistencyMaker {
 		System.out.println("***" + Cst.isConsistent(m, w));
 		IterationSaaty itSaaty = new IterationSaaty();
 
-		System.out.println("***\n***\n***\n" + itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w)));
+		System.out.println("Vous pouvez réviser le jugement" + itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w)));
 
 	}
 
