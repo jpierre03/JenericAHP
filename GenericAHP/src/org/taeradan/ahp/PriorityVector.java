@@ -70,26 +70,20 @@ public class PriorityVector {
 		Matrix oldVector;
 		final int dimension = matrix.getRowDimension();
 		Matrix e = new Matrix(1, dimension, 1);
-//		System.out.println("e=" + PreferenceMatrix.toString(e));
 		do {
-//			System.out.println("Séparateur d'itération ");
 			oldVector = vector;
 			final Matrix numerator = multMatrix.times(e.transpose());
-//			System.out.println("\tNumerator=" + PreferenceMatrix.toString(numerator));
 			final Matrix denominator = e.times(multMatrix).times(e.transpose());
-//			System.out.println("\tDenominator=" + PreferenceMatrix.toString(denominator));
 			vector = numerator.timesEquals(1 / denominator.get(0, 0));
-//			System.out.println("\tvector(times)=" + PreferenceMatrix.toString(vector));
 			if (oldVector == null) {
 				isUnderTreshold = false;
 			} else {
 				Matrix difference = vector.minus(oldVector);
-//				System.out.println("\tdifference=" + PreferenceMatrix.toString(difference));
 				isUnderTreshold = true;
 				for (int i = 0; i < dimension; i++) {
 					if (new BigDecimal(difference.get(i, 0)).abs().doubleValue() > 1E-16) {
 						isUnderTreshold = false;
-//						System.out.println("dirrefence en dessous du seuil");
+//						dirrefence en dessous du seuil
 					}
 				}
 			}
