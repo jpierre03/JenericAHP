@@ -17,24 +17,25 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * The PreferenceMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
+ * @author jpierre03
  * @author Yves Dubromelle
  */
 public class PreferenceMatrix {
 
 	/**
-	 *
+	 * initialization
 	 */
-	private Matrix matrix = null;
+	private MyMatrix matrix = new MyMatrix(0, 0);
 
 	/**
 	 * Class default Constructor.
@@ -50,7 +51,7 @@ public class PreferenceMatrix {
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		final int size = xmlRowsList.size();
-		matrix = new Matrix(size, size);
+		matrix = new MyMatrix(size, size);
 		final JEP myParser = new JEP();
 		for (int i = 0; i < xmlRowsList.size(); i++) {
 //			Extraction of a row from the matrix
@@ -95,7 +96,7 @@ public class PreferenceMatrix {
 	 * @param prefix
 	 * @return
 	 */
-	public static String toString(final Matrix matrix, final String prefix) {
+	public static String toString(final MyMatrix matrix, final String prefix) {
 		return makeString(matrix, prefix);
 	}
 
@@ -105,7 +106,7 @@ public class PreferenceMatrix {
 	 * @param prefix
 	 * @return
 	 */
-	private static String makeString(final Matrix matrix, final String prefix) {
+	private static String makeString(final MyMatrix matrix, final String prefix) {
 		final StringBuilder string = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
@@ -140,7 +141,7 @@ public class PreferenceMatrix {
 //			For each element in the row
 			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 				final Element xmlElt = new Element("elt");
-				xmlElt.setAttribute("value", Double.toString(matrix.get(i, j)));
+				xmlElt.setAttribute("value", Double.toString(matrix.getMatrixValue(i, j).getValue()));
 				xmlRow.addContent(xmlElt);
 			}
 			xmlPrefMatrix.addContent(xmlRow);
@@ -152,7 +153,7 @@ public class PreferenceMatrix {
 	 * Method that give the Matrix contained in this class.
 	 * @return matrix
 	 */
-	public Matrix getMatrix() {
+	public MyMatrix getMatrix() {
 		return matrix;
 	}
 
@@ -160,7 +161,7 @@ public class PreferenceMatrix {
 	 * Method that overwrite the matrix contained in this class.
 	 * @param matrix
 	 */
-	public void setMatrix(final Matrix matrix) {
+	public void setMatrix(final MyMatrix matrix) {
 		this.matrix = matrix;
 	}
 
@@ -170,7 +171,7 @@ public class PreferenceMatrix {
 	 */
 	public void remove(final int index) {
 		final int newDimension = matrix.getRowDimension() - 1;
-		Matrix newMatrix = new Matrix(newDimension, newDimension);
+		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension()
 										 + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
@@ -179,7 +180,7 @@ public class PreferenceMatrix {
 			if (i != index) {
 				for (int j = 0; j < matrix.getColumnDimension(); j++) {
 					if (j != index) {
-						final double newValue = matrix.get(i, j);
+						final double newValue = matrix.getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
 														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);

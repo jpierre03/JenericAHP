@@ -29,7 +29,6 @@ import org.taeradan.ahp.Root;
 public class TestAhp {
 
 	/**
-	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {

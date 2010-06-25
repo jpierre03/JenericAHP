@@ -18,9 +18,9 @@
 package org.taeradan.ahp.gui;
 
 import org.taeradan.ahp.Criteria;
-import Jama.Matrix;
 import java.util.logging.Logger;
 import org.nfunk.jep.JEP;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.Indicator;
 
 /**
@@ -162,8 +162,8 @@ public class CriteriaDialog
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 		criteria.setIdentifier(jTextFieldId.getText());
 		criteria.setName(jTextFieldName.getText());
-		final Matrix matrix =
-					 new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+		final MyMatrix matrix =
+					 new MyMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		Logger.getAnonymousLogger().info(
 				guiPrefMatrix.getValueAt(1, 1).getClass().getCanonicalName());
 		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {

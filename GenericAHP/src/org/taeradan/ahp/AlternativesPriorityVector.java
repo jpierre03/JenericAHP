@@ -17,32 +17,31 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
- *
+ * @author Marianne
+ * @author jpierre03
  * @author Yves Dubromelle
  */
 public class AlternativesPriorityVector {
 
 	/**
-	 * 
 	 */
-	private Matrix matrix = null;
+	private MyMatrix matrix = null;
 
 	/**
 	 * Method that give the Matrix contained in this class.
 	 * @return matrix
 	 */
-	public Matrix getMatrix() {
+	public MyMatrix getMatrix() {
 		return matrix;
 	}
 
 	/**
-	 *
 	 * @param matrix
 	 */
-	public void setMatrix(final Matrix matrix) {
+	public void setMatrix(final MyMatrix matrix) {
 		this.matrix = matrix;
 	}
 }

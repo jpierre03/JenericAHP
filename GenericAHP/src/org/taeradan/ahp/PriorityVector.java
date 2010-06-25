@@ -17,8 +17,9 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.math.BigDecimal;
+import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *
@@ -29,7 +30,7 @@ public class PriorityVector {
 	/**
 	 *
 	 */
-	private Matrix vector = null;
+	private MyMatrix vector = null;
 	/**
 	 *
 	 */
@@ -47,7 +48,7 @@ public class PriorityVector {
 	 *
 	 * @param matrix
 	 */
-	public PriorityVector(final Matrix matrix) {
+	public PriorityVector(final MyMatrix matrix) {
 		constructVector(matrix);
 	}
 
@@ -61,24 +62,31 @@ public class PriorityVector {
 	 *
 	 * @param matrix
 	 */
-	private void constructVector(final Matrix matrix) {
+	private void constructVector(final MyMatrix matrix) {
 		if (matrix.getRowDimension() < 2) {
-			this.vector = new Matrix(matrix.getRowDimension(), 1);
+			this.vector = new MyMatrix(matrix.getRowDimension(), 1);
 		}
-		Matrix multMatrix = (Matrix) matrix.clone();
+		MyMatrix multMatrix = (MyMatrix) matrix.clone();
 //		matrix.print(5, 4);
-		Matrix oldVector;
+		MyMatrix oldVector;
 		final int dimension = matrix.getRowDimension();
-		Matrix e = new Matrix(1, dimension, 1);
+		MyMatrix e = new MyMatrix(1,dimension); /*check*/
+		MatrixValue tripletMatrixValue= new MatrixValue();
+		for(int cptr=0;cptr<dimension;cptr++){
+		//MyMatrix e = new MyMatrix(1, dimension, 1.0);
+		tripletMatrixValue.setColumn(cptr);
+		tripletMatrixValue.setRow(0);
+		tripletMatrixValue.setValue(1);
+		}
 		do {
 			oldVector = vector;
-			final Matrix numerator = multMatrix.times(e.transpose());
-			final Matrix denominator = e.times(multMatrix).times(e.transpose());
-			vector = numerator.timesEquals(1 / denominator.get(0, 0));
+			final MyMatrix numerator = (MyMatrix) multMatrix.times(e.transpose());
+			final MyMatrix denominator = (MyMatrix) e.times(multMatrix).times(e.transpose());
+			vector = (MyMatrix) numerator.timesEquals(1 / denominator.get(0, 0));
 			if (oldVector == null) {
 				isUnderTreshold = false;
 			} else {
-				Matrix difference = vector.minus(oldVector);
+				MyMatrix difference = (MyMatrix) vector.minus(oldVector);
 				isUnderTreshold = true;
 				for (int i = 0; i < dimension; i++) {
 					if (new BigDecimal(difference.get(i, 0)).abs().doubleValue() > 1E-16) {
@@ -87,7 +95,7 @@ public class PriorityVector {
 					}
 				}
 			}
-			multMatrix = multMatrix.times(matrix);
+			multMatrix = (MyMatrix) multMatrix.times(matrix);
 		} while (!isUnderTreshold);
 //		vector.print(5, 4);
 	}
@@ -96,7 +104,7 @@ public class PriorityVector {
 	 * Method that give the Matrix contained in this class.
 	 * @return vector
 	 */
-	public Matrix getVector() {
+	public MyMatrix getVector() {
 		return vector;
 	}
 
@@ -104,7 +112,7 @@ public class PriorityVector {
 	 * 
 	 * @param vector
 	 */
-	public void setVector(final Matrix vector) {
+	public void setVector(final MyMatrix vector) {
 		this.vector = vector;
 	}
 }

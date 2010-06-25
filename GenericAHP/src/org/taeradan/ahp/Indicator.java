@@ -17,9 +17,9 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.util.Collection;
 import org.jdom.Element;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
@@ -50,7 +50,7 @@ public abstract class Indicator {
 	/**
 	 *
 	 */
-	transient private Matrix matrixAltAlt;
+	transient private MyMatrix matrixAltAlt;
 	/**
 	 *
 	 */
@@ -74,7 +74,7 @@ public abstract class Indicator {
 		alternatives = alts;
 		final int dimension = alternatives.size();
 		double[] altValues = new double[dimension];
-		matrixAltAlt = new Matrix(dimension, dimension);
+		matrixAltAlt = new MyMatrix(dimension, dimension);
 //		For each alternative, evaluation of its value for the indicator
 		for (int i = 0; i < alternatives.size(); i++) {
 			altValues[i] = calculateAlternativeValue(i, alternatives);

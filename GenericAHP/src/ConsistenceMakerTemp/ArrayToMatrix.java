@@ -5,7 +5,8 @@
 
 package ConsistenceMakerTemp;
 
-import Jama.Matrix;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+
 
 /**
  *
@@ -27,9 +28,9 @@ public class ArrayToMatrix {
 	}
 
 
-	public Matrix convertArrayToMatrix(double[][] rowData,int rows,int columns){
+	public MyMatrix convertArrayToMatrix(double[][] rowData,int rows,int columns){
 
-		Matrix m = new Matrix(rows,columns);
+		MyMatrix m = new MyMatrix(rows,columns);
 		for(int i=0;i<rows;i++){
 			for (int j=0;j<columns;j++){
 				m.set(i,j,rowData[i][j]);

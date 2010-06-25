@@ -16,7 +16,8 @@ import java.util.Iterator;
  */
 public class IterationSaaty {
 
-	Point[] pointsToModify;
+//	Point[] pointsToModify;
+	private Collection<Point> ranking = new ArrayList<Point>();
 
 	/**
 	 * Builder
@@ -34,11 +35,10 @@ public class IterationSaaty {
 													  Matrix priorityVector) {
 		int x = 0;
 		int y = 0;
-		int maxValueOfEpsilon = 0;
-		Matrix epsilon = new Matrix(preferencesMatrix.getColumnDimension(), preferencesMatrix.
-				getColumnDimension());
-		Collection<Point> cp = new ArrayList<Point>();
-
+//		int maxValueOfEpsilon = 0;
+		Matrix epsilon = new Matrix(preferencesMatrix.getColumnDimension(),
+									preferencesMatrix.getColumnDimension());
+		Collection<Point> ranking = new ArrayList<Point>();
 
 
 		/*Création de la matrice Epsilon*/
@@ -49,8 +49,6 @@ public class IterationSaaty {
 
 				/*epsilon.set(i, j, preferencesMatrix.get(i, j)- priorityVector.get(i, 0) / priorityVector.
 				get(j, 0));*/
-
-
 			}
 		}
 
@@ -58,26 +56,46 @@ public class IterationSaaty {
 		for (int i = 0; i < preferencesMatrix.getColumnDimension(); i++) {
 			for (int j = 0; j < preferencesMatrix.getColumnDimension(); j++) {
 
-				cp.add(this.getMaxOfMatrix(epsilon, cp));
-
-
+				ranking.add(this.getMaxOfMatrix(epsilon, ranking));
 			}
 		}
+//		for (Point point : ranking) {
+//			System.out.println(point);
+//		}
 
-		for (Point point : cp) {
-			System.out.println(point);
-		}
+		Collection<Point> aboutToBeremoved = new ArrayList<Point>();
 		/*Elimination des coordonnées de la partie inférieure gauche de la matrice (réciprocité)*/
-		for (Point point : cp) {
-			if (point.getX()<point.getY()){
-			cp.remove(point); /*PROBLEME SUR CETTE INSTRUCTION*/
+		for (Point point : ranking) {
+			if (point.getX() < point.getY()) {
+				aboutToBeremoved.add(point);
 			}
 		}
 
-		for (Point point : cp) {
-			System.out.println(point);
+		ranking.removeAll(aboutToBeremoved);
+
+//		System.out.println("Après suppression");
+//		for (Point point : ranking) {
+//			System.out.println(point);
+//		}
+
+		return ranking;
+	}
+
+	public double[] calculateBestFits(Matrix priorityVector, Collection<Point> ranking) {
+		int cptr = 0;
+		double[] bestFits = new double[(priorityVector.getRowDimension()
+										* priorityVector.getRowDimension() - priorityVector.
+										getRowDimension()) / 2];
+
+		//Pour chaque point de la collection on calcul le best fit associé
+		for (Point point : ranking) {
+			bestFits[cptr] = ((int) priorityVector.get((int) point.getX(), 0) / priorityVector.get((int) point.
+							  getY(), 0));
+			System.out.println(bestFits[cptr]);
+			cptr++;
 		}
-		return cp;
+
+		return bestFits;
 	}
 
 	/**
@@ -86,16 +104,9 @@ public class IterationSaaty {
 	 * @param Collection<Point>,int
 	 * @return Point
 	 */
-	public Point showBestInconsistency(Collection<Point> ranking,int i) {
-		Point temp = new Point();
-		Iterator iterator = ranking.iterator();
-
-		for (int cptr=0;cptr<i;cptr++){
-		temp=(Point) iterator.next();
-		}
-
+	public Point showBestInconsistency(Collection<Point> ranking, int i) {
+		Point temp = (Point) ranking.toArray()[i];
 		return temp;
-
 	}
 
 	/**
@@ -103,7 +114,7 @@ public class IterationSaaty {
 	 * @param Matrix, Collection<Point>
 	 * @return Point
 	 */
-	public Point getMaxOfMatrix(Matrix m, Collection<Point> c) {
+	public Point getMaxOfMatrix(Matrix m, Collection<Point> ranking) {
 
 		Point maxPoint = new Point();
 		Point tempPoint = new Point();
@@ -113,7 +124,7 @@ public class IterationSaaty {
 			for (int j = 0; j < m.getColumnDimension(); j++) {
 
 				tempPoint.setLocation(i, j);
-				if (!this.isPresentInCollection(tempPoint, c)) {
+				if (!this.isPresentInCollection(tempPoint, ranking)) {
 					if (maxValue < m.get(i, j)) {
 						maxValue = m.get(i, j);
 						maxPoint.setLocation(tempPoint.getX(), tempPoint.getY());
@@ -121,8 +132,6 @@ public class IterationSaaty {
 				}
 			}
 		}
-
-
 		return maxPoint;
 
 	}
@@ -138,41 +147,52 @@ public class IterationSaaty {
 			if (point.getX() == p.getX() && point.getY() == p.getY()) {
 				return true;
 			}
-
 		}
 
 		return false;
 	}
 
-/*	public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
 
 		m.set(0, 0, 1);
-		m.set(0, 1, 2);
-		m.set(0, 2, 3);
+		m.set(0, 1, 16);
+		m.set(0, 2, 4);
 
-		m.set(1, 0, 4);
-		m.set(1, 1, 5);
-		m.set(1, 2, 6);
+		m.set(1, 0, 0.5);
+		m.set(1, 1, 1);
+		m.set(1, 2, 2);
 
-		m.set(2, 0, 7);
-		m.set(2, 1, 8);
-		m.set(2, 2, 9);
+		m.set(2, 0, 0.25);
+		m.set(2, 1, 0.5);
+		m.set(2, 2, 1);
 
-		//m.print(5, 5);
+		m.print(5, 5);
 
-		w.set(0, 0, 1);
-		w.set(1, 0, 2);
-		w.set(2, 0, 3);
 
-		//w.print(5, 5);
+		w.set(0, 0, (double) 28 / 49);
+		w.set(1, 0, (double) 28 / 98);
+		w.set(2, 0, (double) 28 / 196);
 
 
 		IterationSaaty s = new IterationSaaty();
 		System.out.println("Réviser jugement" + s.showBestInconsistency(
-				s.rankingOfInconsistencies(m, w),7));
+				s.rankingOfInconsistencies(m, w), 5));
+	}
 
-	}*/
+	/**
+	 * @return the ranking
+	 */
+	public Collection<Point> getRanking() {
+		return ranking;
+	}
+
+	/**
+	 * @param ranking the ranking to set
+	 */
+	public void setRanking(Collection<Point> ranking) {
+		this.ranking = ranking;
+	}
 }

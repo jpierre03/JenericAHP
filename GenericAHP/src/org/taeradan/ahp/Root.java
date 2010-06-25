@@ -17,7 +17,6 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,6 +35,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
@@ -72,7 +72,7 @@ public class Root {
 	/**
 	 *
 	 */
-	transient private Matrix matrixAltCr;
+	transient private MyMatrix matrixAltCr;
 //	Execution control attributes
 	/**
 	 *
@@ -245,7 +245,7 @@ public class Root {
 	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
+		matrixAltCr = new MyMatrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
@@ -256,7 +256,7 @@ public class Root {
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector();
-		vectorAltOg.setVector(matrixAltCr.times(vectorCrOg.getVector()));
+		vectorAltOg.setVector((MyMatrix) matrixAltCr.times(vectorCrOg.getVector()));
 //		Ranking of the alternatives with the MOg vector
 		double[][] sortedVectorAltOg = vectorAltOg.getVector().getArrayCopy();
 //		vectorAltOg.getVector().print(6, 4);

@@ -17,7 +17,6 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
@@ -27,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import org.jdom.Element;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
@@ -147,8 +147,8 @@ public class Criteria {
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(
 			final Collection<? extends Alternative> alternatives) {
-		Matrix matrixAltInd;
-		matrixAltInd = new Matrix(alternatives.size(), indicators.size());
+		MyMatrix matrixAltInd;
+		matrixAltInd = new MyMatrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
@@ -160,7 +160,7 @@ public class Criteria {
 		}
 //		Calculation of the criteria's alternatives vector
 		vectorAltCr = new PriorityVector();
-		vectorAltCr.setVector(matrixAltInd.times(vectorIndCr.getVector()));
+		vectorAltCr.setVector((MyMatrix) matrixAltInd.times(vectorIndCr.getVector()));
 		return vectorAltCr;
 	}
 

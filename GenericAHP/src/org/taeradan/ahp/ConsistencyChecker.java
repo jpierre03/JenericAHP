@@ -17,8 +17,8 @@
  */
 package org.taeradan.ahp;
 
-import Jama.Matrix;
 import java.util.logging.Logger;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *
@@ -45,8 +45,8 @@ public class ConsistencyChecker {
 	public static boolean isConsistent(final PreferenceMatrix prefMatrix,
 									   final PriorityVector prioVector) {
 		boolean consistent = false;
-		Matrix matrix = prefMatrix.getMatrix();
-		Matrix vector = prioVector.getVector();
+		MyMatrix matrix = prefMatrix.getMatrix();
+		MyMatrix vector = prioVector.getVector();
 		double[] lambdas;
 		int dimension = 0;
 		if (prefMatrix.getMatrix().getRowDimension() == prioVector.getVector().getRowDimension()) {

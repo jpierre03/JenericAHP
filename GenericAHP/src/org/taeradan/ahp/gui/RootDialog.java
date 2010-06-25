@@ -18,8 +18,8 @@
 package org.taeradan.ahp.gui;
 
 import org.taeradan.ahp.Root;
-import Jama.Matrix;
 import org.nfunk.jep.JEP;
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.Criteria;
 
 /**
@@ -146,8 +146,8 @@ public class RootDialog
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 		root.setName(jTextFieldObjective.getText());
-		final Matrix matrix =
-					 new Matrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+		final MyMatrix matrix =
+					 new MyMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
 			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
