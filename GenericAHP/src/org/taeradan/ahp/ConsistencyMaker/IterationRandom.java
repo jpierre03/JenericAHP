@@ -5,11 +5,12 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.awt.Point;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -32,43 +33,29 @@ public class IterationRandom {
 	 * @return Point
 	 */
 	public Collection<Point> getRandomRanking(int sizeOfMatrix) {
-		Point location;
-		Point temp = new Point(0, -1);
-		Point pointToAdd = new Point();
-		double posX = 0;
-		double posY = -1;
-		int flag = 0;
+
 		List<Point> lp;
 
 
 
 		for (int i = 0; i < sizeOfMatrix; i++) {
-			for (int j = i; j < sizeOfMatrix; j++) {
+			for (int j = i+1; j < sizeOfMatrix; j++) {
 				this.pointCollection.add(new Point(i, j));
 			}
 		}
-		lp=new ArrayList<Point>(pointCollection);
-		for (Point point : lp) {
-			System.out.println(point);
-		}
+		lp = new ArrayList<Point>(pointCollection);
+
 		Collections.shuffle(lp);
 
+		pointCollection.clear();
 
+		/*Vider la collection triée pour la remplir d'éléments aléatoires.*/
 
-		System.out.println("***********");
 		for (Point point : lp) {
-			System.out.println(point);
+			pointCollection.add(point);
 		}
 
-		//faire 2 boucles pour mettre ds collections (liste)
-		// shuffle
 
-
-
-
-//		for (Point point : pointCollection) {
-//			System.out.println(point);
-//		}
 		return pointCollection;
 	}
 
@@ -84,10 +71,31 @@ public class IterationRandom {
 		return false;
 	}
 
+	/**
+	 * This method gives the best location in preference matrix for which you
+	 * have to change the preference weight.
+	 * @param Collection<Point>,int
+	 * @return Point
+	 */
+	public Point showBestInconsistency(Collection<Point> ranking, int i) {
+		Point temp = new Point();
+		Iterator iterator = ranking.iterator();
+
+		for (int cptr = 0; cptr < i; cptr++) {
+			temp = (Point) iterator.next();
+		}
+
+		return temp;
+
+	}
+
 	public static void main(String[] args) {
 
 		IterationRandom r = new IterationRandom();
-		r.getRandomRanking(3);
-
+		Collection<Point> pC = new ArrayList<Point>();
+		pC = r.getRandomRanking(3);
+		for (Point point : pC) {
+			System.out.println(point);
+		}
 	}
 }
