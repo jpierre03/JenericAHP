@@ -40,6 +40,7 @@ public class IterationSaaty {
 		Collection<Point> cp = new ArrayList<Point>();
 
 
+
 		/*Création de la matrice Epsilon*/
 		for (int i = 0; i < preferencesMatrix.getColumnDimension(); i++) {
 			for (int j = 0; j < preferencesMatrix.getColumnDimension(); j++) {
@@ -63,6 +64,19 @@ public class IterationSaaty {
 			}
 		}
 
+		for (Point point : cp) {
+			System.out.println(point);
+		}
+		/*Elimination des coordonnées de la partie inférieure gauche de la matrice (réciprocité)*/
+		for (Point point : cp) {
+			if (point.getX()<point.getY()){
+			cp.remove(point); /*PROBLEME SUR CETTE INSTRUCTION*/
+			}
+		}
+
+		for (Point point : cp) {
+			System.out.println(point);
+		}
 		return cp;
 	}
 
@@ -107,6 +121,7 @@ public class IterationSaaty {
 				}
 			}
 		}
+
 
 		return maxPoint;
 

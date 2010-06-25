@@ -6,6 +6,8 @@ package org.taeradan.ahp.ConsistencyMaker;
 
 import Jama.Matrix;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 /**
@@ -26,12 +28,13 @@ public class RandomConsistencyMaker {
 		IterationRandom itRandom = new IterationRandom();
 		Scanner sc = new Scanner(System.in);
 		String str = "N";
-		int cptr = 1;
-		double posX;
-		double posY;
+		int cptr = 2;
 		Point testPoint = new Point();
+		Collection<Point> pointCollection = new ArrayList<Point>();
 
-		testPoint = (Point) itRandom.getRandomRanking(m.getColumnDimension());
+		pointCollection = itRandom.getRandomRanking(m.getColumnDimension());
+
+		testPoint = (Point) itRandom.showBestInconsistency(pointCollection, 1);
 		System.out.println("Vous pouvez réviser le jugement" + testPoint
 						   + "\nSouhaitez vous le modifier? O/N");
 		str = sc.nextLine();
@@ -41,10 +44,17 @@ public class RandomConsistencyMaker {
 		while (!str.equalsIgnoreCase("O")) {
 			if (str.equals("N")) {
 
-				testPoint = (Point) itRandom.getRandomRanking(m.getColumnDimension());
+				testPoint = (Point) itRandom.showBestInconsistency(pointCollection, cptr);
 				System.out.println("Vous pouvez réviser le jugement" + testPoint
 								   + "\nSouhaitez vous le modifier? O/N");
 				str = sc.nextLine();
+
+				if (cptr == ((m.getColumnDimension() * m.getColumnDimension()
+							  - m.getColumnDimension()) / 2)) {
+					cptr = 0;
+					System.out.println("Retour en haut du classement");
+				}
+
 				cptr++;
 
 			} else {

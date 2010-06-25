@@ -31,12 +31,12 @@ public class SaatyConsistencyMaker {
 		IterationSaaty itSaaty = new IterationSaaty();
 		Scanner sc = new Scanner(System.in);
 		String str = "N";
-		int cptr = 1;
+		int cptr = 2;
 		double posX;
 		double posY;
 		Point testPoint = new Point();
 
-		testPoint = itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w), 0);
+		testPoint = itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w), 1);
 		System.out.println("Vous pouvez réviser le jugement" + testPoint
 						   + "\nSouhaitez vous le modifier? O/N");
 		str = sc.nextLine();
