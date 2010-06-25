@@ -17,7 +17,6 @@
  */
 package org.taeradan.ahp.test;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

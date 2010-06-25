@@ -16,13 +16,18 @@ import java.util.Scanner;
  */
 public class RandomConsistencyMaker {
 
-
-	/*
+	/**
 	 * Builder
 	 */
 	public RandomConsistencyMaker() {
 	}
 
+	/**
+	 *
+	 * @param m
+	 * @param w
+	 * @return
+	 */
 	public Matrix modificationOfInconsistentMatrix(Matrix m, Matrix w) {
 
 		IterationRandom itRandom = new IterationRandom();
@@ -34,7 +39,7 @@ public class RandomConsistencyMaker {
 
 		pointCollection = itRandom.getRandomRanking(m.getColumnDimension());
 
-		testPoint = (Point) itRandom.showBestInconsistency(pointCollection, 1);
+		testPoint = itRandom.showBestInconsistency(pointCollection, 1);
 		System.out.println("Vous pouvez réviser le jugement" + testPoint
 						   + "\nSouhaitez vous le modifier? O/N");
 		str = sc.nextLine();
@@ -44,7 +49,7 @@ public class RandomConsistencyMaker {
 		while (!str.equalsIgnoreCase("O")) {
 			if (str.equals("N")) {
 
-				testPoint = (Point) itRandom.showBestInconsistency(pointCollection, cptr);
+				testPoint = itRandom.showBestInconsistency(pointCollection, cptr);
 				System.out.println("Vous pouvez réviser le jugement" + testPoint
 								   + "\nSouhaitez vous le modifier? O/N");
 				str = sc.nextLine();
@@ -80,6 +85,10 @@ public class RandomConsistencyMaker {
 
 	}
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);

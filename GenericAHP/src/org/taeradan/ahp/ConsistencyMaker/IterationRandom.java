@@ -5,7 +5,6 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.awt.Point;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,6 +17,9 @@ import java.util.List;
  */
 public class IterationRandom {
 
+	/**
+	 *
+	 */
 	Collection<Point> pointCollection;
 
 	/**
@@ -29,7 +31,7 @@ public class IterationRandom {
 
 	/**
 	 * Generates a point (x,y) randomly
-	 * @param int
+	 * @param sizeOfMatrix
 	 * @return Point
 	 */
 	public Collection<Point> getRandomRanking(int sizeOfMatrix) {
@@ -39,7 +41,7 @@ public class IterationRandom {
 
 
 		for (int i = 0; i < sizeOfMatrix; i++) {
-			for (int j = i+1; j < sizeOfMatrix; j++) {
+			for (int j = i + 1; j < sizeOfMatrix; j++) {
 				this.pointCollection.add(new Point(i, j));
 			}
 		}
@@ -59,6 +61,12 @@ public class IterationRandom {
 		return pointCollection;
 	}
 
+	/**
+	 *
+	 * @param p
+	 * @param pointCollection
+	 * @return
+	 */
 	public boolean isPresentInCollection(Point p, Collection<Point> pointCollection) {
 
 		for (Point point : pointCollection) {
@@ -74,21 +82,26 @@ public class IterationRandom {
 	/**
 	 * This method gives the best location in preference matrix for which you
 	 * have to change the preference weight.
-	 * @param Collection<Point>,int
+	 * @param ranking
+	 * @param i
 	 * @return Point
 	 */
 	public Point showBestInconsistency(Collection<Point> ranking, int i) {
 		Point temp = new Point();
-		Iterator iterator = ranking.iterator();
+		Iterator<Point> iterator = ranking.iterator();
 
 		for (int cptr = 0; cptr < i; cptr++) {
-			temp = (Point) iterator.next();
+			temp = iterator.next();
 		}
 
 		return temp;
 
 	}
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		IterationRandom r = new IterationRandom();

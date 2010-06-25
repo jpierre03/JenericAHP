@@ -1,4 +1,3 @@
-
 package org.taeradan.ahp.ConsistencyMaker;
 
 import Jama.Matrix;
@@ -67,7 +66,8 @@ public class ConsistencyCheckerMatrix {
 												   + dimension);
 			}
 		} else {
-			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.getRowDimension() + "," + prioVector.getRowDimension());
+			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.
+					getRowDimension() + "," + prioVector.getRowDimension());
 		}
 		return consistent;
 	}

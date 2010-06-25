@@ -6,10 +6,22 @@ package org.taeradan.ahp.ConsistencyMaker;
  */
 public class MatrixValue {
 
+	/**
+	 *
+	 */
 	private double value = 0;
+	/**
+	 *
+	 */
 	private int row = 0;
+	/**
+	 *
+	 */
 	private int column = 0;
 
+	/**
+	 *
+	 */
 	public MatrixValue() {
 	}
 
@@ -55,6 +67,10 @@ public class MatrixValue {
 		this.column = column;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public String toString() {
 		return value + " ";

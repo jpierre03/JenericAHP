@@ -10,11 +10,22 @@ import java.util.TreeMap;
  * @author Marianne
  */
 public class MyMatrixTest {
-	public static int ROWS=5;
-	public static int COLUMN=5;
 
+	/**
+	 *
+	 */
+	private final static int ROWS = 5;
+	/**
+	 *
+	 */
+	private final static int COLUMN = 5;
+
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
-	
+
 		MyMatrix myMatrix = new MyMatrix(ROWS, COLUMN);
 
 		myMatrix.print(ROWS, COLUMN);

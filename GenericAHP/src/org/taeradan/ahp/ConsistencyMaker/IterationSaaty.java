@@ -17,6 +17,9 @@ import java.util.Iterator;
 public class IterationSaaty {
 
 //	Point[] pointsToModify;
+	/**
+	 *
+	 */
 	private Collection<Point> ranking = new ArrayList<Point>();
 
 	/**
@@ -28,7 +31,8 @@ public class IterationSaaty {
 	/**
 	 * This method uses Saaty's algorithm to show where the most important 
 	 * inconsistency is.
-	 * @param Matrix,Matrix
+	 * @param preferencesMatrix
+	 * @param priorityVector
 	 * @return Collection<Point>
 	 */
 	public Collection<Point> rankingOfInconsistencies(Matrix preferencesMatrix,
@@ -81,16 +85,22 @@ public class IterationSaaty {
 		return ranking;
 	}
 
+	/**
+	 *
+	 * @param priorityVector
+	 * @param ranking
+	 * @return
+	 */
 	public double[] calculateBestFits(Matrix priorityVector, Collection<Point> ranking) {
 		int cptr = 0;
 		double[] bestFits = new double[(priorityVector.getRowDimension()
 										* priorityVector.getRowDimension() - priorityVector.
-										getRowDimension()) / 2];
+				getRowDimension()) / 2];
 
 		//Pour chaque point de la collection on calcul le best fit associé
 		for (Point point : ranking) {
 			bestFits[cptr] = ((int) priorityVector.get((int) point.getX(), 0) / priorityVector.get((int) point.
-							  getY(), 0));
+					getY(), 0));
 			System.out.println(bestFits[cptr]);
 			cptr++;
 		}
@@ -101,7 +111,8 @@ public class IterationSaaty {
 	/**
 	 * This method gives the best location in preference matrix for which you
 	 * have to change the preference weight.
-	 * @param Collection<Point>,int
+	 * @param ranking 
+	 * @param i
 	 * @return Point
 	 */
 	public Point showBestInconsistency(Collection<Point> ranking, int i) {
@@ -111,7 +122,8 @@ public class IterationSaaty {
 
 	/**
 	 * Returns the location in a matrix of the greatest value
-	 * @param Matrix, Collection<Point>
+	 * @param m
+	 * @param ranking
 	 * @return Point
 	 */
 	public Point getMaxOfMatrix(Matrix m, Collection<Point> ranking) {
@@ -138,7 +150,8 @@ public class IterationSaaty {
 
 	/**
 	 * Returns true if Point p is present in the point collection pointCollection
-	 * @param Point, Collection<Point>
+	 * @param p
+	 * @param pointCollection
 	 * @return boolean
 	 */
 	public boolean isPresentInCollection(Point p, Collection<Point> pointCollection) {
@@ -152,6 +165,10 @@ public class IterationSaaty {
 		return false;
 	}
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Matrix m = new Matrix(3, 3);

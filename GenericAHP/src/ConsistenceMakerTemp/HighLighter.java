@@ -1,7 +1,8 @@
 package ConsistenceMakerTemp;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -11,6 +12,22 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class HighLighter
 		extends DefaultTableCellRenderer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 *
+	 * @param table
+	 * @param value
+	 * @param isSelected
+	 * @param hasFocus
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	@Override
 	public Component getTableCellRendererComponent(JTable table,
 												   Object value,
 												   boolean isSelected,

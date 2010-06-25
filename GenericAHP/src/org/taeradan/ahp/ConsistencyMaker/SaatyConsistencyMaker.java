@@ -20,10 +20,11 @@ public class SaatyConsistencyMaker {
 	public SaatyConsistencyMaker() {
 	}
 
-	/*
+	/**
 	 * This method show the judgement to change and let the user do his/her modification
 	 * according Saaty's proposition
-	 * @param Matrix, Matrix
+	 * @param m
+	 * @param w
 	 * @return Matrix
 	 */
 	public Matrix modificationOfInconsistentMatrix(Matrix m, Matrix w) {
@@ -80,6 +81,10 @@ public class SaatyConsistencyMaker {
 
 	}
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
@@ -106,12 +111,12 @@ public class SaatyConsistencyMaker {
 
 		m.print(5, 5);
 
-		w.set(0, 0,(double)28/49);
-		w.set(1, 0,(double) 28/98);
-		w.set(2, 0, (double)28/196);
+		w.set(0, 0, (double) 28 / 49);
+		w.set(1, 0, (double) 28 / 98);
+		w.set(2, 0, (double) 28 / 196);
 
 		w.print(5, 5);
-		 
+
 
 
 		/*EXEMPLE DE MATRICE INCOHERENTE
@@ -135,7 +140,7 @@ public class SaatyConsistencyMaker {
 
 		//	w.print(5, 5);
 
- 
+
 		/*Calls a Saaty's Iteration while the pairwise comparison matrix is inconsistent*/
 		while (!Cst.isConsistent(m, w)) {
 			m.print(5, 5);
