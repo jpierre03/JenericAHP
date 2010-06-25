@@ -17,6 +17,7 @@
  */
 package org.taeradan.ahp;
 
+import Jama.Matrix;
 import java.util.logging.Logger;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
@@ -44,17 +45,27 @@ public class ConsistencyChecker {
 	 */
 	public static boolean isConsistent(final PreferenceMatrix prefMatrix,
 									   final PriorityVector prioVector) {
+		return isConsistent(prefMatrix.getMatrix(), prioVector.getVector());
+	}
+
+	/**
+	 *
+	 * @param prefMatrix
+	 * @param prioVector
+	 * @return
+	 */
+	public static boolean isConsistent(final Matrix prefMatrix,
+									   final Matrix prioVector) {
 		boolean consistent = false;
-		MyMatrix matrix = prefMatrix.getMatrix();
-		MyMatrix vector = prioVector.getVector();
+
 		double[] lambdas;
 		int dimension = 0;
-		if (prefMatrix.getMatrix().getRowDimension() == prioVector.getVector().getRowDimension()) {
-			dimension = prefMatrix.getMatrix().getRowDimension();
+		if (prefMatrix.getRowDimension() == prioVector.getRowDimension()) {
+			dimension = prefMatrix.getRowDimension();
 			if (dimension == 1) {
 				consistent = true;
 			} else if (dimension == 2) {
-				if (prefMatrix.getMatrix().get(0, 1) == (1 / prefMatrix.getMatrix().get(1, 0))) {
+				if (prefMatrix.get(0, 1) == (1 / prefMatrix.get(1, 0))) {
 					consistent = true;
 				} else {
 					consistent = false;
@@ -64,9 +75,9 @@ public class ConsistencyChecker {
 				for (int i = 0; i < dimension; i++) {
 					double sum = 0;
 					for (int j = 0; j < dimension; j++) {
-						sum = sum + matrix.get(i, j) * vector.get(j, 0);
+						sum = sum + prefMatrix.get(i, j) * prioVector.get(j, 0);
 					}
-					lambdas[i] = sum / vector.get(i, 0);
+					lambdas[i] = sum / prioVector.get(i, 0);
 				}
 				double lambdaMax = Double.MIN_VALUE;
 				for (int index = 0; index < dimension; index++) {
@@ -85,7 +96,7 @@ public class ConsistencyChecker {
 			}
 		} else {
 			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.
-					getMatrix().getRowDimension() + "," + prioVector.getVector().getRowDimension());
+					getRowDimension() + "," + prioVector.getRowDimension());
 		}
 		return consistent;
 	}

@@ -4,6 +4,7 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import org.taeradan.ahp.ConsistencyChecker;
 import Jama.Matrix;
 import java.awt.Point;
 import java.util.Scanner;
@@ -88,7 +89,7 @@ public class SaatyConsistencyMaker {
 	public static void main(String[] args) {
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
-		ConsistencyCheckerMatrix Cst = new ConsistencyCheckerMatrix();
+		ConsistencyChecker Cst = new ConsistencyChecker();
 		SaatyConsistencyMaker scm = new SaatyConsistencyMaker();
 
 

@@ -70,13 +70,13 @@ public class PriorityVector {
 //		matrix.print(5, 4);
 		MyMatrix oldVector;
 		final int dimension = matrix.getRowDimension();
-		MyMatrix e = new MyMatrix(1,dimension); /*check*/
-		MatrixValue tripletMatrixValue= new MatrixValue();
-		for(int cptr=0;cptr<dimension;cptr++){
-		//MyMatrix e = new MyMatrix(1, dimension, 1.0);
-		tripletMatrixValue.setColumn(cptr);
-		tripletMatrixValue.setRow(0);
-		tripletMatrixValue.setValue(1);
+		MyMatrix e = new MyMatrix(1, dimension); /*check*/
+		MatrixValue tripletMatrixValue = new MatrixValue();
+		for (int cptr = 0; cptr < dimension; cptr++) {
+			//MyMatrix e = new MyMatrix(1, dimension, 1.0);
+			tripletMatrixValue.setColumn(cptr);
+			tripletMatrixValue.setRow(0);
+			tripletMatrixValue.setValue(1);
 		}
 		do {
 			oldVector = vector;

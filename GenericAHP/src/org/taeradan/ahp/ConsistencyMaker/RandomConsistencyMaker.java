@@ -4,6 +4,7 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import org.taeradan.ahp.ConsistencyChecker;
 import Jama.Matrix;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class RandomConsistencyMaker {
 	public static void main(String[] args) {
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
-		ConsistencyCheckerMatrix Cst = new ConsistencyCheckerMatrix();
+		ConsistencyChecker Cst = new ConsistencyChecker();
 		RandomConsistencyMaker rcm = new RandomConsistencyMaker();
 
 
