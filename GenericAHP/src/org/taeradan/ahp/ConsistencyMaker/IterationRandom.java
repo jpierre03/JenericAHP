@@ -5,6 +5,10 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -13,10 +17,13 @@ import java.util.Random;
  */
 public class IterationRandom {
 
+	Collection<Point> pointCollection;
+
 	/**
 	 * Builder
 	 */
 	public IterationRandom() {
+		pointCollection = new ArrayList<Point>();
 	}
 
 	/**
@@ -24,24 +31,63 @@ public class IterationRandom {
 	 * @param int
 	 * @return Point
 	 */
-	public Point getRandomLocation(int sizeOfMatrix) {
+	public Collection<Point> getRandomRanking(int sizeOfMatrix) {
 		Point location;
+		Point temp = new Point(0, -1);
+		Point pointToAdd = new Point();
 		double posX = 0;
 		double posY = -1;
+		int flag = 0;
+		List<Point> lp;
 
-		while (posX > posY || posX < 1 || posX > sizeOfMatrix || posY < 1 || posY > sizeOfMatrix) {
-			posX = 10*Math.random();
-			posY = 10*Math.random();
+
+
+		for (int i = 0; i < sizeOfMatrix; i++) {
+			for (int j = i; j < sizeOfMatrix; j++) {
+				this.pointCollection.add(new Point(i, j));
+			}
 		}
-		return location = new Point((int)posX,(int)posY);
+		lp=new ArrayList<Point>(pointCollection);
+		for (Point point : lp) {
+			System.out.println(point);
+		}
+		Collections.shuffle(lp);
+
+
+
+		System.out.println("***********");
+		for (Point point : lp) {
+			System.out.println(point);
+		}
+
+		//faire 2 boucles pour mettre ds collections (liste)
+		// shuffle
+
+
+
+
+//		for (Point point : pointCollection) {
+//			System.out.println(point);
+//		}
+		return pointCollection;
 	}
 
+	public boolean isPresentInCollection(Point p, Collection<Point> pointCollection) {
 
+		for (Point point : pointCollection) {
+			if (point.getX() == p.getX() && point.getY() == p.getY()) {
+				return true;
+			}
 
-	/*public static void main(String[] args) {
+		}
+
+		return false;
+	}
+
+	public static void main(String[] args) {
 
 		IterationRandom r = new IterationRandom();
-		Point p = r.getRandomLocation(3);
-		System.out.println("X = "+p.getX()+"Y = "+p.getY());
-	}*/
+		r.getRandomRanking(3);
+
+	}
 }

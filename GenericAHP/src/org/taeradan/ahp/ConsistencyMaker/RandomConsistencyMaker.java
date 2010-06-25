@@ -12,23 +12,18 @@ import java.util.Scanner;
  *
  * @author Marianne
  */
-public class SaatyConsistencyMaker {
+public class RandomConsistencyMaker {
 
-	/**
-	 * Builder
-	 */
-	public SaatyConsistencyMaker() {
-	}
 
 	/*
-	 * This method show the judgement to change and let the user do his/her modification
-	 * according Saaty's proposition
-	 * @param Matrix, Matrix
-	 * @return Matrix
+	 * Builder
 	 */
+	public RandomConsistencyMaker() {
+	}
+
 	public Matrix modificationOfInconsistentMatrix(Matrix m, Matrix w) {
 
-		IterationSaaty itSaaty = new IterationSaaty();
+		IterationRandom itRandom = new IterationRandom();
 		Scanner sc = new Scanner(System.in);
 		String str = "N";
 		int cptr = 1;
@@ -36,7 +31,7 @@ public class SaatyConsistencyMaker {
 		double posY;
 		Point testPoint = new Point();
 
-		testPoint = itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w), 0);
+		testPoint = (Point) itRandom.getRandomRanking(m.getColumnDimension());
 		System.out.println("Vous pouvez réviser le jugement" + testPoint
 						   + "\nSouhaitez vous le modifier? O/N");
 		str = sc.nextLine();
@@ -46,17 +41,11 @@ public class SaatyConsistencyMaker {
 		while (!str.equalsIgnoreCase("O")) {
 			if (str.equals("N")) {
 
-				testPoint = itSaaty.showBestInconsistency(itSaaty.rankingOfInconsistencies(m, w),
-														  cptr);
+				testPoint = (Point) itRandom.getRandomRanking(m.getColumnDimension());
 				System.out.println("Vous pouvez réviser le jugement" + testPoint
 								   + "\nSouhaitez vous le modifier? O/N");
 				str = sc.nextLine();
-				if (cptr == (m.getColumnDimension() * m.getColumnDimension())) {
-					cptr = 0;
-					System.out.println("Retour en haut du classement");
-				}
 				cptr++;
-				System.out.println("Cptr = " + cptr);
 
 			} else {
 
@@ -72,6 +61,7 @@ public class SaatyConsistencyMaker {
 		str = sc.nextLine();
 		int newValue = Integer.parseInt(str);
 
+
 		/*Récupération de la valeur saisie u clavier et remplacement dans la matrice*/
 		m.set((int) testPoint.getX(), (int) testPoint.getY(), (double) newValue);/*Aij = x*/
 		m.set((int) testPoint.getY(), (int) testPoint.getX(), (double) 1 / newValue);/*Aji = 1/x*/
@@ -84,7 +74,7 @@ public class SaatyConsistencyMaker {
 		Matrix m = new Matrix(3, 3);
 		Matrix w = new Matrix(3, 1);
 		ConsistencyCheckerMatrix Cst = new ConsistencyCheckerMatrix();
-		SaatyConsistencyMaker scm = new SaatyConsistencyMaker();
+		RandomConsistencyMaker rcm = new RandomConsistencyMaker();
 
 
 
@@ -106,12 +96,12 @@ public class SaatyConsistencyMaker {
 
 		m.print(5, 5);
 
-		w.set(0, 0,(double)28/49);
-		w.set(1, 0,(double) 28/98);
-		w.set(2, 0, (double)28/196);
+		w.set(0, 0, (double) 28 / 49);
+		w.set(1, 0, (double) 28 / 98);
+		w.set(2, 0, (double) 28 / 196);
 
 		w.print(5, 5);
-		 
+
 
 
 		/*EXEMPLE DE MATRICE INCOHERENTE
@@ -135,12 +125,12 @@ public class SaatyConsistencyMaker {
 
 		//	w.print(5, 5);
 
- 
+
 		/*Calls a Saaty's Iteration while the pairwise comparison matrix is inconsistent*/
 		while (!Cst.isConsistent(m, w)) {
 			m.print(5, 5);
 			System.out.println("Votre matrice est incohérente.");
-			m = scm.modificationOfInconsistentMatrix(m, w);
+			m = rcm.modificationOfInconsistentMatrix(m, w);
 		}
 
 		System.out.println("Votre matrice est cohérente ! Merci de votre participation.");
