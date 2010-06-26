@@ -25,7 +25,7 @@ import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.taeradan.ahp.ConsistencyChecker;
-import org.taeradan.ahp.PreferenceMatrix;
+import org.taeradan.ahp.PairWiseMatrix;
 import org.taeradan.ahp.PriorityVector;
 
 /**
@@ -48,9 +48,9 @@ public class TestConsistency {
 		final SAXBuilder parser = new SAXBuilder();
 		try {
 			final Document inDocument = parser.build(matrixChooser.getSelectedFile());
-			final PreferenceMatrix matrix = new PreferenceMatrix(inDocument.getRootElement());
-			final PriorityVector vector = new PriorityVector(matrix);
-			System.out.println(PreferenceMatrix.toString(vector.getVector(), null));
+			final PairWiseMatrix matrix = PairWiseMatrix.builder(inDocument.getRootElement());
+			final PriorityVector vector = PriorityVector.build(matrix);
+			System.out.println(PairWiseMatrix.toString(vector, null));
 			final boolean result = ConsistencyChecker.isConsistent(matrix, vector);
 			System.out.println("CR = " + ConsistencyChecker.getCrResult());
 			if (result) {

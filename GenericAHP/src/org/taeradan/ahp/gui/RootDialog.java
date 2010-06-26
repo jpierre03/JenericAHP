@@ -21,6 +21,7 @@ import org.taeradan.ahp.Root;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.PairWiseMatrix;
 
 /**
  * Dialog used to configure Root's informations and preference matrix
@@ -146,8 +147,8 @@ public class RootDialog
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
 		root.setName(jTextFieldObjective.getText());
-		final MyMatrix matrix =
-					 new MyMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+		final PairWiseMatrix matrix =
+					 new PairWiseMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
 			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
@@ -162,7 +163,7 @@ public class RootDialog
 				matrix.set(i, j, value);
 			}
 		}
-		root.getMatrixCrCr().setMatrix(matrix);
+		root.setMatrixCrCr(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
         // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -184,7 +185,7 @@ public class RootDialog
 		for (int i = 0; i < matrixSize; i++) {
 			columnNames[i] = ((Criteria) root.getCriterias().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = root.getMatrixCrCr().getMatrix().get(i, j);
+				data[i][j] = root.getMatrixCrCr().get(i, j);
 			}
 		}
 		guiPrefMatrix.setDataVector(data, columnNames);
@@ -196,7 +197,7 @@ public class RootDialog
 	 * @param column
 	 */
 	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(root.getMatrixCrCr().getMatrix().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(root.getMatrixCrCr().get(row, column), row, column);
 	}
 
 	/**

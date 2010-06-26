@@ -46,7 +46,7 @@ public class Criteria {
 	/**
 	 *
 	 */
-	transient private PreferenceMatrix matrixIndInd;
+	transient private PairWiseMatrix matrixIndInd;
 	/**
 	 *
 	 */
@@ -76,9 +76,9 @@ public class Criteria {
 
 //		Initialisation of the preference matrix
 		final Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
-		matrixIndInd = new PreferenceMatrix(xmlPrefMatrix);
+		matrixIndInd = PairWiseMatrix.builder(xmlPrefMatrix);
 //		System.out.println("\tCriteria.matrixIndInd="+matrixIndInd);
-		vectorIndCr = new PriorityVector(matrixIndInd);
+		vectorIndCr = PriorityVector.build(matrixIndInd);
 
 //		Consistency verification
 		if (!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
@@ -104,12 +104,13 @@ public class Criteria {
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
 			final String indName = Root.indicatorPath
-							 + Indicator.class.getSimpleName()
-							 + xmlIndicator.getAttributeValue("id");
+								   + Indicator.class.getSimpleName()
+								   + xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 				@SuppressWarnings("unchecked")
-				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(
+				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.
+						forName(
 						indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
@@ -147,20 +148,19 @@ public class Criteria {
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(
 			final Collection<? extends Alternative> alternatives) {
-		MyMatrix matrixAltInd;
-		matrixAltInd = new MyMatrix(alternatives.size(), indicators.size());
+		PairWiseMatrix matrixAltInd;
+		matrixAltInd = new PairWiseMatrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
 			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.next().
-					calculateAlternativesPriorityVector(alternatives).
-					getVector());
+					calculateAlternativesPriorityVector(alternatives));
 			index++;
 		}
 //		Calculation of the criteria's alternatives vector
-		vectorAltCr = new PriorityVector();
-		vectorAltCr.setVector((MyMatrix) matrixAltInd.times(vectorIndCr.getVector()));
+		vectorAltCr = new PriorityVector(matrixAltInd.getRowDimension());
+		vectorAltCr.setMatrix(matrixAltInd.getRowDimension() - 1, matrixAltInd.times(vectorIndCr));
 		return vectorAltCr;
 	}
 
@@ -184,7 +184,7 @@ public class Criteria {
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t(" + printFormat.format(vectorIndCr.getVector().get(index, 0))
+			string.append("\n\t\t(" + printFormat.format(vectorIndCr.get(index, 0))
 						  + ") " + itIndicators.next());
 			index++;
 		}
@@ -219,7 +219,7 @@ public class Criteria {
 					resultToString());
 		}
 		string.append("\n\tvectorAltCr=\n"
-					  + PreferenceMatrix.toString(vectorAltCr.getVector(), "\t"));
+					  + PairWiseMatrix.toString(vectorAltCr, "\t"));
 		return string.toString();
 	}
 
@@ -243,7 +243,7 @@ public class Criteria {
 	 *
 	 * @return
 	 */
-	public PreferenceMatrix getMatrixInd() {
+	public PairWiseMatrix getMatrixInd() {
 		return matrixIndInd;
 	}
 
@@ -251,7 +251,7 @@ public class Criteria {
 	 *
 	 * @param matrixInd
 	 */
-	public void setMatrixInd(final PreferenceMatrix matrixInd) {
+	public void setMatrixInd(final PairWiseMatrix matrixInd) {
 		this.matrixIndInd = matrixInd;
 	}
 

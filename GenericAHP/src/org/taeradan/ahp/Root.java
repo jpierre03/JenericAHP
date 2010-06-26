@@ -17,6 +17,7 @@
  */
 package org.taeradan.ahp;
 
+import Jama.Matrix;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -55,7 +56,7 @@ public class Root {
 	/**
 	 *
 	 */
-	transient private PreferenceMatrix matrixCrCr;
+	transient private PairWiseMatrix matrixCrCr;
 	/**
 	 *
 	 */
@@ -72,7 +73,7 @@ public class Root {
 	/**
 	 *
 	 */
-	transient private MyMatrix matrixAltCr;
+	transient private Matrix matrixAltCr;
 //	Execution control attributes
 	/**
 	 *
@@ -87,7 +88,7 @@ public class Root {
 	public Root(final File inFile, final String indicatorPath) {
 		if (inFile == null) {
 			name = "";
-			matrixCrCr = new PreferenceMatrix();
+			matrixCrCr = new PairWiseMatrix();
 			criterias = new ArrayList<Criteria>();
 		} else {
 			Root.indicatorPath = indicatorPath;
@@ -102,8 +103,8 @@ public class Root {
 				name = xmlRoot.getChildText("name");
 //				Initialisation of the preference matrix
 				final Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
-				matrixCrCr = new PreferenceMatrix(xmlPrefMatrix);
-				vectorCrOg = new PriorityVector(matrixCrCr);
+				matrixCrCr = PairWiseMatrix.builder(xmlPrefMatrix);
+				vectorCrOg = PriorityVector.build(matrixCrCr);
 //				Consistency verification
 				if (!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
 					Logger.getAnonymousLogger().severe(
@@ -129,7 +130,7 @@ public class Root {
 			} catch (FileNotFoundException e) {
 				Logger.getAnonymousLogger().severe("File not found : " + inFile.getAbsolutePath());
 				name = "unknow";
-				matrixCrCr = new PreferenceMatrix();
+				matrixCrCr = new PairWiseMatrix();
 				criterias = new ArrayList<Criteria>();
 			} catch (JDOMException e) {
 				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
@@ -174,8 +175,7 @@ public class Root {
 		int index = 0;
 		while (itCriterias.hasNext()) {
 			string.append("\n\t("
-						  + printFormat.format(vectorCrOg.getVector().
-					get(index, 0))
+						  + printFormat.format(vectorCrOg.get(index, 0))
 						  + ") "
 						  + itCriterias.next().toStringRecursive());
 			index++;
@@ -211,8 +211,7 @@ public class Root {
 				string.append("\n\t" + itCriterias.next().
 						resultToString());
 			}
-			string.append("\nvectorAltOg=\n" + PreferenceMatrix.toString(vectorAltOg.getVector(),
-																		 null));
+			string.append("\nvectorAltOg=\n" + PairWiseMatrix.toString(vectorAltOg, null));
 		} else {
 			string.append("There is no result, please do a ranking first");
 		}
@@ -245,20 +244,27 @@ public class Root {
 	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAltCr = new MyMatrix(alternatives.size(), criterias.size());
+		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
+		System.out.println("alternatives = " + alternatives.size());
+		System.out.println("criterias = " + criterias.size());
 		while (itCriterias.hasNext()) {
-			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, itCriterias.next().
-					calculateAlternativesPriorityVector(alternatives).getVector());
+			PriorityVector temp = itCriterias.next().
+					calculateAlternativesPriorityVector(alternatives);
+			System.out.println("criteria n= " + index);
+			System.out.println("alt vector n= " + temp.getRowDimension());
+			temp.print(5, 4);
+			matrixAltCr.print(5, 4);
+			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, temp);
 			index++;
 		}
 //		Calculation of the final alternatives priority vector
-		vectorAltOg = new PriorityVector();
-		vectorAltOg.setVector((MyMatrix) matrixAltCr.times(vectorCrOg.getVector()));
+		vectorAltOg = new PriorityVector(matrixAltCr.getRowDimension());
+		vectorAltOg.setMatrix(0,matrixAltCr.times(vectorCrOg));
 //		Ranking of the alternatives with the MOg vector
-		double[][] sortedVectorAltOg = vectorAltOg.getVector().getArrayCopy();
+		double[][] sortedVectorAltOg = vectorAltOg.getArrayCopy();
 //		vectorAltOg.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
@@ -283,7 +289,7 @@ public class Root {
 //			vector[i] <-> vector[minIndex]
 			sortedVectorAltOg[i][0] = sortedVectorAltOg[minIndex][0];
 			sortedVectorAltOg[minIndex][0] = tmpValue;
-			ranks[alternatives.size() - i -1] = originIndexes[i];
+			ranks[alternatives.size() - i - 1] = originIndexes[i];
 //			System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
 //							   + sortedVectorAltOg[i][0]);
 		}
@@ -299,7 +305,7 @@ public class Root {
 	 *
 	 * @return
 	 */
-	public PreferenceMatrix getMatrixCrCr() {
+	public PairWiseMatrix getMatrixCrCr() {
 		return matrixCrCr;
 	}
 
@@ -325,5 +331,13 @@ public class Root {
 	 */
 	public Collection<Criteria> getCriterias() {
 		return criterias;
+	}
+
+	/**
+	 *
+	 * @param matrix
+	 */
+	public void setMatrixCrCr(PairWiseMatrix matrix) {
+		matrixCrCr = matrix;
 	}
 }

@@ -19,7 +19,6 @@ package org.taeradan.ahp;
 
 import java.util.Collection;
 import org.jdom.Element;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
@@ -50,7 +49,7 @@ public abstract class Indicator {
 	/**
 	 *
 	 */
-	transient private MyMatrix matrixAltAlt;
+	transient private PairWiseMatrix matrixAltAlt;
 	/**
 	 *
 	 */
@@ -74,7 +73,7 @@ public abstract class Indicator {
 		alternatives = alts;
 		final int dimension = alternatives.size();
 		double[] altValues = new double[dimension];
-		matrixAltAlt = new MyMatrix(dimension, dimension);
+		matrixAltAlt = new PairWiseMatrix(dimension, dimension);
 //		For each alternative, evaluation of its value for the indicator
 		for (int i = 0; i < alternatives.size(); i++) {
 			altValues[i] = calculateAlternativeValue(i, alternatives);
@@ -93,7 +92,7 @@ public abstract class Indicator {
 			}
 		}
 //		Conversion from pairwise matrix to priority vector
-		vectorAltInd = new PriorityVector(matrixAltAlt);
+		vectorAltInd = PriorityVector.build(matrixAltAlt);
 		return vectorAltInd;
 	}
 
@@ -170,10 +169,10 @@ public abstract class Indicator {
 		final StringBuilder string = new StringBuilder(this.toString());
 		if (alternatives.size() < 30) {
 			string.append("\n\t\tmatrixAltAlt=\n");
-			string.append(PreferenceMatrix.toString(matrixAltAlt, "\t\t"));
+			string.append(PairWiseMatrix.toString(matrixAltAlt, "\t\t"));
 		}
 		string.append("\n\t\tvectorAltInd=\n");
-		string.append(PreferenceMatrix.toString(vectorAltInd.getVector(),
+		string.append(PairWiseMatrix.toString(vectorAltInd,
 												"\t\t"));
 		return string.toString();
 	}

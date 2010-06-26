@@ -16,18 +16,25 @@ public class MyMatrix
 
 	/**
 	 *
-	 * @param i
-	 * @param i1
 	 */
-	public MyMatrix(int i, int i1) {
-		super(i, i1);
+	public MyMatrix(){
+		super(0, 0);
+	}
+
+	/**
+	 *
+	 * @param i
+	 * @param j
+	 */
+	public MyMatrix(int i, int j) {
+		super(i, j);
 	}
 
 	/**
 	 *
 	 * @param matrixValue
 	 */
-	public void set(MatrixValue matrixValue) {
+	public void setMatrixValue(MatrixValue matrixValue) {
 		super.set(matrixValue.getRow(),
 				  matrixValue.getColumn(),
 				  matrixValue.getValue());
@@ -36,14 +43,14 @@ public class MyMatrix
 	/**
 	 *
 	 * @param i
-	 * @param i1
+	 * @param j
 	 * @return
 	 */
-	public MatrixValue getMatrixValue(int i, int i1) {
+	public MatrixValue getMatrixValue(int i, int j) {
 		MatrixValue matrixValue = new MatrixValue();
-		matrixValue.setValue(super.get(i, i1));
+		matrixValue.setValue(super.get(i, j));
 		matrixValue.setRow(i);
-		matrixValue.setColumn(i1);
+		matrixValue.setColumn(j);
 
 		return matrixValue;
 	}

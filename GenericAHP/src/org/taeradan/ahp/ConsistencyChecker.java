@@ -37,16 +37,16 @@ public class ConsistencyChecker {
 	 */
 	private static double consistenceCrit = 0;
 
-	/**
-	 *
-	 * @param prefMatrix
-	 * @param prioVector
-	 * @return
-	 */
-	public static boolean isConsistent(final PreferenceMatrix prefMatrix,
-									   final PriorityVector prioVector) {
-		return isConsistent(prefMatrix.getMatrix(), prioVector.getVector());
-	}
+//	/**
+//	 *
+//	 * @param prefMatrix
+//	 * @param prioVector
+//	 * @return
+//	 */
+//	public static boolean isConsistent(final PairWiseMatrix prefMatrix,
+//									   final PriorityVector prioVector) {
+//		return isConsistent(prefMatrix, prioVector);
+//	}
 
 	/**
 	 *

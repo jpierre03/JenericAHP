@@ -26,34 +26,40 @@ import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
- * The PreferenceMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
+ * The PairWiseMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
  * @author jpierre03
  * @author Yves Dubromelle
  */
-public class PreferenceMatrix {
-
-	/**
-	 * initialization
-	 */
-	private MyMatrix matrix = new MyMatrix(0, 0);
+public class PairWiseMatrix
+		extends MyMatrix {
 
 	/**
 	 * Class default Constructor.
 	 */
-	public PreferenceMatrix() {
+	public PairWiseMatrix() {
 	}
 
 	/**
-	 * Creates a PreferenceMatrix from a JDOM Element
-	 * @param xmlPrefMatrix JDOM Element
+	 *
+	 * @param i
+	 * @param j
 	 */
-	public PreferenceMatrix(final Element xmlPrefMatrix) {
+	public PairWiseMatrix(int i, int j) {
+		super(i, j);
+	}
+
+	/**
+	 * Creates a PairWiseMatrix from a JDOM Element
+	 * @param xmlPrefMatrix JDOM Element
+	 * @return 
+	 */
+	public static PairWiseMatrix builder(final Element xmlPrefMatrix) {
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		final int size = xmlRowsList.size();
-		matrix = new MyMatrix(size, size);
+		PairWiseMatrix matrix = new PairWiseMatrix(size, size);
 		final JEP myParser = new JEP();
-		for (int i = 0; i < xmlRowsList.size(); i++) {
+		for (int i = 0; i < size; i++) {
 //			Extraction of a row from the matrix
 			final Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
@@ -70,6 +76,7 @@ public class PreferenceMatrix {
 				matrix.set(i, j, value);
 			}
 		}
+		return matrix;
 	}
 
 	/**
@@ -78,7 +85,7 @@ public class PreferenceMatrix {
 	 */
 	@Override
 	public String toString() {
-		return makeString(this.matrix, null);
+		return makeString(this, null);
 	}
 
 	/**
@@ -87,7 +94,7 @@ public class PreferenceMatrix {
 	 * @return
 	 */
 	public String toString(final String prefix) {
-		return makeString(this.matrix, prefix);
+		return makeString(this, prefix);
 	}
 
 	/**
@@ -136,12 +143,12 @@ public class PreferenceMatrix {
 	public Element toXml() {
 		final Element xmlPrefMatrix = new Element("prefmatrix");
 //		For each row in the matrix
-		for (int i = 0; i < matrix.getRowDimension(); i++) {
+		for (int i = 0; i < getRowDimension(); i++) {
 			final Element xmlRow = new Element("row");
 //			For each element in the row
-			for (int j = 0; j < matrix.getColumnDimension(); j++) {
+			for (int j = 0; j < getColumnDimension(); j++) {
 				final Element xmlElt = new Element("elt");
-				xmlElt.setAttribute("value", Double.toString(matrix.getMatrixValue(i, j).getValue()));
+				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).getValue()));
 				xmlRow.addContent(xmlElt);
 			}
 			xmlPrefMatrix.addContent(xmlRow);
@@ -150,37 +157,21 @@ public class PreferenceMatrix {
 	}
 
 	/**
-	 * Method that give the Matrix contained in this class.
-	 * @return matrix
-	 */
-	public MyMatrix getMatrix() {
-		return matrix;
-	}
-
-	/**
-	 * Method that overwrite the matrix contained in this class.
-	 * @param matrix
-	 */
-	public void setMatrix(final MyMatrix matrix) {
-		this.matrix = matrix;
-	}
-
-	/**
 	 * 
 	 * @param index
 	 */
 	public void remove(final int index) {
-		final int newDimension = matrix.getRowDimension() - 1;
+		final int newDimension = getRowDimension() - 1;
 		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
-		Logger.getAnonymousLogger().info("Ancienne dimension =" + matrix.getRowDimension()
+		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
 										 + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
-		for (int i = 0; i < matrix.getRowDimension(); i++) {
+		for (int i = 0; i < getRowDimension(); i++) {
 			if (i != index) {
-				for (int j = 0; j < matrix.getColumnDimension(); j++) {
+				for (int j = 0; j < getColumnDimension(); j++) {
 					if (j != index) {
-						final double newValue = matrix.getMatrixValue(i, j).getValue();
+						final double newValue = getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
 														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);

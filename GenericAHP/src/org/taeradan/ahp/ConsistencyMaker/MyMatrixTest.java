@@ -38,7 +38,7 @@ public class MyMatrixTest {
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
 
-				myMatrix.set(matrixValue);
+				myMatrix.setMatrixValue(matrixValue);
 			}
 		}
 

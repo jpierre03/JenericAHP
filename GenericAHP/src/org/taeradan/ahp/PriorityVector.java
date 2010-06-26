@@ -17,102 +17,72 @@
  */
 package org.taeradan.ahp;
 
+import Jama.Matrix;
 import java.math.BigDecimal;
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *
  * @author Yves Dubromelle
  */
-public class PriorityVector {
+public class PriorityVector
+		extends MyMatrix {
 
 	/**
 	 *
+	 * @param i
 	 */
-	private MyMatrix vector = null;
-	/**
-	 *
-	 */
-	transient private boolean isUnderTreshold = true;
-
-	/**
-	 *
-	 * @param prefMatrix
-	 */
-	public PriorityVector(final PreferenceMatrix prefMatrix) {
-		constructVector(prefMatrix.getMatrix());
+	public PriorityVector(int i) {
+		super(i, 1);
 	}
 
 	/**
 	 *
 	 * @param matrix
+	 * @return
 	 */
-	public PriorityVector(final MyMatrix matrix) {
-		constructVector(matrix);
-	}
-
-	/**
-	 *
-	 */
-	PriorityVector() {
-	}
-
-	/**
-	 *
-	 * @param matrix
-	 */
-	private void constructVector(final MyMatrix matrix) {
-		if (matrix.getRowDimension() < 2) {
-			this.vector = new MyMatrix(matrix.getRowDimension(), 1);
-		}
-		MyMatrix multMatrix = (MyMatrix) matrix.clone();
-//		matrix.print(5, 4);
-		MyMatrix oldVector;
+	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		MyMatrix e = new MyMatrix(1, dimension); /*check*/
-		MatrixValue tripletMatrixValue = new MatrixValue();
-		for (int cptr = 0; cptr < dimension; cptr++) {
-			//MyMatrix e = new MyMatrix(1, dimension, 1.0);
-			tripletMatrixValue.setColumn(cptr);
-			tripletMatrixValue.setRow(0);
-			tripletMatrixValue.setValue(1);
-		}
+		PriorityVector resultVector;
+//		if (matrix.getRowDimension() < 2) {
+		resultVector = new PriorityVector(dimension);
+//		}
+		Matrix workVector = new PriorityVector(dimension);
+		Matrix multMatrix = (Matrix) matrix.clone();
+//		matrix.print(5, 4);
+		Matrix e = new Matrix(1, dimension, 1);
+		Matrix lastVector;
+		boolean isUnderTreshold = true;
 		do {
-			oldVector = vector;
-			final MyMatrix numerator = (MyMatrix) multMatrix.times(e.transpose());
-			final MyMatrix denominator = (MyMatrix) e.times(multMatrix).times(e.transpose());
-			vector = (MyMatrix) numerator.timesEquals(1 / denominator.get(0, 0));
-			if (oldVector == null) {
+			lastVector = workVector;
+			final Matrix numerator = multMatrix.times(e.transpose());
+			final Matrix denominator = e.times(multMatrix).times(e.transpose());
+			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
+			if (lastVector == null) {
 				isUnderTreshold = false;
 			} else {
-				MyMatrix difference = (MyMatrix) vector.minus(oldVector);
+				Matrix difference = workVector.minus(lastVector);
 				isUnderTreshold = true;
 				for (int i = 0; i < dimension; i++) {
-					if (new BigDecimal(difference.get(i, 0)).abs().doubleValue() > 1E-16) {
+					double valeur0 = difference.get(i, 0);
+					if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
+//						difference en dessous du seuil
 						isUnderTreshold = false;
-//						dirrefence en dessous du seuil
 					}
 				}
 			}
-			multMatrix = (MyMatrix) multMatrix.times(matrix);
+			multMatrix = multMatrix.times(matrix);
 		} while (!isUnderTreshold);
-//		vector.print(5, 4);
+		resultVector.setMatrix(dimension - 1, workVector);
+		return resultVector;
 	}
 
 	/**
-	 * Method that give the Matrix contained in this class.
-	 * @return vector
+	 *
+	 * @param i
+	 * @param matrix
 	 */
-	public MyMatrix getVector() {
-		return vector;
-	}
-
-	/**
-	 * 
-	 * @param vector
-	 */
-	public void setVector(final MyMatrix vector) {
-		this.vector = vector;
+	void setMatrix(int i, Matrix matrix) {
+		setMatrix(0, i, 0, 0, matrix);
 	}
 }

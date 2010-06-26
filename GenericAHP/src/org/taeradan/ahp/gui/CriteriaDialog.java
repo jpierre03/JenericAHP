@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.Indicator;
+import org.taeradan.ahp.PairWiseMatrix;
 
 /**
  * Dialog used to configure a Criteria's informations and preference matrix
@@ -180,7 +181,7 @@ public class CriteriaDialog
 				matrix.set(i, j, value);
 			}
 		}
-		criteria.getMatrixInd().setMatrix(matrix);
+		criteria.setMatrixInd((PairWiseMatrix) matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
         // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -204,7 +205,7 @@ public class CriteriaDialog
 		for (int i = 0; i < matrixSize; i++) {
 			columnNames[i] = ((Indicator) criteria.getIndicators().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = criteria.getMatrixInd().getMatrix().get(i, j);
+				data[i][j] = criteria.getMatrixInd().get(i, j);
 			}
 		}
 		guiPrefMatrix.setDataVector(data, columnNames);
@@ -216,7 +217,7 @@ public class CriteriaDialog
 	 * @param column
 	 */
 	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(criteria.getMatrixInd().getMatrix().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(criteria.getMatrixInd().get(row, column), row, column);
 	}
 
 	/**
