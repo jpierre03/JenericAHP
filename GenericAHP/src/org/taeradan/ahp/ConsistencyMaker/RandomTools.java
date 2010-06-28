@@ -26,7 +26,6 @@ public class RandomTools {
 		Scanner sc = new Scanner(System.in);
 		int isValueChosen = 0;
 		String expertsChoice;
-		int cptr = 0;
 		MatrixValue matrixValue = new MatrixValue();
 		Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<MatrixValue>();
 		Iterator<MatrixValue> valueIterator;
@@ -57,7 +56,7 @@ public class RandomTools {
 
 		/*Boucle pour que l'utilisateur désigne la valeur à modifier*/
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
-		System.out.println("Retour en haut du classement");
+		
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			System.out.println("Souhaitez-vous modifier la valeur "

@@ -16,7 +16,7 @@ public class PriorityVectorNewVersion
 	public PriorityVectorNewVersion() {
 	}
 
-	public static MyMatrix build(MyMatrix CC) {
+	public  MyMatrix build(MyMatrix CC) {
 		MyMatrix priorityVector = new MyMatrix(CC.getColumnDimension(), 1);
 		Matrix tempPriorityVector = new Matrix(CC.getColumnDimension(), 1);
 		MyMatrix eTranspose = new MyMatrix(CC.getColumnDimension(), 1);
