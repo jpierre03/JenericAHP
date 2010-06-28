@@ -36,7 +36,7 @@ public class SaatysToolsTest {
 		
 
 		SaatysTools saatysTools  = new SaatysTools();
-		MatrixValue matrixValue = saatysTools.getValueToModifiyByRanking(myMatrix);
+		MatrixValue matrixValue = saatysTools.getFirstValueOfSaatysRanking(myMatrix);
 		System.out.println("En quoi souhaitez vous changer la valeur "
 							   + matrixValue.getValue()
 							   + " ( "

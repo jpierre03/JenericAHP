@@ -54,7 +54,10 @@ public class SaatysTools {
 
 	}
 
-	/*Print a TreeMap*/
+	/*Print a TreeMap
+	 *@param TreeMap<Double, MatrixValue>
+	 * @return void
+	 */
 	public void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
 		while (!myTreeMap.isEmpty()) {
 			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
@@ -71,11 +74,12 @@ public class SaatysTools {
 
 
 	/*
-	 * Calculate the rankingof value which should be changed
-	 * @param
-	 * @return
+	 * Calculates the rankingof value which should be changed while
+	 * user does not choose a value to review
+	 * @param MyMatrix
+	 * @return MatrixValue
 	 */
-	public MatrixValue getValueToModifiyByRanking (MyMatrix myPreferencMatrix) {
+	public MatrixValue getValueToModifiyByRanking(MyMatrix myPreferencMatrix) {
 
 
 		Scanner sc = new Scanner(System.in);
@@ -116,7 +120,7 @@ public class SaatysTools {
 		valueIterator = collectionOfSortedMatrixValues.iterator();
 		System.out.println("Retour en haut du classement");
 		while (isValueChosen == 0) {
-			matrixValue=valueIterator.next();
+			matrixValue = valueIterator.next();
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValue.getValue()
 							   + " ( "
@@ -129,9 +133,7 @@ public class SaatysTools {
 
 			if (expertsChoice.equalsIgnoreCase("O")) {
 				isValueChosen = 1;
-			}
-			else if(!valueIterator.hasNext())
-			{
+			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
 				valueIterator = collectionOfSortedMatrixValues.iterator();
 			}
@@ -141,5 +143,19 @@ public class SaatysTools {
 
 
 		return matrixValue;
+	}
+
+	/*
+	 * Returns the first element of SaatysRanking
+	 * @param MyMatrix
+	 * @return MatrixValue
+	 */
+	public MatrixValue getFirstValueOfSaatysRanking(MyMatrix myPreferenceMatrix) {
+
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		myTreeMap = createTreeMap(myPreferenceMatrix);
+
+		return myTreeMap.pollLastEntry().getValue();
+
 	}
 }
