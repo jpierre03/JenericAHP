@@ -5,9 +5,6 @@
 
 package org.taeradan.ahp.ConsistencyMaker;
 
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
-
 /**
  *
  * @author Marianne
@@ -16,27 +13,59 @@ public class SaatysToolsTest {
 
 	public static void main(String[] args) {
 
-		MyMatrix myMatrix = new MyMatrix(5, 5);
+		MyMatrix myMatrix = new MyMatrix(3,3);
+		MyMatrix priorityVector = new MyMatrix();
+		MatrixValue matrixValue = new MatrixValue();
 
 		myMatrix.print(5, 5);
 
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				MatrixValue matrixValue = new MatrixValue();
-//				matrixValue.setValue((i + 1) * (j + 1));
-				matrixValue.setValue((i - j) * (j + i));
-				matrixValue.setRow(i);
-				matrixValue.setColumn(j);
+		/*Déclaration matrice*/
+		matrixValue.setValue(1);
+		matrixValue.setRow(0);
+		matrixValue.setColumn(0);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(21);
+		matrixValue.setRow(0);
+		matrixValue.setColumn(1);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(4);
+		matrixValue.setRow(0);
+		matrixValue.setColumn(2);
+		myMatrix.setMatrixValue(matrixValue);
 
-				myMatrix.setMatrixValue(matrixValue);
-			}
-		}
+		matrixValue.setValue(0.5);
+		matrixValue.setRow(1);
+		matrixValue.setColumn(0);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(1);
+		matrixValue.setRow(1);
+		matrixValue.setColumn(1);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(2);
+		matrixValue.setRow(1);
+		matrixValue.setColumn(2);
+		myMatrix.setMatrixValue(matrixValue);
 
-		myMatrix.print(5, 0);
+		matrixValue.setValue(0.25);
+		matrixValue.setRow(2);
+		matrixValue.setColumn(0);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(0.5);
+		matrixValue.setRow(2);
+		matrixValue.setColumn(1);
+		myMatrix.setMatrixValue(matrixValue);
+		matrixValue.setValue(1);
+		matrixValue.setRow(2);
+		matrixValue.setColumn(2);
+		myMatrix.setMatrixValue(matrixValue);
+
+
+
+		myMatrix.print(5, 5);
 		
 
 		SaatysTools saatysTools  = new SaatysTools();
-		MatrixValue matrixValue = saatysTools.getFirstValueOfSaatysRanking(myMatrix);
+	/*	MatrixValue matrixValue = saatysTools.getFirstValueOfSaatysRanking(myMatrix);
 		System.out.println("En quoi souhaitez vous changer la valeur "
 							   + matrixValue.getValue()
 							   + " ( "
@@ -45,7 +74,13 @@ public class SaatysToolsTest {
 							   + matrixValue.getColumn()
 							   + " )"
 							   );
+*/
 
+		MyMatrix epsilon = new MyMatrix();
+		PriorityVectorNewVersion pvnv = new PriorityVectorNewVersion();
+		priorityVector = pvnv.build(myMatrix);
+		priorityVector.print(5,1);
+		saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
 	}
 
 

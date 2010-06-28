@@ -159,8 +159,37 @@ public class SaatysTools {
 
 	}
 
+	public MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix, MyMatrix priorityVector) {
+		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(), myPreferenceMatrix.
+				getColumnDimension());
+		MatrixValue epsilonValue = new MatrixValue();
+
+		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < myPreferenceMatrix.getColumnDimension(); j++) {
+
+				double aij;
+				double wj;
+				double wi;
+				double eij;
+
+				aij = myPreferenceMatrix.get(i, j);
+				wj = priorityVector.get(j, 0);
+				wi = priorityVector.get(i, 0);
 
 
+				eij = aij * wj / wi;
+				epsilonValue.setValue(eij);
+				epsilonValue.setRow(i);
+				epsilonValue.setColumn(j);
+
+				epsilon.setMatrixValue(epsilonValue);
+			}
+		}
+
+		epsilon.print(5, 5);
 
 
+		return epsilon;
+
+	}
 }
