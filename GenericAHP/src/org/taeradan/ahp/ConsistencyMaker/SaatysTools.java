@@ -76,57 +76,65 @@ public class SaatysTools {
 	/*
 	 * Calculates the rankingof value which should be changed while
 	 * user does not choose a value to review
-	 * @param MyMatrix
+	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector, MyMatrix epsilon
 	 * @return MatrixValue
 	 */
-	public MatrixValue getValueToModifiyByRanking(MyMatrix myPreferencMatrix) {
+	public MatrixValue getValueToModifiyByRanking(MyMatrix myPreferenceMatrix,
+												  MyMatrix priorityVector, MyMatrix epsilon) {
 
 
 		Scanner sc = new Scanner(System.in);
 		int isValueChosen = 0;
 		String expertsChoice;
-		int cptr = 0;
 		MatrixValue matrixValue = new MatrixValue();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		Iterator<MatrixValue> valueIterator;
+		MatrixValue matrixValueToPrint = new MatrixValue();
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = createTreeMap(myPreferencMatrix);
+		myTreeMap = createTreeMap(epsilon);
 
 
 		while ((!myTreeMap.isEmpty()) && (isValueChosen == 0)) {
-			System.out.println("cptr = " + cptr);
-			cptr++;
+
 			matrixValue = myTreeMap.pollLastEntry().getValue();
-			System.out.println("Souhaitez-vous modifier la valeur "
-							   + matrixValue.getValue()
-							   + " ( "
-							   + matrixValue.getRow()
-							   + " , "
-							   + matrixValue.getColumn()
-							   + " )"
-							   + " ? O/N");
+			matrixValueToPrint.setRow(matrixValue.getRow());
+			matrixValueToPrint.setColumn(matrixValue.getColumn());
+			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
+					getColumn()));
+			/*System.out.println("Souhaitez-vous modifier la valeur "
+			+ matrixValueToPrint.getValue()
+			+ " ( "
+			+ matrixValueToPrint.getRow()
+			+ " , "
+			+ matrixValueToPrint.getColumn()
+			+ " )"
+			+ " ? O/N");*/
 			collectionOfSortedMatrixValues.add(matrixValue);
 
-			expertsChoice = sc.nextLine();
+			/*	expertsChoice = sc.nextLine();
 			if (expertsChoice.equalsIgnoreCase("O")) {
-				isValueChosen = 1;
-			}
+			isValueChosen = 1;
+			}*/
 		}
 
 
 
 		/*Pour le cas où l'expert n'ai pas choisi de valeur à modifier*/
 		valueIterator = collectionOfSortedMatrixValues.iterator();
-		System.out.println("Retour en haut du classement");
+
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
+			matrixValueToPrint.setRow(matrixValue.getRow());
+			matrixValueToPrint.setColumn(matrixValue.getColumn());
+			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
+					getColumn()));
 			System.out.println("Souhaitez-vous modifier la valeur "
-							   + matrixValue.getValue()
+							   + matrixValueToPrint.getValue()
 							   + " ( "
-							   + matrixValue.getRow()
+							   + matrixValueToPrint.getRow()
 							   + " , "
-							   + matrixValue.getColumn()
+							   + matrixValueToPrint.getColumn()
 							   + " )"
 							   + " ? O/N");
 			expertsChoice = sc.nextLine();
@@ -150,15 +158,20 @@ public class SaatysTools {
 	 * @param MyMatrix
 	 * @return MatrixValue
 	 */
-	public MatrixValue getFirstValueOfSaatysRanking(MyMatrix myPreferenceMatrix) {
+	public MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = createTreeMap(myPreferenceMatrix);
+		myTreeMap = createTreeMap(epsilon);
 
 		return myTreeMap.pollLastEntry().getValue();
 
 	}
 
+	/*
+	 * Calculates the espilon matrix of Saaty ; Epsilon[i][j]=A[i][j]*w[j]/w[j]
+	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector
+	 * @return MyMatrix Epsilon
+	 */
 	public MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix, MyMatrix priorityVector) {
 		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(), myPreferenceMatrix.
 				getColumnDimension());
@@ -186,10 +199,12 @@ public class SaatysTools {
 			}
 		}
 
-		epsilon.print(5, 5);
-
-
 		return epsilon;
 
+	}
+
+	public double calculateBestFit(MyMatrix priorityVector, int posX, int posY) {
+		double bestFit;
+		return priorityVector.get(posX, 0) / priorityVector.get(posY, 0);
 	}
 }
