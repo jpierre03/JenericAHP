@@ -17,7 +17,7 @@ public class SaatysToolsTest {
 
 	public static void main(String[] args) {
 
-		MyMatrix myMatrix = new MyMatrix(8, 8);
+		MyMatrix myMatrix = new MyMatrix(3,3);
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		SaatysTools saatysTools = new SaatysTools();
@@ -68,8 +68,8 @@ public class SaatysToolsTest {
 		myMatrix.setMatrixValue(matrixValue);*/
 
 		/*Saisie matrice*/
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
 				System.out.println(
 						"Saisir la valeur pour les coordonnées "
 						+ " ( "
@@ -120,7 +120,7 @@ public class SaatysToolsTest {
 					+ " )"
 					+ "Saisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
-			System.out.println("BestFit = "+saatysTools.calculateBestFit(priorityVector, matrixValue.getRow(), matrixValue.
+			System.out.println("BestFit = "+saatysTools.calculateBestFit(myMatrix,priorityVector, matrixValue.getRow(), matrixValue.
 			getColumn()));
 
 			expertsChoice = scan.next();
@@ -144,7 +144,10 @@ public class SaatysToolsTest {
 			myMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
+			System.out.println("---");
 			myMatrix.print(5, 5);
+
+			System.out.println("---");
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);

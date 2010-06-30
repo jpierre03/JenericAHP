@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.PriorityVector;
 
 /**
  *
@@ -204,8 +205,52 @@ public class SaatysTools {
 
 	}
 
-	public double calculateBestFit(MyMatrix priorityVector, int posX, int posY) {
-		double bestFit;
-		return priorityVector.get(posX, 0) / priorityVector.get(posY, 0);
+	public double calculateBestFit(MyMatrix preferenceMatrix, MyMatrix priorityVector, int i, int j) {
+		MatrixValue matrixValue = new MatrixValue();
+		MyMatrix tempMatrix = new MyMatrix();
+
+		tempMatrix = copyMyMatrix(preferenceMatrix);
+
+		/*Remplacer aii et ajj par 2*/
+		matrixValue = preferenceMatrix.getMatrixValue(i, i);
+		matrixValue.setValue(2);
+		tempMatrix.setMatrixValue(matrixValue);
+
+		matrixValue = preferenceMatrix.getMatrixValue(j, j);
+		matrixValue.setValue(2);
+		tempMatrix.setMatrixValue(matrixValue);
+
+
+		/*Remplacer aij et aji par 0*/
+		matrixValue = preferenceMatrix.getMatrixValue(i, j);
+		matrixValue.setValue(0);
+		tempMatrix.setMatrixValue(matrixValue);
+
+		matrixValue = preferenceMatrix.getMatrixValue(j, i);
+		matrixValue.setValue(0);
+		preferenceMatrix.setMatrixValue(matrixValue);
+
+		
+		/*Recalculer vecteur priorité*/
+		priorityVector = PriorityVector.build(tempMatrix);
+
+
+		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
+
+	}
+
+	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
+		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
+		MatrixValue temp = new MatrixValue();
+
+		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < initMatrix.getColumnDimension(); j++) {
+				temp.setRow(i);
+				temp.setColumn(j);
+				temp.setValue(initMatrix.getMatrixValue(i, j).getValue());
+				finalMatrix.setMatrixValue(temp);
+			}
+		}
+		return finalMatrix;
 	}
 }
