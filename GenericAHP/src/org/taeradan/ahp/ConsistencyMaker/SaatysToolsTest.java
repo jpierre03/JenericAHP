@@ -17,7 +17,7 @@ public class SaatysToolsTest {
 
 	public static void main(String[] args) {
 
-		MyMatrix myMatrix = new MyMatrix(3,3);
+		MyMatrix myMatrix = new MyMatrix(3, 3);
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		SaatysTools saatysTools = new SaatysTools();
@@ -69,26 +69,44 @@ public class SaatysToolsTest {
 
 		/*Saisie matrice*/
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
+			for (int j = i + 1; j < myMatrix.getColumnDimension(); j++) {
 				System.out.println(
 						"Saisir la valeur pour les coordonnées "
 						+ " ( "
-						+ i
+						+ (i + 1)
 						+ " , "
-						+ j
-						+ " )"
-						+ "Saisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
+						+ (j + 1)
+						+ " )");
 
 				expertsChoice = scan.next();
 				final JEP myParser = new JEP();
 				myParser.parseExpression(expertsChoice);
 				double newValue = myParser.getValue();
 
+
+				/*Partie supérieure*/
 				matrixValue.setValue(newValue);
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
 				myMatrix.setMatrixValue(matrixValue);
+
+				/*Réciprocité*/
+				matrixValue.setValue(1 / newValue);
+				matrixValue.setRow(j);
+				matrixValue.setColumn(i);
+				myMatrix.setMatrixValue(matrixValue);
+
+
 			}
+		}
+
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+
+			matrixValue.setValue(1);
+			matrixValue.setRow(i);
+			matrixValue.setColumn(i);
+			myMatrix.setMatrixValue(matrixValue);
+
 		}
 
 
@@ -101,11 +119,11 @@ public class SaatysToolsTest {
 
 		priorityVector.print(5, 5);
 
-	
+
 
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente");
+			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
 			matrixValue = saatysTools.getValueToModifiyByRanking(myMatrix, priorityVector,
 																 epsilon);
@@ -114,14 +132,14 @@ public class SaatysToolsTest {
 					+ myMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
 					+ " de coordonnées "
 					+ " ( "
-					+ matrixValue.getRow()
+					+ (matrixValue.getRow()+1)
 					+ " , "
-					+ matrixValue.getColumn()
+					+ (matrixValue.getColumn()+1)
 					+ " )"
 					+ "Saisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
-			System.out.println("BestFit = "+saatysTools.calculateBestFit(myMatrix,priorityVector, matrixValue.getRow(), matrixValue.
-			getColumn()));
+			System.out.println("BestFit = " + saatysTools.calculateBestFit(myMatrix, priorityVector, matrixValue.
+					getRow(), matrixValue.getColumn()));
 
 			expertsChoice = scan.next();
 			final JEP myParser = new JEP();
@@ -157,7 +175,7 @@ public class SaatysToolsTest {
 
 		}
 
-
+		System.out.println("CR = " + ConsistencyChecker.getCrResult());
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");

@@ -112,7 +112,7 @@ public class SaatysTools {
 			+ " )"
 			+ " ? O/N");*/
 			collectionOfSortedMatrixValues.add(matrixValue);
-
+	
 			/*	expertsChoice = sc.nextLine();
 			if (expertsChoice.equalsIgnoreCase("O")) {
 			isValueChosen = 1;
@@ -134,9 +134,9 @@ public class SaatysTools {
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValueToPrint.getValue()
 							   + " ( "
-							   + matrixValueToPrint.getRow()
+							   + (matrixValueToPrint.getRow()+1)
 							   + " , "
-							   + matrixValueToPrint.getColumn()
+							   + (matrixValueToPrint.getColumn()+1)
 							   + " )"
 							   + " ? O/N");
 			expertsChoice = sc.nextLine();
