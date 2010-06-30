@@ -62,9 +62,9 @@ public class RandomTools {
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValue.getValue()
 							   + " ( "
-							   + matrixValue.getRow()
+							   + (matrixValue.getRow()+1)
 							   + " , "
-							   + matrixValue.getColumn()
+							   + (matrixValue.getColumn()+1)
 							   + " )"
 							   + " ? O/N");
 			expertsChoice = sc.nextLine();

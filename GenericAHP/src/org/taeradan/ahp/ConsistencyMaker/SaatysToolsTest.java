@@ -136,7 +136,7 @@ public class SaatysToolsTest {
 					+ " , "
 					+ (matrixValue.getColumn()+1)
 					+ " )"
-					+ "Saisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
+					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
 			System.out.println("BestFit = " + saatysTools.calculateBestFit(myMatrix, priorityVector, matrixValue.
 					getRow(), matrixValue.getColumn()));

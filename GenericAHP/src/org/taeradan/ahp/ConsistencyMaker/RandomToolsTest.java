@@ -7,6 +7,7 @@ package org.taeradan.ahp.ConsistencyMaker;
 import java.util.Scanner;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
+import org.taeradan.ahp.PriorityVector;
 
 /**
  *
@@ -24,7 +25,7 @@ public class RandomToolsTest {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		myMatrix.print(5, 5);
 
-		/*Déclaration matrice*/
+		/*Déclaration matrice
 		matrixValue.setValue(1);
 		matrixValue.setRow(0);
 		matrixValue.setColumn(0);
@@ -62,18 +63,61 @@ public class RandomToolsTest {
 		matrixValue.setValue(1);
 		matrixValue.setRow(2);
 		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);
+		myMatrix.setMatrixValue(matrixValue);*/
+
+
+		/*Saisie matrice*/
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+			for (int j = i + 1; j < myMatrix.getColumnDimension(); j++) {
+				System.out.println(
+						"Saisir la valeur pour les coordonnées "
+						+ " ( "
+						+ (i + 1)
+						+ " , "
+						+ (j + 1)
+						+ " )");
+
+				expertsChoice = scan.next();
+				final JEP myParser = new JEP();
+				myParser.parseExpression(expertsChoice);
+				double newValue = myParser.getValue();
+
+
+				/*Partie supérieure*/
+				matrixValue.setValue(newValue);
+				matrixValue.setRow(i);
+				matrixValue.setColumn(j);
+				myMatrix.setMatrixValue(matrixValue);
+
+				/*Réciprocité*/
+				matrixValue.setValue(1 / newValue);
+				matrixValue.setRow(j);
+				matrixValue.setColumn(i);
+				myMatrix.setMatrixValue(matrixValue);
+
+
+			}
+		}
+
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+
+			matrixValue.setValue(1);
+			matrixValue.setRow(i);
+			matrixValue.setColumn(i);
+			myMatrix.setMatrixValue(matrixValue);
+
+		}
 
 		myMatrix.print(5, 2);
 
-		PriorityVectorNewVersion pvnv = new PriorityVectorNewVersion();
-		priorityVector = pvnv.build(myMatrix);
+
+		priorityVector = PriorityVector.build(myMatrix);
 
 		priorityVector.print(5, 5);
 
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente");
+			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
 
 			RandomTools randomTools = new RandomTools();
 			matrixValue = randomTools.getValueToModifiyByRanking(myMatrix);
@@ -82,18 +126,18 @@ public class RandomToolsTest {
 					+ matrixValue.getValue()
 					+ " de coordonnées "
 					+ " ( "
-					+ matrixValue.getRow()
+					+ (matrixValue.getRow() + 1)
 					+ " , "
-					+ matrixValue.getColumn()
+					+ (matrixValue.getColumn() + 1)
 					+ " )"
-					+ "Saisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
+					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 			expertsChoice = scan.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
-			 la matrice*/
+			la matrice*/
 
 			//Valeur directement modifiée
 			matrixValue.setValue(newValue);
@@ -101,8 +145,8 @@ public class RandomToolsTest {
 
 			//Valeur réciproquement modifiée
 			int tempI = matrixValue.getRow();
-			int tempJ = matrixValue.getColumn();			
-			matrixValue.setValue(1/newValue);
+			int tempJ = matrixValue.getColumn();
+			matrixValue.setValue(1 / newValue);
 			matrixValue.setRow(tempJ);
 			matrixValue.setColumn(tempI);
 			myMatrix.setMatrixValue(matrixValue);
@@ -111,15 +155,17 @@ public class RandomToolsTest {
 			myMatrix.print(5, 5);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
-			priorityVector = pvnv.build(myMatrix);
+			priorityVector = PriorityVector.build(myMatrix);
 
 
 		}
 
 
+		System.out.println("CR = " + ConsistencyChecker.getCrResult());
+
 		System.out.println("***********************************************"
-				          + "\n**  Félicitation ! La matrice est cohérente  **\n"
-						  +"***********************************************");
+						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
+						   + "***********************************************");
 
 	}
 }
