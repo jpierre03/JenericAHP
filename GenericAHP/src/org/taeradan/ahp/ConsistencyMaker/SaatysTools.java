@@ -209,7 +209,7 @@ public class SaatysTools {
 		MatrixValue matrixValue = new MatrixValue();
 		MyMatrix tempMatrix = new MyMatrix();
 
-		tempMatrix = copyMyMatrix(preferenceMatrix);
+		tempMatrix = tempMatrix.copyMyMatrix(preferenceMatrix);
 
 		/*Remplacer aii et ajj par 2*/
 		matrixValue = preferenceMatrix.getMatrixValue(i, i);
@@ -239,18 +239,4 @@ public class SaatysTools {
 
 	}
 
-	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
-		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
-		MatrixValue temp = new MatrixValue();
-
-		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < initMatrix.getColumnDimension(); j++) {
-				temp.setRow(i);
-				temp.setColumn(j);
-				temp.setValue(initMatrix.getMatrixValue(i, j).getValue());
-				finalMatrix.setMatrixValue(temp);
-			}
-		}
-		return finalMatrix;
-	}
 }

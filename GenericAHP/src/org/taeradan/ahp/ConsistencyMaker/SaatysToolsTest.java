@@ -17,7 +17,7 @@ public class SaatysToolsTest {
 
 	public static void main(String[] args) {
 
-		MyMatrix myMatrix = new MyMatrix(3, 3);
+		
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		SaatysTools saatysTools = new SaatysTools();
@@ -25,6 +25,13 @@ public class SaatysToolsTest {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		Scanner scan = new Scanner(System.in);
 		String expertsChoice;
+
+
+		System.out.println("De quelle dimension est votre matrice?");
+		expertsChoice = scan.next();
+		int matrixSize = Integer.parseInt(expertsChoice);
+		
+		MyMatrix myMatrix = new MyMatrix(matrixSize,matrixSize);
 
 
 		/*Déclaration matrice

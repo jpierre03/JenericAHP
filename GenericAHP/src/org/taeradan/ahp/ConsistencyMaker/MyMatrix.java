@@ -54,4 +54,20 @@ public class MyMatrix
 
 		return matrixValue;
 	}
+
+
+	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
+		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
+		MatrixValue temp = new MatrixValue();
+
+		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < initMatrix.getColumnDimension(); j++) {
+				temp.setRow(i);
+				temp.setColumn(j);
+				temp.setValue(initMatrix.getMatrixValue(i, j).getValue());
+				finalMatrix.setMatrixValue(temp);
+			}
+		}
+		return finalMatrix;
+	}
 }
