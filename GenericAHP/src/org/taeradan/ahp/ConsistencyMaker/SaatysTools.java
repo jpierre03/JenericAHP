@@ -38,10 +38,8 @@ public class SaatysTools {
 		/*Création d'une collection de MatrixValue*/
 		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
 		for (int i = 0; i < rows; i++) {
-			for (int j = i - 1; j < columns; j++) {
-				if (j > i) {
-					matrixValues.add(myPreferencMatrix.getMatrixValue(i, j));
-				}
+			for (int j = 0; j < columns; j++) {
+				matrixValues.add(myPreferencMatrix.getMatrixValue(i, j));
 			}
 		}
 
@@ -103,29 +101,32 @@ public class SaatysTools {
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
 			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
 					getColumn()));
-			/*System.out.println("Souhaitez-vous modifier la valeur "
-			+ matrixValueToPrint.getValue()
-			+ " ( "
-			+ matrixValueToPrint.getRow()
-			+ " , "
-			+ matrixValueToPrint.getColumn()
-			+ " )"
-			+ " ? O/N");*/
+
 			collectionOfSortedMatrixValues.add(matrixValue);
-	
-			/*	expertsChoice = sc.nextLine();
-			if (expertsChoice.equalsIgnoreCase("O")) {
-			isValueChosen = 1;
-			}*/
+
+
 		}
 
 
 
-		/*Pour le cas où l'expert n'ai pas choisi de valeur à modifier*/
+		/*Pour le cas où l'expert n'a pas choisi de valeur à modifier*/
 		valueIterator = collectionOfSortedMatrixValues.iterator();
 
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
+
+			/*Si on est dans la partie inférieure de la matrice*/
+			/*Proposer modification de la valeur réciproque*/
+			int i = matrixValue.getRow();
+			int j = matrixValue.getColumn();
+
+			if (i > j) {
+				matrixValue.setRow(j);
+				matrixValue.setColumn(i);
+				matrixValue.setValue(epsilon.get(j, i));
+			}
+
+
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
 			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
@@ -134,9 +135,9 @@ public class SaatysTools {
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValueToPrint.getValue()
 							   + " ( "
-							   + (matrixValueToPrint.getRow()+1)
+							   + (matrixValueToPrint.getRow() + 1)
 							   + " , "
-							   + (matrixValueToPrint.getColumn()+1)
+							   + (matrixValueToPrint.getColumn() + 1)
 							   + " )"
 							   + " ? O/N");
 			expertsChoice = sc.nextLine();
@@ -163,9 +164,24 @@ public class SaatysTools {
 	public MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		MatrixValue tempMatrixValue = new MatrixValue();
 		myTreeMap = createTreeMap(epsilon);
+		tempMatrixValue = myTreeMap.pollLastEntry().getValue();
 
-		return myTreeMap.pollLastEntry().getValue();
+		int i = tempMatrixValue.getRow();
+		int j = tempMatrixValue.getColumn();
+
+		/*Si on est dans la partie inférieure de la matrice*/
+		/*Proposer modification de la valeur réciproque*/
+		if (i > j) {
+			if (i > j) {
+				tempMatrixValue.setRow(j);
+				tempMatrixValue.setColumn(i);
+				tempMatrixValue.setValue(epsilon.get(j, i));
+			}
+		}
+		return tempMatrixValue;
+
 
 	}
 
@@ -193,6 +209,7 @@ public class SaatysTools {
 
 
 				eij = aij * wj / wi;
+
 				epsilonValue.setValue(eij);
 				epsilonValue.setRow(i);
 				epsilonValue.setColumn(j);
@@ -200,6 +217,7 @@ public class SaatysTools {
 				epsilon.setMatrixValue(epsilonValue);
 			}
 		}
+
 
 		return epsilon;
 
@@ -230,7 +248,7 @@ public class SaatysTools {
 		matrixValue.setValue(0);
 		preferenceMatrix.setMatrixValue(matrixValue);
 
-		
+
 		/*Recalculer vecteur priorité*/
 		priorityVector = PriorityVector.build(tempMatrix);
 
@@ -238,5 +256,4 @@ public class SaatysTools {
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 
 	}
-
 }

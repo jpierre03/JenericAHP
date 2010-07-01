@@ -37,6 +37,7 @@ public class SaatysToolsTest {
 		/*Déclaration matrice
 		matrixValue.setValue(1);
 		matrixValue.setRow(0);
+		 *
 		matrixValue.setColumn(0);
 		myMatrix.setMatrixValue(matrixValue);
 		matrixValue.setValue(1);
@@ -118,8 +119,6 @@ public class SaatysToolsTest {
 
 
 
-
-
 		myMatrix.print(5, 5);
 
 		priorityVector = PriorityVector.build(myMatrix);
@@ -131,7 +130,10 @@ public class SaatysToolsTest {
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
+			/*Calcul matrice epsilon*/
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
+
+			/*Recherche de la valeur à modifier*/
 			matrixValue = saatysTools.getValueToModifiyByRanking(myMatrix, priorityVector,
 																 epsilon);
 			System.out.println(
@@ -176,7 +178,7 @@ public class SaatysToolsTest {
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);
-
+			priorityVector.print(5,5);
 
 
 
