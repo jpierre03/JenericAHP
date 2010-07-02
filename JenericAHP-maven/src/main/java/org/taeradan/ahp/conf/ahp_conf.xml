@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "ahp_conf.dtd">
+
+<!--
+	Document   : ahp_conf.xml
+	Created on : 27 mars 2009, 15:05
+	Author     : Yves Dubromelle
+	Description:
+		This document is the configuration file of the org.taeradan.ahp package, a new generic Java implementation of the AHP algorithm.
+		For syntax information, just have a look at the ahp_conf.dtd file.
+-->
+
+<root>
+	<name>Choix d'un produit à traiter dans un WIP</name>
+	<prefmatrix>
+		<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/></row>
+		<row><elt value="3"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="3"/></row>
+		<row><elt value="3"/><elt value="1"/><elt value="1"/><elt value="9"/><elt value="3"/></row>
+		<row><elt value="1/3"/><elt value="1/9"/><elt value="1/9"/><elt value="1"/><elt value="1/3"/></row>
+		<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/></row>
+	</prefmatrix>
+	<criteria id="C1">
+		<name>Type de produit</name>
+		<prefmatrix>
+			<row><elt value="1"/><elt value="1/3"/><elt value="1/3"/></row>
+			<row><elt value="3"/><elt value="1"/><elt value="1"/></row>
+			<row><elt value="3"/><elt value="1"/><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="I11">
+			<name>Ligne en flow-shop ou en job-shop</name>
+			<maximize/>
+		</indicator>
+		<indicator id="I12">
+			<name>Produit principal ou de complément</name>
+			<maximize/>
+		</indicator>
+		<indicator id="I13">
+			<name>Produit pour assemblage ou de rechange</name>
+			<maximize/>
+		</indicator>
+	</criteria>
+	<criteria id="C2">
+		<name>Progression du produit</name>
+		<prefmatrix>
+			<row><elt value="1"/><elt value="1"/></row>
+			<row><elt value="1"/><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="I21">
+			<name>Progression globale</name>
+			<maximize/>
+		</indicator>
+		<indicator id="I22">
+			<name>Progression locale</name>
+			<maximize/>
+		</indicator>
+	</criteria>
+	<criteria id="C3">
+		<name>Marge restante</name>
+		<prefmatrix>
+			<row><elt value="1"/><elt value="5"/></row>
+			<row><elt value="1/5"/><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="I31">
+			<name>Marge restante</name>
+			<minimize/>
+		</indicator>
+		<indicator id="I32">
+			<name>Marge restante pondérée</name>
+			<minimize/>
+		</indicator>
+	</criteria>
+	<criteria id="C4">
+		<name>Temps dans la file d'attente</name>
+		<prefmatrix>
+			<row><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="I41">
+			<name>Temps d'attente</name>
+			<maximize/>
+		</indicator>
+	</criteria>
+	<criteria id="C5">
+		<name>Charge de la ressource</name>
+		<prefmatrix>
+			<row><elt value="1"/></row>
+		</prefmatrix>
+		<indicator id="I51">
+			<name>Charge de la ressource</name>
+			<minimize/>
+		</indicator>
+	</criteria>
+</root>
