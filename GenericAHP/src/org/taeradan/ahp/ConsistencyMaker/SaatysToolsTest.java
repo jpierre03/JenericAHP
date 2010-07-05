@@ -6,10 +6,15 @@ package org.taeradan.ahp.ConsistencyMaker;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *
@@ -42,9 +47,65 @@ public class SaatysToolsTest {
 		return result;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static MatrixValue readSaatysRanking(Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix){
+
+		Scanner userInput = new Scanner(System.in);
+		int isValueChosen = 0;
+		String expertsChoice;
+		MatrixValue matrixValue = new MatrixValue();
+		Iterator<MatrixValue> valueIterator;
+		MatrixValue matrixValueToPrint = new MatrixValue();
+		try {
+			CharSequenceAppender csa =
+								 new CharSequenceAppender("Sequence.csv");
+		} catch (IOException ex) {
+			Logger.getLogger(SaatysToolsTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
 
+
+		valueIterator = collectionOfSortedMatrixValues.iterator();
+		boolean firstReading = true; //Flag qui permet ne pas écrire 2 fois les mêmes valeurs dans le fichier
+
+		while (isValueChosen == 0) {
+			matrixValue = valueIterator.next();
+			matrixValueToPrint.setRow(matrixValue.getRow());
+			matrixValueToPrint.setColumn(matrixValue.getColumn());
+			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
+					getColumn()));
+
+			System.out.println("Souhaitez-vous modifier la valeur "
+							   + matrixValueToPrint.getValue()
+							   + " ( "
+							   + (matrixValueToPrint.getRow() + 1)
+							   + " , "
+							   + (matrixValueToPrint.getColumn() + 1)
+							   + " )"
+							   + " ? O/N");
+
+
+
+			expertsChoice = userInput.nextLine();
+
+			if (expertsChoice.equalsIgnoreCase("O")) {
+				isValueChosen = 1;
+			} else if (!valueIterator.hasNext()) {
+				System.out.println("Retour en haut du classement");
+				valueIterator = collectionOfSortedMatrixValues.iterator();
+				firstReading = false;
+			}
+
+		}
+
+
+
+		return matrixValue;
+
+	}
+
+	public static MyMatrix createMatrix(){
+		
+		
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		SaatysTools saatysTools = new SaatysTools();
@@ -52,7 +113,7 @@ public class SaatysToolsTest {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		Scanner userInput = new Scanner(System.in);
 		String expertsChoice;
-	
+		
 		System.out.println("De quelle dimension est votre matrice?");
 		expertsChoice = userInput.next();
 		int matrixSize = Integer.parseInt(expertsChoice);
@@ -111,12 +172,25 @@ public class SaatysToolsTest {
 
 		}
 
+		return myMatrix;
+	}
 
+	public static void main(String[] args) throws IOException {
 
+		MyMatrix priorityVector = new MyMatrix();
+		MatrixValue matrixValue = new MatrixValue();
+		SaatysTools saatysTools = new SaatysTools();
+		MyMatrix epsilon = new MyMatrix();
+		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+		Scanner userInput = new Scanner(System.in);
+		String expertsChoice;
+		MyMatrix myMatrix = new MyMatrix();
+		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
+
+		myMatrix=createMatrix();
 		myMatrix.print(5, 5);
 
 		priorityVector = PriorityVector.build(myMatrix);
-
 		priorityVector.print(5, 5);
 
 		CharSequenceAppender csa = new CharSequenceAppender("Sequence.csv");
@@ -129,16 +203,23 @@ public class SaatysToolsTest {
 
 		/*Ecriture du CR*/
 		//csa.append(temp);
-		csa.insertLineFeed();
+
+		//en-tête du tableau
+		csa.append("BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changec Value ; Expert Position in Saaty's ranking\n");
+		csa.close();
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
 			/*Calcul matrice epsilon*/
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
-
 			/*Recherche de la valeur à modifier*/
-			matrixValue = saatysTools.getValueToModifiyByRanking(myMatrix, priorityVector,
-																 epsilon);
+			/*matrixValue = saatysTools.getValueToModifiyByRanking(myMatrix, priorityVector,
+																 epsilon);*/
+
+			collectionOfSortedMatrixValues = saatysTools.getRank( myMatrix,priorityVector, epsilon);
+			matrixValue=readSaatysRanking(collectionOfSortedMatrixValues, myMatrix);
+			
+
 			System.out.println(
 					"Vous avez choisi de remplacer la valeur "
 					+ myMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
@@ -149,6 +230,8 @@ public class SaatysToolsTest {
 					+ (matrixValue.getColumn() + 1)
 					+ " )"
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
+
+			/*& Ecrire la valeur modifiée par l'utilisateur*/
 
 			/*Lecture de lavaleur saisie au clavier*/
 			expertsChoice = userInput.next();
@@ -196,7 +279,7 @@ public class SaatysToolsTest {
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
-
+csa = new CharSequenceAppender("Sequence.csv");
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.insertLineFeed();
 		csa.insertMatrix(myMatrix);

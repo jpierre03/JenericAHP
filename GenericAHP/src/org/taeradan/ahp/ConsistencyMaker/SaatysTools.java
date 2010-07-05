@@ -4,6 +4,7 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.PriorityVector;
 import java.lang.Math;
+import javax.sound.midi.Sequence;
 
 /**
  *
@@ -77,99 +79,6 @@ public class SaatysTools {
 	}
 
 
-	/*
-	 * Calculates the rankingof value which should be changed while
-	 * user does not choose a value to review
-	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector, MyMatrix epsilon
-	 * @return MatrixValue
-	 */
-	public static MatrixValue getValueToModifiyByRanking(MyMatrix myPreferenceMatrix,
-														 MyMatrix priorityVector,
-														 MyMatrix epsilon) {
-
-
-		Scanner userInput = new Scanner(System.in);
-		int isValueChosen = 0;
-		String expertsChoice;
-		MatrixValue matrixValue = new MatrixValue();
-		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
-		Iterator<MatrixValue> valueIterator;
-		MatrixValue matrixValueToPrint = new MatrixValue();
-		boolean isPresent = false;
-
-		/*Creation du TreeMap à partir de la matrice epsilon*/
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = createTreeMap(epsilon);
-
-
-		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
-		while (!myTreeMap.isEmpty()) {
-
-			matrixValue = myTreeMap.pollLastEntry().getValue();
-
-			int row = matrixValue.getRow();
-			int column = matrixValue.getColumn();
-			double value = matrixValue.getValue();
-
-
-			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
-			if (row > column) {
-				/*On retient la valeur réciproque*/
-
-				matrixValue.setRow(column);
-				matrixValue.setColumn(row);
-				matrixValue.setValue(1 / value);
-			}
-
-			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
-			for (MatrixValue matrixValue1 : collectionOfSortedMatrixValues) {
-				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
-					isPresent = true;
-				}
-			}
-
-			if (!isPresent) {
-				/*Ajout dans la collection des éléments triés.*/
-				collectionOfSortedMatrixValues.add(matrixValue);
-
-			}
-
-			isPresent = false;
-
-		}
-
-		valueIterator = collectionOfSortedMatrixValues.iterator();
-
-		while (isValueChosen == 0) {
-			matrixValue = valueIterator.next();
-			matrixValueToPrint.setRow(matrixValue.getRow());
-			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
-					getColumn()));
-
-			System.out.println("Souhaitez-vous modifier la valeur "
-							   + matrixValueToPrint.getValue()
-							   + " ( "
-							   + (matrixValueToPrint.getRow() + 1)
-							   + " , "
-							   + (matrixValueToPrint.getColumn() + 1)
-							   + " )"
-							   + " ? O/N");
-			expertsChoice = userInput.nextLine();
-
-			if (expertsChoice.equalsIgnoreCase("O")) {
-				isValueChosen = 1;
-			} else if (!valueIterator.hasNext()) {
-				System.out.println("Retour en haut du classement");
-				valueIterator = collectionOfSortedMatrixValues.iterator();
-			}
-
-		}
-
-
-
-		return matrixValue;
-	}
 
 	/*
 	 * Returns the first element of SaatysRanking
@@ -272,5 +181,60 @@ public class SaatysTools {
 
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 
+	}
+
+	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
+												  MyMatrix priorityVector,
+												  MyMatrix epsilon) {
+
+
+		MatrixValue matrixValue = new MatrixValue();
+		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
+		boolean isPresent = false;
+
+
+
+		/*Creation du TreeMap à partir de la matrice epsilon*/
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		myTreeMap = createTreeMap(epsilon);
+
+
+		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
+		while (!myTreeMap.isEmpty()) {
+
+			matrixValue = myTreeMap.pollLastEntry().getValue();
+
+			int row = matrixValue.getRow();
+			int column = matrixValue.getColumn();
+			double value = matrixValue.getValue();
+
+
+			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
+			if (row > column) {
+				/*On retient la valeur réciproque*/
+
+				matrixValue.setRow(column);
+				matrixValue.setColumn(row);
+				matrixValue.setValue(1 / value);
+			}
+
+			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
+			for (MatrixValue matrixValue1 : collectionOfSortedMatrixValues) {
+				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
+					isPresent = true;
+				}
+			}
+
+			if (!isPresent) {
+				/*Ajout dans la collection des éléments triés.*/
+				collectionOfSortedMatrixValues.add(matrixValue);
+
+			}
+
+			isPresent = false;
+
+		}
+
+		return collectionOfSortedMatrixValues;
 	}
 }
