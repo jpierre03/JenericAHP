@@ -15,6 +15,10 @@ import org.taeradan.ahp.PriorityVector;
  */
 public class RandomToolsTest {
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		MyMatrix priorityVector = new MyMatrix(3, 1);
@@ -93,7 +97,7 @@ public class RandomToolsTest {
 
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
+			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
 
 
 
@@ -148,11 +152,17 @@ public class RandomToolsTest {
 
 		}
 
-		System.out.println("CR = " + ConsistencyChecker.getCrResult());
+		System.out.println("CR = " + consistencyChecker.getCrResult());
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
 
+	}
+
+	/**
+	 * 
+	 */
+	private RandomToolsTest() {
 	}
 }

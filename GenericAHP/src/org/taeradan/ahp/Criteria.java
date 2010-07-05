@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import org.jdom.Element;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
@@ -60,6 +59,10 @@ public class Criteria {
 	 *
 	 */
 	transient private PriorityVector vectorAltCr;
+	/**
+	 *
+	 */
+	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 
 	/**
 	 * Creates a AHP Criteria from a JDOM Element
@@ -81,7 +84,7 @@ public class Criteria {
 		vectorIndCr = PriorityVector.build(matrixIndInd);
 
 //		Consistency verification
-		if (!ConsistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
+		if (!consistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
 			Logger.getAnonymousLogger().severe("Is not consistent (criteria "
 											   + identifier + ")");
 		}

@@ -40,10 +40,12 @@ public class TestConsistency {
 	final private static JFileChooser matrixChooser = new JFileChooser(
 			System.getProperty("user.dir"));
 
+
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(final String[] args) {
+		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		matrixChooser.showOpenDialog(null);
 		final SAXBuilder parser = new SAXBuilder();
 		try {
@@ -51,8 +53,8 @@ public class TestConsistency {
 			final PairWiseMatrix matrix = PairWiseMatrix.builder(inDocument.getRootElement());
 			final PriorityVector vector = PriorityVector.build(matrix);
 			System.out.println(PairWiseMatrix.toString(vector, null));
-			final boolean result = ConsistencyChecker.isConsistent(matrix, vector);
-			System.out.println("CR = " + ConsistencyChecker.getCrResult());
+			final boolean result = consistencyChecker.isConsistent(matrix, vector);
+			System.out.println("CR = " + consistencyChecker.getCrResult());
 			if (result) {
 				System.out.println("Matrice consistante");
 			} else {
@@ -63,5 +65,11 @@ public class TestConsistency {
 		} catch (IOException ex) {
 			Logger.getLogger(TestConsistency.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}
+
+	/**
+	 *
+	 */
+	private TestConsistency() {
 	}
 }

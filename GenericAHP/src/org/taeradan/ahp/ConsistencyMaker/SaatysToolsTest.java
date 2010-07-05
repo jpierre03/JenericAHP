@@ -5,63 +5,45 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.util.Scanner;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 
 /**
  *
+ * @author jpierre03
+ * @author Yves Dubromelle
  * @author Marianne
  */
 public class SaatysToolsTest {
 
-	public static boolean isInSaatysSacale(double value) {
+	/**
+	 * 
+	 */
+	private final static double[] SAATY_VALUES = {1. / 9, 1. / 8, 1. / 7, 1. / 6, 1. / 5, 1. / 4,
+												  1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-		if (value != 1 / 9) {
-			if (value != 1 / 8) {
-				if (value != 1 / 7) {
-					if (value != 1 / 6) {
-						if (value != 1 / 5) {
-							if (value != 1 / 4) {
-								if (value != 1 / 3) {
-									if (value != 1 / 2) {
-										if (value != 1) {
-											if (value != 2) {
-												if (value != 3) {
-													if (value != 4) {
-														if (value != 5) {
-															if (value != 6) {
-																if (value != 7) {
-																	if (value != 8) {
-																		if (value != 9) {
-																			return false;
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+	/**
+	 *
+	 * @param value
+	 * @return
+	 */
+	public static boolean isInSaatysSacale(double value) {
+		boolean result = false;
+
+		for (int i = 0; i < SAATY_VALUES.length; i++) {
+			double d = SAATY_VALUES[i];
+			if(value==d){
+				result=true;
 			}
 		}
-
-		if (value == 0) {
-			return false;
-		}
-
-		return true;
-
+		return result;
 	}
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 
@@ -143,7 +125,7 @@ public class SaatysToolsTest {
 
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
+			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
 			/*Calcul matrice epsilon*/
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
 
@@ -202,11 +184,17 @@ public class SaatysToolsTest {
 
 		}
 
-		System.out.println("CR = " + ConsistencyChecker.getCrResult());
+		System.out.println("CR = " + consistencyChecker.getCrResult());
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
 
+	}
+
+	/**
+	 *
+	 */
+	private SaatysToolsTest() {
 	}
 }
