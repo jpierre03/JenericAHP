@@ -78,8 +78,6 @@ public class SaatysTools {
 
 	}
 
-
-
 	/*
 	 * Returns the first element of SaatysRanking
 	 * @param MyMatrix
@@ -236,5 +234,21 @@ public class SaatysTools {
 		}
 
 		return collectionOfSortedMatrixValues;
+	}
+
+	public static int getLocationInRank(Collection<MatrixValue> collectionOfSortedMatrixValues,
+										int i, int j) {
+		int cptr = 0;
+		MatrixValue matrixValue = new MatrixValue();
+		boolean isFound = false;
+		Iterator<MatrixValue> valueIterator = collectionOfSortedMatrixValues.iterator();
+		while ((valueIterator.hasNext()) && (!isFound)) {
+			matrixValue = valueIterator.next();
+			if ((i == matrixValue.getRow()) && (j == matrixValue.getColumn())) {
+				isFound = true;
+			}
+			cptr++;
+		}
+		return cptr;
 	}
 }
