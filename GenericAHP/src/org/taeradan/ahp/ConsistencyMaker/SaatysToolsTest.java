@@ -5,6 +5,7 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.util.Scanner;
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
@@ -15,65 +16,69 @@ import org.taeradan.ahp.PriorityVector;
  */
 public class SaatysToolsTest {
 
+	public static boolean isInSaatysSacale(double value) {
+
+		if (value != 1 / 9) {
+			if (value != 1 / 8) {
+				if (value != 1 / 7) {
+					if (value != 1 / 6) {
+						if (value != 1 / 5) {
+							if (value != 1 / 4) {
+								if (value != 1 / 3) {
+									if (value != 1 / 2) {
+										if (value != 1) {
+											if (value != 2) {
+												if (value != 3) {
+													if (value != 4) {
+														if (value != 5) {
+															if (value != 6) {
+																if (value != 7) {
+																	if (value != 8) {
+																		if (value != 9) {
+																			return false;
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (value == 0) {
+			return false;
+		}
+
+		return true;
+
+	}
+
 	public static void main(String[] args) {
 
-		
+
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		SaatysTools saatysTools = new SaatysTools();
 		MyMatrix epsilon = new MyMatrix();
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-		Scanner scan = new Scanner(System.in);
+		Scanner userInput = new Scanner(System.in);
 		String expertsChoice;
 
 
 		System.out.println("De quelle dimension est votre matrice?");
-		expertsChoice = scan.next();
+		expertsChoice = userInput.next();
 		int matrixSize = Integer.parseInt(expertsChoice);
-		
-		MyMatrix myMatrix = new MyMatrix(matrixSize,matrixSize);
 
-
-		/*Déclaration matrice
-		matrixValue.setValue(1);
-		matrixValue.setRow(0);
-		 *
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(1);
-		matrixValue.setRow(0);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(3);
-		matrixValue.setRow(0);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);
-
-		matrixValue.setValue(1);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(1);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(3);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);
-
-		matrixValue.setValue(0.33);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(0.33);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(1);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);*/
+		MyMatrix myMatrix = new MyMatrix(matrixSize, matrixSize);
 
 		/*Saisie matrice*/
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
@@ -86,10 +91,19 @@ public class SaatysToolsTest {
 						+ (j + 1)
 						+ " )");
 
-				expertsChoice = scan.next();
+				expertsChoice = userInput.next();
 				final JEP myParser = new JEP();
 				myParser.parseExpression(expertsChoice);
 				double newValue = myParser.getValue();
+
+
+				while (!isInSaatysSacale(newValue)) {
+					System.out.println(
+							"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+					expertsChoice = userInput.next();
+					myParser.parseExpression(expertsChoice);
+					newValue = myParser.getValue();
+				}
 
 
 				/*Partie supérieure*/
@@ -141,19 +155,25 @@ public class SaatysToolsTest {
 					+ myMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
 					+ " de coordonnées "
 					+ " ( "
-					+ (matrixValue.getRow()+1)
+					+ (matrixValue.getRow() + 1)
 					+ " , "
-					+ (matrixValue.getColumn()+1)
+					+ (matrixValue.getColumn() + 1)
 					+ " )"
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
-			System.out.println("BestFit = " + saatysTools.calculateBestFit(myMatrix, priorityVector, matrixValue.
-					getRow(), matrixValue.getColumn()));
 
-			expertsChoice = scan.next();
+			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
+
+			while (!isInSaatysSacale(newValue)) {
+				System.out.println(
+						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+				expertsChoice = userInput.next();
+				myParser.parseExpression(expertsChoice);
+				newValue = myParser.getValue();
+			}
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/
@@ -178,9 +198,7 @@ public class SaatysToolsTest {
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);
-			priorityVector.print(5,5);
-
-
+			priorityVector.print(5, 5);
 
 		}
 

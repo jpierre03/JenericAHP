@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.util.ArrayList;
@@ -19,6 +18,26 @@ import java.util.TreeMap;
  */
 public class RandomTools {
 
+	public static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix myPreferencMatrix) {
+		int rows = myPreferencMatrix.getRowDimension();
+		int columns = myPreferencMatrix.getColumnDimension();
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+
+
+		/*Création d'une collection de MatrixValue*/
+		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
+		for (int i = 0; i < rows; i++) {
+			for (int j = i + 1; j < columns; j++) {
+				matrixValues.add(myPreferencMatrix.getMatrixValue(i, j));
+			}
+		}
+		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
+		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
+			MatrixValue matrixValue = valueIterator.next();
+			myTreeMap.put(matrixValue.getValue(), matrixValue);
+		}
+		return myTreeMap;
+	}
 
 	public MatrixValue getValueToModifiyByRanking(MyMatrix myPreferencMatrix) {
 
@@ -33,7 +52,7 @@ public class RandomTools {
 		List<MatrixValue> listOfMatrixValue;
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = tool.createTreeMap(myPreferencMatrix);
+		myTreeMap = createTreeMap(myPreferencMatrix);
 
 
 		while (!myTreeMap.isEmpty()) {
@@ -56,15 +75,15 @@ public class RandomTools {
 
 		/*Boucle pour que l'utilisateur désigne la valeur à modifier*/
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
-		
+
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValue.getValue()
 							   + " ( "
-							   + (matrixValue.getRow()+1)
+							   + (matrixValue.getRow() + 1)
 							   + " , "
-							   + (matrixValue.getColumn()+1)
+							   + (matrixValue.getColumn() + 1)
 							   + " )"
 							   + " ? O/N");
 			expertsChoice = sc.nextLine();
@@ -82,7 +101,4 @@ public class RandomTools {
 
 		return matrixValue;
 	}
-
-
-
 }

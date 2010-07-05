@@ -67,6 +67,38 @@ public class MatrixValue {
 		this.column = column;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		boolean isEquals = true;
+		if (o instanceof MatrixValue) {
+			MatrixValue aValue = (MatrixValue) o;
+			if (this.getColumn() != aValue.getColumn()) {
+				isEquals = false;
+			}
+			if (this.getRow() != aValue.getRow()) {
+				isEquals = false;
+			}
+			if (this.getValue() != aValue.getValue()) {
+				isEquals = false;
+			}
+
+		} else {
+			isEquals = false;
+		}
+		return  isEquals;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash =
+		97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value)
+																  >>> 32));
+		hash = 97 * hash + this.row;
+		hash = 97 * hash + this.column;
+		return hash;
+	}
+
 	/**
 	 *
 	 * @return

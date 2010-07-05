@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.PriorityVector;
+import java.lang.Math;
 
 /**
  *
@@ -28,20 +29,24 @@ public class SaatysTools {
 	public SaatysTools() {
 	}
 
-	public TreeMap<Double, MatrixValue> createTreeMap(MyMatrix myPreferencMatrix) {
+	public static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix epsilon) {
 
-		int rows = myPreferencMatrix.getRowDimension();
-		int columns = myPreferencMatrix.getColumnDimension();
+		int rows = epsilon.getRowDimension();
+		int columns = epsilon.getColumnDimension();
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+
 
 
 		/*Création d'une collection de MatrixValue*/
 		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				matrixValues.add(myPreferencMatrix.getMatrixValue(i, j));
+				if (i != j) {
+					matrixValues.add(epsilon.getMatrixValue(i, j));
+				}
 			}
 		}
+
 
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
 		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
@@ -57,7 +62,7 @@ public class SaatysTools {
 	 *@param TreeMap<Double, MatrixValue>
 	 * @return void
 	 */
-	public void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
+	public static void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
 		while (!myTreeMap.isEmpty()) {
 			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
 			System.out.println(
@@ -78,55 +83,65 @@ public class SaatysTools {
 	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector, MyMatrix epsilon
 	 * @return MatrixValue
 	 */
-	public MatrixValue getValueToModifiyByRanking(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector, MyMatrix epsilon) {
+	public static MatrixValue getValueToModifiyByRanking(MyMatrix myPreferenceMatrix,
+														 MyMatrix priorityVector,
+														 MyMatrix epsilon) {
 
 
-		Scanner sc = new Scanner(System.in);
+		Scanner userInput = new Scanner(System.in);
 		int isValueChosen = 0;
 		String expertsChoice;
 		MatrixValue matrixValue = new MatrixValue();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		Iterator<MatrixValue> valueIterator;
 		MatrixValue matrixValueToPrint = new MatrixValue();
+		boolean isPresent = false;
 
+		/*Creation du TreeMap à partir de la matrice epsilon*/
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
 		myTreeMap = createTreeMap(epsilon);
 
 
-		while ((!myTreeMap.isEmpty()) && (isValueChosen == 0)) {
+		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
+		while (!myTreeMap.isEmpty()) {
 
 			matrixValue = myTreeMap.pollLastEntry().getValue();
-			matrixValueToPrint.setRow(matrixValue.getRow());
-			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
-					getColumn()));
 
-			collectionOfSortedMatrixValues.add(matrixValue);
+			int row = matrixValue.getRow();
+			int column = matrixValue.getColumn();
+			double value = matrixValue.getValue();
 
+
+			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
+			if (row > column) {
+				/*On retient la valeur réciproque*/
+
+				matrixValue.setRow(column);
+				matrixValue.setColumn(row);
+				matrixValue.setValue(1 / value);
+			}
+
+			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
+			for (MatrixValue matrixValue1 : collectionOfSortedMatrixValues) {
+				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
+					isPresent = true;
+				}
+			}
+
+			if (!isPresent) {
+				/*Ajout dans la collection des éléments triés.*/
+				collectionOfSortedMatrixValues.add(matrixValue);
+
+			}
+
+			isPresent = false;
 
 		}
 
-
-
-		/*Pour le cas où l'expert n'a pas choisi de valeur à modifier*/
 		valueIterator = collectionOfSortedMatrixValues.iterator();
 
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
-
-			/*Si on est dans la partie inférieure de la matrice*/
-			/*Proposer modification de la valeur réciproque*/
-			int i = matrixValue.getRow();
-			int j = matrixValue.getColumn();
-
-			if (i > j) {
-				matrixValue.setRow(j);
-				matrixValue.setColumn(i);
-				matrixValue.setValue(epsilon.get(j, i));
-			}
-
-
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
 			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
@@ -140,7 +155,7 @@ public class SaatysTools {
 							   + (matrixValueToPrint.getColumn() + 1)
 							   + " )"
 							   + " ? O/N");
-			expertsChoice = sc.nextLine();
+			expertsChoice = userInput.nextLine();
 
 			if (expertsChoice.equalsIgnoreCase("O")) {
 				isValueChosen = 1;
@@ -161,7 +176,7 @@ public class SaatysTools {
 	 * @param MyMatrix
 	 * @return MatrixValue
 	 */
-	public MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
+	public static MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
 		MatrixValue tempMatrixValue = new MatrixValue();
@@ -174,11 +189,9 @@ public class SaatysTools {
 		/*Si on est dans la partie inférieure de la matrice*/
 		/*Proposer modification de la valeur réciproque*/
 		if (i > j) {
-			if (i > j) {
-				tempMatrixValue.setRow(j);
-				tempMatrixValue.setColumn(i);
-				tempMatrixValue.setValue(epsilon.get(j, i));
-			}
+			tempMatrixValue.setRow(j);
+			tempMatrixValue.setColumn(i);
+			tempMatrixValue.setValue(epsilon.get(j, i));
 		}
 		return tempMatrixValue;
 
@@ -190,7 +203,8 @@ public class SaatysTools {
 	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector
 	 * @return MyMatrix Epsilon
 	 */
-	public MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix, MyMatrix priorityVector) {
+	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
+												  MyMatrix priorityVector) {
 		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(), myPreferenceMatrix.
 				getColumnDimension());
 		MatrixValue epsilonValue = new MatrixValue();
@@ -223,7 +237,10 @@ public class SaatysTools {
 
 	}
 
-	public double calculateBestFit(MyMatrix preferenceMatrix, MyMatrix priorityVector, int i, int j) {
+	public static double calculateBestFit(MyMatrix preferenceMatrix,
+										  MyMatrix priorityVector,
+										  int i,
+										  int j) {
 		MatrixValue matrixValue = new MatrixValue();
 		MyMatrix tempMatrix = new MyMatrix();
 

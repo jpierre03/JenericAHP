@@ -17,53 +17,19 @@ public class RandomToolsTest {
 
 	public static void main(String[] args) {
 
-		MyMatrix myMatrix = new MyMatrix(3, 3);
 		MyMatrix priorityVector = new MyMatrix(3, 1);
 		MatrixValue matrixValue = new MatrixValue();
 		String expertsChoice;
-		Scanner scan = new Scanner(System.in);
+		Scanner userInput = new Scanner(System.in);
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-		myMatrix.print(5, 5);
 
-		/*Déclaration matrice
-		matrixValue.setValue(1);
-		matrixValue.setRow(0);
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(21);
-		matrixValue.setRow(0);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(4);
-		matrixValue.setRow(0);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);
 
-		matrixValue.setValue(0.5);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(1);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(2);
-		matrixValue.setRow(1);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);
+		System.out.println("De quelle dimension est votre matrice?");
+		expertsChoice = userInput.next();
+		int matrixSize = Integer.parseInt(expertsChoice);
 
-		matrixValue.setValue(0.25);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(0);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(0.5);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(1);
-		myMatrix.setMatrixValue(matrixValue);
-		matrixValue.setValue(1);
-		matrixValue.setRow(2);
-		matrixValue.setColumn(2);
-		myMatrix.setMatrixValue(matrixValue);*/
+		MyMatrix myMatrix = new MyMatrix(matrixSize, matrixSize);
+
 
 
 		/*Saisie matrice*/
@@ -77,10 +43,17 @@ public class RandomToolsTest {
 						+ (j + 1)
 						+ " )");
 
-				expertsChoice = scan.next();
+				expertsChoice = userInput.next();
 				final JEP myParser = new JEP();
 				myParser.parseExpression(expertsChoice);
 				double newValue = myParser.getValue();
+
+				while (!SaatysToolsTest.isInSaatysSacale(newValue)){
+				System.out.println("Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+				expertsChoice = userInput.next();
+				myParser.parseExpression(expertsChoice);
+				newValue = myParser.getValue();
+				}
 
 
 				/*Partie supérieure*/
@@ -108,16 +81,21 @@ public class RandomToolsTest {
 
 		}
 
-		myMatrix.print(5, 2);
 
+
+		myMatrix.print(5, 2);
 
 		priorityVector = PriorityVector.build(myMatrix);
 
-		priorityVector.print(5, 5);
+		priorityVector.print(5, 3);
+
+
 
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + ConsistencyChecker.getCrResult());
+
+
 
 			RandomTools randomTools = new RandomTools();
 			matrixValue = randomTools.getValueToModifiyByRanking(myMatrix);
@@ -131,10 +109,17 @@ public class RandomToolsTest {
 					+ (matrixValue.getColumn() + 1)
 					+ " )"
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
-			expertsChoice = scan.next();
+			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
+
+			while (!SaatysToolsTest.isInSaatysSacale(newValue)){
+				System.out.println("Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+				expertsChoice = userInput.next();
+				myParser.parseExpression(expertsChoice);
+				newValue = myParser.getValue();
+				}
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/
@@ -152,20 +137,22 @@ public class RandomToolsTest {
 			myMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
+			System.out.println("---");
 			myMatrix.print(5, 5);
+
+			System.out.println("---");
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);
-
+			priorityVector.print(5, 5);
 
 		}
 
-
 		System.out.println("CR = " + ConsistencyChecker.getCrResult());
-
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
+
 
 	}
 }
