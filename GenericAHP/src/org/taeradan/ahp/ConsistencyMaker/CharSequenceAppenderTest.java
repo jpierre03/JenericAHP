@@ -11,7 +11,7 @@ public class CharSequenceAppenderTest {
 
 	public static void main(String[] args) {
 		try {
-			CharSequenceAppender appender = new CharSequenceAppender("attsp.csv");
+			CharSequenceAppender appender = new CharSequenceAppender("ahp.csv");
 
 			appender.insertLineFeed();
 			appender.append("ma matrice");
@@ -23,6 +23,14 @@ public class CharSequenceAppenderTest {
 			appender.append("c");
 			appender.insertSeparator();
 			appender.append("d");
+
+			MyMatrix m = new MyMatrix(2, 2);
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					m.set(i, j, i + 1);
+				}
+			}
+			appender.insertMatrix(m);
 
 			appender.close();
 		} catch (IOException ex) {

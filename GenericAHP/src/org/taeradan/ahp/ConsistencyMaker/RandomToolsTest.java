@@ -26,6 +26,7 @@ public class RandomToolsTest {
 		String expertsChoice;
 		Scanner userInput = new Scanner(System.in);
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+		String temp="";
 
 
 		System.out.println("De quelle dimension est votre matrice?");
@@ -48,17 +49,19 @@ public class RandomToolsTest {
 						+ " )");
 
 				expertsChoice = userInput.next();
+				temp+=expertsChoice;
 				final JEP myParser = new JEP();
 				myParser.parseExpression(expertsChoice);
 				double newValue = myParser.getValue();
 
-				while (!SaatysToolsTest.isInSaatysSacale(newValue)){
-				System.out.println("Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
-				expertsChoice = userInput.next();
-				myParser.parseExpression(expertsChoice);
-				newValue = myParser.getValue();
+				/*Test la validité de la valeur (doit appartenir à l'échelle de Saaty)*/
+				while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
+					System.out.println(
+							"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+					expertsChoice = userInput.next();
+					myParser.parseExpression(expertsChoice);
+					newValue = myParser.getValue();
 				}
-
 
 				/*Partie supérieure*/
 				matrixValue.setValue(newValue);
@@ -118,12 +121,14 @@ public class RandomToolsTest {
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
 
-			while (!SaatysToolsTest.isInSaatysSacale(newValue)){
-				System.out.println("Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+			while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
+				System.out.println(
+						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
 				myParser.parseExpression(expertsChoice);
 				newValue = myParser.getValue();
-				}
+			}
+
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/

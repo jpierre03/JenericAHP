@@ -4,6 +4,8 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+import java.io.IOException;
 import java.util.Scanner;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
@@ -40,11 +42,7 @@ public class SaatysToolsTest {
 		return result;
 	}
 
-	/**
-	 *
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 
 		MyMatrix priorityVector = new MyMatrix();
@@ -54,8 +52,7 @@ public class SaatysToolsTest {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		Scanner userInput = new Scanner(System.in);
 		String expertsChoice;
-
-
+	
 		System.out.println("De quelle dimension est votre matrice?");
 		expertsChoice = userInput.next();
 		int matrixSize = Integer.parseInt(expertsChoice);
@@ -78,7 +75,7 @@ public class SaatysToolsTest {
 				myParser.parseExpression(expertsChoice);
 				double newValue = myParser.getValue();
 
-
+				/*Test la validité de la valeur (doit appartenir à l'échelle de Saaty)*/
 				while (!isInSaatysSacale(newValue)) {
 					System.out.println(
 							"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
@@ -104,6 +101,7 @@ public class SaatysToolsTest {
 			}
 		}
 
+		/*Diagonale*/
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
 
 			matrixValue.setValue(1);
@@ -121,8 +119,17 @@ public class SaatysToolsTest {
 
 		priorityVector.print(5, 5);
 
+		CharSequenceAppender csa = new CharSequenceAppender("Sequence.csv");
 
+		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		csa.insertMatrix(myMatrix);
+		csa.insertLineFeed();
+		csa.insertMatrix(priorityVector);
+		csa.insertLineFeed();
 
+		/*Ecriture du CR*/
+		//csa.append(temp);
+		csa.insertLineFeed();
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
@@ -143,7 +150,7 @@ public class SaatysToolsTest {
 					+ " )"
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
-
+			/*Lecture de lavaleur saisie au clavier*/
 			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
@@ -188,6 +195,17 @@ public class SaatysToolsTest {
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
+
+
+		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		csa.insertLineFeed();
+		csa.insertMatrix(myMatrix);
+		csa.insertLineFeed();
+		csa.insertMatrix(priorityVector);
+		csa.insertLineFeed();
+
+
+		csa.close();
 
 
 	}

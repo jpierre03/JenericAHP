@@ -19,11 +19,30 @@ public class CharSequenceAppender {
 	public void append(CharSequence object) {
 		output.append(object);
 	}
-	public void insertLineFeed(){
+
+	public void insertLineFeed() {
 		output.append("\n");
 	}
-	public void insertSeparator(){
+
+	public void insertSeparator() {
 		output.append(";");
+	}
+
+	public void insertMatrix(MyMatrix myMatrix) {
+		String chaine = "";
+
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
+
+
+				chaine += myMatrix.getMatrixValue(i, j).getValue()+";";
+
+			}
+			output.append(chaine);
+			insertLineFeed();
+			chaine = "";
+
+		}
 	}
 
 	public void close() {
