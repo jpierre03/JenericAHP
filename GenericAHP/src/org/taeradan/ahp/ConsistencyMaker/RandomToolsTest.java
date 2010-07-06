@@ -4,10 +4,14 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
+import java.util.Collection;
+import sun.awt.color.CMM.CSAccessor;
 
 /**
  *
@@ -19,93 +23,72 @@ public class RandomToolsTest {
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		MyMatrix priorityVector = new MyMatrix(3, 1);
+		MyMatrix myPreferenceMatrix = new MyMatrix();
+		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		String expertsChoice;
 		Scanner userInput = new Scanner(System.in);
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-		String temp="";
+		Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<MatrixValue>();
+		String file;
+		Boolean tempBoolean;
+		String tempString;
 
+		/*Choix du nom du fichier*/
+		System.out.println("Saisir le nom du fichier");
+		file = userInput.next();
+		file += ".csv";
+		CharSequenceAppender csa = new CharSequenceAppender(file);
 
-		System.out.println("De quelle dimension est votre matrice?");
-		expertsChoice = userInput.next();
-		int matrixSize = Integer.parseInt(expertsChoice);
-
-		MyMatrix myMatrix = new MyMatrix(matrixSize, matrixSize);
-
-
-
-		/*Saisie matrice*/
-		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-			for (int j = i + 1; j < myMatrix.getColumnDimension(); j++) {
-				System.out.println(
-						"Saisir la valeur pour les coordonnées "
-						+ " ( "
-						+ (i + 1)
-						+ " , "
-						+ (j + 1)
-						+ " )");
-
-				expertsChoice = userInput.next();
-				temp+=expertsChoice;
-				final JEP myParser = new JEP();
-				myParser.parseExpression(expertsChoice);
-				double newValue = myParser.getValue();
-
-				/*Test la validité de la valeur (doit appartenir à l'échelle de Saaty)*/
-				while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
-					System.out.println(
-							"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
-					expertsChoice = userInput.next();
-					myParser.parseExpression(expertsChoice);
-					newValue = myParser.getValue();
-				}
-
-				/*Partie supérieure*/
-				matrixValue.setValue(newValue);
-				matrixValue.setRow(i);
-				matrixValue.setColumn(j);
-				myMatrix.setMatrixValue(matrixValue);
-
-				/*Réciprocité*/
-				matrixValue.setValue(1 / newValue);
-				matrixValue.setRow(j);
-				matrixValue.setColumn(i);
-				myMatrix.setMatrixValue(matrixValue);
-
-
-			}
-		}
-
-		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-
-			matrixValue.setValue(1);
-			matrixValue.setRow(i);
-			matrixValue.setColumn(i);
-			myMatrix.setMatrixValue(matrixValue);
-
-		}
-
-
-
-		myMatrix.print(5, 2);
-
-		priorityVector = PriorityVector.build(myMatrix);
-
+		/*Création de la matrice*/
+		myPreferenceMatrix = SaatysToolsTest.createMatrix();
+		myPreferenceMatrix.print(5, 2);
+		priorityVector = PriorityVector.build(myPreferenceMatrix);
 		priorityVector.print(5, 3);
 
+		/*Ecriture de la matrice, du vecteur propre et du CR en tête du fichier*/
 
+		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		csa.insertMatrix(myPreferenceMatrix);
+		csa.insertLineFeed();
+		csa.insertMatrix(priorityVector);
+		csa.insertLineFeed();
+
+		//Ecriture du CR
+		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
+		tempString = "" + consistencyChecker.getCrResult();
+		csa.append(tempString);
+		csa.insertLineFeed();
+		csa.insertLineFeed();
+
+		//en-tête du tableau
+		csa.append(
+				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
+		csa.insertLineFeed();
+
+		csa.close();
 
 		/*Tant que la matrice est incohérente*/
-		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
+		while (!consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
 
+			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
+			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
+			/*Ecriture des propositions de Saaty et du classement aléatoire*/
+			RandomTools.writeRandomAndSaatysProposition(myPreferenceMatrix,
+														collectionOfNonSortedMatrixValues,
+														matrixValue,
+														priorityVector, file);
 
-			RandomTools randomTools = new RandomTools();
-			matrixValue = randomTools.getValueToModifiyByRanking(myMatrix);
+			/*Ecrire la valeur que souhaite modifier l'expert*/
+			csa = new CharSequenceAppender(file);
+			tempString = "" + matrixValue.getValue();
+			csa.append(tempString);
+			csa.insertSeparator();
+
 			System.out.println(
 					"Vous avez choisi de remplacer la valeur "
 					+ matrixValue.getValue()
@@ -116,6 +99,10 @@ public class RandomToolsTest {
 					+ (matrixValue.getColumn() + 1)
 					+ " )"
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
+
+
+
+
 			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
@@ -129,13 +116,17 @@ public class RandomToolsTest {
 				newValue = myParser.getValue();
 			}
 
+			/*Ecriture de la nouvelle valeur*/
+			tempString = "" + newValue;
+			csa.append(tempString);
+			csa.insertSeparator();
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/
 
 			//Valeur directement modifiée
 			matrixValue.setValue(newValue);
-			myMatrix.setMatrixValue(matrixValue);
+			myPreferenceMatrix.setMatrixValue(matrixValue);
 
 			//Valeur réciproquement modifiée
 			int tempI = matrixValue.getRow();
@@ -143,18 +134,23 @@ public class RandomToolsTest {
 			matrixValue.setValue(1 / newValue);
 			matrixValue.setRow(tempJ);
 			matrixValue.setColumn(tempI);
-			myMatrix.setMatrixValue(matrixValue);
+			myPreferenceMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
-			System.out.println("---");
-			myMatrix.print(5, 5);
+			myPreferenceMatrix.print(5, 5);
 
-			System.out.println("---");
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
-			priorityVector = PriorityVector.build(myMatrix);
+			priorityVector = PriorityVector.build(myPreferenceMatrix);
 			priorityVector.print(5, 5);
 
+			//écriture du nouveau CR
+			tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
+			tempString = "" + consistencyChecker.getCrResult();
+			csa.append(tempString);
+
+
+			csa.close();
 		}
 
 		System.out.println("CR = " + consistencyChecker.getCrResult());
@@ -162,6 +158,22 @@ public class RandomToolsTest {
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
+		csa = new CharSequenceAppender(file);
+		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		csa.insertLineFeed();
+		csa.insertLineFeed();
+		csa.insertMatrix(myPreferenceMatrix);
+		csa.insertLineFeed();
+		csa.insertMatrix(priorityVector);
+		csa.insertLineFeed();
+
+		//Ecriture du CR
+		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
+		tempString = "" + consistencyChecker.getCrResult();
+		csa.append(tempString);
+		csa.insertLineFeed();
+		csa.insertLineFeed();
+		csa.close();
 
 	}
 
