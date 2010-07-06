@@ -49,7 +49,8 @@ public class SaatysToolsTest {
 	}
 
 	public static MatrixValue readSaatysRanking(
-			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix, String file) throws IOException {
+			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix,
+			String file) throws IOException {
 
 		Scanner userInput = new Scanner(System.in);
 		int isValueChosen = 0;
@@ -225,6 +226,7 @@ public class SaatysToolsTest {
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		String tempString;
 		String file;
+		Boolean tempBoolean;
 
 		myMatrix = createMatrix();
 		myMatrix.print(5, 5);
@@ -234,7 +236,7 @@ public class SaatysToolsTest {
 
 		System.out.println("Saisir le nom du fichier");
 		file = userInput.next();
-		file+=".csv";
+		file += ".csv";
 		CharSequenceAppender csa = new CharSequenceAppender(file);
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
@@ -244,7 +246,11 @@ public class SaatysToolsTest {
 		csa.insertLineFeed();
 
 		/*Ecriture du CR*/
-		//csa.append(temp);
+		tempBoolean = consistencyChecker.isConsistent(myMatrix, priorityVector);
+		tempString = "" + consistencyChecker.getCrResult();
+		csa.append(tempString);
+		csa.insertLineFeed();
+		csa.insertLineFeed();
 
 		//en-tête du tableau
 		csa.append(
@@ -259,7 +265,7 @@ public class SaatysToolsTest {
 
 			/*Recherche de la valeur à modifier*/
 			collectionOfSortedMatrixValues = saatysTools.getRank(myMatrix, priorityVector, epsilon);
-			matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix,file);
+			matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix, file);
 
 			System.out.println(
 					"Vous avez choisi de remplacer la valeur "
@@ -302,7 +308,7 @@ public class SaatysToolsTest {
 			int location = SaatysTools.getLocationInRank(collectionOfSortedMatrixValues,
 														 matrixValue.getRow(),
 														 matrixValue.getColumn());
-			tempString=""+location;
+			tempString = "" + location;
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -329,8 +335,8 @@ public class SaatysToolsTest {
 			priorityVector.print(5, 5);
 
 			//Ecriture du nouveau CR
-			
-			tempString=""+consistencyChecker.getCrResult();
+			tempBoolean = consistencyChecker.isConsistent(myMatrix, priorityVector);
+			tempString = "" + consistencyChecker.getCrResult();
 			csa.append(tempString);
 
 
