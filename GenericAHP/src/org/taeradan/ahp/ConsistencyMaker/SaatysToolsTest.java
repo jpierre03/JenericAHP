@@ -64,6 +64,7 @@ public class SaatysToolsTest {
 		String tempString;
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		boolean isFound = false;
+		boolean tempBoolean;
 		MatrixValue tempMatrixValue = new MatrixValue();
 
 
@@ -100,12 +101,16 @@ public class SaatysToolsTest {
 
 		/*parcours de la liste pour l'écriture dans le fichier*/
 		valueIterator = collectionOfSortedMatrixValues.iterator();
+
 		while ((valueIterator.hasNext()) && (!isFound)) {
+
 			tempMatrixValue = valueIterator.next();
 			csa.insertLineFeed();
+
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
 			tempMatrix = tempMatrix.copyMyMatrix(myPreferenceMatrix);
+
 			//calcul du vecteur propre associé à tempMatrix
 			tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
@@ -125,9 +130,26 @@ public class SaatysToolsTest {
 			csa.insertSeparator();
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
+
+			//remplacement de la valeur (i,j) par BestFit
+			MatrixValue newMatrixValue = new MatrixValue();
+			newMatrixValue.setRow(tempMatrixValue.getRow());
+			newMatrixValue.setColumn(tempMatrixValue.getColumn());
+			newMatrixValue.setValue(BestFit);
+			tempMatrix.setMatrixValue(newMatrixValue);
+
+			//remplacement de la valeur (j,i) par 1/BestFit
+			newMatrixValue.setRow(tempMatrixValue.getColumn());
+			newMatrixValue.setColumn(tempMatrixValue.getRow());
+			newMatrixValue.setValue(1. / BestFit);
+			tempMatrix.setMatrixValue(newMatrixValue);
+
+			//rafraîchissement du vecteur de priorité
+			tempVector = PriorityVector.build(tempMatrix);
+			//calcul et écriture de la cohérence
+			tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector);
 			tempString = "" + consistencyChecker.getCrResult();
 			csa.append(tempString);
-			csa.insertSeparator();
 
 			if (matrixValue.equals(tempMatrixValue)) {
 				isFound = true;
@@ -228,16 +250,17 @@ public class SaatysToolsTest {
 		String file;
 		Boolean tempBoolean;
 
+		System.out.println("Saisir le nom du fichier");
+		file = userInput.next();
+		file += ".csv";
+		CharSequenceAppender csa = new CharSequenceAppender(file);
+
 		myMatrix = createMatrix();
 		myMatrix.print(5, 5);
 
 		priorityVector = PriorityVector.build(myMatrix);
 		priorityVector.print(5, 5);
 
-		System.out.println("Saisir le nom du fichier");
-		file = userInput.next();
-		file += ".csv";
-		CharSequenceAppender csa = new CharSequenceAppender(file);
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.insertMatrix(myMatrix);
