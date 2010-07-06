@@ -49,7 +49,7 @@ public class SaatysToolsTest {
 	}
 
 	public static MatrixValue readSaatysRanking(
-			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix) throws IOException {
+			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix, String file) throws IOException {
 
 		Scanner userInput = new Scanner(System.in);
 		int isValueChosen = 0;
@@ -57,7 +57,7 @@ public class SaatysToolsTest {
 		MatrixValue matrixValue = new MatrixValue();
 		Iterator<MatrixValue> valueIterator;
 		MatrixValue matrixValueToPrint = new MatrixValue();
-		CharSequenceAppender csa = new CharSequenceAppender("Sequence.csv");
+		CharSequenceAppender csa = new CharSequenceAppender(file);
 		MyMatrix tempMatrix = new MyMatrix();
 		MyMatrix tempVector = new MyMatrix();
 		String tempString;
@@ -224,6 +224,7 @@ public class SaatysToolsTest {
 		MyMatrix myMatrix = new MyMatrix();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		String tempString;
+		String file;
 
 		myMatrix = createMatrix();
 		myMatrix.print(5, 5);
@@ -231,7 +232,10 @@ public class SaatysToolsTest {
 		priorityVector = PriorityVector.build(myMatrix);
 		priorityVector.print(5, 5);
 
-		CharSequenceAppender csa = new CharSequenceAppender("Sequence.csv");
+		System.out.println("Saisir le nom du fichier");
+		file = userInput.next();
+		file+=".csv";
+		CharSequenceAppender csa = new CharSequenceAppender(file);
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.insertMatrix(myMatrix);
@@ -255,7 +259,7 @@ public class SaatysToolsTest {
 
 			/*Recherche de la valeur à modifier*/
 			collectionOfSortedMatrixValues = saatysTools.getRank(myMatrix, priorityVector, epsilon);
-			matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix);
+			matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix,file);
 
 			System.out.println(
 					"Vous avez choisi de remplacer la valeur "
@@ -269,7 +273,7 @@ public class SaatysToolsTest {
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
 			/*Ecrire la valeur que souhaite modifier l'expert*/
-			csa = new CharSequenceAppender("Sequence.csv");
+			csa = new CharSequenceAppender(file);
 			tempString = "" + myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 			csa.append(tempString);
 			csa.insertSeparator();
@@ -338,7 +342,7 @@ public class SaatysToolsTest {
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
-		csa = new CharSequenceAppender("Sequence.csv");
+		csa = new CharSequenceAppender(file);
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.insertLineFeed();
 		csa.insertLineFeed();

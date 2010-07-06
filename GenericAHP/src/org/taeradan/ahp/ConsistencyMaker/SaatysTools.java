@@ -14,7 +14,7 @@ import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.PriorityVector;
 import java.lang.Math;
-import javax.sound.midi.Sequence;
+
 
 /**
  *
