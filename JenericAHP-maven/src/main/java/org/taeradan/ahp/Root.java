@@ -36,7 +36,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
@@ -79,6 +78,10 @@ public class Root {
 	 *
 	 */
 	transient private boolean calculationOccured = false;
+	/**
+	 * 
+	 */
+	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
@@ -106,7 +109,7 @@ public class Root {
 				matrixCrCr = PairWiseMatrix.builder(xmlPrefMatrix);
 				vectorCrOg = PriorityVector.build(matrixCrCr);
 //				Consistency verification
-				if (!ConsistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
+				if (!consistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
 					Logger.getAnonymousLogger().severe(
 							"Is not consistent (root)");
 				}

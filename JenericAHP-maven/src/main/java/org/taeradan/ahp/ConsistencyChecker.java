@@ -35,7 +35,7 @@ public class ConsistencyChecker {
 	/**
 	 * 
 	 */
-	private static double consistenceCrit = 0;
+	private double consistenceCrit = 0;
 
 //	/**
 //	 *
@@ -54,7 +54,7 @@ public class ConsistencyChecker {
 	 * @param prioVector
 	 * @return
 	 */
-	public static boolean isConsistent(final Matrix prefMatrix,
+	public boolean isConsistent(final Matrix prefMatrix,
 									   final Matrix prioVector) {
 		boolean consistent = false;
 
@@ -105,7 +105,7 @@ public class ConsistencyChecker {
 	 *
 	 * @return
 	 */
-	public static double getCrResult() {
+	public double getCrResult() {
 		return consistenceCrit;
 	}
 }
