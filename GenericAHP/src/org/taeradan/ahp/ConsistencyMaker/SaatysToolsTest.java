@@ -150,6 +150,7 @@ public class SaatysToolsTest {
 			tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector);
 			tempString = "" + consistencyChecker.getCrResult();
 			csa.append(tempString);
+			csa.insertSeparator();
 
 			if (matrixValue.equals(tempMatrixValue)) {
 				isFound = true;
