@@ -21,27 +21,6 @@ import org.taeradan.ahp.PriorityVector;
  */
 public class RandomTools {
 
-	public static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix myPreferencMatrix) {
-		int rows = myPreferencMatrix.getRowDimension();
-		int columns = myPreferencMatrix.getColumnDimension();
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-
-
-		/*Création d'une collection de MatrixValue*/
-		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
-		for (int i = 0; i < rows; i++) {
-			for (int j = i + 1; j < columns; j++) {
-				matrixValues.add(myPreferencMatrix.getMatrixValue(i, j));
-			}
-		}
-		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
-			MatrixValue matrixValue = valueIterator.next();
-			myTreeMap.put(matrixValue.getValue(), matrixValue);
-		}
-		return myTreeMap;
-	}
-
 	public static MatrixValue getValueToModifiyByRanking(
 			Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
 
@@ -86,30 +65,26 @@ public class RandomTools {
 
 		MatrixValue matrixValue = new MatrixValue();
 		Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<MatrixValue>();
-		List<MatrixValue> listOfMatrixValue;
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = createTreeMap(myPreferenceMatrix);
+		List<MatrixValue> listOfMatrixValue = new ArrayList<MatrixValue>();
 
-
-		while (!myTreeMap.isEmpty()) {
-			matrixValue = myTreeMap.pollLastEntry().getValue();
-			collectionOfNonSortedMatrixValues.add(matrixValue);
+		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
+			for (int j = i + 1; j < myPreferenceMatrix.getColumnDimension(); j++) {
+				matrixValue = new MatrixValue();
+				matrixValue.setRow(i);
+				matrixValue.setColumn(j);
+				matrixValue.setValue(myPreferenceMatrix.get(i, j));
+				listOfMatrixValue.add(matrixValue);
+			}
 		}
-
-		listOfMatrixValue = new ArrayList<MatrixValue>(collectionOfNonSortedMatrixValues);
 
 		Collections.shuffle(listOfMatrixValue);
 
-		collectionOfNonSortedMatrixValues.clear();
-
-		/*Vider la collection triée pour la remplir d'éléments aléatoires.*/
-
+		/*Mettre éléments aléatoire dans collection*/
 		for (MatrixValue matrixValue1 : listOfMatrixValue) {
 			collectionOfNonSortedMatrixValues.add(matrixValue1);
 		}
 
 		return collectionOfNonSortedMatrixValues;
-
 	}
 
 	public static void writeRandomAndSaatysProposition(MyMatrix myPreferenceMatrix,

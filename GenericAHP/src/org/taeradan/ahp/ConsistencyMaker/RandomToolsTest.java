@@ -11,7 +11,6 @@ import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 import java.util.Collection;
-import sun.awt.color.CMM.CSAccessor;
 
 /**
  *
@@ -73,7 +72,7 @@ public class RandomToolsTest {
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector)) {
 			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
-
+			
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
