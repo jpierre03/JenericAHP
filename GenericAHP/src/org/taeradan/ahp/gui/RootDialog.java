@@ -41,7 +41,7 @@ public class RootDialog
 	/**
 	 *
 	 */
-	final private PrefMatrixTableModel guiPrefMatrix;
+	final private PairWiseMatrixTableModel guiPrefMatrix;
 
 	/** Creates new form CriteriaDialog
 	 * @param parent
@@ -51,10 +51,10 @@ public class RootDialog
 	public RootDialog(java.awt.Frame parent, boolean modal, Root root) {
 		super(parent, modal);
 		this.root = root;
-		guiPrefMatrix = new PrefMatrixTableModel();
+		guiPrefMatrix = new PairWiseMatrixTableModel();
 		initTable();
 		initComponents();
-		guiPrefMatrix.addTableModelListener(new PrefMatrixChangeListener());
+		guiPrefMatrix.addTableModelListener(new PairWiseMatrixChangeListener());
 		jTextFieldObjective.setText(root.getName());
 	}
 
@@ -204,7 +204,7 @@ public class RootDialog
 	 *
 	 * @return
 	 */
-	public PrefMatrixTableModel getGuiPrefMatrix() {
+	public PairWiseMatrixTableModel getGuiPrefMatrix() {
 		return guiPrefMatrix;
 	}
 }

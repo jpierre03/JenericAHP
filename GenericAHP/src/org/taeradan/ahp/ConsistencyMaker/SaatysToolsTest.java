@@ -4,18 +4,18 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 import java.util.Collection;
 import java.util.Iterator;
-import sun.awt.color.CMM.CSAccessor;
+import javax.swing.JFrame;
+import org.taeradan.ahp.gui.MyMatrixTable;
+import org.taeradan.ahp.gui.MyMatrixTableModel;
 
 /**
  *
@@ -248,16 +248,24 @@ public class SaatysToolsTest {
 		MyMatrix myMatrix = new MyMatrix();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		String tempString;
-		String file;
-		Boolean tempBoolean;
+		CharSequenceAppender csa;
 
-		System.out.println("Saisir le nom du fichier");
-		file = userInput.next();
+		MyMatrixTable maTable = new MyMatrixTable();
+		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
+
+		System.out.println("Saisir le nom du fichier ermettant de garder la trace des actions");
+		String file = userInput.next();
 		file += ".csv";
-		CharSequenceAppender csa = new CharSequenceAppender(file);
+		csa = new CharSequenceAppender(file);
 
 		myMatrix = createMatrix();
 		myMatrix.print(5, 5);
+
+		/*Interface graphique*/
+		matrixTableModel.setMatrix(myMatrix);
+		maTable.setModel(matrixTableModel);
+
+		showMatrixTable(maTable, myMatrix);
 
 		priorityVector = PriorityVector.build(myMatrix);
 		priorityVector.print(5, 5);
@@ -270,7 +278,7 @@ public class SaatysToolsTest {
 		csa.insertLineFeed();
 
 		/*Ecriture du CR*/
-		tempBoolean = consistencyChecker.isConsistent(myMatrix, priorityVector);
+		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getCrResult();
 		csa.append(tempString);
 		csa.insertLineFeed();
@@ -354,12 +362,16 @@ public class SaatysToolsTest {
 			//Affichage nouvelle matrice
 			myMatrix.print(5, 5);
 
+			/*change*/
+			matrixTableModel.setMatrix(myMatrix);
+			maTable.setModel(matrixTableModel);
+
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);
 			priorityVector.print(5, 5);
 
 			//Ecriture du nouveau CR
-			tempBoolean = consistencyChecker.isConsistent(myMatrix, priorityVector);
+			consistencyChecker.isConsistent(myMatrix, priorityVector);
 			tempString = "" + consistencyChecker.getCrResult();
 			csa.append(tempString);
 
@@ -385,6 +397,15 @@ public class SaatysToolsTest {
 		csa.close();
 
 
+	}
+
+	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix) throws HeadlessException {
+		// Show a frame with a table
+		JFrame maFenetre = new JFrame("ma belle fenêtre");
+		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		maFenetre.setContentPane(maTable);
+		maFenetre.setSize(1000, 27 * myMatrix.getRowDimension());
+		maFenetre.setVisible(true);
 	}
 
 	/**

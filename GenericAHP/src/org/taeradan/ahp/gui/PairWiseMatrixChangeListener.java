@@ -28,7 +28,7 @@ import org.nfunk.jep.JEP;
  * It is used to verify that the value entered is correct and to automatically fill the second half of the matrix.
  * @author Yves Dubromelle
  */
-public class PrefMatrixChangeListener implements TableModelListener {
+public class PairWiseMatrixChangeListener implements TableModelListener {
 
 	/**
 	 * Handle of the event launched every time the JTable changes
@@ -38,7 +38,7 @@ public class PrefMatrixChangeListener implements TableModelListener {
 	public void tableChanged(TableModelEvent evt) {
 		Logger.getAnonymousLogger().info("row=" + evt.getFirstRow() + ",column" + evt.getColumn());
 		if(evt.getFirstRow() >= evt.getColumn()) {
-			final PrefMatrixTableModel prefMatrix = (PrefMatrixTableModel) evt.getSource();
+			final PairWiseMatrixTableModel prefMatrix = (PairWiseMatrixTableModel) evt.getSource();
 			Double value = null;
 			final Object nonParsedValue = prefMatrix.getValueAt(evt.getFirstRow(), evt.getColumn());
 			Logger.getAnonymousLogger().info("Non parsed value = " + nonParsedValue);
