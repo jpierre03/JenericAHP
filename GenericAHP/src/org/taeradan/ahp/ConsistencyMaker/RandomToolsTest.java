@@ -49,6 +49,7 @@ public class RandomToolsTest {
 		String tempString;
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
+		int iterationsCounter=0;
 
 		/*Choix du nom du fichier*/
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
@@ -58,12 +59,15 @@ public class RandomToolsTest {
 
 		/*Création de la matrice*/
 		myPreferenceMatrix = SaatysToolsTest.createMatrix();
-		myPreferenceMatrix.print(5, 2);
+	//	myPreferenceMatrix.print(5, 2);
 		priorityVector = PriorityVector.build(myPreferenceMatrix);
-		priorityVector.print(5, 3);
+	//	priorityVector.print(5, 3);
+
+		System.out.println("Merci de patienter.");
 
 		matrixTableModel.setMatrix(myPreferenceMatrix);
 		maTable.setModel(matrixTableModel);
+
 		/*Affichage de l'aperçu de la matrice*/
 		showMatrixTable(maTable, myPreferenceMatrix);
 
@@ -92,6 +96,9 @@ public class RandomToolsTest {
 
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector)) {
+
+			iterationsCounter++;
+
 			System.out.println("\n**********          Matrice incohérente" +"          **********\n CR = "+ consistencyChecker.getCrResult()+"\n");
 			
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
@@ -197,6 +204,11 @@ public class RandomToolsTest {
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
+
+		//Ecriture du nombre d'iterations
+		tempString="Number of Iterations;"+iterationsCounter;
+		csa.append(tempString);
+
 		csa.close();
 
 	}

@@ -249,17 +249,21 @@ public class SaatysToolsTest {
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		String tempString;
 		CharSequenceAppender csa;
+		int iterationCounter=0;
+		String file;
 
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
-		String file = userInput.next();
+		file = userInput.next();
 		file += ".csv";
 		csa = new CharSequenceAppender(file);
 
 		myMatrix = createMatrix();
 		//	myMatrix.print(5, 5);
+
+		System.out.println("Merci de patienter");
 
 		/*Interface graphique*/
 		matrixTableModel.setMatrix(myMatrix);
@@ -291,6 +295,10 @@ public class SaatysToolsTest {
 		csa.close();
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
+
+			//incrémentation du compteur du nombre d'itération
+			iterationCounter++;
+
 			System.out.println("\n**********          Matrice incohérente"
 							   + "          **********\n CR = " + consistencyChecker.getCrResult()
 							   + "\n");
@@ -394,6 +402,16 @@ public class SaatysToolsTest {
 		csa.insertLineFeed();
 		csa.insertMatrix(priorityVector);
 		csa.insertLineFeed();
+
+		//Ecriture du CR
+		consistencyChecker.isConsistent(myMatrix, priorityVector);
+		tempString = "" + consistencyChecker.getCrResult();
+		csa.append(tempString);
+		csa.insertLineFeed();
+		csa.insertLineFeed();
+
+		tempString="Number of Iterations;"+iterationCounter;
+		csa.append(tempString);
 
 
 		csa.close();
