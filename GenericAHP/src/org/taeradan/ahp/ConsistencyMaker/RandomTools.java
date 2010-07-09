@@ -145,10 +145,10 @@ public class RandomTools {
 			csa.insertSeparator();
 
 			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
-			tempString = "" + saatysMatrixValue.getRow();
+			tempString = "" + (saatysMatrixValue.getRow()+1);
 			csa.append(tempString);
 			csa.insertSeparator();
-			tempString = "" + saatysMatrixValue.getColumn();
+			tempString = "" + (saatysMatrixValue.getColumn()+1);
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -193,11 +193,11 @@ public class RandomTools {
 			csa.insertSeparator();
 
 			/*écriture des indices de la valeur aléatoire proposé*/
-			tempString = "" + randomsMatrixValue.getRow();
+			tempString = "" + (randomsMatrixValue.getRow()+1);
 			csa.append(tempString);
 			csa.insertSeparator();
 
-			tempString = "" + randomsMatrixValue.getColumn();
+			tempString = "" + (randomsMatrixValue.getColumn()+1);
 			csa.append(tempString);
 			csa.insertSeparator();
 

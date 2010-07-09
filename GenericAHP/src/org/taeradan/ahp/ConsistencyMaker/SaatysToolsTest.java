@@ -122,10 +122,10 @@ public class SaatysToolsTest {
 			csa.insertSeparator();
 
 			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
-			tempString = "" + tempMatrixValue.getRow();
+			tempString = "" + (tempMatrixValue.getRow() + 1);
 			csa.append(tempString);
 			csa.insertSeparator();
-			tempString = "" + tempMatrixValue.getColumn();
+			tempString = "" + (tempMatrixValue.getColumn() + 1);
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -253,13 +253,13 @@ public class SaatysToolsTest {
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 
-		System.out.println("Saisir le nom du fichier ermettant de garder la trace des actions");
+		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
 		String file = userInput.next();
 		file += ".csv";
 		csa = new CharSequenceAppender(file);
 
 		myMatrix = createMatrix();
-		myMatrix.print(5, 5);
+		//	myMatrix.print(5, 5);
 
 		/*Interface graphique*/
 		matrixTableModel.setMatrix(myMatrix);
@@ -268,7 +268,7 @@ public class SaatysToolsTest {
 		showMatrixTable(maTable, myMatrix);
 
 		priorityVector = PriorityVector.build(myMatrix);
-		priorityVector.print(5, 5);
+		//	priorityVector.print(5, 5);
 
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
@@ -291,7 +291,9 @@ public class SaatysToolsTest {
 		csa.close();
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
+			System.out.println("\n**********          Matrice incohérente"
+							   + "          **********\n CR = " + consistencyChecker.getCrResult()
+							   + "\n");
 			/*Calcul matrice epsilon*/
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
 
@@ -316,7 +318,7 @@ public class SaatysToolsTest {
 			csa.append(tempString);
 			csa.insertSeparator();
 
-			/*Lecture de lavaleur saisie au clavier*/
+			/*Lecture de la valeur saisie au clavier*/
 			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
@@ -360,15 +362,15 @@ public class SaatysToolsTest {
 			myMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
-			myMatrix.print(5, 5);
+			//	myMatrix.print(5, 5);
 
-			/*change*/
+			//Affichage nouvelle matrice
 			matrixTableModel.setMatrix(myMatrix);
 			maTable.setModel(matrixTableModel);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myMatrix);
-			priorityVector.print(5, 5);
+			//		priorityVector.print(5, 5);
 
 			//Ecriture du nouveau CR
 			consistencyChecker.isConsistent(myMatrix, priorityVector);
@@ -380,7 +382,7 @@ public class SaatysToolsTest {
 		}
 
 		System.out.println("CR = " + consistencyChecker.getCrResult());
-		System.out.println("***********************************************"
+		System.out.println("\n***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
@@ -401,7 +403,7 @@ public class SaatysToolsTest {
 
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix) throws HeadlessException {
 		// Show a frame with a table
-		JFrame maFenetre = new JFrame("ma belle fenêtre");
+		JFrame maFenetre = new JFrame("Aperçu de la Matrice de Préférences");
 		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		maFenetre.setContentPane(maTable);
 		maFenetre.setSize(1000, 27 * myMatrix.getRowDimension());

@@ -45,7 +45,7 @@ public class MyMatrixTableModel
 
 		aLegend.add("");
 		for (int i = 0; i < matrix.getColumnDimension(); i++) {
-			aLegend.add("Critere" + i);
+			aLegend.add("Critere" + (i+1));
 		}
 		return aLegend;
 	}
@@ -57,7 +57,7 @@ public class MyMatrixTableModel
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
 
-			String columnNames = "Critere" + i;
+			String columnNames = "Critere" + (i+1);
 			data[0][i+1] = columnNames;
 			data[i+1][0] = columnNames;
 
