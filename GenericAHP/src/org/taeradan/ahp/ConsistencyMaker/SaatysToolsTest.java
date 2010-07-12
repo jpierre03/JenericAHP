@@ -185,12 +185,10 @@ public class SaatysToolsTest {
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
 			for (int j = i + 1; j < myMatrix.getColumnDimension(); j++) {
 				System.out.println(
-						"Saisir la valeur pour les coordonnées "
-						+ " ( "
+						"Pondération entre Critère "
 						+ (i + 1)
-						+ " , "
-						+ (j + 1)
-						+ " )");
+						+ " et Critère  "
+						+ (j + 1));
 
 				expertsChoice = userInput.next();
 				final JEP myParser = new JEP();
