@@ -17,7 +17,7 @@ public class MyMatrix
 	/**
 	 *
 	 */
-	public MyMatrix(){
+	public MyMatrix() {
 		super(0, 0);
 	}
 
@@ -55,9 +55,9 @@ public class MyMatrix
 		return matrixValue;
 	}
 
-
 	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
-		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
+		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.
+				getColumnDimension());
 		MatrixValue temp = new MatrixValue();
 
 		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
@@ -69,5 +69,13 @@ public class MyMatrix
 			}
 		}
 		return finalMatrix;
+	}
+
+	public void printCriteriaAndMatrix(MyMatrix matrix/*, String[] criterias*/) {
+		MatrixValue matrixValue = new MatrixValue();
+		String stringToPrint;
+		System.out.println("\tCritère 1\tCritère 2\tCritère 3\tCritère 4\tCritère 5");
+		matrix.print(15, 3);
+
 	}
 }

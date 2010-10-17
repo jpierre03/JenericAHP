@@ -42,7 +42,7 @@ public class CriteriaDialog
 	/**
 	 *
 	 */
-	private final PrefMatrixTableModel guiPrefMatrix;
+	private final PairWiseMatrixTableModel guiPrefMatrix;
 
 	/** Creates new form CriteriaDialog
 	 * @param parent
@@ -52,10 +52,10 @@ public class CriteriaDialog
 	public CriteriaDialog(final java.awt.Frame parent, final boolean modal, final Criteria criteria) {
 		super(parent, modal);
 		this.criteria = criteria;
-		guiPrefMatrix = new PrefMatrixTableModel();
+		guiPrefMatrix = new PairWiseMatrixTableModel();
 		initTable();
 		initComponents();
-		guiPrefMatrix.addTableModelListener(new PrefMatrixChangeListener());
+		guiPrefMatrix.addTableModelListener(new PairWiseMatrixChangeListener());
 		jTextFieldId.setText(criteria.getIdentifier());
 		jTextFieldName.setText(criteria.getName());
 	}
@@ -224,7 +224,7 @@ public class CriteriaDialog
 	 *
 	 * @return
 	 */
-	public PrefMatrixTableModel getGuiPrefMatrix() {
+	public PairWiseMatrixTableModel getGuiPrefMatrix() {
 		return guiPrefMatrix;
 	}
 }

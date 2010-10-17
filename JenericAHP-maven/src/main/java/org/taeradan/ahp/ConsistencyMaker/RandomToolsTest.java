@@ -4,6 +4,7 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,13 +12,24 @@ import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 import java.util.Collection;
-import sun.awt.color.CMM.CSAccessor;
+import javax.swing.JFrame;
+import org.taeradan.ahp.gui.MyMatrixTable;
+import org.taeradan.ahp.gui.MyMatrixTableModel;
 
 /**
  *
  * @author Marianne
  */
 public class RandomToolsTest {
+
+	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix) throws HeadlessException {
+		// Show a frame with a table
+		JFrame maFenetre = new JFrame("Aperçu de la Matrice de Préférences");
+		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		maFenetre.setContentPane(maTable);
+		maFenetre.setSize(1000, 27 * myMatrix.getRowDimension());
+		maFenetre.setVisible(true);
+	}
 
 	/**
 	 *
@@ -35,18 +47,30 @@ public class RandomToolsTest {
 		String file;
 		Boolean tempBoolean;
 		String tempString;
+		MyMatrixTable maTable = new MyMatrixTable();
+		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
+		int iterationsCounter=0;
 
 		/*Choix du nom du fichier*/
-		System.out.println("Saisir le nom du fichier");
+		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
 		file = userInput.next();
 		file += ".csv";
 		CharSequenceAppender csa = new CharSequenceAppender(file);
 
 		/*Création de la matrice*/
 		myPreferenceMatrix = SaatysToolsTest.createMatrix();
-		myPreferenceMatrix.print(5, 2);
+	//	myPreferenceMatrix.print(5, 2);
 		priorityVector = PriorityVector.build(myPreferenceMatrix);
-		priorityVector.print(5, 3);
+	//	priorityVector.print(5, 3);
+
+		System.out.println("Merci de patienter.");
+
+		matrixTableModel.setMatrix(myPreferenceMatrix);
+		maTable.setModel(matrixTableModel);
+
+		/*Affichage de l'aperçu de la matrice*/
+		showMatrixTable(maTable, myPreferenceMatrix);
+
 
 		/*Ecriture de la matrice, du vecteur propre et du CR en tête du fichier*/
 
@@ -72,8 +96,11 @@ public class RandomToolsTest {
 
 		/*Tant que la matrice est incohérente*/
 		while (!consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector)) {
-			System.out.println("Matrice incohérente\n CR = " + consistencyChecker.getCrResult());
 
+			iterationsCounter++;
+
+			System.out.println("\n**********          Matrice incohérente" +"          **********\n CR = "+ consistencyChecker.getCrResult()+"\n");
+			
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
@@ -137,12 +164,16 @@ public class RandomToolsTest {
 			myPreferenceMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
-			myPreferenceMatrix.print(5, 5);
+		//	myPreferenceMatrix.print(5, 5);
+
+			//Affichage nouvelle matrice
+			matrixTableModel.setMatrix(myPreferenceMatrix);
+			maTable.setModel(matrixTableModel);
 
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myPreferenceMatrix);
-			priorityVector.print(5, 5);
+		//	priorityVector.print(5, 5);
 
 			//écriture du nouveau CR
 			tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
@@ -153,7 +184,7 @@ public class RandomToolsTest {
 			csa.close();
 		}
 
-		System.out.println("CR = " + consistencyChecker.getCrResult());
+		System.out.println("CR = " + consistencyChecker.getCrResult()+"\n");
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
@@ -173,6 +204,11 @@ public class RandomToolsTest {
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
+
+		//Ecriture du nombre d'iterations
+		tempString="Number of Iterations;"+iterationsCounter;
+		csa.append(tempString);
+
 		csa.close();
 
 	}

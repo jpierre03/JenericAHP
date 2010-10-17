@@ -170,7 +170,7 @@ public class SaatysTools {
 
 		matrixValue = preferenceMatrix.getMatrixValue(j, i);
 		matrixValue.setValue(0);
-		preferenceMatrix.setMatrixValue(matrixValue);
+		tempMatrix.setMatrixValue(matrixValue);
 
 
 		/*Recalculer vecteur priorité*/
