@@ -2,6 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/* This class aims to execute the random method, for a given matrix,
+ that you can fill through the console
+ */
 package org.taeradan.ahp.ConsistencyMaker;
 
 import java.awt.HeadlessException;
@@ -51,50 +55,58 @@ public class RandomToolsTest {
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 		int iterationsCounter=0;
 
-		/*Choix du nom du fichier*/
+		/*Select the file, in which simulation will be saved*/
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
 		file = userInput.next();
 		file += ".csv";
 		CharSequenceAppender csa = new CharSequenceAppender(file);
 
-		/*Création de la matrice*/
+		/*Matrix creation*/
 		myPreferenceMatrix = SaatysToolsTest.createMatrix();
 	//	myPreferenceMatrix.print(5, 2);
 		priorityVector = PriorityVector.build(myPreferenceMatrix);
 	//	priorityVector.print(5, 3);
 
+		/*WIP*/
 		System.out.println("Merci de patienter.");
 
 		matrixTableModel.setMatrix(myPreferenceMatrix);
 		maTable.setModel(matrixTableModel);
 
-		/*Affichage de l'aperçu de la matrice*/
+		/*Print a matrix view*/
 		showMatrixTable(maTable, myPreferenceMatrix);
 
 
-		/*Ecriture de la matrice, du vecteur propre et du CR en tête du fichier*/
+		/*Writing of :
+		 * the matrix
+		 * the eigenvector
+		 * the Consistency Ratio
+		 * in the header lines of the file
+		 */
 
-		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		//Writing of the matrix
 		csa.insertMatrix(myPreferenceMatrix);
 		csa.insertLineFeed();
+		
+		//Writing of the eigenvector
 		csa.insertMatrix(priorityVector);
 		csa.insertLineFeed();
 
-		//Ecriture du CR
+		//Writing of the CR
 		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getCrResult();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
 
-		//en-tête du tableau
+		//Writing of the headers of the table in which events are memorised
 		csa.append(
 				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		csa.insertLineFeed();
 
 		csa.close();
 
-		/*Tant que la matrice est incohérente*/
+		/*While they are inconsistencies*/
 		while (!consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector)) {
 
 			iterationsCounter++;
@@ -104,13 +116,13 @@ public class RandomToolsTest {
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
-			/*Ecriture des propositions de Saaty et du classement aléatoire*/
+			/*Writing of Saaty's propositions and of random ranking*/
 			RandomTools.writeRandomAndSaatysProposition(myPreferenceMatrix,
 														collectionOfNonSortedMatrixValues,
 														matrixValue,
 														priorityVector, file);
 
-			/*Ecrire la valeur que souhaite modifier l'expert*/
+			/*Writing of the value, which will be changed by the expert*/
 			csa = new CharSequenceAppender(file);
 			tempString = "" + matrixValue.getValue();
 			csa.append(tempString);
@@ -143,7 +155,7 @@ public class RandomToolsTest {
 				newValue = myParser.getValue();
 			}
 
-			/*Ecriture de la nouvelle valeur*/
+			/*Wrriting of the new value*/
 			tempString = "" + newValue;
 			csa.append(tempString);
 			csa.insertSeparator();
