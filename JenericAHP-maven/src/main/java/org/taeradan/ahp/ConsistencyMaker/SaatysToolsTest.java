@@ -55,25 +55,19 @@ public final class SaatysToolsTest {
 			MyMatrix myPreferenceMatrix,
 			String file) throws IOException {
 
-		Scanner userInput = new Scanner(System.in);
-		int isValueChosen = 0;
-		String expertsChoice;
-		MatrixValue matrixValue = new MatrixValue();
-		Iterator<MatrixValue> valueIterator;
-		MatrixValue matrixValueToPrint = new MatrixValue();
 		CharSequenceAppender csa = new CharSequenceAppender(file);
-		MyMatrix tempMatrix = new MyMatrix();
-		MyMatrix tempVector = new MyMatrix();
-		String tempString;
-		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+		MatrixValue matrixValue = new MatrixValue();
 		boolean isFound = false;
 		MatrixValue tempMatrixValue = new MatrixValue();
 
 
-		valueIterator = collectionOfSortedMatrixValues.iterator();
+		Iterator<MatrixValue> valueIterator = collectionOfSortedMatrixValues.
+				iterator();
 
+		int isValueChosen = 0;
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
+			MatrixValue matrixValueToPrint = new MatrixValue();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
 			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.
@@ -88,16 +82,15 @@ public final class SaatysToolsTest {
 							   + " )"
 							   + " ? O/N");
 
-			expertsChoice = userInput.nextLine();
+			Scanner userInput = new Scanner(System.in);
+			String expertsChoice = userInput.nextLine();
 
 			if (expertsChoice.equalsIgnoreCase("O")) {
 				isValueChosen = 1;
 			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
 				valueIterator = collectionOfSortedMatrixValues.iterator();
-
 			}
-
 		}
 
 
@@ -111,24 +104,24 @@ public final class SaatysToolsTest {
 
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
-			tempMatrix = tempMatrix.copyMyMatrix(myPreferenceMatrix);
+			MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
 			//calcul du vecteur propre associé à tempMatrix
-			tempVector = PriorityVector.build(tempMatrix);
+			MyMatrix tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
-			double BestFit = SaatysTools.calculateBestFit(tempMatrix, tempVector, tempMatrixValue.
-					getRow(), tempMatrixValue.getColumn());
+			double bestFit = SaatysTools.calculateBestFit(tempMatrix,
+														  tempVector,
+														  tempMatrixValue.getRow(),
+														  tempMatrixValue.
+					getColumn());
 			//écriture du best fit
-			tempString = "" + BestFit;
-			csa.append(tempString);
+			csa.append("" + bestFit);
 			csa.insertSeparator();
 
 			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
-			tempString = "" + ( tempMatrixValue.getRow() + 1 );
-			csa.append(tempString);
+			csa.append("" + ( tempMatrixValue.getRow() + 1 ));
 			csa.insertSeparator();
-			tempString = "" + ( tempMatrixValue.getColumn() + 1 );
-			csa.append(tempString);
+			csa.append("" + ( tempMatrixValue.getColumn() + 1 ));
 			csa.insertSeparator();
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
@@ -137,34 +130,31 @@ public final class SaatysToolsTest {
 			MatrixValue newMatrixValue = new MatrixValue();
 			newMatrixValue.setRow(tempMatrixValue.getRow());
 			newMatrixValue.setColumn(tempMatrixValue.getColumn());
-			newMatrixValue.setValue(BestFit);
+			newMatrixValue.setValue(bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
 			//remplacement de la valeur (j,i) par 1/BestFit
 			newMatrixValue.setRow(tempMatrixValue.getColumn());
 			newMatrixValue.setColumn(tempMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
+			newMatrixValue.setValue(1. / bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité
 			tempVector = PriorityVector.build(tempMatrix);
 			//calcul et écriture de la cohérence
-			boolean tempBoolean = consistencyChecker.isConsistent(tempMatrix,
-																  tempVector);
-			tempString = "" + consistencyChecker.getCrResult();
-			csa.append(tempString);
+			ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+			consistencyChecker.isConsistent(tempMatrix,
+											tempVector);
+			csa.append("" + consistencyChecker.getCrResult());
 			csa.insertSeparator();
 
 			if (matrixValue.equals(tempMatrixValue)) {
 				isFound = true;
 			}
-
 		}
-
 		csa.close();
 
 		return matrixValue;
-
 	}
 
 	public static MyMatrix createMatrix() {
@@ -232,7 +222,6 @@ public final class SaatysToolsTest {
 
 		MyMatrix priorityVector = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
-		SaatysTools saatysTools = new SaatysTools();
 		MyMatrix epsilon = new MyMatrix();
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		Scanner userInput = new Scanner(System.in);

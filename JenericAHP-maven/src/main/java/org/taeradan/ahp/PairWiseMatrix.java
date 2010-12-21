@@ -19,6 +19,7 @@ package org.taeradan.ahp;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -44,7 +45,8 @@ public class PairWiseMatrix
 	 * @param i
 	 * @param j
 	 */
-	public PairWiseMatrix(int i, int j) {
+	public PairWiseMatrix(int i,
+						  int j) {
 		super(i, j);
 	}
 
@@ -55,7 +57,8 @@ public class PairWiseMatrix
 	 */
 	public static PairWiseMatrix builder(final Element xmlPrefMatrix) {
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.
+				getChildren("row");
 		final int size = xmlRowsList.size();
 		PairWiseMatrix matrix = new PairWiseMatrix(size, size);
 		final JEP myParser = new JEP();
@@ -63,7 +66,8 @@ public class PairWiseMatrix
 //			Extraction of a row from the matrix
 			final Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
-			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
+			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren(
+					"elt");
 			for (int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
 				final Element xmlElt = xmlEltsList.get(j);
@@ -103,7 +107,8 @@ public class PairWiseMatrix
 	 * @param prefix
 	 * @return
 	 */
-	public static String toString(final MyMatrix matrix, final String prefix) {
+	public static String toString(final MyMatrix matrix,
+								  final String prefix) {
 		return makeString(matrix, prefix);
 	}
 
@@ -113,7 +118,8 @@ public class PairWiseMatrix
 	 * @param prefix
 	 * @return
 	 */
-	private static String makeString(final MyMatrix matrix, final String prefix) {
+	private static String makeString(final MyMatrix matrix,
+									 final String prefix) {
 		final StringBuilder string = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
@@ -148,7 +154,8 @@ public class PairWiseMatrix
 //			For each element in the row
 			for (int j = 0; j < getColumnDimension(); j++) {
 				final Element xmlElt = new Element("elt");
-				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).getValue()));
+				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).
+						getValue()));
 				xmlRow.addContent(xmlElt);
 			}
 			xmlPrefMatrix.addContent(xmlRow);
@@ -163,8 +170,10 @@ public class PairWiseMatrix
 	public void remove(final int index) {
 		final int newDimension = getRowDimension() - 1;
 		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
-		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
-										 + ", nouvelle=" + newDimension + "\n");
+		Logger.getAnonymousLogger().log(Level.INFO,
+										"Ancienne dimension ={0}, nouvelle={1}\n",
+										new Object[]{getRowDimension(),
+													 newDimension});
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -172,8 +181,13 @@ public class PairWiseMatrix
 				for (int j = 0; j < getColumnDimension(); j++) {
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
-						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
-														 + "newI=" + newI + "newJ=" + newJ + "\n");
+						Logger.getAnonymousLogger().log(Level.INFO,
+														"i={0}j={1}value={2}newI={3}newJ={4}\n",
+														new Object[]{i,
+																	 j,
+																	 newValue,
+																	 newI,
+																	 newJ});
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

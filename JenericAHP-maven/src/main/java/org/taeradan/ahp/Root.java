@@ -40,6 +40,7 @@ import org.jdom.output.XMLOutputter;
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
  * @author Yves Dubromelle
+ * @author jpierre03
  */
 public class Root {
 
@@ -81,14 +82,16 @@ public class Root {
 	/**
 	 * 
 	 */
-	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+	private final ConsistencyChecker consistencyChecker =
+									 new ConsistencyChecker();
 
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
 	 * @param inFile Path to the configuration file
 	 * @param indicatorPath
 	 */
-	public Root(final File inFile, final String indicatorPath) {
+	public Root(final File inFile,
+				final String indicatorPath) {
 		if (inFile == null) {
 			name = "";
 			matrixCrCr = new PairWiseMatrix();
@@ -115,29 +118,37 @@ public class Root {
 				}
 //				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
-				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren(
+				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.
+						getChildren(
 						"criteria");
 				@SuppressWarnings("unchecked")
-				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.
+						getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //				Verification that the number of criterias matches the size of the preference matrix
 				if (xmlCriteriasList.size() != xmlRowsList.size()) {
 					Logger.getAnonymousLogger().severe(
 							"Error : the number of criterias and the size of the preference matrix does not match !");
 				}
-				final Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
+				final Iterator<Element> itXmlCritList = xmlCriteriasList.
+						iterator();
 				while (itXmlCritList.hasNext()) {
 					final Element xmlCriteria = itXmlCritList.next();
 					criterias.add(new Criteria(xmlCriteria));
 				}
-			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().severe("File not found : " + inFile.getAbsolutePath());
+			}
+			catch (FileNotFoundException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE,
+												"File not found : {0}", inFile.
+						getAbsolutePath());
 				name = "unknow";
 				matrixCrCr = new PairWiseMatrix();
 				criterias = new ArrayList<Criteria>();
-			} catch (JDOMException e) {
+			}
+			catch (JDOMException e) {
 				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
 			}
 		}
@@ -149,7 +160,8 @@ public class Root {
 	 */
 	public void delCriteria(final Criteria crit) {
 		if (criterias.contains(crit)) {
-			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
+			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(
+					crit);
 			criterias.remove(crit);
 			matrixCrCr.remove(critIndex);
 		} else {
@@ -172,15 +184,15 @@ public class Root {
 	 */
 	public String toStringRecursive() {
 		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n" + matrixCrCr);
+		string.append("\n").append(matrixCrCr);
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
-			string.append("\n\t("
-						  + printFormat.format(vectorCrOg.get(index, 0))
-						  + ") "
-						  + itCriterias.next().toStringRecursive());
+			string.append("\n\t(");
+			string.append(printFormat.format(vectorCrOg.get(index, 0)));
+			string.append(") ");
+			string.append(itCriterias.next().toStringRecursive());
 			index++;
 		}
 		return string.toString();
@@ -211,10 +223,11 @@ public class Root {
 			string.append(this.toString());
 			final Iterator<Criteria> itCriterias = criterias.iterator();
 			while (itCriterias.hasNext()) {
-				string.append("\n\t" + itCriterias.next().
-						resultToString());
+				string.append("\n\t");
+				string.append(itCriterias.next().resultToString());
 			}
-			string.append("\nvectorAltOg=\n" + PairWiseMatrix.toString(vectorAltOg, null));
+			string.append("\nvectorAltOg=\n");
+			string.append(PairWiseMatrix.toString(vectorAltOg, null));
 		} else {
 			string.append("There is no result, please do a ranking first");
 		}
@@ -230,13 +243,16 @@ public class Root {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
 						   new Document(toXml(),
-										new DocType("root", getClass().getResource(
+										new DocType("root", getClass().
+					getResource(
 					"/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 //			Use a write format easily readable by a human
-			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
+			final XMLOutputter output = new XMLOutputter(
+					Format.getPrettyFormat());
 //			Write the output into the specified file
 			output.output(outXmlDocument, new FileOutputStream(outputFile));
-		} catch (IOException ex) {
+		}
+		catch (IOException ex) {
 			Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
@@ -246,7 +262,8 @@ public class Root {
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
 	 * @param alternatives
 	 */
-	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
+	public void calculateRanking(
+			final Collection<? extends Alternative> alternatives) {
 		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		final Iterator<Criteria> itCriterias = criterias.iterator();
@@ -265,7 +282,7 @@ public class Root {
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector(matrixAltCr.getRowDimension());
-		vectorAltOg.setMatrix(0,matrixAltCr.times(vectorCrOg));
+		vectorAltOg.setMatrix(0, matrixAltCr.times(vectorCrOg));
 //		Ranking of the alternatives with the MOg vector
 		double[][] sortedVectorAltOg = vectorAltOg.getArrayCopy();
 //		vectorAltOg.getVector().print(6, 4);
@@ -298,7 +315,7 @@ public class Root {
 		}
 		index = 0;
 		for (int i : ranks) {
-			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
+			( (Alternative) alternatives.toArray()[i] ).setRank(index + 1);
 			index++;
 		}
 		calculationOccured = true;

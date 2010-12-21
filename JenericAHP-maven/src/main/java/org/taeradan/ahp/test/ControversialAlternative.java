@@ -22,6 +22,7 @@ import org.taeradan.ahp.Alternative;
 /**
  *
  * @author Yves Dubromelle
+ * @author jpierre03
  */
 public class ControversialAlternative
 		implements Alternative {
@@ -37,11 +38,11 @@ public class ControversialAlternative
 	/**
 	 *
 	 */
-	public double valueIT;
+	private double valueIT;
 	/**
 	 *
 	 */
-	public double valueIV;
+	private double valueIV;
 
 	/**
 	 *
@@ -63,5 +64,33 @@ public class ControversialAlternative
 	@Override
 	public void setRank(final int rank) {
 		this.rank = rank;
+	}
+
+	/**
+	 * @return the valueIT
+	 */
+	public double getValueIT() {
+		return valueIT;
+	}
+
+	/**
+	 * @param valueIT the valueIT to set
+	 */
+	public void setValueIT(double valueIT) {
+		this.valueIT = valueIT;
+	}
+
+	/**
+	 * @return the valueIV
+	 */
+	public double getValueIV() {
+		return valueIV;
+	}
+
+	/**
+	 * @param valueIV the valueIV to set
+	 */
+	public void setValueIV(double valueIV) {
+		this.valueIV = valueIV;
 	}
 }

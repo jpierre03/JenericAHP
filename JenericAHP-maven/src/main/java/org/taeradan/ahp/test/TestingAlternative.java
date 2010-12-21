@@ -22,8 +22,10 @@ import org.taeradan.ahp.Alternative;
 /**
  *
  * @author Yves Dubromelle
+ * @author jpierre03
  */
-public class TestingAlternative implements Alternative {
+public class TestingAlternative
+		implements Alternative {
 
 	/**
 	 *
@@ -83,7 +85,16 @@ public class TestingAlternative implements Alternative {
 	 * @param valueI41
 	 * @param valueI51
 	 */
-	public TestingAlternative(String name, double valueI11, double valueI12, double valueI13, double valueI21, double valueI22, double valueI31, double valueI32, double valueI41, double valueI51) {
+	public TestingAlternative(String name,
+							  double valueI11,
+							  double valueI12,
+							  double valueI13,
+							  double valueI21,
+							  double valueI22,
+							  double valueI31,
+							  double valueI32,
+							  double valueI41,
+							  double valueI51) {
 		this.name = name;
 		this.valueI11 = valueI11;
 		this.valueI12 = valueI12;

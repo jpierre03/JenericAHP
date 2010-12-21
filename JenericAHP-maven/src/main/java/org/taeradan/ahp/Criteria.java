@@ -24,12 +24,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
 
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
  * @author Yves Dubromelle
+ * @author jpierre03
  */
 public class Criteria {
 
@@ -62,7 +64,8 @@ public class Criteria {
 	/**
 	 *
 	 */
-	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+	private final ConsistencyChecker consistencyChecker =
+									 new ConsistencyChecker();
 
 	/**
 	 * Creates a AHP Criteria from a JDOM Element
@@ -85,14 +88,17 @@ public class Criteria {
 
 //		Consistency verification
 		if (!consistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
-			Logger.getAnonymousLogger().severe("Is not consistent (criteria "
-											   + identifier + ")");
+			Logger.getAnonymousLogger().log(Level.SEVERE,
+											"Is not consistent (criteria {0})",
+											identifier);
 		}
 //		Initialisation of the Indicators
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
+		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.
+				getChildren("indicator");
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.
+				getChildren(
 				"row");
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
@@ -124,22 +130,32 @@ public class Criteria {
 				indicators.add(indConstruct.newInstance(xmlIndicator));
 
 //					System.out.println("\tCriteria.indicator="+indicators.get(i));
-			} catch (NoSuchMethodException e) {
-				Logger.getAnonymousLogger().severe("Error : no such constructor :"
-												   + e);
-			} catch (SecurityException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
-			} catch (ClassNotFoundException e) {
-				Logger.getAnonymousLogger().severe("Error : class " + indName
-												   + " not found :" + e);
-			} catch (InstantiationException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
-			} catch (IllegalAccessException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
-			} catch (IllegalArgumentException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
-			} catch (InvocationTargetException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+			}
+			catch (NoSuchMethodException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE,
+												"Error : no such constructor :{0}",
+												e);
+			}
+			catch (SecurityException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
+			}
+			catch (ClassNotFoundException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE,
+												"Error : class {0} not found :{1}",
+												new Object[]{indName,
+															 e});
+			}
+			catch (InstantiationException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
+			}
+			catch (IllegalAccessException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
+			}
+			catch (IllegalArgumentException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
+			}
+			catch (InvocationTargetException e) {
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			}
 		}
 	}
@@ -152,18 +168,21 @@ public class Criteria {
 	public PriorityVector calculateAlternativesPriorityVector(
 			final Collection<? extends Alternative> alternatives) {
 		PairWiseMatrix matrixAltInd;
-		matrixAltInd = new PairWiseMatrix(alternatives.size(), indicators.size());
+		matrixAltInd =
+		new PairWiseMatrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.next().
+			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.
+					next().
 					calculateAlternativesPriorityVector(alternatives));
 			index++;
 		}
 //		Calculation of the criteria's alternatives vector
 		vectorAltCr = new PriorityVector(matrixAltInd.getRowDimension());
-		vectorAltCr.setMatrix(matrixAltInd.getRowDimension() - 1, matrixAltInd.times(vectorIndCr));
+		vectorAltCr.setMatrix(matrixAltInd.getRowDimension() - 1, matrixAltInd.
+				times(vectorIndCr));
 		return vectorAltCr;
 	}
 
@@ -182,13 +201,15 @@ public class Criteria {
 	 */
 	public String toStringRecursive() {
 		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n" + matrixIndInd.toString("\t"));
+		string.append("\n").append(matrixIndInd.toString("\t"));
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t(" + printFormat.format(vectorIndCr.get(index, 0))
-						  + ") " + itIndicators.next());
+			string.append("\n\t\t(");
+			string.append(printFormat.format(vectorIndCr.get(index, 0)));
+			string.append(") ");
+			string.append(itIndicators.next());
 			index++;
 		}
 		return string.toString();
@@ -218,11 +239,11 @@ public class Criteria {
 		final StringBuilder string = new StringBuilder(this.toString());
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t" + itIndicators.next().
-					resultToString());
+			string.append("\n\t\t");
+			string.append(itIndicators.next().resultToString());
 		}
-		string.append("\n\tvectorAltCr=\n"
-					  + PairWiseMatrix.toString(vectorAltCr, "\t"));
+		string.append("\n\tvectorAltCr=\n");
+		string.append(PairWiseMatrix.toString(vectorAltCr, "\t"));
 		return string.toString();
 	}
 
