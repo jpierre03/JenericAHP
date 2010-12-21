@@ -11,27 +11,24 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TreeMap;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 
 /**
  *
  * @author Marianne
+ * @author jpierre03
  */
 public class RandomTools {
 
 	public static MatrixValue getValueToModifiyByRanking(
 			Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
 
-
 		Scanner sc = new Scanner(System.in);
 		int isValueChosen = 0;
 		String expertsChoice;
 		MatrixValue matrixValue = new MatrixValue();
 		Iterator<MatrixValue> valueIterator;
-
-
 
 		/*Boucle pour que l'utilisateur désigne la valeur à modifier*/
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
@@ -54,9 +51,7 @@ public class RandomTools {
 				System.out.println("Retour en haut du classement");
 				valueIterator = collectionOfNonSortedMatrixValues.iterator();
 			}
-
 		}
-
 
 		return matrixValue;
 	}
@@ -107,7 +102,6 @@ public class RandomTools {
 		MatrixValue saatysMatrixValue = new MatrixValue();
 		MatrixValue randomsMatrixValue = new MatrixValue();
 
-
 		/*Dresser classement de Saaty*/
 		epsilon = SaatysTools.calculateEpsilonMatrix(myPreferenceMatrix,
 													 priorityVector);
@@ -118,7 +112,6 @@ public class RandomTools {
 		/*Parcours simultané des 2 classement tant que la valeur à modifier n'est
 		pas trouvée dans le classement aléatoire*/
 
-
 		//iterateur pour parcourir le classement de Saaty
 		saatysIterator = collectionOfSortedMatrixValues.iterator();
 		//iterateur pour parcourir le classement aléatoire
@@ -126,7 +119,6 @@ public class RandomTools {
 
 		/*parcours de la liste pour l'écriture dans le fichier*/
 		while ((randomsIterator.hasNext()) && (!isFound)) {
-
 			// PARTIE SAATY
 
 			saatysMatrixValue = saatysIterator.next();
@@ -174,7 +166,6 @@ public class RandomTools {
 			tempString = "" + consistencyChecker.getCrResult();
 			csa.append(tempString);
 			csa.insertSeparator();
-
 
 			//PARTIE ALEATOIRE
 
@@ -230,16 +221,10 @@ public class RandomTools {
 			csa.append(tempString);
 			csa.insertSeparator();
 
-
 			if (chosenValueToBeModified.equals(randomsMatrixValue)) {
 				isFound = true;
 			}
-
-
-
 		}
-
 		csa.close();
-
 	}
 }

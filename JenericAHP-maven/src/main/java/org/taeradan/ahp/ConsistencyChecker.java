@@ -18,20 +18,23 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *
  * @author Yves Dubromelle
+ * @author jpierre03
  */
 public class ConsistencyChecker {
 
 	/**
 	 *
 	 */
-	private static final double[] randomIndex = {0.00, 0.00, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41,
-												 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59};
+	private static final double[] randomIndex = {0.00, 0.00, 0.58, 0.90, 1.12,
+												 1.24, 1.32, 1.41,
+												 1.45, 1.49, 1.51, 1.48, 1.56,
+												 1.57, 1.59};
 	/**
 	 * 
 	 */
@@ -47,7 +50,6 @@ public class ConsistencyChecker {
 //									   final PriorityVector prioVector) {
 //		return isConsistent(prefMatrix, prioVector);
 //	}
-
 	/**
 	 *
 	 * @param prefMatrix
@@ -55,7 +57,7 @@ public class ConsistencyChecker {
 	 * @return
 	 */
 	public boolean isConsistent(final Matrix prefMatrix,
-									   final Matrix prioVector) {
+								final Matrix prioVector) {
 		boolean consistent = false;
 
 		double[] lambdas;
@@ -65,7 +67,7 @@ public class ConsistencyChecker {
 			if (dimension == 1) {
 				consistent = true;
 			} else if (dimension == 2) {
-				if (prefMatrix.get(0, 1) == (1 / prefMatrix.get(1, 0))) {
+				if (prefMatrix.get(0, 1) == ( 1 / prefMatrix.get(1, 0) )) {
 					consistent = true;
 				} else {
 					consistent = false;
@@ -75,7 +77,7 @@ public class ConsistencyChecker {
 				for (int i = 0; i < dimension; i++) {
 					double sum = 0;
 					for (int j = 0; j < dimension; j++) {
-						sum = sum + prefMatrix.get(i, j) * prioVector.get(j, 0);
+						sum += prefMatrix.get(i, j) * prioVector.get(j, 0);
 					}
 					lambdas[i] = sum / prioVector.get(i, 0);
 				}
@@ -85,14 +87,15 @@ public class ConsistencyChecker {
 						lambdaMax = lambdas[index];
 					}
 				}
-				final double CI = (lambdaMax - dimension) / (dimension - 1);
+				final double CI = ( lambdaMax - dimension ) / ( dimension - 1 );
 				consistenceCrit = CI / randomIndex[dimension - 1];
 				if (consistenceCrit < 0.1) {
 					consistent = true;
 				}
 			} else {
-				Logger.getAnonymousLogger().severe("Preference matrix and priority vector are too wide (15 max) or empty !!"
-												   + dimension);
+				Logger.getAnonymousLogger().log(Level.SEVERE,
+												"Preference matrix and priority vector are too wide (15 max) or empty !!{0}",
+												dimension);
 			}
 		} else {
 			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.

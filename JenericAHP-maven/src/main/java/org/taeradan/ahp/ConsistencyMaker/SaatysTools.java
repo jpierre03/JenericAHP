@@ -4,21 +4,16 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.TreeMap;
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 import org.taeradan.ahp.PriorityVector;
-import java.lang.Math;
-
 
 /**
  *
  * @author Marianne
+ * @author jpierre03
  */
 /*
  * This class provides 2 tools of the Saaty's method :
@@ -35,7 +30,8 @@ public class SaatysTools {
 
 		int rows = epsilon.getRowDimension();
 		int columns = epsilon.getColumnDimension();
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap =
+									 new TreeMap<Double, MatrixValue>();
 
 
 
@@ -51,7 +47,8 @@ public class SaatysTools {
 
 
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
+		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.
+				hasNext();) {
 			MatrixValue matrixValue = valueIterator.next();
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
@@ -85,7 +82,8 @@ public class SaatysTools {
 	 */
 	public static MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap =
+									 new TreeMap<Double, MatrixValue>();
 		MatrixValue tempMatrixValue = new MatrixValue();
 		myTreeMap = createTreeMap(epsilon);
 		tempMatrixValue = myTreeMap.pollLastEntry().getValue();
@@ -187,13 +185,15 @@ public class SaatysTools {
 
 
 		MatrixValue matrixValue = new MatrixValue();
-		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
+		Collection<MatrixValue> collectionOfSortedMatrixValues =
+								new ArrayList<MatrixValue>();
 		boolean isPresent = false;
 
 
 
 		/*Creation du TreeMap à partir de la matrice epsilon*/
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap =
+									 new TreeMap<Double, MatrixValue>();
 		myTreeMap = createTreeMap(epsilon);
 
 
@@ -218,7 +218,8 @@ public class SaatysTools {
 
 			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
 			for (MatrixValue matrixValue1 : collectionOfSortedMatrixValues) {
-				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
+				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue())
+					< 0.000000001) {
 					isPresent = true;
 				}
 			}
@@ -236,15 +237,19 @@ public class SaatysTools {
 		return collectionOfSortedMatrixValues;
 	}
 
-	public static int getLocationInRank(Collection<MatrixValue> collectionOfSortedMatrixValues,
-										int i, int j) {
+	public static int getLocationInRank(
+			Collection<MatrixValue> collectionOfSortedMatrixValues,
+										int i,
+										int j) {
 		int cptr = 0;
 		MatrixValue matrixValue = new MatrixValue();
 		boolean isFound = false;
-		Iterator<MatrixValue> valueIterator = collectionOfSortedMatrixValues.iterator();
-		while ((valueIterator.hasNext()) && (!isFound)) {
+		Iterator<MatrixValue> valueIterator = collectionOfSortedMatrixValues.
+				iterator();
+		while (( valueIterator.hasNext() ) && ( !isFound )) {
 			matrixValue = valueIterator.next();
-			if ((i == matrixValue.getRow()) && (j == matrixValue.getColumn())) {
+			if (( i == matrixValue.getRow() )
+				&& ( j == matrixValue.getColumn() )) {
 				isFound = true;
 			}
 			cptr++;

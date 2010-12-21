@@ -26,7 +26,8 @@ public class MyMatrix
 	 * @param i
 	 * @param j
 	 */
-	public MyMatrix(int i, int j) {
+	public MyMatrix(int i,
+					int j) {
 		super(i, j);
 	}
 
@@ -46,7 +47,8 @@ public class MyMatrix
 	 * @param j
 	 * @return
 	 */
-	public MatrixValue getMatrixValue(int i, int j) {
+	public MatrixValue getMatrixValue(int i,
+									  int j) {
 		MatrixValue matrixValue = new MatrixValue();
 		matrixValue.setValue(super.get(i, j));
 		matrixValue.setRow(i);
@@ -72,10 +74,8 @@ public class MyMatrix
 	}
 
 	public void printCriteriaAndMatrix(MyMatrix matrix/*, String[] criterias*/) {
-		MatrixValue matrixValue = new MatrixValue();
-		String stringToPrint;
-		System.out.println("\tCritère 1\tCritère 2\tCritère 3\tCritère 4\tCritère 5");
+		System.out.println(
+				"\tCritère 1\tCritère 2\tCritère 3\tCritère 4\tCritère 5");
 		matrix.print(15, 3);
-
 	}
 }

@@ -27,42 +27,12 @@ public class MyMatrixTest {
 			for (int j = 0; j < COLUMN; j++) {
 				MatrixValue matrixValue = new MatrixValue();
 //				matrixValue.setValue((i + 1) * (j + 1));
-				matrixValue.setValue((i - j) * (j + i));
+				matrixValue.setValue(( i - j ) * ( j + i ));
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
 
 				myMatrix.setMatrixValue(matrixValue);
 			}
 		}
-
-		/*Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
-		for (int i = 0; i < ROWS; i++) {
-		for (int j = 0; j < COLUMN; j++) {
-		if (j > i) {
-		matrixValues.add(myMatrix.getMatrixValue(i, j));
-		}
-		}
-		}
-
-		System.out.print(matrixValues);
-
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
-		MatrixValue matrixValue = valueIterator.next();
-		myTreeMap.put(matrixValue.getValue(), matrixValue);
-		}
-
-		System.out.println("-------------");
-
-		while (!myTreeMap.isEmpty()) {
-		MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
-		System.out.println(matrixValue.getValue()
-		+ "( "
-		+ matrixValue.getRow()
-		+ " , "
-		+ matrixValue.getColumn()
-		+ " )");
-		}*/
 	}
 }

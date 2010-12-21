@@ -135,7 +135,7 @@ public class RandomToolsTest {
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
 
-			while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
+			while (!SaatysToolsTest.isInSaatyScale(newValue)) {
 				System.out.println(
 						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
