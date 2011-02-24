@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
 
@@ -85,8 +86,9 @@ public class Criteria {
 
 //		Consistency verification
 		if (!consistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
-			Logger.getAnonymousLogger().severe("Is not consistent (criteria "
-											   + identifier + ")");
+			Logger.getAnonymousLogger().log(Level.SEVERE,
+											"Is not consistent (criteria {0})",
+											identifier);
 		}
 //		Initialisation of the Indicators
 		@SuppressWarnings("unchecked")
@@ -125,21 +127,20 @@ public class Criteria {
 
 //					System.out.println("\tCriteria.indicator="+indicators.get(i));
 			} catch (NoSuchMethodException e) {
-				Logger.getAnonymousLogger().severe("Error : no such constructor :"
-												   + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : no such constructor :{0}", e);
 			} catch (SecurityException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (ClassNotFoundException e) {
-				Logger.getAnonymousLogger().severe("Error : class " + indName
-												   + " not found :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : class {0} not found :{1}",
+												new Object[]{indName, e});
 			} catch (InstantiationException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (IllegalAccessException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (IllegalArgumentException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (InvocationTargetException e) {
-				Logger.getAnonymousLogger().severe("Error :" + e);
+				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			}
 		}
 	}
@@ -182,13 +183,15 @@ public class Criteria {
 	 */
 	public String toStringRecursive() {
 		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n" + matrixIndInd.toString("\t"));
+		string.append("\n").append(matrixIndInd.toString("\t"));
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t(" + printFormat.format(vectorIndCr.get(index, 0))
-						  + ") " + itIndicators.next());
+			string.append("\n\t\t(").
+					append(printFormat.format(vectorIndCr.get(index, 0))).
+					append(") ").
+					append(itIndicators.next());
 			index++;
 		}
 		return string.toString();
@@ -218,11 +221,9 @@ public class Criteria {
 		final StringBuilder string = new StringBuilder(this.toString());
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t" + itIndicators.next().
-					resultToString());
+			string.append("\n\t\t").append(itIndicators.next().resultToString());
 		}
-		string.append("\n\tvectorAltCr=\n"
-					  + PairWiseMatrix.toString(vectorAltCr, "\t"));
+		string.append("\n\tvectorAltCr=\n").append(PairWiseMatrix.toString(vectorAltCr, "\t"));
 		return string.toString();
 	}
 

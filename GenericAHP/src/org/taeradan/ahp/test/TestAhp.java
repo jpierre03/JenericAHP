@@ -29,43 +29,42 @@ import org.taeradan.ahp.Root;
  */
 public class TestAhp {
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
-        File aFile = new File(resource.getFile());
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
+		File aFile = new File(resource.getFile());
 
-        final Root root = new Root(aFile,
-                Root.indicatorPath);
+		final Root root = new Root(aFile, Root.indicatorPath);
 //		System.out.println(root.toStringRecursive());
-        final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
-        for (int index = 0; index < 2; index++) {
-            alts.add(new TestingAlternative("Alternative 1-"+index, 3, 3, 3, 3, 3, 3, 3, 3, 3));
-            alts.add(new TestingAlternative("Alternative 2-"+index, 1, 1, 1, 1, 1, 1, 1, 1, 1));
-            alts.add(new TestingAlternative("Alternative 3-"+index, 4, 4, 4, 4, 4, 4, 4, 4, 4));
-            alts.add(new TestingAlternative("Alternative 4-"+index, 2, 2, 2, 2, 2, 2, 2, 2, 2));
-            alts.add(new TestingAlternative("Alternative 5-"+index, 5, 5, 5, 5, 5, 5, 5, 5, 5));
-        }
+		final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
+		for (int index = 0; index < 2; index++) {
+			alts.add(new TestingAlternative("Alternative 1-" + index, 3, 3, 3, 3, 3, 3, 3, 3, 3));
+			alts.add(new TestingAlternative("Alternative 2-" + index, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+			alts.add(new TestingAlternative("Alternative 3-" + index, 4, 4, 4, 4, 4, 4, 4, 4, 4));
+			alts.add(new TestingAlternative("Alternative 4-" + index, 2, 2, 2, 2, 2, 2, 2, 2, 2));
+			alts.add(new TestingAlternative("Alternative 5-" + index, 5, 5, 5, 5, 5, 5, 5, 5, 5));
+		}
 //		alts.add(new TestingAlternative("Alternative 1", 3, 5, 3, 1 / 2., 3, 1200, 1, 100, 1));
 //		alts.add(new TestingAlternative("Alternative 2", 3, 5, 3, 1 / 2., 1, 8638, 1, 250, 1));
 //		alts.add(new TestingAlternative("Alternative 3", 5, 5, 5, 2 / 3., 3, 1800, 1, 30, 1));
 //		alts.add(new TestingAlternative("Alternative 4", 3, 3, 3, 3 / 4., 3, 7136, 1, 300, 1));
-        System.out.println("Calculate Ranking =============");
-        root.calculateRanking(alts);
+		System.out.println("Calculate Ranking =============");
+		root.calculateRanking(alts);
 
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		root.calculateRanking(alts);
-        System.out.println(
-                "======================================================");
+		System.out.println(
+				"======================================================");
 //		System.out.println(root.resultToString());
-        System.out.println("Valeurs de \"rank\" pour chaque alternative:");
-        for (TestingAlternative currentAlt : alts) {
-            System.out.println(currentAlt.name + " = " + currentAlt.getRank());
-        }
-    }
+		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
+		for (TestingAlternative currentAlt : alts) {
+			System.out.println(currentAlt.name + " = " + currentAlt.getRank());
+		}
+	}
 
-    private TestAhp() {
-    }
+	private TestAhp() {
+	}
 }

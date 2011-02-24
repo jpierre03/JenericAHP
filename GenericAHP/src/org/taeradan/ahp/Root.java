@@ -39,6 +39,7 @@ import org.jdom.output.XMLOutputter;
 
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
+ * @author jpierre03
  * @author Yves Dubromelle
  */
 public class Root {
@@ -48,40 +49,17 @@ public class Root {
 	 */
 	public static String indicatorPath = "org.taeradan.ahp.test.ind.";
 //	AHP configuration attributes
-	/**
-	 *
-	 */
 	private String name;
-	/**
-	 *
-	 */
 	transient private PairWiseMatrix matrixCrCr;
-	/**
-	 *
-	 */
 	transient private PriorityVector vectorCrOg;
-	/**
-	 *
-	 */
 	transient private Collection<Criteria> criterias;
 //	AHP execution attributes
-	/**
-	 *
-	 */
 	transient private PriorityVector vectorAltOg;
-	/**
-	 *
-	 */
 	transient private Matrix matrixAltCr;
 //	Execution control attributes
-	/**
-	 *
-	 */
 	transient private boolean calculationOccured = false;
-	/**
-	 * 
-	 */
 	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+	private static boolean DEBUG = false;
 
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
@@ -131,7 +109,8 @@ public class Root {
 					criterias.add(new Criteria(xmlCriteria));
 				}
 			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().severe("File not found : " + inFile.getAbsolutePath());
+				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.
+						getAbsolutePath());
 				name = "unknow";
 				matrixCrCr = new PairWiseMatrix();
 				criterias = new ArrayList<Criteria>();
@@ -172,15 +151,15 @@ public class Root {
 	 */
 	public String toStringRecursive() {
 		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n" + matrixCrCr);
+		string.append("\n").append(matrixCrCr);
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
 		while (itCriterias.hasNext()) {
-			string.append("\n\t("
-						  + printFormat.format(vectorCrOg.get(index, 0))
-						  + ") "
-						  + itCriterias.next().toStringRecursive());
+			string.append("\n\t(").
+					append(printFormat.format(vectorCrOg.get(index, 0))).
+					append(") ").
+					append(itCriterias.next().toStringRecursive());
 			index++;
 		}
 		return string.toString();
@@ -211,10 +190,9 @@ public class Root {
 			string.append(this.toString());
 			final Iterator<Criteria> itCriterias = criterias.iterator();
 			while (itCriterias.hasNext()) {
-				string.append("\n\t" + itCriterias.next().
-						resultToString());
+				string.append("\n\t").append(itCriterias.next().resultToString());
 			}
-			string.append("\nvectorAltOg=\n" + PairWiseMatrix.toString(vectorAltOg, null));
+			string.append("\nvectorAltOg=\n").append(PairWiseMatrix.toString(vectorAltOg, null));
 		} else {
 			string.append("There is no result, please do a ranking first");
 		}
@@ -244,42 +222,45 @@ public class Root {
 	/**
 	 * Root method of the AHP execution.
 	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
-	 * @param alternatives
+	 * @param choices
 	 */
-	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
+	public void calculateRanking(final Collection<? extends Alternative> choices) {
+		matrixAltCr = new Matrix(choices.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		int index = 0;
-		System.out.println("alternatives = " + alternatives.size());
-		System.out.println("criterias = " + criterias.size());
+		if (DEBUG) {
+			System.out.println("alternatives = " + choices.size());
+			System.out.println("criterias = " + criterias.size());
+		}
 		while (itCriterias.hasNext()) {
-			PriorityVector temp = itCriterias.next().
-					calculateAlternativesPriorityVector(alternatives);
-			System.out.println("criteria n= " + index);
-			System.out.println("alt vector n= " + temp.getRowDimension());
-			temp.print(5, 4);
-			matrixAltCr.print(5, 4);
-			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, temp);
+			PriorityVector temp = itCriterias.next().calculateAlternativesPriorityVector(choices);
+			if (DEBUG) {
+				System.out.println("criteria n= " + index);
+				System.out.println("alt vector n= " + temp.getRowDimension());
+				temp.print(5, 4);
+				matrixAltCr.print(5, 4);
+			}
+			matrixAltCr.setMatrix(0, choices.size() - 1, index, index, temp);
 			index++;
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAltOg = new PriorityVector(matrixAltCr.getRowDimension());
-		vectorAltOg.setMatrix(0,matrixAltCr.times(vectorCrOg));
+		vectorAltOg.setMatrix(0, matrixAltCr.times(vectorCrOg));
 //		Ranking of the alternatives with the MOg vector
 		double[][] sortedVectorAltOg = vectorAltOg.getArrayCopy();
 //		vectorAltOg.getVector().print(6, 4);
-		int[] originIndexes = new int[alternatives.size()];
+		int[] originIndexes = new int[choices.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
 		}
 		int minIndex;
 		double tmpValue;
 		int tmpIndex;
-		int[] ranks = new int[alternatives.size()];
-		for (int i = 0; i < alternatives.size(); i++) {
+		int[] ranks = new int[choices.size()];
+		for (int i = 0; i < choices.size(); i++) {
 			minIndex = i;
-			for (int j = i + 1; j < alternatives.size(); j++) {
+			for (int j = i + 1; j < choices.size(); j++) {
 				if (sortedVectorAltOg[j][0] < sortedVectorAltOg[minIndex][0]) {
 					minIndex = j;
 				}
@@ -292,13 +273,13 @@ public class Root {
 //			vector[i] <-> vector[minIndex]
 			sortedVectorAltOg[i][0] = sortedVectorAltOg[minIndex][0];
 			sortedVectorAltOg[minIndex][0] = tmpValue;
-			ranks[alternatives.size() - i - 1] = originIndexes[i];
+			ranks[choices.size() - i - 1] = originIndexes[i];
 //			System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
 //							   + sortedVectorAltOg[i][0]);
 		}
 		index = 0;
 		for (int i : ranks) {
-			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
+			((Alternative) choices.toArray()[i]).setRank(index + 1);
 			index++;
 		}
 		calculationOccured = true;
