@@ -17,29 +17,32 @@ public class CharSequenceAppender {
 		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
 	}
 
-	/*
+	/**
 	 * Write an object in the opened file
+	 * @param object
 	 */
 	public void append(CharSequence object) {
 		output.append(object);
 	}
 
-	/*
+	/**
 	 * Write a linefeed in the opened file
 	 */
 	public void insertLineFeed() {
 		output.append("\n");
 	}
 
-	/*
+	/**
 	 * Write a separator separator in the opened file
 	 */
 	public void insertSeparator() {
 		output.append(";");
 	}
 
-	/*
+
+	/**
 	 * Write a matrix in the opened file
+	 * @param myMatrix
 	 */
 	public void insertMatrix(MyMatrix myMatrix) {
 		String chaine = "";

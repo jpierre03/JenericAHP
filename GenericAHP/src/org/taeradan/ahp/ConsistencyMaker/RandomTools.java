@@ -21,11 +21,18 @@ import org.taeradan.ahp.PriorityVector;
  */
 public class RandomTools {
 
+
+	/**
+	 * This method returns the value which will be modified by the expert
+	 * @param collectionOfNonSortedMatrixValues
+	 * @return
+	 */
 	public static MatrixValue getValueToModifiyByRanking(
 			Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
 
 
 		Scanner sc = new Scanner(System.in);
+		// boolean
 		int isValueChosen = 0;
 		String expertsChoice;
 		MatrixValue matrixValue = new MatrixValue();
@@ -33,7 +40,9 @@ public class RandomTools {
 
 
 
-		/*Boucle pour que l'utilisateur désigne la valeur à modifier*/
+		/* While loop which proposes a random ranking of MatrixValue
+		 * while the expert hasn't chosen the value he wants to modify
+		 */
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
 
 		while (isValueChosen == 0) {
@@ -60,7 +69,11 @@ public class RandomTools {
 
 		return matrixValue;
 	}
-
+/**
+ * Build randomly a rank of MatrixValue from a MyMatrix
+ * @param myPreferenceMatrix
+ * @return
+ */
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix) {
 
 		MatrixValue matrixValue = new MatrixValue();
@@ -87,6 +100,16 @@ public class RandomTools {
 		return collectionOfNonSortedMatrixValues;
 	}
 
+	/**
+	 * Write the rank which is printed on screen (Random rank), in a csv file
+	 * Write also Saaty's method propositions
+	 * @param myPreferenceMatrix
+	 * @param collectionOfNonSortedMatrixValues
+	 * @param chosenValueToBeModified
+	 * @param priorityVector
+	 * @param file
+	 * @throws IOException
+	 */
 	public static void writeRandomAndSaatysProposition(MyMatrix myPreferenceMatrix,
 													   Collection<MatrixValue> collectionOfNonSortedMatrixValues,
 													   MatrixValue chosenValueToBeModified,
@@ -108,38 +131,38 @@ public class RandomTools {
 		MatrixValue randomsMatrixValue = new MatrixValue();
 
 
-		/*Dresser classement de Saaty*/
+		/*Build Saaty's ranking*/
 		epsilon = SaatysTools.calculateEpsilonMatrix(myPreferenceMatrix,
 													 priorityVector);
 		collectionOfSortedMatrixValues = SaatysTools.getRank(myPreferenceMatrix,
 															 priorityVector,
 															 epsilon);
 
-		/*Parcours simultané des 2 classement tant que la valeur à modifier n'est
-		pas trouvée dans le classement aléatoire*/
+		/*Simultaneous reading of the 2 classifications as the value to edit is
+not found in the random ranking*/
 
 
-		//iterateur pour parcourir le classement de Saaty
+		//iterator to read Saaty's ranking
 		saatysIterator = collectionOfSortedMatrixValues.iterator();
-		//iterateur pour parcourir le classement aléatoire
+		//iterator to read random ranking
 		randomsIterator = collectionOfNonSortedMatrixValues.iterator();
 
-		/*parcours de la liste pour l'écriture dans le fichier*/
+		/*reading of the list to write in the csv file*/
 		while ((randomsIterator.hasNext()) && (!isFound)) {
 
-			// PARTIE SAATY
+			// SAATY'S PART
 
 			saatysMatrixValue = saatysIterator.next();
 			csa.insertLineFeed();
-			/*écriture du best fit associé à la valeur proposée*/
-			//copie de la matrice initiale
+			/*Writing of de the best fit related to the proposed value*/
+			//Copy of the original matrix
 			saatysMatrix = saatysMatrix.copyMyMatrix(myPreferenceMatrix);
-			//calcul du vecteur propre associé à saatyMatrix
+			//saatysMatrix's eigenvector calculation
 			saatysVector = PriorityVector.build(saatysMatrix);
-			//calcul du best fit
+			//best fit calculation
 			double BestFit = SaatysTools.calculateBestFit(saatysMatrix, saatysVector, saatysMatrixValue.
 					getRow(), saatysMatrixValue.getColumn());
-			//écriture du best fit
+			//best fit writing
 			tempString = "" + BestFit;
 			csa.append(tempString);
 			csa.insertSeparator();
