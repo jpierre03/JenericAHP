@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 
 /**
  * @author Marianne
+ * This class allows to insert separators (used in csv files) or datas in a file
  */
 public class CharSequenceAppender {
 
@@ -16,18 +17,30 @@ public class CharSequenceAppender {
 		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
 	}
 
+	/*
+	 * Write an object in the opened file
+	 */
 	public void append(CharSequence object) {
 		output.append(object);
 	}
 
+	/*
+	 * Write a linefeed in the opened file
+	 */
 	public void insertLineFeed() {
 		output.append("\n");
 	}
 
+	/*
+	 * Write a separator separator in the opened file
+	 */
 	public void insertSeparator() {
 		output.append(";");
 	}
 
+	/*
+	 * Write a matrix in the opened file
+	 */
 	public void insertMatrix(MyMatrix myMatrix) {
 		String chaine = "";
 
