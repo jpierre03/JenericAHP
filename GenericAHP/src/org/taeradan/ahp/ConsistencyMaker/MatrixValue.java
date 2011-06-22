@@ -24,7 +24,12 @@ public class MatrixValue {
 	 */
 	public MatrixValue() {
 	}
-
+	/*
+	 * méthode qui arrondi la valeur
+	 */
+	private double round(double what, int howmuch) {
+		return (double)( (int)(what * Math.pow(10,howmuch) + .5) ) / Math.pow(10,howmuch);
+	}
 	/**
 	 * @return the value
 	 */
@@ -36,7 +41,8 @@ public class MatrixValue {
 	 * @param value the value to set
 	 */
 	public void setValue(double value) {
-		this.value = value;
+		if(value<1)this.value = round(value,4);
+		else this.value = round(value,0);
 	}
 
 	/**

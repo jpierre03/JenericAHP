@@ -49,36 +49,47 @@ public class MyMatrixTableModel
 		}
 		return aLegend;
 	}
+	/**
+	* Retourne vrai si la cellule est éditable : celle-ci sera donc éditable
+	* @return boolean
+	*/
+	@Override
+	public boolean isCellEditable(int row, int col){
+		if(row>0&&col>row){
+			setValueAt("", row, col);
+			return true;
+		}
+		else return false;
+		
+	}
 
-	public void setMatrix(MyMatrix matrix) {
+	public void setMatrix(MyMatrix matrix,boolean testPb) {
 		this.matrix = matrix;
-
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
-
-			String columnNames = "Critere" + (i+1);
-			data[0][i+1] = columnNames;
-			data[i+1][0] = columnNames;
+			//on cree les critère en fonction du pb choisi
+			if( testPb == true){
+				String columnNames[] = {"Temps de transport", "Coût", "Confort" , "Pollution",
+				"Qualité de service","Sécurité"};
+				data[0][i+1] = columnNames[i];
+				data[i+1][0] = columnNames[i];
+			}
+			else{
+				String columnNames[] = {"Prix", "Sécurité", "Pollution" , "Design",
+				"Durée de vie", "Taille"};
+				data[0][i+1] = columnNames[i];
+				data[i+1][0] = columnNames[i];
+			}
+			//String columnNames = "Critere" + (i+1);
+			//data[0][i+1] = columnNames[i];
+			//data[i+1][0] = columnNames;
 
 			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 				data[i + 1][j + 1] = matrix.getMatrixValue(i, j);
 			}
 		}
 		setDataVector(data, new String [matrix.getColumnDimension() + 1]);
-	}
-
-//	We override this method to make editable only half of the matrix.
-//	The other half will be filled automatically by an event listener on the table.
-	@Override
-	public boolean isCellEditable(final int row, final int column) {
-		//Define wich cells are editable
-//		boolean editable = true;
-//		if (column >= row) {
-//			editable = false;
-//		}
-//		return editable;
-		return false;
 	}
 
 	/**

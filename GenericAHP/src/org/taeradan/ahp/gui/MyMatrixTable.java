@@ -49,7 +49,8 @@ public class MyMatrixTable
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 
-		matrixTableModel.setMatrix(aMatrix);
+		//Attention true si c'est le 1er pb false si deuxième
+		matrixTableModel.setMatrix(aMatrix, true);
 
 		maTable.setModel(matrixTableModel);
 

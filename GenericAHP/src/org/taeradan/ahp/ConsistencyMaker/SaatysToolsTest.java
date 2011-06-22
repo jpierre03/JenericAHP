@@ -264,7 +264,8 @@ public class SaatysToolsTest {
 		System.out.println("Merci de patienter");
 
 		/*Interface graphique*/
-		matrixTableModel.setMatrix(myMatrix);
+		//Attention true si c'est le 1er pb false si deuxième
+		matrixTableModel.setMatrix(myMatrix, true);
 		maTable.setModel(matrixTableModel);
 
 		showMatrixTable(maTable, myMatrix);
@@ -371,7 +372,8 @@ public class SaatysToolsTest {
 			//	myMatrix.print(5, 5);
 
 			//Affichage nouvelle matrice
-			matrixTableModel.setMatrix(myMatrix);
+			//Attention true si c'est le 1er pb false si deuxième
+			matrixTableModel.setMatrix(myMatrix, true);
 			maTable.setModel(matrixTableModel);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
