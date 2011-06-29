@@ -39,16 +39,33 @@ public class MyMatrixTableModel
 
 	public MyMatrixTableModel() {
 	}
-
-	private Collection<String> getColumnHeader() {
+	/*
+	 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
+	 * 
+	 */
+	public String[] getColumnHeader(boolean testB)
+	{
+		if( testB == true){
+			String columnNames[] = {"Temps de transport", "Coût", "Confort" , "Pollution",
+			"Qualité de service","Sécurité"};
+			return columnNames;
+		}
+		else{
+			String columnNames[] = {"Prix", "Sécurité", "Pollution" , "Design",
+			"Durée de vie", "Taille"};
+			return columnNames;
+		}
+	}
+/*
+	private Collection<String> getColumnHeader(){
 		Collection<String> aLegend = new ArrayList<String>();
 
 		aLegend.add("");
 		for (int i = 0; i < matrix.getColumnDimension(); i++) {
-			aLegend.add("Critere" + (i+1));
+			aLegend.add("Critere" + (i+1));			
 		}
 		return aLegend;
-	}
+	}*/
 	/**
 	* Retourne vrai si la cellule est éditable : celle-ci sera donc éditable
 	* @return boolean
@@ -59,8 +76,7 @@ public class MyMatrixTableModel
 			setValueAt("", row, col);
 			return true;
 		}
-		else return false;
-		
+		else return false;		
 	}
 
 	public void setMatrix(MyMatrix matrix,boolean testPb) {

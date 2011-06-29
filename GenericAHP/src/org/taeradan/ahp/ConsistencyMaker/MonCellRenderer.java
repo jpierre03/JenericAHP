@@ -49,18 +49,32 @@ public class MonCellRenderer
 															 isSelected, hasFocus, row, column);
 
 		if (row == this.row && column == this.col) {
-			cell.setBackground(Color.GRAY);
+			cell.setBackground(Color.YELLOW);
 		} else {
 			cell.setBackground(Color.WHITE);
+		}
+		for(int r=0;r<table.getRowCount();r++)
+		{
+			for(int c=0;c<table.getColumnCount();c++)
+			{
+				if((column<row||column==row)&&(column!=0))
+						cell.setBackground(Color.lightGray);
+				else if(row==0) cell.setBackground(Color.GRAY);
+				else if(column==0) cell.setBackground(Color.GRAY);
+				//else cell.setBackground(Color.WHITE);
+			}
 		}
 		return cell;
 	}
 }
+/*
+ * classe de test
+ */
 class testCellRenderer{
 	public static void main(String args[])
 	{
-		MyMatrix MyMatrix = new MyMatrix(25, 25);
-		JTable matable = new JTable(25, 25);
+		MyMatrix MyMatrix = new MyMatrix(5, 5);
+		JTable matable = new JTable(5, 5);
 		int j =0;
 		MonCellRenderer moncell = new MonCellRenderer(0, 0);
 		matable.setDefaultRenderer(Object.class, moncell);
@@ -68,13 +82,13 @@ class testCellRenderer{
 		jFrame.add(matable);
 		jFrame.pack();
 		jFrame.setVisible(true);
-		for(int i = 0;i<25;i++)
+		/*for(int i = 0;i<5;i++)
 		{
 			j = i;
 			moncell.setRow(i);
 			moncell.setCol(j);
-
 		}
+		*/
 		
 	}
 

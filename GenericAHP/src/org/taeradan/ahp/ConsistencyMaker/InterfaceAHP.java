@@ -11,17 +11,16 @@
 
 package org.taeradan.ahp.ConsistencyMaker;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.nfunk.jep.JEP;
-import org.nfunk.jep.ParseException;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.gui.MyMatrixTable;
@@ -55,10 +54,17 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 	private JEP monJep;
     /** Creates new form MaMatriceFrame */
     public InterfaceAHP() {
+		//on redimensionne la taille de la jframe
+		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		tailleEcran.setSize(tailleEcran.getWidth(), tailleEcran.getHeight()-100);
+		this.setPreferredSize(tailleEcran);
+		this.setResizable(false);
         initComponents();
 		//On initialise la taille de la matrice à 6
 		jTextFieldDimensions.setText("6");
 		monJep = new JEP();
+		
+		
 	    }
 
     /** This method is called from within the constructor to
@@ -92,18 +98,18 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jButtonParcourir = new javax.swing.JButton();
         jPanelClassemnt = new javax.swing.JPanel();
         jPanel1erClassement = new javax.swing.JPanel();
-        jTextField1erClass1 = new javax.swing.JTextField();
-        jTextField1erClass2 = new javax.swing.JTextField();
-        jTextField1erClass3 = new javax.swing.JTextField();
-        jTextField1erClass4 = new javax.swing.JTextField();
-        jTextField1erClass5 = new javax.swing.JTextField();
-        jTextField1erClass6 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jComboBox1erClass2 = new javax.swing.JComboBox();
+        jComboBox1erClass3 = new javax.swing.JComboBox();
+        jComboBox1erClass4 = new javax.swing.JComboBox();
+        jComboBox1erClass5 = new javax.swing.JComboBox();
+        jComboBox1erClass6 = new javax.swing.JComboBox();
+        jComboBox1erClass1 = new javax.swing.JComboBox();
         jPanelClassementFinal = new javax.swing.JPanel();
         jTextFieldClassFinal1 = new javax.swing.JTextField();
         jTextFieldClassFinal2 = new javax.swing.JTextField();
@@ -117,6 +123,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabelClassFinal1 = new javax.swing.JLabel();
+        jLabelClassFinal2 = new javax.swing.JLabel();
+        jLabelClassFinal3 = new javax.swing.JLabel();
+        jLabelClassFinal4 = new javax.swing.JLabel();
+        jLabelClassFinal5 = new javax.swing.JLabel();
+        jLabelClassFinal6 = new javax.swing.JLabel();
         jPanelClassementMatrice = new javax.swing.JPanel();
         jTextFieldClassMat1 = new javax.swing.JTextField();
         jTextFieldClassMat2 = new javax.swing.JTextField();
@@ -130,6 +142,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jLabelClassInit1 = new javax.swing.JLabel();
+        jLabelClassInit2 = new javax.swing.JLabel();
+        jLabelClassInit3 = new javax.swing.JLabel();
+        jLabelClassInit4 = new javax.swing.JLabel();
+        jLabelClassInit5 = new javax.swing.JLabel();
+        jLabelClassInit6 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -254,20 +272,10 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         );
 
         jPanelClassemnt.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement"));
+        jPanelClassemnt.setMaximumSize(new java.awt.Dimension(635, 273));
 
-        jPanel1erClassement.setBorder(javax.swing.BorderFactory.createTitledBorder("1er Classement"));
-
-        jTextField1erClass3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1erClass3ActionPerformed(evt);
-            }
-        });
-
-        jTextField1erClass4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1erClass4ActionPerformed(evt);
-            }
-        });
+        jPanel1erClassement.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement intuitif"));
+        jPanel1erClassement.setMaximumSize(new java.awt.Dimension(184, 224));
 
         jLabel5.setText("1er:");
 
@@ -281,11 +289,17 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 
         jLabel11.setText("6ème:");
 
+        jComboBox1erClass2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1erClass2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1erClassementLayout = new javax.swing.GroupLayout(jPanel1erClassement);
         jPanel1erClassement.setLayout(jPanel1erClassementLayout);
         jPanel1erClassementLayout.setHorizontalGroup(
             jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1erClassementLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1erClassementLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -295,47 +309,48 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1erClass5)
-                    .addComponent(jTextField1erClass2)
-                    .addComponent(jTextField1erClass6, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                    .addComponent(jTextField1erClass3)
-                    .addComponent(jTextField1erClass4, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(jTextField1erClass1))
-                .addContainerGap())
+                    .addComponent(jComboBox1erClass6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1erClass4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1erClass3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1erClass2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1erClass5, 0, 66, Short.MAX_VALUE)
+                    .addComponent(jComboBox1erClass1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1erClassementLayout.setVerticalGroup(
             jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1erClassementLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox1erClass1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBox1erClass2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBox1erClass3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(jComboBox1erClass4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox1erClass5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1erClassementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1erClass6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addComponent(jComboBox1erClass6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jPanelClassementFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement Final"));
+        jPanelClassementFinal.setMaximumSize(new java.awt.Dimension(203, 199));
 
         jLabel18.setText("1er:");
 
@@ -354,56 +369,97 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jPanelClassementFinalLayout.setHorizontalGroup(
             jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel19)
-                        .addComponent(jLabel22)
-                        .addComponent(jLabel21)
-                        .addComponent(jLabel20)
-                        .addComponent(jLabel18))
-                    .addComponent(jLabel23))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel18)
                 .addGap(18, 18, 18)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldClassFinal6, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassFinal4, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassFinal5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassFinal1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassFinal2, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassFinal3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jTextFieldClassFinal1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassFinal2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel20)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassFinal3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassFinal4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel22)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassFinal5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel23)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassFinal6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassFinal6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelClassementFinalLayout.setVerticalGroup(
             jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(11, 11, 11)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel18))
                     .addComponent(jTextFieldClassFinal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassFinal1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel19))
                     .addComponent(jTextFieldClassFinal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassFinal2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel20))
                     .addComponent(jTextFieldClassFinal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassFinal3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel21))
                     .addComponent(jTextFieldClassFinal4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassFinal4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel22))
                     .addComponent(jTextFieldClassFinal5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassFinal5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementFinalLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel23))
                     .addComponent(jTextFieldClassFinal6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addContainerGap())
+                    .addComponent(jLabelClassFinal6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanelClassementMatrice.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement matrice"));
+        jPanelClassementMatrice.setBorder(javax.swing.BorderFactory.createTitledBorder("Classement initial"));
+        jPanelClassementMatrice.setMaximumSize(new java.awt.Dimension(204, 231));
 
         jLabel12.setText("1er:");
 
@@ -422,53 +478,93 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jPanelClassementMatriceLayout.setHorizontalGroup(
             jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel12)
-                        .addComponent(jLabel13))
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel12)
                 .addGap(18, 18, 18)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldClassMat1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassMat2, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassMat3, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassMat4, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassMat5, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(jTextFieldClassMat6, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jTextFieldClassMat1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassMat2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassMat3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassMat4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassMat5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldClassMat6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabelClassInit6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelClassementMatriceLayout.setVerticalGroup(
             jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(11, 11, 11)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel12))
                     .addComponent(jTextFieldClassMat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldClassMat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldClassMat3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
+                    .addComponent(jLabelClassInit1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel13))
+                    .addComponent(jTextFieldClassMat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelClassInit2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel14))
+                    .addComponent(jTextFieldClassMat3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelClassInit3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel15))
                     .addComponent(jTextFieldClassMat4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassInit4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel16))
                     .addComponent(jTextFieldClassMat5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClassInit5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanelClassementMatriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelClassementMatriceLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel17))
                     .addComponent(jTextFieldClassMat6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addGap(23, 23, 23))
+                    .addComponent(jLabelClassInit6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanelClassemntLayout = new javax.swing.GroupLayout(jPanelClassemnt);
@@ -476,23 +572,23 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
         jPanelClassemntLayout.setHorizontalGroup(
             jPanelClassemntLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClassemntLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1erClassement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
+                .addComponent(jPanel1erClassement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addComponent(jPanelClassementMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelClassementFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanelClassementFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelClassemntLayout.setVerticalGroup(
             jPanelClassemntLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClassemntLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelClassemntLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1erClassement, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelClassementFinal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                    .addComponent(jPanelClassementMatrice, 0, 204, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGroup(jPanelClassemntLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jPanel1erClassement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassemntLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jPanelClassementMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelClassemntLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jPanelClassementFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -543,41 +639,40 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelInit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(104, 104, 104))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(15, 15, 15)))
-                            .addGap(60, 60, 60))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonNewSimul)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabelCompteur, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
-                            .addComponent(jLabelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelClassemnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldCR, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonValiderMatrice))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jPanelInit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jButtonNewSimul)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
+                                    .addComponent(jLabelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(30, 30, 30)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextFieldCR, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonValiderMatrice))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCompteur, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelClassemnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -588,12 +683,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonNewSimul)
-                            .addComponent(jLabelCompteur, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                             .addComponent(jLabelTime))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelInit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -601,10 +696,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelCompteur, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jButtonValiderMatrice)
@@ -614,8 +711,8 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
                                 .addComponent(jTextFieldCR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3))
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addComponent(jPanelClassemnt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(jPanelClassemnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -640,9 +737,10 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		{
 			maMatrice = new MyMatrix(matrixSize, matrixSize);
 			int choix;
+			
 			for (int i = 0; i < maMatrice.getRowDimension(); i++) {
 				for (int j = i + 1; j < maMatrice.getColumnDimension(); j++) {
-					
+
 					//on récupère les valeurs saisies de la matrice
 					monJep.parseExpression(jTableMatrice.getValueAt(i + 1, j + 1).toString());
 					//on la stocke
@@ -861,6 +959,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 	private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
 		// TODO add your handling code here:
 		//on crée et lance le thread pour efficher un compteur
+
 		monHeure = new Meter(jLabelTime, this);
 		monHeure.setCommencerAZero(false);
 		monHeure.start();
@@ -905,17 +1004,37 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 			} catch (IOException ex) {
 				Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 			}
-		}
-		
+		}		
 		/*Interface graphique*/
 		matrixTableModel.setMatrix(myMatrix, jRadioButtonP1.isSelected());
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrice.setModel(matrixTableModel);
 		//maTable.setModel(matrixTableModel);
-		jLabel6.setText("Veuillez remplir la partie supérieure de la matrice avec les coefficients de SAATY:");
+		jLabel6.setText("Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
 		//on affiche la matrice
-		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);		
+		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
+		//on rempli les jComboBox par le nom des column pour le 1er classement
+		String[] mesColonnes = new String[myMatrix.getColumnDimension()];
+		mesColonnes = matrixTableModel.getColumnHeader(jRadioButtonP1.isSelected());
+		remplirJcomboBox(jComboBox1erClass1, mesColonnes);
+		remplirJcomboBox(jComboBox1erClass2, mesColonnes);
+		remplirJcomboBox(jComboBox1erClass3, mesColonnes);
+		remplirJcomboBox(jComboBox1erClass4, mesColonnes);
+		remplirJcomboBox(jComboBox1erClass5, mesColonnes);
+		remplirJcomboBox(jComboBox1erClass6, mesColonnes);
+		//on modifie l'affichage de la table
+		MonCellRenderer monCellRenderer = new MonCellRenderer(0, 0);
+		jTableMatrice.setDefaultRenderer(Object.class, monCellRenderer);
 	}//GEN-LAST:event_jButtonOKActionPerformed
+	/*
+	 * cette méthode rempli les items d'un jComboBox
+	 */
+	private void remplirJcomboBox(JComboBox jcb,String[] name)
+	{
+		for (int i = 0; i < name.length; i++) {
+			jcb.addItem(name[i]);			
+		}
+	}
 	/*
 	 * Cette méthode ecrit dans le fichier csv 
 	 */
@@ -932,7 +1051,11 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		int coordRowVal;
 		int coordColVal;
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		csa.append("Matrice de preferences initiale");
+		csa.insertLineFeed();
 		csa.insertMatrix(myMatrix);
+		csa.insertLineFeed();
+		csa.append("Vecteur de priorite initial");
 		csa.insertLineFeed();
 		csa.insertMatrix(priorityVector);
 		csa.insertLineFeed();
@@ -948,16 +1071,26 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		jTextFieldClassMat4.setText(classement[2]);
 		jTextFieldClassMat5.setText(classement[1]);
 		jTextFieldClassMat6.setText(classement[0]);
+		double[] classementVal = this.classerPourcentageCritères(priorityVector);
+		jLabelClassInit1.setText(String.valueOf(classementVal[5])+"%");
+		jLabelClassInit2.setText(String.valueOf(classementVal[4])+"%");
+		jLabelClassInit3.setText(String.valueOf(classementVal[3])+"%");
+		jLabelClassInit4.setText(String.valueOf(classementVal[2])+"%");
+		jLabelClassInit5.setText(String.valueOf(classementVal[1])+"%");
+		jLabelClassInit6.setText(String.valueOf(classementVal[0])+"%");
 		/*Ecriture du CR*/
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		String tempString = "" + consistencyChecker.getCrResult();
+		csa.append("CR initial");
+		csa.insertLineFeed();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
 
 		//On affiche le cr
 		jTextFieldCR.setText(String.valueOf(consistencyChecker.getCrResult()));
-
+		csa.append("Tableau de changement des valeurs");
+		csa.insertLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
 		if(jRadioButtonSaaty.isSelected() == true)
 		csa.append(
@@ -1134,6 +1267,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 				}
 				//on affiche un cpt pour les observations avec un coeff de 7.5
 				jLabelCompteur.setText(String.valueOf(iterationCounter*7.5));
+				jTextFieldCR.setText(String.valueOf(consistencyChecker.getCrResult()));
 			}
 		}
 		if(finSimulation != -1)	jLabel4.setText("Bravo la matrice est cohérente!!!!!");
@@ -1145,7 +1279,11 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.insertLineFeed();
 		csa.insertLineFeed();
+		csa.append("Matrice de preference finale");
+		csa.insertLineFeed();
 		csa.insertMatrix(myMatrix);
+		csa.insertLineFeed();
+		csa.append("Vecteur de priorite final");
 		csa.insertLineFeed();
 		csa.insertMatrix(priorityVector);
 		csa.insertLineFeed();
@@ -1158,10 +1296,19 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		jTextFieldClassFinal4.setText(classementF[2]);
 		jTextFieldClassFinal5.setText(classementF[1]);
 		jTextFieldClassFinal6.setText(classementF[0]);
+		double[] classementValF = this.classerPourcentageCritères(priorityVector);
+		jLabelClassFinal1.setText(String.valueOf(classementValF[5])+"%");
+		jLabelClassFinal2.setText(String.valueOf(classementValF[4])+"%");
+		jLabelClassFinal3.setText(String.valueOf(classementValF[3])+"%");
+		jLabelClassFinal4.setText(String.valueOf(classementValF[2])+"%");
+		jLabelClassFinal5.setText(String.valueOf(classementValF[1])+"%");
+		jLabelClassFinal6.setText(String.valueOf(classementValF[0])+"%");
 		
 		//Ecriture du CR
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getCrResult();
+		csa.append("CR final");
+		csa.insertLineFeed();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
@@ -1275,6 +1422,26 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		return matrixValue;
 	}
 	/*
+	 * cette méthode classe le vector priority
+	 */
+	private double[] classerPourcentageCritères(PriorityVector v)
+	{
+		double[] monClassement =  new double[v.getRowDimension()];
+		for( int i=0; i<v.getRowDimension();i++)
+		{
+			monClassement[i] = this.round(v.get(i, 0)*100, 1);
+		}
+		//on classe par ordre croissant
+		Arrays.sort(monClassement);
+		return monClassement;
+	}
+	/*
+	 * méthode qui arrondi la valeur
+	 */
+	private double round(double what, int howmuch) {
+		return (double)( (int)(what * Math.pow(10,howmuch) + .5) ) / Math.pow(10,howmuch);
+	}
+	/*
 	 * Cette méthode permet de classer les critères et de renvoyer le classement
 	 */
 	private String[] classerCriteres(PriorityVector v)
@@ -1333,14 +1500,6 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		// TODO add your handling code here:
 	}//GEN-LAST:event_jTextFieldCheminActionPerformed
 
-	private void jTextField1erClass3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1erClass3ActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_jTextField1erClass3ActionPerformed
-
-	private void jTextField1erClass4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1erClass4ActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_jTextField1erClass4ActionPerformed
-
 	private void jButtonNewSimulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewSimulActionPerformed
 		// TODO add your handling code here:
 		initComponents();
@@ -1362,6 +1521,10 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		}
 	}//GEN-LAST:event_jButtonParcourirActionPerformed
 
+	private void jComboBox1erClass2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1erClass2ActionPerformed
+		// TODO add your handling code here:
+	}//GEN-LAST:event_jComboBox1erClass2ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -1382,6 +1545,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
     private javax.swing.JButton jButtonOK;
     private javax.swing.JButton jButtonParcourir;
     private javax.swing.JButton jButtonValiderMatrice;
+    private javax.swing.JComboBox jComboBox1erClass1;
+    private javax.swing.JComboBox jComboBox1erClass2;
+    private javax.swing.JComboBox jComboBox1erClass3;
+    private javax.swing.JComboBox jComboBox1erClass4;
+    private javax.swing.JComboBox jComboBox1erClass5;
+    private javax.swing.JComboBox jComboBox1erClass6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1405,6 +1574,18 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelClassFinal1;
+    private javax.swing.JLabel jLabelClassFinal2;
+    private javax.swing.JLabel jLabelClassFinal3;
+    private javax.swing.JLabel jLabelClassFinal4;
+    private javax.swing.JLabel jLabelClassFinal5;
+    private javax.swing.JLabel jLabelClassFinal6;
+    private javax.swing.JLabel jLabelClassInit1;
+    private javax.swing.JLabel jLabelClassInit2;
+    private javax.swing.JLabel jLabelClassInit3;
+    private javax.swing.JLabel jLabelClassInit4;
+    private javax.swing.JLabel jLabelClassInit5;
+    private javax.swing.JLabel jLabelClassInit6;
     private javax.swing.JLabel jLabelCompteur;
     private javax.swing.JLabel jLabelTime;
     private javax.swing.JPanel jPanel1erClassement;
@@ -1422,12 +1603,6 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTableMatrice;
-    private javax.swing.JTextField jTextField1erClass1;
-    private javax.swing.JTextField jTextField1erClass2;
-    private javax.swing.JTextField jTextField1erClass3;
-    private javax.swing.JTextField jTextField1erClass4;
-    private javax.swing.JTextField jTextField1erClass5;
-    private javax.swing.JTextField jTextField1erClass6;
     private javax.swing.JTextField jTextFieldCR;
     private javax.swing.JTextField jTextFieldChemin;
     private javax.swing.JTextField jTextFieldClassFinal1;
