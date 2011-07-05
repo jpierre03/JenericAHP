@@ -1357,13 +1357,13 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable{
 		} catch (IOException ex) {
 			Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		tempString = ""+oldValue;
+		tempString = "Ancienne valeur: "+oldValue;
 		csa.append(tempString);
 		csa.insertSeparator();
 		tempString = coordx + "," + coordy;
 		csa.append(tempString);
 		csa.insertSeparator();
-		tempString = ""+newVal;
+		tempString = "Nouvelle valeur: "+newVal;
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertMatrix(matrix);		
