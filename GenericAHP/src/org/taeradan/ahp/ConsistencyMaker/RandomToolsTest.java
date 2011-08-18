@@ -70,8 +70,8 @@ public class RandomToolsTest {
 		/*WIP*/
 		System.out.println("Merci de patienter.");
 
-		//Attention true si c'est le 1er pb false si deuxième
-		matrixTableModel.setMatrix(myPreferenceMatrix,true);
+		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
+		matrixTableModel.setMatrix(myPreferenceMatrix,true,false);
 		maTable.setModel(matrixTableModel);
 
 		/*Print a matrix view*/
@@ -180,8 +180,8 @@ public class RandomToolsTest {
 		//	myPreferenceMatrix.print(5, 5);
 
 			//Affichage nouvelle matrice
-			//Attention true si c'est le 1er problème false si deuxième
-			matrixTableModel.setMatrix(myPreferenceMatrix, true);
+			//Attention true si c'est le 1er problème false si deuxième et false si langue francaise
+			matrixTableModel.setMatrix(myPreferenceMatrix, true, false);
 			maTable.setModel(matrixTableModel);
 
 

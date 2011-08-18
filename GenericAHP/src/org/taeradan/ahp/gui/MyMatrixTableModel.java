@@ -43,17 +43,35 @@ public class MyMatrixTableModel
 	 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
 	 * 
 	 */
-	public String[] getColumnHeader(boolean testB)
+	public String[] getColumnHeader(boolean testB, boolean langueB)
 	{
 		if( testB == true){
-			String columnNames[] = {"Temps de transport", "Coût", "Confort" , "Pollution",
-			"Qualité de service","Sécurité"};
-			return columnNames;
+			if(langueB==false)
+			{
+				String columnNames[] = {"Temps de transport", "Coût", "Confort" , "Pollution",
+				"Qualité de service","Sécurité"};
+				return columnNames;
+			}
+			else
+			{
+				String columnNames[] = {"Travel time", "Cost", "Comfort", "Pollution",
+				"Quality of Service", "Security"};
+				return columnNames;
+			}			
 		}
 		else{
-			String columnNames[] = {"Prix", "Sécurité", "Pollution" , "Design",
-			"Durée de vie", "Taille"};
-			return columnNames;
+			if(langueB==false)
+			{
+				String columnNames[] = {"Prix", "Sécurité", "Pollution" , "Design",
+				"Durée de vie", "Taille"};
+				return columnNames;
+			}
+			else
+			{
+				String columnNames[] = {"Price", "Security", "Pollution","Design",
+				"Life","Size"};
+				return columnNames;
+			}			
 		}
 	}
 /*
@@ -79,21 +97,19 @@ public class MyMatrixTableModel
 		else return false;		
 	}
 
-	public void setMatrix(MyMatrix matrix,boolean testPb) {
+	public void setMatrix(MyMatrix matrix,boolean testPb, boolean langueB) {
 		this.matrix = matrix;
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
 			//on cree les critère en fonction du pb choisi
 			if( testPb == true){
-				String columnNames[] = {"Temps de transport", "Coût", "Confort" , "Pollution",
-				"Qualité de service","Sécurité"};
+				String columnNames[] = getColumnHeader(testPb, langueB);
 				data[0][i+1] = columnNames[i];
 				data[i+1][0] = columnNames[i];
 			}
 			else{
-				String columnNames[] = {"Prix", "Sécurité", "Pollution" , "Design",
-				"Durée de vie", "Taille"};
+				String columnNames[] = getColumnHeader(testPb, langueB);
 				data[0][i+1] = columnNames[i];
 				data[i+1][0] = columnNames[i];
 			}

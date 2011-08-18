@@ -49,8 +49,8 @@ public class MyMatrixTable
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 
-		//Attention true si c'est le 1er pb false si deuxième
-		matrixTableModel.setMatrix(aMatrix, true);
+		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
+		matrixTableModel.setMatrix(aMatrix, true, false);
 
 		maTable.setModel(matrixTableModel);
 
