@@ -117,7 +117,7 @@ public class PairWiseMatrix
 		final StringBuilder string = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
-		DecimalFormat printFormat = new DecimalFormat("0.000");
+		DecimalFormat printFormat = new DecimalFormat("0.00000000");
 //		For each row in the matrix
 		for (int i = 0; i < nRows; i++) {
 			if (prefix != null) {
