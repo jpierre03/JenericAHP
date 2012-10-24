@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/lib/jdom.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dist/lib/Jama-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dist/lib/jep-2.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
