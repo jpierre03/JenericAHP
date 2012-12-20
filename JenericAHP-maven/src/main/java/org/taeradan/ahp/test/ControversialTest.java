@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import org.taeradan.ahp.Root;
 
 /**
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class ControversialTest {

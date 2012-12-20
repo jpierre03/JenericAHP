@@ -11,7 +11,7 @@ import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  *
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
 public class MyMatrixTable

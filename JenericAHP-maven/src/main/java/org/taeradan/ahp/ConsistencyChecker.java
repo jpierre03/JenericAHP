@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Yves Dubromelle
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class ConsistencyChecker {
 

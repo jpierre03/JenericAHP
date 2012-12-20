@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
  *
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class Root {

@@ -22,7 +22,7 @@ import org.taeradan.ahp.Alternative;
 /**
  *
  * @author Yves Dubromelle
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class ControversialAlternative
 		implements Alternative {

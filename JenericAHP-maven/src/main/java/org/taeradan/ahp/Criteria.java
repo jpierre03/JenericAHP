@@ -31,7 +31,7 @@ import org.jdom.Element;
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
  * @author Yves Dubromelle
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class Criteria {
 

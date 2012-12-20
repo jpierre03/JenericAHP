@@ -1,7 +1,7 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 /**
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
 public class MyMatrixTest {

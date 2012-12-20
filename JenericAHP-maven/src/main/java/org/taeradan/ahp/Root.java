@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
 /**
  *  This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
  * @author Yves Dubromelle
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class Root {
 

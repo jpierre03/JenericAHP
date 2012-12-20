@@ -23,7 +23,7 @@ import org.jdom.Element;
 /**
  * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
  * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public abstract class Indicator {

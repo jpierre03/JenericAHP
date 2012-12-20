@@ -25,7 +25,7 @@ import org.taeradan.ahp.test.TestingAlternative;
 
 /**
  * Dummy implementation of an AHP indicator
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class IndicatorI22

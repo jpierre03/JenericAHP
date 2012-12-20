@@ -24,7 +24,7 @@ import org.taeradan.ahp.Root;
 
 /**
  * Test class for the AHP tree
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class TestAhp {

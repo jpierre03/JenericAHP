@@ -6,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
 public class HighLighter

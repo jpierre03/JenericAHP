@@ -17,7 +17,7 @@ import org.taeradan.ahp.PriorityVector;
 /**
  *
  * @author Marianne
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class RandomTools {
 

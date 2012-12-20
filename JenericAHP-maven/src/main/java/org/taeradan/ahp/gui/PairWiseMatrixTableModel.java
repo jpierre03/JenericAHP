@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Specialised implementation of tableModel for the Preference Matrix needs
  * @author Yves Dubromelle
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  */
 public class PairWiseMatrixTableModel
 		extends DefaultTableModel {

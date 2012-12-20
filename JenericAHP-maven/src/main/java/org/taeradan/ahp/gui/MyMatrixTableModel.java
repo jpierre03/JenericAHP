@@ -24,7 +24,7 @@ import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * Specialised implementation of tableModel for the Preference Matrix needs
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Marianne
  * @author Yves Dubromelle
  */

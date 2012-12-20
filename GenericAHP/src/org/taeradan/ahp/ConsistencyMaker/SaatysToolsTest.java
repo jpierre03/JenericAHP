@@ -19,7 +19,7 @@ import org.taeradan.ahp.gui.MyMatrixTableModel;
 
 /**
  *
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  * @author Marianne
  */

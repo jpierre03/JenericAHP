@@ -28,7 +28,7 @@ import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
  * The PairWiseMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
- * @author jpierre03
+ * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
