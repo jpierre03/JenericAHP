@@ -53,7 +53,7 @@ public class TestUnconsistencyDetector {
 			final PriorityVector vector = PriorityVector.build(matrix);
 			System.out.println(PairWiseMatrix.toString(vector, null));
 			final boolean result = consistencyChecker.isConsistent(matrix, vector);
-			System.out.println("CR = " + consistencyChecker.getCrResult());
+			System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 			if (result) {
 				System.out.println("Matrice consistante");
 			} else {

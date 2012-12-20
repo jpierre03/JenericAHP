@@ -24,26 +24,17 @@ import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PairWiseMatrix;
 import org.taeradan.ahp.PriorityVector;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * @author Yves Dubromelle
- */
-public class TestConsistency {
+/** @author Yves Dubromelle */
+public final class TestConsistency {
 
-	/**
-	 *
-	 */
-	final private static JFileChooser matrixChooser = new JFileChooser(
-		System.getProperty("user.dir"));
+	private static final JFileChooser matrixChooser = new JFileChooser(System.getProperty("user.dir"));
 
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(final String[] args) {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		matrixChooser.showOpenDialog(null);
@@ -54,7 +45,7 @@ public class TestConsistency {
 			final PriorityVector vector = PriorityVector.build(matrix);
 			System.out.println(PairWiseMatrix.toString(vector, null));
 			final boolean result = consistencyChecker.isConsistent(matrix, vector);
-			System.out.println("CR = " + consistencyChecker.getCrResult());
+			System.out.println("ConsistencyRatio = " + consistencyChecker.getConsistencyRatio());
 			if (result) {
 				System.out.println("Matrice consistante");
 			} else {
@@ -67,9 +58,6 @@ public class TestConsistency {
 		}
 	}
 
-	/**
-	 *
-	 */
 	private TestConsistency() {
 	}
 }

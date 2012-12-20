@@ -743,8 +743,8 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 				tempVector = PriorityVector.build(tempMatrix);
 				//calcul et écriture de la cohérence
 				tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector);
-				saatyConsistency = consistencyChecker.getCrResult();
-				tempString = "" + consistencyChecker.getCrResult();
+				saatyConsistency = consistencyChecker.getConsistencyRatio();
+				tempString = "" + consistencyChecker.getConsistencyRatio();
 				monCsa.append(tempString);
 				monCsa.insertSeparator();
 
@@ -891,7 +891,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 		jLabelClassInit6.setText(String.valueOf(classementVal[0]) + "%");
 		/*Ecriture du CR*/
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
-		String tempString = "" + consistencyChecker.getCrResult();
+		String tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR initial");
 		csa.insertLineFeed();
 		csa.append(tempString);
@@ -899,7 +899,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 		csa.insertLineFeed();
 
 		//On affiche le cr
-		jTextFieldCR.setText(String.valueOf(consistencyChecker.getCrResult()));
+		jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 		csa.append("Tableau de changement des valeurs");
 		csa.insertLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
@@ -1045,12 +1045,12 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 
 					//Ecriture du nouveau CR
 					consistencyChecker.isConsistent(myMatrix, priorityVector);
-					tempString = "" + consistencyChecker.getCrResult();
+					tempString = "" + consistencyChecker.getConsistencyRatio();
 					csa.append(tempString);
 					csa.insertSeparator();
 					//uniquement si on fai la méthode saaty
 					if (jRadioButtonSaaty.isSelected() == true) {
-						tempString = String.valueOf(saatyConsistency - consistencyChecker.getCrResult());
+						tempString = String.valueOf(saatyConsistency - consistencyChecker.getConsistencyRatio());
 						csa.append(tempString);
 					}
 					csa.close();
@@ -1067,7 +1067,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 				}
 				//on affiche un cpt pour les observations avec un coeff de 7.5
 				jLabelCompteur.setText(String.valueOf(iterationCounter * 7.5));
-				jTextFieldCR.setText(String.valueOf(consistencyChecker.getCrResult()));
+				jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 			}
 		}
 		if (finSimulation != -1) jLabel4.setText("Bravo la matrice est cohérente!!!!!");
@@ -1106,7 +1106,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 
 		//Ecriture du CR
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
-		tempString = "" + consistencyChecker.getCrResult();
+		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR final");
 		csa.insertLineFeed();
 		csa.append(tempString);
@@ -1117,7 +1117,7 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 		csa.append(tempString);
 
 		csa.close();
-		return consistencyChecker.getCrResult();
+		return consistencyChecker.getConsistencyRatio();
 	}
 
 	private void jButtonValiderMatriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderMatriceActionPerformed

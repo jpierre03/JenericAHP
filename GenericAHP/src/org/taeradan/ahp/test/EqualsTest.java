@@ -6,10 +6,11 @@ package org.taeradan.ahp.test;
 
 import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 
-/**
- * @author Marianne
- */
-public class EqualsTest {
+/** @author Marianne */
+public final class EqualsTest {
+
+	private EqualsTest() {
+	}
 
 	public static void main(String[] args) {
 		MatrixValue m1 = new MatrixValue();

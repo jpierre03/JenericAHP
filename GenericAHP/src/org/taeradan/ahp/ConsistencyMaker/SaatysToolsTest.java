@@ -147,7 +147,7 @@ public class SaatysToolsTest {
 			tempVector = PriorityVector.build(tempMatrix);
 			//calcul et écriture de la cohérence
 			tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector);
-			tempString = "" + consistencyChecker.getCrResult();
+			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -281,7 +281,7 @@ public class SaatysToolsTest {
 
 		/*Ecriture du CR*/
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
-		tempString = "" + consistencyChecker.getCrResult();
+		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
@@ -298,7 +298,7 @@ public class SaatysToolsTest {
 			iterationCounter++;
 
 			System.out.println("\n**********          Matrice incohérente"
-				+ "          **********\n CR = " + consistencyChecker.getCrResult()
+				+ "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
 				+ "\n");
 			/*Calcul matrice epsilon*/
 			epsilon = saatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
@@ -381,14 +381,14 @@ public class SaatysToolsTest {
 
 			//Ecriture du nouveau CR
 			consistencyChecker.isConsistent(myMatrix, priorityVector);
-			tempString = "" + consistencyChecker.getCrResult();
+			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 
 
 			csa.close();
 		}
 
-		System.out.println("CR = " + consistencyChecker.getCrResult());
+		System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 		System.out.println("\n***********************************************"
 			+ "\n**  Félicitation ! La matrice est cohérente  **\n"
 			+ "***********************************************");
@@ -404,7 +404,7 @@ public class SaatysToolsTest {
 
 		//Ecriture du CR
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
-		tempString = "" + consistencyChecker.getCrResult();
+		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();

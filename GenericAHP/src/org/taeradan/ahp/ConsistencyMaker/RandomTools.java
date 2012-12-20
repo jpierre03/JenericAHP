@@ -194,7 +194,7 @@ not found in the random ranking*/
 			saatysVector = PriorityVector.build(saatysMatrix);
 			//calcul et écriture de la cohérence
 			tempBoolean = consistencyChecker.isConsistent(saatysMatrix, saatysVector);
-			tempString = "" + consistencyChecker.getCrResult();
+			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -249,7 +249,7 @@ not found in the random ranking*/
 			randomsVector = PriorityVector.build(randomsMatrix);
 			//calcul et écriture de la cohérence
 			tempBoolean = consistencyChecker.isConsistent(randomsMatrix, randomsVector);
-			tempString = "" + consistencyChecker.getCrResult();
+			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 			csa.insertSeparator();
 

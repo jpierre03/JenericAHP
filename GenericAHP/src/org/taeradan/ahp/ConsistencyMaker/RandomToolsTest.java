@@ -94,7 +94,7 @@ public class RandomToolsTest {
 
 		//Writing of the CR
 		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
-		tempString = "" + consistencyChecker.getCrResult();
+		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
@@ -111,7 +111,7 @@ public class RandomToolsTest {
 
 			iterationsCounter++;
 
-			System.out.println("\n**********          Matrice incohérente" + "          **********\n CR = " + consistencyChecker.getCrResult() + "\n");
+			System.out.println("\n**********          Matrice incohérente" + "          **********\n CR = " + consistencyChecker.getConsistencyRatio() + "\n");
 
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
@@ -188,14 +188,14 @@ public class RandomToolsTest {
 
 			//écriture du nouveau CR
 			tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
-			tempString = "" + consistencyChecker.getCrResult();
+			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 
 
 			csa.close();
 		}
 
-		System.out.println("CR = " + consistencyChecker.getCrResult() + "\n");
+		System.out.println("CR = " + consistencyChecker.getConsistencyRatio() + "\n");
 		System.out.println("***********************************************"
 			+ "\n**  Félicitation ! La matrice est cohérente  **\n"
 			+ "***********************************************");
@@ -211,7 +211,7 @@ public class RandomToolsTest {
 
 		//Ecriture du CR
 		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
-		tempString = "" + consistencyChecker.getCrResult();
+		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.insertLineFeed();
 		csa.insertLineFeed();
