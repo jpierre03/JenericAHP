@@ -17,9 +17,9 @@
  */
 package org.taeradan.ahp.gui;
 
+import org.taeradan.ahp.AHPRoot;
 import org.taeradan.ahp.Criteria;
 import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.Root;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -53,7 +53,7 @@ public class ConfigurationFrame
 	/**
 	 *
 	 */
-	transient private Root ahpRoot;
+	transient private AHPRoot ahpAHPRoot;
 	/**
 	 *
 	 */
@@ -67,9 +67,9 @@ public class ConfigurationFrame
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded
-		ahpRoot = new Root(null, Root.indicatorPath);
+		ahpAHPRoot = new AHPRoot(null, AHPRoot.indicatorPath);
 //		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
-		guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+		guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		initComponents();
 	}
 
@@ -171,8 +171,8 @@ public class ConfigurationFrame
 			if (evt.getButton() == MouseEvent.BUTTON3) {
 				final Object object = node.getUserObject();
 				final JPopupMenu contextMenu = new JPopupMenu();
-				if (object instanceof Root) {
-					final Root root = (Root) object;
+				if (object instanceof AHPRoot) {
+					final AHPRoot AHPRoot = (AHPRoot) object;
 					final JMenuItem addItem = new JMenuItem("Add criteria");
 					addItem.addActionListener(new java.awt.event.ActionListener() {
 
@@ -196,7 +196,7 @@ public class ConfigurationFrame
 
 						@Override
 						public void actionPerformed(java.awt.event.ActionEvent evt) {
-							delRootActionPerformed(root);
+							delRootActionPerformed(AHPRoot);
 						}
 					});
 					contextMenu.add(delItem);
@@ -268,8 +268,8 @@ public class ConfigurationFrame
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			currentFile = jFileChooser.getSelectedFile();
-			ahpRoot = new Root(new File(currentFile.getAbsolutePath()), Root.indicatorPath);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+			ahpAHPRoot = new AHPRoot(new File(currentFile.getAbsolutePath()), AHPRoot.indicatorPath);
+			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 			fileOpened = true;
 		}
 	}//GEN-LAST:event_jMenuItemOpenActionPerformed
@@ -284,7 +284,7 @@ public class ConfigurationFrame
 	private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
 	{//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
 		if (fileOpened) {
-			ahpRoot.saveConfig(currentFile.getAbsolutePath());
+			ahpAHPRoot.saveConfig(currentFile.getAbsolutePath());
 		} else {
 			jMenuItemSaveUnderActionPerformed(evt);
 		}
@@ -303,7 +303,7 @@ public class ConfigurationFrame
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			currentFile = jFileChooser.getSelectedFile();
-			ahpRoot.saveConfig(currentFile.getAbsolutePath());
+			ahpAHPRoot.saveConfig(currentFile.getAbsolutePath());
 		}
 	}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
 
@@ -311,9 +311,9 @@ public class ConfigurationFrame
 	 * @param object
 	 */
 	private void editActionPerformed(final Object object) {
-		if (object instanceof Root) {
-			final Root root = (Root) object;
-			final RootDialog dialog = new RootDialog(this, true, root);
+		if (object instanceof AHPRoot) {
+			final AHPRoot AHPRoot = (AHPRoot) object;
+			final RootDialog dialog = new RootDialog(this, true, AHPRoot);
 			dialog.setVisible(true);
 		}
 		if (object instanceof Criteria) {
@@ -329,14 +329,14 @@ public class ConfigurationFrame
 	}
 
 	/**
-	 * @param root
+	 * @param AHPRoot
 	 */
-	private void delRootActionPerformed(final Root root) {
+	private void delRootActionPerformed(final AHPRoot AHPRoot) {
 		if (JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpRoot = new Root(null, Root.indicatorPath);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
-			editActionPerformed(ahpRoot);
+			ahpAHPRoot = new AHPRoot(null, AHPRoot.indicatorPath);
+			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
+			editActionPerformed(ahpAHPRoot);
 		}
 	}
 
@@ -347,8 +347,8 @@ public class ConfigurationFrame
 		if (JOptionPane.showConfirmDialog(this,
 			"Are you sure ? The criteria and its indicators will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpRoot.delCriteria(criteria);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpRoot));
+			ahpAHPRoot.delCriteria(criteria);
+			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		}
 	}
 
@@ -389,13 +389,13 @@ public class ConfigurationFrame
 	/**
 	 * Takes an initialized AHP root element and produces a tree by processing the AHP hierarchy
 	 *
-	 * @param ahpRoot Initialised AHP root
+	 * @param ahpAHPRoot Initialised AHP root
 	 * @return node containing a AHP tree
 	 */
-	public static DefaultMutableTreeNode processAhpHierarchy(final Root ahpRoot) {
+	public static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
 //		Creation of the root node
-		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpRoot);
-		final Collection<Criteria> ahpCriterias = ahpRoot.getCriterias();
+		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
+		final Collection<Criteria> ahpCriterias = ahpAHPRoot.getCriterias();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
 //		For each criteria in root
 		for (int i = 0; i < ahpCriterias.size(); i++) {

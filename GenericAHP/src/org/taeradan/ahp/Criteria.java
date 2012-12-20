@@ -111,7 +111,7 @@ public class Criteria {
 			final Element xmlIndicator = itxmlIndList.next();
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
-			final String indName = Root.indicatorPath
+			final String indName = AHPRoot.indicatorPath
 				+ Indicator.class.getSimpleName()
 				+ xmlIndicator.getAttributeValue("id");
 			try {

@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public class Root {
+public class AHPRoot {
 
 	/**
 	 * Contains the path to access indicators
@@ -69,13 +69,13 @@ public class Root {
 	 * @param inFile        Path to the configuration file
 	 * @param indicatorPath
 	 */
-	public Root(final File inFile, final String indicatorPath) {
+	public AHPRoot(final File inFile, final String indicatorPath) {
 		if (inFile == null) {
 			name = "";
 			matrixCrCr = new PairWiseMatrix();
 			criterias = new ArrayList<Criteria>();
 		} else {
-			Root.indicatorPath = indicatorPath;
+			AHPRoot.indicatorPath = indicatorPath;
 //			XML parser creation
 			final SAXBuilder parser = new SAXBuilder();
 			try {
@@ -220,7 +220,7 @@ public class Root {
 //			Write the output into the specified file
 			output.output(outXmlDocument, new FileOutputStream(outputFile));
 		} catch (IOException ex) {
-			Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AHPRoot.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
