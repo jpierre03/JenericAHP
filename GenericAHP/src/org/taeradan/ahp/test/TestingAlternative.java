@@ -20,7 +20,6 @@ package org.taeradan.ahp.test;
 import org.taeradan.ahp.Alternative;
 
 /**
- *
  * @author Yves Dubromelle
  */
 public class TestingAlternative implements Alternative {
@@ -62,7 +61,7 @@ public class TestingAlternative implements Alternative {
 	 */
 	transient public final double valueI32;
 	/**
-	 * 
+	 *
 	 */
 	transient public final double valueI41;
 	/**
@@ -71,7 +70,6 @@ public class TestingAlternative implements Alternative {
 	transient public final double valueI51;
 
 	/**
-	 * 
 	 * @param name
 	 * @param valueI11
 	 * @param valueI12

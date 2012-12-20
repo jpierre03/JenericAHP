@@ -8,20 +8,20 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
-import java.awt.HeadlessException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
-import java.util.Collection;
-import javax.swing.JFrame;
 import org.taeradan.ahp.gui.MyMatrixTable;
 import org.taeradan.ahp.gui.MyMatrixTableModel;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
+
 /**
- *
  * @author Marianne
  */
 public class RandomToolsTest {
@@ -36,7 +36,6 @@ public class RandomToolsTest {
 	}
 
 	/**
-	 *
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
@@ -53,7 +52,7 @@ public class RandomToolsTest {
 		String tempString;
 		MyMatrixTable maTable = new MyMatrixTable();
 		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
-		int iterationsCounter=0;
+		int iterationsCounter = 0;
 
 		/*Select the file, in which simulation will be saved*/
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
@@ -63,15 +62,15 @@ public class RandomToolsTest {
 
 		/*Matrix creation*/
 		myPreferenceMatrix = SaatysToolsTest.createMatrix();
-	//	myPreferenceMatrix.print(5, 2);
+		//	myPreferenceMatrix.print(5, 2);
 		priorityVector = PriorityVector.build(myPreferenceMatrix);
-	//	priorityVector.print(5, 3);
+		//	priorityVector.print(5, 3);
 
 		/*WIP*/
 		System.out.println("Merci de patienter.");
 
 		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-		matrixTableModel.setMatrix(myPreferenceMatrix,true,false);
+		matrixTableModel.setMatrix(myPreferenceMatrix, true, false);
 		maTable.setModel(matrixTableModel);
 
 		/*Print a matrix view*/
@@ -88,7 +87,7 @@ public class RandomToolsTest {
 		//Writing of the matrix
 		csa.insertMatrix(myPreferenceMatrix);
 		csa.insertLineFeed();
-		
+
 		//Writing of the eigenvector
 		csa.insertMatrix(priorityVector);
 		csa.insertLineFeed();
@@ -102,7 +101,7 @@ public class RandomToolsTest {
 
 		//Writing of the headers of the table in which events are memorised
 		csa.append(
-				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
+			"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		csa.insertLineFeed();
 
 		csa.close();
@@ -112,16 +111,16 @@ public class RandomToolsTest {
 
 			iterationsCounter++;
 
-			System.out.println("\n**********          Matrice incohérente" +"          **********\n CR = "+ consistencyChecker.getCrResult()+"\n");
-			
+			System.out.println("\n**********          Matrice incohérente" + "          **********\n CR = " + consistencyChecker.getCrResult() + "\n");
+
 			collectionOfNonSortedMatrixValues = RandomTools.getRank(myPreferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
 			/*Writing of Saaty's propositions and of random ranking*/
 			RandomTools.writeRandomAndSaatysProposition(myPreferenceMatrix,
-														collectionOfNonSortedMatrixValues,
-														matrixValue,
-														priorityVector, file);
+				collectionOfNonSortedMatrixValues,
+				matrixValue,
+				priorityVector, file);
 
 			/*Writing of the value, which will be changed by the expert*/
 			csa = new CharSequenceAppender(file);
@@ -130,7 +129,7 @@ public class RandomToolsTest {
 			csa.insertSeparator();
 
 			System.out.println(
-					"Vous avez choisi de remplacer la valeur "
+				"Vous avez choisi de remplacer la valeur "
 					+ matrixValue.getValue()
 					+ " de coordonnées "
 					+ " ( "
@@ -141,8 +140,6 @@ public class RandomToolsTest {
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
 
-
-
 			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
@@ -150,7 +147,7 @@ public class RandomToolsTest {
 
 			while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
 				System.out.println(
-						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+					"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
 				myParser.parseExpression(expertsChoice);
 				newValue = myParser.getValue();
@@ -177,7 +174,7 @@ public class RandomToolsTest {
 			myPreferenceMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
-		//	myPreferenceMatrix.print(5, 5);
+			//	myPreferenceMatrix.print(5, 5);
 
 			//Affichage nouvelle matrice
 			//Attention true si c'est le 1er problème false si deuxième et false si langue francaise
@@ -187,7 +184,7 @@ public class RandomToolsTest {
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(myPreferenceMatrix);
-		//	priorityVector.print(5, 5);
+			//	priorityVector.print(5, 5);
 
 			//écriture du nouveau CR
 			tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
@@ -198,10 +195,10 @@ public class RandomToolsTest {
 			csa.close();
 		}
 
-		System.out.println("CR = " + consistencyChecker.getCrResult()+"\n");
+		System.out.println("CR = " + consistencyChecker.getCrResult() + "\n");
 		System.out.println("***********************************************"
-						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
-						   + "***********************************************");
+			+ "\n**  Félicitation ! La matrice est cohérente  **\n"
+			+ "***********************************************");
 
 		csa = new CharSequenceAppender(file);
 		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
@@ -220,7 +217,7 @@ public class RandomToolsTest {
 		csa.insertLineFeed();
 
 		//Ecriture du nombre d'iterations
-		tempString="Number of Iterations;"+iterationsCounter;
+		tempString = "Number of Iterations;" + iterationsCounter;
 		csa.append(tempString);
 
 		csa.close();
@@ -228,7 +225,7 @@ public class RandomToolsTest {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private RandomToolsTest() {
 	}

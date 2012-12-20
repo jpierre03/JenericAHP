@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,41 +17,36 @@
  */
 package org.taeradan.ahp;
 
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.logging.Logger;
+
 /**
  * The PairWiseMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
-		extends MyMatrix {
+	extends MyMatrix {
 
-	/**
-	 * Class default Constructor.
-	 */
 	public PairWiseMatrix() {
 	}
 
-	/**
-	 *
-	 * @param i
-	 * @param j
-	 */
 	public PairWiseMatrix(int i, int j) {
 		super(i, j);
 	}
 
 	/**
 	 * Creates a PairWiseMatrix from a JDOM Element
+	 *
 	 * @param xmlPrefMatrix JDOM Element
-	 * @return 
+	 * @return
 	 */
 	public static PairWiseMatrix builder(final Element xmlPrefMatrix) {
 		@SuppressWarnings("unchecked")
@@ -81,6 +76,7 @@ public class PairWiseMatrix
 
 	/**
 	 * Describes a preference matrix in a String
+	 *
 	 * @return String description
 	 */
 	@Override
@@ -88,31 +84,14 @@ public class PairWiseMatrix
 		return makeString(this, null);
 	}
 
-	/**
-	 *
-	 * @param prefix
-	 * @return
-	 */
 	public String toString(final String prefix) {
 		return makeString(this, prefix);
 	}
 
-	/**
-	 *
-	 * @param matrix
-	 * @param prefix
-	 * @return
-	 */
 	public static String toString(final MyMatrix matrix, final String prefix) {
 		return makeString(matrix, prefix);
 	}
 
-	/**
-	 * 
-	 * @param matrix
-	 * @param prefix
-	 * @return
-	 */
 	private static String makeString(final MyMatrix matrix, final String prefix) {
 		final StringBuilder string = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
@@ -138,6 +117,7 @@ public class PairWiseMatrix
 
 	/**
 	 * Returns a JDOM element that represents the preference matrix
+	 *
 	 * @return JDOM element representing the preference matrix
 	 */
 	public Element toXml() {
@@ -156,15 +136,11 @@ public class PairWiseMatrix
 		return xmlPrefMatrix;
 	}
 
-	/**
-	 * 
-	 * @param index
-	 */
 	public void remove(final int index) {
 		final int newDimension = getRowDimension() - 1;
 		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
-										 + ", nouvelle=" + newDimension + "\n");
+			+ ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -173,7 +149,7 @@ public class PairWiseMatrix
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
-														 + "newI=" + newI + "newJ=" + newJ + "\n");
+							+ "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

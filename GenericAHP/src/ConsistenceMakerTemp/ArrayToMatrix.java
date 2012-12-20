@@ -7,7 +7,6 @@ package ConsistenceMakerTemp;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
- *
  * @author Marianne
  */
 /*
@@ -22,7 +21,6 @@ public class ArrayToMatrix {
 	}
 
 	/**
-	 * 
 	 * @param rowData
 	 * @param rows
 	 * @param columns

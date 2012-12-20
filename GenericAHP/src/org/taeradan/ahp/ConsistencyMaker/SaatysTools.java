@@ -4,20 +4,15 @@
  */
 package org.taeradan.ahp.ConsistencyMaker;
 
-import java.io.IOException;
+import org.taeradan.ahp.PriorityVector;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.TreeMap;
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
-import org.taeradan.ahp.PriorityVector;
-import java.lang.Math;
 
 
 /**
- *
  * @author Marianne
  */
 /*
@@ -51,7 +46,7 @@ public class SaatysTools {
 
 
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext();) {
+		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
 			MatrixValue matrixValue = valueIterator.next();
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
@@ -68,7 +63,7 @@ public class SaatysTools {
 		while (!myTreeMap.isEmpty()) {
 			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
 			System.out.println(
-					+matrixValue.getValue()
+				+matrixValue.getValue()
 					+ " ( "
 					+ matrixValue.getRow()
 					+ " , "
@@ -111,9 +106,9 @@ public class SaatysTools {
 	 * @return MyMatrix Epsilon
 	 */
 	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector) {
+						      MyMatrix priorityVector) {
 		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(), myPreferenceMatrix.
-				getColumnDimension());
+			getColumnDimension());
 		MatrixValue epsilonValue = new MatrixValue();
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
@@ -145,9 +140,9 @@ public class SaatysTools {
 	}
 
 	public static double calculateBestFit(MyMatrix preferenceMatrix,
-										  MyMatrix priorityVector,
-										  int i,
-										  int j) {
+					      MyMatrix priorityVector,
+					      int i,
+					      int j) {
 		MatrixValue matrixValue = new MatrixValue();
 		MyMatrix tempMatrix = new MyMatrix();
 
@@ -182,8 +177,8 @@ public class SaatysTools {
 	}
 
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector,
-												  MyMatrix epsilon) {
+						      MyMatrix priorityVector,
+						      MyMatrix epsilon) {
 
 
 		MatrixValue matrixValue = new MatrixValue();
@@ -237,7 +232,7 @@ public class SaatysTools {
 	}
 
 	public static int getLocationInRank(Collection<MatrixValue> collectionOfSortedMatrixValues,
-										int i, int j) {
+					    int i, int j) {
 		int cptr = 0;
 		MatrixValue matrixValue = new MatrixValue();
 		boolean isFound = false;

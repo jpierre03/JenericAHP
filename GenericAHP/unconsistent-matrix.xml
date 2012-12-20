@@ -9,12 +9,84 @@
 -->
 
 <root>
-	<row><elt value="1"/><elt value="5"/><elt value="3"/><elt value="7"/><elt value="6"/><elt value="6"/><elt value="1/3"/><elt value="1/4"/></row>
-	<row><elt value="1/5"/><elt value="1"/><elt value="1/3"/><elt value="5"/><elt value="3"/><elt value="3"/><elt value="1/5"/><elt value="1/7"/></row>
-	<row><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="6"/><elt value="3"/><elt value="4"/><elt value="6"/><elt value="1/5"/></row>
-	<row><elt value="1/7"/><elt value="1/5"/><elt value="1/6"/><elt value="1"/><elt value="1/3"/><elt value="1/4"/><elt value="1/7"/><elt value="1/8"/></row>
-	<row><elt value="1/6"/><elt value="1/3"/><elt value="1/3"/><elt value="3"/><elt value="1"/><elt value="1/2"/><elt value="1/5"/><elt value="1/6"/></row>
-	<row><elt value="1/6"/><elt value="1/3"/><elt value="1/4"/><elt value="4"/><elt value="2"/><elt value="1"/><elt value="1/5"/><elt value="1/6"/></row>
-	<row><elt value="3"/><elt value="5"/><elt value="1/6"/><elt value="7"/><elt value="5"/><elt value="5"/><elt value="1"/><elt value="1/2"/></row>
-	<row><elt value="4"/><elt value="7"/><elt value="5"/><elt value="8"/><elt value="6"/><elt value="6"/><elt value="2"/><elt value="1"/></row>
+	<row>
+		<elt value="1"/>
+		<elt value="5"/>
+		<elt value="3"/>
+		<elt value="7"/>
+		<elt value="6"/>
+		<elt value="6"/>
+		<elt value="1/3"/>
+		<elt value="1/4"/>
+	</row>
+	<row>
+		<elt value="1/5"/>
+		<elt value="1"/>
+		<elt value="1/3"/>
+		<elt value="5"/>
+		<elt value="3"/>
+		<elt value="3"/>
+		<elt value="1/5"/>
+		<elt value="1/7"/>
+	</row>
+	<row>
+		<elt value="1/3"/>
+		<elt value="3"/>
+		<elt value="1"/>
+		<elt value="6"/>
+		<elt value="3"/>
+		<elt value="4"/>
+		<elt value="6"/>
+		<elt value="1/5"/>
+	</row>
+	<row>
+		<elt value="1/7"/>
+		<elt value="1/5"/>
+		<elt value="1/6"/>
+		<elt value="1"/>
+		<elt value="1/3"/>
+		<elt value="1/4"/>
+		<elt value="1/7"/>
+		<elt value="1/8"/>
+	</row>
+	<row>
+		<elt value="1/6"/>
+		<elt value="1/3"/>
+		<elt value="1/3"/>
+		<elt value="3"/>
+		<elt value="1"/>
+		<elt value="1/2"/>
+		<elt value="1/5"/>
+		<elt value="1/6"/>
+	</row>
+	<row>
+		<elt value="1/6"/>
+		<elt value="1/3"/>
+		<elt value="1/4"/>
+		<elt value="4"/>
+		<elt value="2"/>
+		<elt value="1"/>
+		<elt value="1/5"/>
+		<elt value="1/6"/>
+	</row>
+	<row>
+		<elt value="3"/>
+		<elt value="5"/>
+		<elt value="1/6"/>
+		<elt value="7"/>
+		<elt value="5"/>
+		<elt value="5"/>
+		<elt value="1"/>
+		<elt value="1/2"/>
+	</row>
+	<row>
+		<elt value="4"/>
+		<elt value="7"/>
+		<elt value="5"/>
+		<elt value="8"/>
+		<elt value="6"/>
+		<elt value="6"/>
+		<elt value="2"/>
+		<elt value="1"/>
+	</row>
 </root>

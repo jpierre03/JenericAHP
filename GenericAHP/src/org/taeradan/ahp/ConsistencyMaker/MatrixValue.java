@@ -24,12 +24,14 @@ public class MatrixValue {
 	 */
 	public MatrixValue() {
 	}
+
 	/*
 	 * méthode qui arrondi la valeur
 	 */
 	private double round(double what, int howmuch) {
-		return (double)( (int)(what * Math.pow(10,howmuch) + .5) ) / Math.pow(10,howmuch);
+		return (double) ((int) (what * Math.pow(10, howmuch) + .5)) / Math.pow(10, howmuch);
 	}
+
 	/**
 	 * @return the value
 	 */
@@ -41,8 +43,8 @@ public class MatrixValue {
 	 * @param value the value to set
 	 */
 	public void setValue(double value) {
-		if(value<1)this.value = round(value,4);
-		else this.value = round(value,0);
+		if (value < 1) this.value = round(value, 4);
+		else this.value = round(value, 0);
 	}
 
 	/**
@@ -91,22 +93,21 @@ public class MatrixValue {
 		} else {
 			isEquals = false;
 		}
-		return  isEquals;
+		return isEquals;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 3;
 		hash =
-		97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value)
-																  >>> 32));
+			97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value)
+				>>> 32));
 		hash = 97 * hash + this.row;
 		hash = 97 * hash + this.column;
 		return hash;
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	@Override

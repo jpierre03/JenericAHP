@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,18 +18,17 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.math.BigDecimal;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
+import java.math.BigDecimal;
+
 /**
- *
  * @author Yves Dubromelle
  */
 public class PriorityVector
-		extends MyMatrix {
+	extends MyMatrix {
 
 	/**
-	 *
 	 * @param i
 	 */
 	public PriorityVector(int i) {
@@ -37,7 +36,6 @@ public class PriorityVector
 	}
 
 	/**
-	 *
 	 * @param matrix
 	 * @return
 	 */
@@ -78,7 +76,6 @@ public class PriorityVector
 	}
 
 	/**
-	 *
 	 * @param i
 	 * @param matrix
 	 */

@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,17 +21,18 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Specialised implementation of tableModel for the Preference Matrix needs
+ *
  * @author Yves Dubromelle
  */
 public class PairWiseMatrixTableModel
-		extends DefaultTableModel {
+	extends DefaultTableModel {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-//	We override this method to make editable only half of the matrix.
+	//	We override this method to make editable only half of the matrix.
 //	The other half will be filled automatically by an event listener on the table.
 	@Override
 	public boolean isCellEditable(final int row, final int column) {

@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -92,19 +92,19 @@ public class Root {
 //				Consistency verification
 				if (!consistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
 					Logger.getAnonymousLogger().severe(
-							"Is not consistent (root)");
+						"Is not consistent (root)");
 				}
 //				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren(
-						"criteria");
+					"criteria");
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //				Verification that the number of criterias matches the size of the preference matrix
 				if (xmlCriteriasList.size() != xmlRowsList.size()) {
 					Logger.getAnonymousLogger().severe(
-							"Error : the number of criterias and the size of the preference matrix does not match !");
+						"Error : the number of criterias and the size of the preference matrix does not match !");
 				}
 				final Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
 				while (itXmlCritList.hasNext()) {
@@ -113,7 +113,7 @@ public class Root {
 				}
 			} catch (FileNotFoundException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.
-						getAbsolutePath());
+					getAbsolutePath());
 				name = "unknow";
 				matrixCrCr = new PairWiseMatrix();
 				criterias = new ArrayList<Criteria>();
@@ -161,9 +161,9 @@ public class Root {
 		int index = 0;
 		while (itCriterias.hasNext()) {
 			string.append("\n\t(").
-					append(printFormat.format(vectorCrOg.get(index, 0))).
-					append(") ").
-					append(itCriterias.next().toStringRecursive());
+				append(printFormat.format(vectorCrOg.get(index, 0))).
+				append(") ").
+				append(itCriterias.next().toStringRecursive());
 			index++;
 		}
 		return string.toString();
@@ -212,9 +212,9 @@ public class Root {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
-					new Document(toXml(),
-							new DocType("root", getClass().getResource(
-									"/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+				new Document(toXml(),
+					new DocType("root", getClass().getResource(
+						"/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 //			Use a write format easily readable by a human
 			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file

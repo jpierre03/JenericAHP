@@ -4,20 +4,17 @@
  */
 package org.taeradan.ahp.gui;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
+import javax.swing.*;
+
 /**
- *
  * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
 public class MyMatrixTable
-		extends JTable {
+	extends JTable {
 
 	/**
 	 *
@@ -59,8 +56,8 @@ public class MyMatrixTable
 		JFrame maFenetre = new JFrame("ma belle fenêtre");
 		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		maFenetre.setContentPane(maTable);
-		maFenetre.setSize(1000,27*aMatrix.getRowDimension());
-		
+		maFenetre.setSize(1000, 27 * aMatrix.getRowDimension());
+
 		maFenetre.setVisible(true);
 	}
 }

@@ -16,7 +16,6 @@ public class MyMatrixTest {
 	private final static int COLUMN = 5;
 
 	/**
-	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -7,7 +7,7 @@ import Jama.Matrix;
  * @author Marianne
  */
 public class MyMatrix
-		extends Matrix {
+	extends Matrix {
 
 	/**
 	 *
@@ -22,7 +22,6 @@ public class MyMatrix
 	}
 
 	/**
-	 *
 	 * @param i
 	 * @param j
 	 */
@@ -31,17 +30,15 @@ public class MyMatrix
 	}
 
 	/**
-	 *
 	 * @param matrixValue
 	 */
 	public void setMatrixValue(MatrixValue matrixValue) {
 		super.set(matrixValue.getRow(),
-				  matrixValue.getColumn(),
-				  matrixValue.getValue());
+			matrixValue.getColumn(),
+			matrixValue.getValue());
 	}
 
 	/**
-	 *
 	 * @param i
 	 * @param j
 	 * @return
@@ -57,7 +54,7 @@ public class MyMatrix
 
 	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
 		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.
-				getColumnDimension());
+			getColumnDimension());
 		MatrixValue temp = new MatrixValue();
 
 		for (int i = 0; i < initMatrix.getRowDimension(); i++) {

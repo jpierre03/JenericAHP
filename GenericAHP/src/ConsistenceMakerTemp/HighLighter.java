@@ -1,16 +1,15 @@
 package ConsistenceMakerTemp;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 /**
  * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
 public class HighLighter
-		extends DefaultTableCellRenderer {
+	extends DefaultTableCellRenderer {
 
 	/**
 	 *
@@ -18,7 +17,6 @@ public class HighLighter
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 *
 	 * @param table
 	 * @param value
 	 * @param isSelected
@@ -29,18 +27,18 @@ public class HighLighter
 	 */
 	@Override
 	public Component getTableCellRendererComponent(JTable table,
-												   Object value,
-												   boolean isSelected,
-												   boolean hasFocus,
-												   int row,
-												   int column) {
+						       Object value,
+						       boolean isSelected,
+						       boolean hasFocus,
+						       int row,
+						       int column) {
 
 		Component cell = super.getTableCellRendererComponent(table,
-															 value,
-															 isSelected,
-															 hasFocus,
-															 row,
-															 column);
+			value,
+			isSelected,
+			hasFocus,
+			row,
+			column);
 
 		if (row == 1 && column == 1) {
 			cell.setBackground(Color.PINK);

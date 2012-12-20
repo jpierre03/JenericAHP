@@ -17,10 +17,6 @@
  */
 package org.taeradan.ahp.test;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -28,17 +24,21 @@ import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PairWiseMatrix;
 import org.taeradan.ahp.PriorityVector;
 
+import javax.swing.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author Yves Dubromelle
  */
 public class TestUnconsistencyDetector {
 
 	/**
-	 * 
+	 *
 	 */
 	final private static JFileChooser matrixChooser = new JFileChooser(
-			System.getProperty("user.dir"));
+		System.getProperty("user.dir"));
 
 	/**
 	 * @param args the command line arguments

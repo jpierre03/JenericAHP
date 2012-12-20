@@ -18,11 +18,10 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
+
 import java.util.logging.Logger;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 /**
- *
  * @author Yves Dubromelle
  */
 public class ConsistencyChecker {
@@ -31,9 +30,9 @@ public class ConsistencyChecker {
 	 *
 	 */
 	private static final double[] randomIndex = {0.00, 0.00, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41,
-												 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59};
+		1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59};
 	/**
-	 * 
+	 *
 	 */
 	private double consistenceCrit = 0;
 
@@ -49,13 +48,12 @@ public class ConsistencyChecker {
 //	}
 
 	/**
-	 *
 	 * @param prefMatrix
 	 * @param prioVector
 	 * @return
 	 */
 	public boolean isConsistent(final Matrix prefMatrix,
-									   final Matrix prioVector) {
+				    final Matrix prioVector) {
 		boolean consistent = false;
 
 		double[] lambdas;
@@ -92,17 +90,16 @@ public class ConsistencyChecker {
 				}
 			} else {
 				Logger.getAnonymousLogger().severe("Preference matrix and priority vector are too wide (15 max) or empty !!"
-												   + dimension);
+					+ dimension);
 			}
 		} else {
 			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.
-					getRowDimension() + "," + prioVector.getRowDimension());
+				getRowDimension() + "," + prioVector.getRowDimension());
 		}
 		return consistent;
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public double getCrResult() {

@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,13 +17,15 @@
  */
 package org.taeradan.ahp.test;
 
+import org.taeradan.ahp.Root;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import org.taeradan.ahp.Root;
 
 /**
  * Test class for the AHP tree
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
@@ -57,7 +59,7 @@ public class TestAhp {
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		root.calculateRanking(alts);
 		System.out.println(
-				"======================================================");
+			"======================================================");
 		System.out.println(root.resultToString());
 		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
 		for (TestingAlternative currentAlt : alts) {

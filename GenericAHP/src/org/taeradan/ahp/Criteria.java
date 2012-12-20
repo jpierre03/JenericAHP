@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,6 +17,8 @@
  */
 package org.taeradan.ahp;
 
+import org.jdom.Element;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
@@ -26,10 +28,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom.Element;
 
 /**
  * This class represents the criterias of the AHP tree, it contains Indicators and it executes its part of the AHP algorithm.
+ *
  * @author Yves Dubromelle
  */
 public class Criteria {
@@ -67,6 +69,7 @@ public class Criteria {
 
 	/**
 	 * Creates a AHP Criteria from a JDOM Element
+	 *
 	 * @param xmlCriteria
 	 */
 	public Criteria(final Element xmlCriteria) {
@@ -87,20 +90,20 @@ public class Criteria {
 //		Consistency verification
 		if (!consistencyChecker.isConsistent(matrixIndInd, vectorIndCr)) {
 			Logger.getAnonymousLogger().log(Level.SEVERE,
-											"Is not consistent (criteria {0})",
-											identifier);
+				"Is not consistent (criteria {0})",
+				identifier);
 		}
 //		Initialisation of the Indicators
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(
-				"row");
+			"row");
 		indicators = new ArrayList<Indicator>(xmlIndicatorsList.size());
 //		Verification that the number of indicators matches the size of the matrix
 		if (xmlIndicatorsList.size() != xmlRowsList.size()) {
 			Logger.getAnonymousLogger().severe(
-					"Error : the number of Indicators and the size of the preference matrix does not match !");
+				"Error : the number of Indicators and the size of the preference matrix does not match !");
 		}
 //		For each indicator declared in the configuration file
 		final Iterator<Element> itxmlIndList = xmlIndicatorsList.iterator();
@@ -109,18 +112,18 @@ public class Criteria {
 //				System.out.println("\tCriteria.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriteria.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
 			final String indName = Root.indicatorPath
-								   + Indicator.class.getSimpleName()
-								   + xmlIndicator.getAttributeValue("id");
+				+ Indicator.class.getSimpleName()
+				+ xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 				@SuppressWarnings("unchecked")
 				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.
-						forName(
+					forName(
 						indName);
 //					System.out.println("\t\tCriteria.indClass="+indClass);
 //					Extraction of its constructor
 				final Constructor<? extends Indicator> indConstruct = (Constructor<? extends Indicator>) indClass.
-						getConstructor(Element.class);
+					getConstructor(Element.class);
 //					System.out.println("\t\tCriteria.indConstruct="+indConstruct);
 //					Instanciation of the indicator with its constructor
 				indicators.add(indConstruct.newInstance(xmlIndicator));
@@ -132,7 +135,7 @@ public class Criteria {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (ClassNotFoundException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : class {0} not found :{1}",
-												new Object[]{indName, e});
+					new Object[]{indName, e});
 			} catch (InstantiationException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			} catch (IllegalAccessException e) {
@@ -146,12 +149,11 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @param alternatives
 	 * @return
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(
-			final Collection<? extends Alternative> alternatives) {
+		final Collection<? extends Alternative> alternatives) {
 		PairWiseMatrix matrixAltInd;
 		matrixAltInd = new PairWiseMatrix(alternatives.size(), indicators.size());
 //		Concatenation of the indicators' alternatives vectors
@@ -159,7 +161,7 @@ public class Criteria {
 		int index = 0;
 		while (itIndicators.hasNext()) {
 			matrixAltInd.setMatrix(0, alternatives.size() - 1, index, index, itIndicators.next().
-					calculateAlternativesPriorityVector(alternatives));
+				calculateAlternativesPriorityVector(alternatives));
 			index++;
 		}
 //		Calculation of the criteria's alternatives vector
@@ -170,6 +172,7 @@ public class Criteria {
 
 	/**
 	 * Returns a string describing the criteria, but not its children
+	 *
 	 * @return Criteria as a String
 	 */
 	@Override
@@ -179,6 +182,7 @@ public class Criteria {
 
 	/**
 	 * Returns a string describing the criteria and all its children
+	 *
 	 * @return Criteria and children as a String
 	 */
 	public String toStringRecursive() {
@@ -189,9 +193,9 @@ public class Criteria {
 		int index = 0;
 		while (itIndicators.hasNext()) {
 			string.append("\n\t\t(").
-					append(printFormat.format(vectorIndCr.get(index, 0))).
-					append(") ").
-					append(itIndicators.next());
+				append(printFormat.format(vectorIndCr.get(index, 0))).
+				append(") ").
+				append(itIndicators.next());
 			index++;
 		}
 		return string.toString();
@@ -199,6 +203,7 @@ public class Criteria {
 
 	/**
 	 * Returns a JDOM element that represents the criteria and all its children
+	 *
 	 * @return JDOM Element representing the criteria and children
 	 */
 	public Element toXml() {
@@ -214,7 +219,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String resultToString() {
@@ -228,7 +232,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String getIdentifier() {
@@ -236,7 +239,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @param identifier
 	 */
 	public void setIdentifier(final String identifier) {
@@ -244,7 +246,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public PairWiseMatrix getMatrixInd() {
@@ -252,7 +253,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @param matrixInd
 	 */
 	public void setMatrixInd(final PairWiseMatrix matrixInd) {
@@ -260,7 +260,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String getName() {
@@ -268,7 +267,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @param name
 	 */
 	public void setName(final String name) {
@@ -276,7 +274,6 @@ public class Criteria {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public Collection<Indicator> getIndicators() {

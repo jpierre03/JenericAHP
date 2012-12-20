@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -26,14 +26,14 @@ import java.util.Collection;
 
 /**
  * Dummy implementation of an AHP indicator
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class IndicatorI33
-		extends Indicator {
+	extends Indicator {
 
 	/**
-	 *
 	 * @param xmlIndicator
 	 */
 	public IndicatorI33(final Element xmlIndicator) {
@@ -42,7 +42,7 @@ public class IndicatorI33
 
 	@Override
 	public double calculateAlternativeValue(final int altIndex,
-											final Collection<? extends Alternative> alternatives) {
+						final Collection<? extends Alternative> alternatives) {
 		return ((TestingAlternative) alternatives.toArray()[altIndex]).valueI32;
 	}
 }

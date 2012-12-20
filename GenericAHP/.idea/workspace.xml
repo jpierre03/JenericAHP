@@ -7,8 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="88883983-f085-4136-87e4-d6a67d99b089" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/jpierre03.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/AbsoluteConstraints.java" afterPath="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/AbsoluteConstraints.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/AbsoluteLayout.java" afterPath="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/AbsoluteLayout.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/taeradan/ahp/Alternative.java" afterPath="$PROJECT_DIR$/src/org/taeradan/ahp/Alternative.java" />
@@ -63,23 +61,25 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_conf.dtd" afterPath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_conf.dtd" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_conf.xml" afterPath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_conf.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_confDocumentation.html" afterPath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_confDocumentation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-before-profiler.xml" afterPath="$PROJECT_DIR$/build-before-profiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/build-impl.xml" afterPath="$PROJECT_DIR$/nbproject/build-impl.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consistent-matrix.xml" afterPath="$PROJECT_DIR$/consistent-matrix.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/controversial_test.xml" afterPath="$PROJECT_DIR$/src/org/taeradan/ahp/conf/controversial_test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/profiler-build-impl.xml" afterPath="$PROJECT_DIR$/nbproject/profiler-build-impl.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/project.xml" afterPath="$PROJECT_DIR$/nbproject/project.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unconsistent-matrix.xml" afterPath="$PROJECT_DIR$/unconsistent-matrix.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JenericAHP.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356036909194" ignored="false" />
     <file path="/fragment.java" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356036207411" ignored="false" />
     <file path="/a.groovy" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356036999233" ignored="false" />
-    <file path="/a.java" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356037419388" ignored="false" />
+    <file path="/a.java" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356037914754" ignored="false" />
     <file path="/sample.java" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356037392861" ignored="false" />
+    <file path="/a.xml" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356037924768" ignored="false" />
+    <file path="/MonCellRenderer.java" changelist="88883983-f085-4136-87e4-d6a67d99b089" time="1356038091853" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +167,7 @@
         <option value="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/dfccc.java" />
         <option value="$PROJECT_DIR$/src/org/netbeans/lib/awtextra/AbsoluteConstraints.java" />
         <option value="$PROJECT_DIR$/src/org/taeradan/ahp/PairWiseMatrix.java" />
+        <option value="$PROJECT_DIR$/src/org/taeradan/ahp/ConsistencyMaker/MonCellRenderer.java" />
       </list>
     </option>
   </component>
@@ -272,6 +273,58 @@
               <option name="myItemId" value="org" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="taeradan.ahp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ConsistencyMaker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JenericAHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GenericAHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="taeradan.ahp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ConsistencyMaker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MonCellRenderer.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JenericAHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GenericAHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="netbeans.lib.awtextra" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -300,7 +353,7 @@
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="114" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="73" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="57" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="79" />
     <property name="project.structure.proportion" value="0.0" />
@@ -326,7 +379,7 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Java" />
+    <property name="options.lastSelected" value="preferences.sourceCode.XML" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
@@ -521,16 +574,16 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977304" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24938725" sideWeight="0.40088105" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18811275" sideWeight="0.40088105" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24938725" sideWeight="0.59030837" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18811275" sideWeight="0.59030837" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31016043" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32977304" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -595,11 +648,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/taeradan/ahp/conf/ahp_conf.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="18" selection-start="2728" selection-end="2728" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/taeradan/ahp/Root.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="25" selection-start="1593" selection-end="1593" vertical-scroll-proportion="0.0" />
@@ -705,6 +753,13 @@
             <element signature="e#1495#1525#0" expanded="false" />
             <element signature="e#1868#1898#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/taeradan/ahp/ConsistencyMaker/MonCellRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="9" selection-start="1928" selection-end="1928" vertical-scroll-proportion="1.293984">
+          <folding />
         </state>
       </provider>
     </entry>

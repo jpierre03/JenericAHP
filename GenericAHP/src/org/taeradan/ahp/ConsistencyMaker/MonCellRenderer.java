@@ -8,15 +8,13 @@ package org.taeradan.ahp.ConsistencyMaker;
  *
  * @author Yannick
  */
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JFrame;
 
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 public class MonCellRenderer
-		extends DefaultTableCellRenderer {
+	extends DefaultTableCellRenderer {
 
 	int row;
 	int col;
@@ -42,40 +40,39 @@ public class MonCellRenderer
 		this.col = col;
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value,
-												   boolean isSelected, boolean hasFocus, int row,
-												   int column) {
+	public Component getTableCellRendererComponent(JTable table,
+						       Object value,
+						       boolean isSelected,
+						       boolean hasFocus,
+						       int row,
+						       int column) {
+
 		Component cell = super.getTableCellRendererComponent(table, value,
-															 isSelected, hasFocus, row, column);
+			isSelected, hasFocus, row, column);
 
 		if (row == this.row && column == this.col) {
 			cell.setBackground(Color.YELLOW);
 		} else {
 			cell.setBackground(Color.WHITE);
 		}
-		for(int r=0;r<table.getRowCount();r++)
-		{
-			for(int c=0;c<table.getColumnCount();c++)
-			{
-				if((column<row||column==row)&&(column!=0))
-						cell.setBackground(Color.lightGray);
-				else if(row==0) cell.setBackground(Color.GRAY);
-				else if(column==0) cell.setBackground(Color.GRAY);
+		for (int r = 0; r < table.getRowCount(); r++) {
+			for (int c = 0; c < table.getColumnCount(); c++) {
+				if ((column < row || column == row) && (column != 0))
+					cell.setBackground(Color.lightGray);
+				else if (row == 0) cell.setBackground(Color.GRAY);
+				else if (column == 0) cell.setBackground(Color.GRAY);
 				//else cell.setBackground(Color.WHITE);
 			}
 		}
 		return cell;
 	}
 }
-/*
- * classe de test
- */
-class testCellRenderer{
-	public static void main(String args[])
-	{
+
+class TestCellRenderer {
+	public static void main(String args[]) {
 		MyMatrix MyMatrix = new MyMatrix(5, 5);
 		JTable matable = new JTable(5, 5);
-		int j =0;
+		int j = 0;
 		MonCellRenderer moncell = new MonCellRenderer(0, 0);
 		matable.setDefaultRenderer(Object.class, moncell);
 		JFrame jFrame = new JFrame();
@@ -89,7 +86,6 @@ class testCellRenderer{
 			moncell.setCol(j);
 		}
 		*/
-		
-	}
 
+	}
 }

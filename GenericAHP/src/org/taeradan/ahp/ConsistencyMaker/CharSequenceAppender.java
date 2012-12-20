@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 
 /**
  * @author Marianne
- * This class allows to insert separators (used in csv files) or datas in a file
+ *         This class allows to insert separators (used in csv files) or datas in a file
  */
 public class CharSequenceAppender {
 
@@ -19,6 +19,7 @@ public class CharSequenceAppender {
 
 	/**
 	 * Write an object in the opened file
+	 *
 	 * @param object
 	 */
 	public void append(CharSequence object) {
@@ -42,6 +43,7 @@ public class CharSequenceAppender {
 
 	/**
 	 * Write a matrix in the opened file
+	 *
 	 * @param myMatrix
 	 */
 	public void insertMatrix(MyMatrix myMatrix) {
@@ -51,7 +53,7 @@ public class CharSequenceAppender {
 			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
 
 
-				chaine += myMatrix.getMatrixValue(i, j).getValue()+";";
+				chaine += myMatrix.getMatrixValue(i, j).getValue() + ";";
 
 			}
 			output.append(chaine);

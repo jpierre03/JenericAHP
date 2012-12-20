@@ -1,99 +1,136 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>DTD Grammar Documentation</title>
-<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+    <title>DTD Grammar Documentation</title>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8"/>
 </head>
 
 <!-- Generated on 6 avr. 2009 by NetBeans XML module. -->
 <body>
 
-<hr />
+<hr/>
 <h2>Element Index</h2>
-<ul><li><tt><a href="#criteria">criteria</a></tt></li>
-<li><tt><a href="#elt">elt</a></tt></li>
-<li><tt><a href="#indicator">indicator</a></tt></li>
-<li><tt><a href="#name">name</a></tt></li>
-<li><tt><a href="#prefmatrix">prefmatrix</a></tt></li>
-<li><tt><a href="#root">root</a></tt></li>
-<li><tt><a href="#row">row</a></tt></li>
+<ul>
+    <li><tt><a href="#criteria">criteria</a></tt></li>
+    <li><tt><a href="#elt">elt</a></tt></li>
+    <li><tt><a href="#indicator">indicator</a></tt></li>
+    <li><tt><a href="#name">name</a></tt></li>
+    <li><tt><a href="#prefmatrix">prefmatrix</a></tt></li>
+    <li><tt><a href="#root">root</a></tt></li>
+    <li><tt><a href="#row">row</a></tt></li>
 </ul>
 
-<hr />
+<hr/>
 <h2>Element Details</h2>
 
 
-<hr />
+<hr/>
 <h2><a name="root"></a>root</h2>
+
 <div>The root element of the XML document is the root element of the AHP tree.
-It must contain a name, a preference matrix and an array of criterias elements.</div>
+    It must contain a name, a preference matrix and an array of criterias elements.
+</div>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(<a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#criteria">criteria</a>*)</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="name"></a>name</h2>
+
 <div>The name of the AHP tree (or the goal of this AHP instance).</div>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(#PCDATA)*</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#root">root</a>, <a href="#criteria">criteria</a>, <a href="#indicator">indicator</a></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="prefmatrix"></a>prefmatrix</h2>
-<div>The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criteria.
-Contains rows.
-It must have as much rows and colums than the number of elements compared.</div>
+
+<div>The preference matrix is a square matrix that establish preferences between each criterias in the root or each
+    indicators of a given criteria.
+    Contains rows.
+    It must have as much rows and colums than the number of elements compared.
+</div>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(<a href="#row">row</a>)*</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#root">root</a>, <a href="#criteria">criteria</a></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="row"></a>row</h2>
+
 <div>A row of the preference matrix, contains elements.</div>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(<a href="#elt">elt</a>)*</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#prefmatrix">prefmatrix</a></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="elt"></a>elt</h2>
-<div>An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference.</div>
+
+<div>An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference.
+</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA value</tt></li>
+<ul>
+    <li><tt>#IMPLIED CDATA value</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
+
 <p><tt>EMPTY</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#row">row</a></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="criteria"></a>criteria</h2>
+
 <div>A criteria contains a name, a preference matrix and an array of indicators.</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA id</tt></li>
+<ul>
+    <li><tt>#IMPLIED CDATA id</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(<a href="#name">name</a>, <a href="#prefmatrix">prefmatrix</a>, <a href="#indicator">indicator</a>*)</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#root">root</a></tt></p>
 
 
-<hr />
+<hr/>
 <h2><a name="indicator"></a>indicator</h2>
+
 <div>An indicator only contains a name.</div>
 <p><b>Declared Attributes</b></p>
-<ul><li><tt>#IMPLIED CDATA id</tt></li>
+<ul>
+    <li><tt>#IMPLIED CDATA id</tt></li>
 </ul>
 <p><b>Element Content Model</b></p>
+
 <p><tt>(<a href="#name">name</a>)</tt></p>
+
 <p><b>Referenced by</b></p>
+
 <p><tt><a href="#criteria">criteria</a></tt></p>
-</body></html>
+</body>
+</html>

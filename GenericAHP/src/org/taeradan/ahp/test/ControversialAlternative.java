@@ -20,11 +20,10 @@ package org.taeradan.ahp.test;
 import org.taeradan.ahp.Alternative;
 
 /**
- *
  * @author Yves Dubromelle
  */
 public class ControversialAlternative
-		implements Alternative {
+	implements Alternative {
 
 	/**
 	 *
@@ -44,7 +43,6 @@ public class ControversialAlternative
 	public double valueIV;
 
 	/**
-	 *
 	 * @param name
 	 * @param valueIT
 	 * @param valueIV

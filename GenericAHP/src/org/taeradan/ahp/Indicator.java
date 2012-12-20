@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,12 +17,14 @@
  */
 package org.taeradan.ahp;
 
-import java.util.Collection;
 import org.jdom.Element;
+
+import java.util.Collection;
 
 /**
  * This class provides the basis of the indicators of AHP. It is abstract because we can't know what the calculateIndicator() method should do for each user.<br/>
  * The indicators implementing this class must be names with the syntax : "IndicatorCxIy", x being the criteria's number and y the indicator number within the criteria.
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
@@ -57,6 +59,7 @@ public abstract class Indicator {
 
 	/**
 	 * Creates an Indicator from a JDOM Element
+	 *
 	 * @param xmlIndicator JDOM Element
 	 */
 	public Indicator(final Element xmlIndicator) {
@@ -65,11 +68,12 @@ public abstract class Indicator {
 
 	/**
 	 * Method called by the criterias for the execution of the AHP algorithm.
+	 *
 	 * @param alts
 	 * @return MCr vector
 	 */
 	public PriorityVector calculateAlternativesPriorityVector(
-			final Collection<? extends Alternative> alts) {
+		final Collection<? extends Alternative> alts) {
 		alternatives = alts;
 		final int dimension = alternatives.size();
 		double[] altValues = new double[dimension];
@@ -98,15 +102,17 @@ public abstract class Indicator {
 
 	/**
 	 * Method that calculates the value (floating point) of the indicator for an alternative i.
-	 * @param altIndex Alternative to be evaluated from the list
+	 *
+	 * @param altIndex     Alternative to be evaluated from the list
 	 * @param alternatives
 	 * @return Indicator value
 	 */
 	public abstract double calculateAlternativeValue(int altIndex,
-													 Collection<? extends Alternative> alternatives);
+							 Collection<? extends Alternative> alternatives);
 
 	/**
 	 * Returns a string describing the indicator
+	 *
 	 * @return String describing the indicator
 	 */
 	@Override
@@ -122,6 +128,7 @@ public abstract class Indicator {
 
 	/**
 	 * Returns a JDOM element that represents the indicator
+	 *
 	 * @return JDOM Element representing the indicator
 	 */
 	public Element toXml() {
@@ -137,7 +144,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @param xmlIndicator
 	 */
 	protected final void fromXml(final Element xmlIndicator) {
@@ -173,12 +179,11 @@ public abstract class Indicator {
 		}
 		string.append("\n\t\tvectorAltInd=\n");
 		string.append(PairWiseMatrix.toString(vectorAltInd,
-												"\t\t"));
+			"\t\t"));
 		return string.toString();
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String getIdentifier() {
@@ -186,7 +191,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @param identifier
 	 */
 	public void setIdentifier(final String identifier) {
@@ -194,7 +198,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public String getName() {
@@ -202,7 +205,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @param name
 	 */
 	public void setName(final String name) {
@@ -210,7 +212,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public boolean isMaximized() {
@@ -218,7 +219,6 @@ public abstract class Indicator {
 	}
 
 	/**
-	 *
 	 * @param maximization
 	 */
 	public void setMaximization(final boolean maximization) {
