@@ -242,22 +242,23 @@ public class AHPRoot {
 			System.out.println("criteria = " + criteria.size());
 		}
 		for (Criterion criterion : this.criteria) {
-			PriorityVector temp = criterion.calculateAlternativesPriorityVector(alternatives);
+			final PriorityVector priorityVector = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
 				System.out.println("criterion n= " + index);
-				System.out.println("alternatives vector n= " + temp.getRowDimension());
-				temp.print(5, 4);
+				System.out.println("alternatives vector n= " + priorityVector.getRowDimension());
+				priorityVector.print(5, 4);
 				matrixAlternativesCriteria.print(5, 4);
 			}
-			matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, temp);
+			matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
 			index++;
 		}
 //		Calculation of the final alternatives priority vector
 		vectorAlternativesGoal = new PriorityVector(matrixAlternativesCriteria.getRowDimension());
 		vectorAlternativesGoal.setMatrix(alternatives.size() - 1, matrixAlternativesCriteria.times(vectorCriteriaGoal));
-//		Ranking of the alternatives with the MOg vector
-		double[][] sortedVectorAltOg = vectorAlternativesGoal.getArrayCopy();
-//		vectorAlternativesGoal.getVector().print(6, 4);
+
+//			Ranking of the alternatives with the MOg vector
+		final double[][] sortedVectorAlternativesGoal = vectorAlternativesGoal.getArrayCopy();
+//			vectorAlternativesGoal.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
@@ -269,27 +270,28 @@ public class AHPRoot {
 		for (int i = 0; i < alternatives.size(); i++) {
 			minIndex = i;
 			for (int j = i + 1; j < alternatives.size(); j++) {
-				if (sortedVectorAltOg[j][0] < sortedVectorAltOg[minIndex][0]) {
+				if (sortedVectorAlternativesGoal[j][0] < sortedVectorAlternativesGoal[minIndex][0]) {
 					minIndex = j;
 				}
 			}
-//			indexes[i] <-> indexes[minIndex]
+//				indexes[i] <-> indexes[minIndex]
 			tmpIndex = originIndexes[i];
 			originIndexes[i] = originIndexes[minIndex];
 			originIndexes[minIndex] = tmpIndex;
-			tmpValue = sortedVectorAltOg[i][0];
-//			vector[i] <-> vector[minIndex]
-			sortedVectorAltOg[i][0] = sortedVectorAltOg[minIndex][0];
-			sortedVectorAltOg[minIndex][0] = tmpValue;
+			tmpValue = sortedVectorAlternativesGoal[i][0];
+//				vector[i] <-> vector[minIndex]
+			sortedVectorAlternativesGoal[i][0] = sortedVectorAlternativesGoal[minIndex][0];
+			sortedVectorAlternativesGoal[minIndex][0] = tmpValue;
 			ranks[alternatives.size() - i - 1] = originIndexes[i];
-//			System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
-//							   + sortedVectorAltOg[i][0]);
+//				System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
+//							   + sortedVectorAlternativesGoal[i][0]);
 		}
 		index = 0;
 		for (int i : ranks) {
 			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
 			index++;
 		}
+
 		isCalculationDone = true;
 	}
 
