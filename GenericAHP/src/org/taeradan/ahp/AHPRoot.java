@@ -49,13 +49,13 @@ public class AHPRoot {
 	/** Contains the path to access indicators */
 	public static String indicatorPath = "org.taeradan.ahp.test.ind.";
 	//	AHP configuration attributes
-	private           String               name;
-	private transient PairWiseMatrix       matrixCriteriaCriteria;
-	private transient PriorityVector       vectorCriteriaGoal;
-	private transient Collection<Criteria> criterias;
+	private           String                name;
+	private transient PairWiseMatrix        matrixCriteriaCriteria;
+	private transient PriorityVector        vectorCriteriaGoal;
+	private transient Collection<Criterion> criteria;
 	//	AHP execution attributes
-	private transient PriorityVector       vectorAlternativesGoal;
-	private transient Matrix               matrixAlternativesCriteria;
+	private transient PriorityVector        vectorAlternativesGoal;
+	private transient Matrix                matrixAlternativesCriteria;
 	//	Execution control attributes
 	private transient    boolean            isCalculationDone  = false;
 	private final        ConsistencyChecker consistencyChecker = new ConsistencyChecker();
@@ -71,7 +71,7 @@ public class AHPRoot {
 		if (inFile == null) {
 			name = "";
 			matrixCriteriaCriteria = new PairWiseMatrix();
-			criterias = new ArrayList<Criteria>();
+			criteria = new ArrayList<>();
 		} else {
 			AHPRoot.indicatorPath = indicatorPath;
 //			XML parser creation
@@ -92,29 +92,31 @@ public class AHPRoot {
 					Logger.getAnonymousLogger().severe(
 							"Is not consistent (root)");
 				}
-//				Initialisation of the criterias
+//				Initialisation of the criteria
 				@SuppressWarnings("unchecked")
-				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren(
+				final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren(
 						"criteria");
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
-				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
-//				Verification that the number of criterias matches the size of the preference matrix
-				if (xmlCriteriasList.size() != xmlRowsList.size()) {
+				criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
+//				Verification that the number of criteria matches the size of the preference matrix
+				if (xmlCriteriaList.size() != xmlRowsList.size()) {
 					Logger.getAnonymousLogger().severe(
-							"Error : the number of criterias and the size of the preference matrix does not match !");
+							"Error : the number of criteria and the size of the preference matrix does not match !");
 				}
-				final Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
-				while (itXmlCritList.hasNext()) {
-					final Element xmlCriteria = itXmlCritList.next();
-					criterias.add(new Criteria(xmlCriteria));
+
+				final Iterator<Element> xmlCriteriaListIterator = xmlCriteriaList.iterator();
+				while (xmlCriteriaListIterator.hasNext()) {
+					final Element xmlCriteria = xmlCriteriaListIterator.next();
+
+					criteria.add(new Criterion(xmlCriteria));
 				}
 			} catch (FileNotFoundException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.
 																									getAbsolutePath());
 				name = "unknow";
 				matrixCriteriaCriteria = new PairWiseMatrix();
-				criterias = new ArrayList<Criteria>();
+				criteria = new ArrayList<>();
 			} catch (JDOMException e) {
 				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
 			} catch (IOException e) {
@@ -123,13 +125,14 @@ public class AHPRoot {
 		}
 	}
 
-	public void delCriteria(final Criteria crit) {
-		if (criterias.contains(crit)) {
-			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
-			criterias.remove(crit);
-			matrixCriteriaCriteria.remove(critIndex);
+	public void delCriteria(final Criterion criterion) {
+		if (criteria.contains(criterion)) {
+
+			final int criterionIndex = new ArrayList<Criterion>(criteria).lastIndexOf(criterion);
+			criteria.remove(criterion);
+			matrixCriteriaCriteria.remove(criterionIndex);
 		} else {
-			Logger.getAnonymousLogger().severe("Criteria not found");
+			Logger.getAnonymousLogger().severe("Criterion not found");
 		}
 	}
 
@@ -140,7 +143,7 @@ public class AHPRoot {
 	 */
 	@Override
 	public String toString() {
-		return " AHP Root : " + name + ", " + criterias.size() + " criteria";
+		return " AHP Root : " + name + ", " + criteria.size() + " criteria";
 	}
 
 	/**
@@ -154,16 +157,16 @@ public class AHPRoot {
 
 		sb.append("\n").append(matrixCriteriaCriteria);
 		final DecimalFormat printFormat = new DecimalFormat("0.000");
-		final Iterator<Criteria> criteriaIterator = criterias.iterator();
+		final Iterator<Criterion> criteriaIterator = criteria.iterator();
 		int index = 0;
 
 		while (criteriaIterator.hasNext()) {
-			final Criteria criteria = criteriaIterator.next();
+			final Criterion criterion = criteriaIterator.next();
 
 			sb.append("\n\t(");
 			sb.append(printFormat.format(vectorCriteriaGoal.get(index, 0)));
 			sb.append(") ");
-			sb.append(criteria.toStringRecursive());
+			sb.append(criterion.toStringRecursive());
 			index++;
 		}
 
@@ -179,27 +182,27 @@ public class AHPRoot {
 		final Element xmlRoot = new Element("root");
 		xmlRoot.addContent(new Element("name").setText(name));
 		xmlRoot.addContent(matrixCriteriaCriteria.toXml());
-		final Iterator<Criteria> itCriterias = criterias.iterator();
+		final Iterator<Criterion> itCriterias = criteria.iterator();
 		while (itCriterias.hasNext()) {
 			xmlRoot.addContent(itCriterias.next().toXml());
 		}
 		return xmlRoot;
 	}
 
-	/** @return  */
-	public String resultToString() {
-		final StringBuilder string = new StringBuilder();
+	public StringBuilder resultToString() {
+		final StringBuilder sb = new StringBuilder();
 		if (isCalculationDone) {
-			string.append(this.toString());
-			final Iterator<Criteria> itCriterias = criterias.iterator();
+			sb.append(this.toString());
+			final Iterator<Criterion> itCriterias = criteria.iterator();
 			while (itCriterias.hasNext()) {
-				string.append("\n\t").append(itCriterias.next().resultToString());
+				sb.append("\n\t");
+				sb.append(itCriterias.next().resultToString());
 			}
-			string.append("\nvectorAlternativesGoal=\n").append(PairWiseMatrix.toString(vectorAlternativesGoal, null));
+			sb.append("\nvectorAlternativesGoal=\n").append(PairWiseMatrix.toString(vectorAlternativesGoal, null));
 		} else {
-			string.append("There is no result, please do a ranking first");
+			sb.append("There is no result, please do a ranking first");
 		}
-		return string.toString();
+		return sb;
 	}
 
 	/**
@@ -225,22 +228,22 @@ public class AHPRoot {
 
 	/**
 	 * Root method of the AHP execution. Calculates the final alternatives ranking with the alternatives priority vectors
-	 * from the criterias and the criterias priority vectors.
+	 * from the criteria and the criteria priority vectors.
 	 *
 	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAlternativesCriteria = new Matrix(alternatives.size(), criterias.size());
-//		Concatenation in a matrix of the vectors calculated by the criterias
+		matrixAlternativesCriteria = new Matrix(alternatives.size(), criteria.size());
+//		Concatenation in a matrix of the vectors calculated by the criteria
 		int index = 0;
 		if (DEBUG) {
 			System.out.println("alternatives = " + alternatives.size());
-			System.out.println("criterias = " + criterias.size());
+			System.out.println("criteria = " + criteria.size());
 		}
-		for (Criteria criteria : criterias) {
-			PriorityVector temp = criteria.calculateAlternativesPriorityVector(alternatives);
+		for (Criterion criterion : this.criteria) {
+			PriorityVector temp = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
-				System.out.println("criteria n= " + index);
+				System.out.println("criterion n= " + index);
 				System.out.println("alt vector n= " + temp.getRowDimension());
 				temp.print(5, 4);
 				matrixAlternativesCriteria.print(5, 4);
@@ -301,8 +304,8 @@ public class AHPRoot {
 		this.name = name;
 	}
 
-	public Collection<Criteria> getCriterias() {
-		return criterias;
+	public Collection<Criterion> getCriteria() {
+		return criteria;
 	}
 
 	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {

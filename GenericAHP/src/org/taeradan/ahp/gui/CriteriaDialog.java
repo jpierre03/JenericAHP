@@ -19,14 +19,14 @@ package org.taeradan.ahp.gui;
 
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
-import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.Criterion;
 import org.taeradan.ahp.Indicator;
 import org.taeradan.ahp.PairWiseMatrix;
 
 import java.util.logging.Logger;
 
 /**
- * Dialog used to configure a Criteria's informations and preference matrix
+ * Dialog used to configure a Criterion's informations and preference matrix
  *
  * @author Yves Dubromelle
  */
@@ -40,7 +40,7 @@ public class CriteriaDialog
 	/**
 	 *
 	 */
-	final private Criteria criteria;
+	final private Criterion                criterion;
 	/**
 	 *
 	 */
@@ -51,17 +51,17 @@ public class CriteriaDialog
 	 *
 	 * @param parent
 	 * @param modal
-	 * @param criteria
+	 * @param criterion
 	 */
-	public CriteriaDialog(final java.awt.Frame parent, final boolean modal, final Criteria criteria) {
+	public CriteriaDialog(final java.awt.Frame parent, final boolean modal, final Criterion criterion) {
 		super(parent, modal);
-		this.criteria = criteria;
+		this.criterion = criterion;
 		guiPrefMatrix = new PairWiseMatrixTableModel();
 		initTable();
 		initComponents();
 		guiPrefMatrix.addTableModelListener(new PairWiseMatrixChangeListener());
-		jTextFieldId.setText(criteria.getIdentifier());
-		jTextFieldName.setText(criteria.getName());
+		jTextFieldId.setText(criterion.getIdentifier());
+		jTextFieldName.setText(criterion.getName());
 	}
 
 	/**
@@ -156,13 +156,13 @@ public class CriteriaDialog
 
 	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
 		initTable();
-		jTextFieldId.setText(criteria.getIdentifier());
-		jTextFieldName.setText(criteria.getName());
+		jTextFieldId.setText(criterion.getIdentifier());
+		jTextFieldName.setText(criterion.getName());
 	}//GEN-LAST:event_jButtonReloadActionPerformed
 
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		criteria.setIdentifier(jTextFieldId.getText());
-		criteria.setName(jTextFieldName.getText());
+		criterion.setIdentifier(jTextFieldId.getText());
+		criterion.setName(jTextFieldName.getText());
 		final MyMatrix matrix =
 			new MyMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		Logger.getAnonymousLogger().info(
@@ -181,7 +181,7 @@ public class CriteriaDialog
 				matrix.set(i, j, value);
 			}
 		}
-		criteria.setMatrixInd((PairWiseMatrix) matrix);
+		criterion.setMatrixIndicatorIndicator((PairWiseMatrix) matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -200,13 +200,13 @@ public class CriteriaDialog
 	 *
 	 */
 	private void initTable() {
-		final int matrixSize = criteria.getIndicators().size();
+		final int matrixSize = criterion.getIndicators().size();
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
 		for (int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Indicator) criteria.getIndicators().toArray()[i]).getIdentifier();
+			columnNames[i] = ((Indicator) criterion.getIndicators().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = criteria.getMatrixInd().get(i, j);
+				data[i][j] = criterion.getMatrixIndicatorIndicator().get(i, j);
 			}
 		}
 		guiPrefMatrix.setDataVector(data, columnNames);
@@ -217,7 +217,7 @@ public class CriteriaDialog
 	 * @param column
 	 */
 	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(criteria.getMatrixInd().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(criterion.getMatrixIndicatorIndicator().get(row, column), row, column);
 	}
 
 	/**

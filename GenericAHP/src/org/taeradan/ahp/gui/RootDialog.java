@@ -19,7 +19,7 @@ package org.taeradan.ahp.gui;
 
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.AHPRoot;
-import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.Criterion;
 import org.taeradan.ahp.PairWiseMatrix;
 
 /**
@@ -178,11 +178,11 @@ public class RootDialog
 	 *
 	 */
 	private void initTable() {
-		final int matrixSize = AHPRoot.getCriterias().size();
+		final int matrixSize = AHPRoot.getCriteria().size();
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
 		for (int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Criteria) AHPRoot.getCriterias().toArray()[i]).getIdentifier();
+			columnNames[i] = ((Criterion) AHPRoot.getCriteria().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
 				data[i][j] = AHPRoot.getMatrixCriteriaCriteria().get(i, j);
 			}

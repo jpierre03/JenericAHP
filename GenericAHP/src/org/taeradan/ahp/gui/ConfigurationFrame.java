@@ -18,7 +18,7 @@
 package org.taeradan.ahp.gui;
 
 import org.taeradan.ahp.AHPRoot;
-import org.taeradan.ahp.Criteria;
+import org.taeradan.ahp.Criterion;
 import org.taeradan.ahp.Indicator;
 
 import javax.swing.*;
@@ -201,8 +201,8 @@ public class ConfigurationFrame
 					});
 					contextMenu.add(delItem);
 				}
-				if (object instanceof Criteria) {
-					final Criteria criteria = (Criteria) object;
+				if (object instanceof Criterion) {
+					final Criterion criterion = (Criterion) object;
 					final JMenuItem addItem = new JMenuItem("Add indicator");
 					addItem.addActionListener(new java.awt.event.ActionListener() {
 
@@ -225,7 +225,7 @@ public class ConfigurationFrame
 
 						@Override
 						public void actionPerformed(java.awt.event.ActionEvent evt) {
-							delCriteriaActionPerformed(criteria);
+							delCriteriaActionPerformed(criterion);
 						}
 					});
 					contextMenu.add(delItem);
@@ -316,9 +316,9 @@ public class ConfigurationFrame
 			final RootDialog dialog = new RootDialog(this, true, AHPRoot);
 			dialog.setVisible(true);
 		}
-		if (object instanceof Criteria) {
-			final Criteria criteria = (Criteria) object;
-			final CriteriaDialog dialog = new CriteriaDialog(this, true, criteria);
+		if (object instanceof Criterion) {
+			final Criterion criterion = (Criterion) object;
+			final CriteriaDialog dialog = new CriteriaDialog(this, true, criterion);
 			dialog.setVisible(true);
 		}
 		if (object instanceof Indicator) {
@@ -341,13 +341,13 @@ public class ConfigurationFrame
 	}
 
 	/**
-	 * @param criteria
+	 * @param criterion
 	 */
-	private void delCriteriaActionPerformed(final Criteria criteria) {
+	private void delCriteriaActionPerformed(final Criterion criterion) {
 		if (JOptionPane.showConfirmDialog(this,
-			"Are you sure ? The criteria and its indicators will be destroyed.",
+			"Are you sure ? The criterion and its indicators will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpAHPRoot.delCriteria(criteria);
+			ahpAHPRoot.delCriteria(criterion);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		}
 	}
@@ -395,15 +395,15 @@ public class ConfigurationFrame
 	public static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
 //		Creation of the root node
 		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
-		final Collection<Criteria> ahpCriterias = ahpAHPRoot.getCriterias();
+		final Collection<Criterion> ahpCriteria = ahpAHPRoot.getCriteria();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
 //		For each criteria in root
-		for (int i = 0; i < ahpCriterias.size(); i++) {
+		for (int i = 0; i < ahpCriteria.size(); i++) {
 //			Real criteria attached to a criteria node
-			guiCriterias.add(new DefaultMutableTreeNode(ahpCriterias.toArray()[i]));
-//			Criteria node attached to the root node
+			guiCriterias.add(new DefaultMutableTreeNode(ahpCriteria.toArray()[i]));
+//			Criterion node attached to the root node
 			guiRoot.add(guiCriterias.get(i));
-			final Collection<Indicator> ahpIndicators = ((Criteria) ahpCriterias.toArray()[i]).
+			final Collection<Indicator> ahpIndicators = ((Criterion) ahpCriteria.toArray()[i]).
 				getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators =
 				new ArrayList<DefaultMutableTreeNode>();

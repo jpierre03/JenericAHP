@@ -24,7 +24,7 @@
 	<!--- The name of the AHP tree (or the goal of this AHP instance). -->
 	<!ELEMENT name (#PCDATA)>
 
-	<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criteria.
+	<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criterion.
 	Contains rows.
 	It must have as much rows and colums than the number of elements compared. -->
 	<!ELEMENT prefmatrix (row)*>
@@ -32,13 +32,13 @@
 	<!--- A row of the preference matrix, contains elements. -->
 	<!ELEMENT row (elt)*>
 
-	<!--- An element of the preference matrix, contains the value of a criteria/criteria or indicator/indicator preference. -->
+	<!--- An element of the preference matrix, contains the value of a criterion/criterion or indicator/indicator preference. -->
 	<!ELEMENT elt EMPTY>
 	<!ATTLIST elt
 		value CDATA #REQUIRED
 		>
 
-	<!--- A criteria contains a name, a preference matrix and an array of indicators. -->
+	<!--- A criterion contains a name, a preference matrix and an array of indicators. -->
 	<!ELEMENT criteria (name,prefmatrix,indicator*)>
 	<!ATTLIST criteria
 		id CDATA #REQUIRED
