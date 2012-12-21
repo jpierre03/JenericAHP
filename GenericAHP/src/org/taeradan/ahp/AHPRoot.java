@@ -125,10 +125,10 @@ public class AHPRoot {
 		}
 	}
 
-	public void delCriteria(final Criterion criterion) {
+	public void removeCriterion(final Criterion criterion) {
 		if (criteria.contains(criterion)) {
 
-			final int criterionIndex = new ArrayList<Criterion>(criteria).lastIndexOf(criterion);
+			final int criterionIndex = new ArrayList<>(criteria).lastIndexOf(criterion);
 			criteria.remove(criterion);
 			matrixCriteriaCriteria.remove(criterionIndex);
 		} else {
@@ -210,13 +210,14 @@ public class AHPRoot {
 	 *
 	 * @param outputFile Output XML file path
 	 */
-	public void saveConfig(final String outputFile) {
+	public void saveConfiguration(final String outputFile) {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
 					new Document(toXml(),
-								 new DocType("root", getClass().getResource(
-										 "/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+								 new DocType("root",
+											 getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+
 //			Use a write format easily readable by a human
 			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file
@@ -244,7 +245,7 @@ public class AHPRoot {
 			PriorityVector temp = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
 				System.out.println("criterion n= " + index);
-				System.out.println("alt vector n= " + temp.getRowDimension());
+				System.out.println("alternatives vector n= " + temp.getRowDimension());
 				temp.print(5, 4);
 				matrixAlternativesCriteria.print(5, 4);
 			}
@@ -301,6 +302,9 @@ public class AHPRoot {
 	}
 
 	public void setName(final String name) {
+		assert name != null;
+		assert name.isEmpty() == false;
+
 		this.name = name;
 	}
 
@@ -309,6 +313,10 @@ public class AHPRoot {
 	}
 
 	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
+		assert matrix != null;
+		assert matrix.getColumnDimension() > 0;
+		assert matrix.getRowDimension() > 0;
+
 		matrixCriteriaCriteria = matrix;
 	}
 }

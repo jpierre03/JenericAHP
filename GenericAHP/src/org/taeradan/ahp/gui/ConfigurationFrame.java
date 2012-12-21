@@ -284,7 +284,7 @@ public class ConfigurationFrame
 	private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
 	{//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
 		if (fileOpened) {
-			ahpAHPRoot.saveConfig(currentFile.getAbsolutePath());
+			ahpAHPRoot.saveConfiguration(currentFile.getAbsolutePath());
 		} else {
 			jMenuItemSaveUnderActionPerformed(evt);
 		}
@@ -303,7 +303,7 @@ public class ConfigurationFrame
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			currentFile = jFileChooser.getSelectedFile();
-			ahpAHPRoot.saveConfig(currentFile.getAbsolutePath());
+			ahpAHPRoot.saveConfiguration(currentFile.getAbsolutePath());
 		}
 	}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
 
@@ -347,7 +347,7 @@ public class ConfigurationFrame
 		if (JOptionPane.showConfirmDialog(this,
 			"Are you sure ? The criterion and its indicators will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpAHPRoot.delCriteria(criterion);
+			ahpAHPRoot.removeCriterion(criterion);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		}
 	}
