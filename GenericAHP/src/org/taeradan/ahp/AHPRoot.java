@@ -39,29 +39,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This is the root class of the AHP tree. It contains Criterias and execute its part of the AHP algorithm.
+ * This is the root class of the AHP tree. It contains Criteria and execute its part of the AHP algorithm.
  *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class AHPRoot {
 
-	/**
-	 * Contains the path to access indicators
-	 */
+	/** Contains the path to access indicators */
 	public static String indicatorPath = "org.taeradan.ahp.test.ind.";
 	//	AHP configuration attributes
-	private String name;
-	transient private PairWiseMatrix matrixCrCr;
-	transient private PriorityVector vectorCrOg;
-	transient private Collection<Criteria> criterias;
+	private           String               name;
+	private transient PairWiseMatrix       matrixCriteriaCriteria;
+	private transient PriorityVector       vectorCriteriaGoal;
+	private transient Collection<Criteria> criterias;
 	//	AHP execution attributes
-	transient private PriorityVector vectorAltOg;
-	transient private Matrix matrixAltCr;
+	private transient PriorityVector       vectorAlternativesGoal;
+	private transient Matrix               matrixAlternativesCriteria;
 	//	Execution control attributes
-	transient private boolean calculationOccured = false;
-	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-	private static boolean DEBUG = false;
+	private transient    boolean            isCalculationDone  = false;
+	private final        ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+	private static final boolean            DEBUG              = false;
 
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
@@ -72,7 +70,7 @@ public class AHPRoot {
 	public AHPRoot(final File inFile, final String indicatorPath) {
 		if (inFile == null) {
 			name = "";
-			matrixCrCr = new PairWiseMatrix();
+			matrixCriteriaCriteria = new PairWiseMatrix();
 			criterias = new ArrayList<Criteria>();
 		} else {
 			AHPRoot.indicatorPath = indicatorPath;
@@ -87,24 +85,24 @@ public class AHPRoot {
 				name = xmlRoot.getChildText("name");
 //				Initialisation of the preference matrix
 				final Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
-				matrixCrCr = PairWiseMatrix.builder(xmlPrefMatrix);
-				vectorCrOg = PriorityVector.build(matrixCrCr);
+				matrixCriteriaCriteria = PairWiseMatrix.builder(xmlPrefMatrix);
+				vectorCriteriaGoal = PriorityVector.build(matrixCriteriaCriteria);
 //				Consistency verification
-				if (!consistencyChecker.isConsistent(matrixCrCr, vectorCrOg)) {
+				if (!consistencyChecker.isConsistent(matrixCriteriaCriteria, vectorCriteriaGoal)) {
 					Logger.getAnonymousLogger().severe(
-						"Is not consistent (root)");
+							"Is not consistent (root)");
 				}
 //				Initialisation of the criterias
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlCriteriasList = (List<Element>) xmlRoot.getChildren(
-					"criteria");
+						"criteria");
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criterias = new ArrayList<Criteria>(xmlCriteriasList.size());
 //				Verification that the number of criterias matches the size of the preference matrix
 				if (xmlCriteriasList.size() != xmlRowsList.size()) {
 					Logger.getAnonymousLogger().severe(
-						"Error : the number of criterias and the size of the preference matrix does not match !");
+							"Error : the number of criterias and the size of the preference matrix does not match !");
 				}
 				final Iterator<Element> itXmlCritList = xmlCriteriasList.iterator();
 				while (itXmlCritList.hasNext()) {
@@ -113,9 +111,9 @@ public class AHPRoot {
 				}
 			} catch (FileNotFoundException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.
-					getAbsolutePath());
+																									getAbsolutePath());
 				name = "unknow";
-				matrixCrCr = new PairWiseMatrix();
+				matrixCriteriaCriteria = new PairWiseMatrix();
 				criterias = new ArrayList<Criteria>();
 			} catch (JDOMException e) {
 				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
@@ -125,14 +123,12 @@ public class AHPRoot {
 		}
 	}
 
-	/**
-	 * @param crit
-	 */
+	/** @param crit  */
 	public void delCriteria(final Criteria crit) {
 		if (criterias.contains(crit)) {
 			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
 			criterias.remove(crit);
-			matrixCrCr.remove(critIndex);
+			matrixCriteriaCriteria.remove(critIndex);
 		} else {
 			Logger.getAnonymousLogger().severe("Criteria not found");
 		}
@@ -149,24 +145,30 @@ public class AHPRoot {
 	}
 
 	/**
-	 * Returns a big string (multiple lines) containing recursively the description of the whole AHP tree. Best suited for testing purposes.
+	 * Returns a big string (multiple lines) containing recursively the description of the whole AHP tree. Best suited for
+	 * testing purposes.
 	 *
 	 * @return Multiline string describing the AHP tree
 	 */
 	public String toStringRecursive() {
-		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n").append(matrixCrCr);
-		DecimalFormat printFormat = new DecimalFormat("0.000");
-		final Iterator<Criteria> itCriterias = criterias.iterator();
+		final StringBuilder sb = new StringBuilder(this.toString());
+
+		sb.append("\n").append(matrixCriteriaCriteria);
+		final DecimalFormat printFormat = new DecimalFormat("0.000");
+		final Iterator<Criteria> criteriaIterator = criterias.iterator();
 		int index = 0;
-		while (itCriterias.hasNext()) {
-			string.append("\n\t(").
-				append(printFormat.format(vectorCrOg.get(index, 0))).
-				append(") ").
-				append(itCriterias.next().toStringRecursive());
+
+		while (criteriaIterator.hasNext()) {
+			final Criteria criteria = criteriaIterator.next();
+
+			sb.append("\n\t(");
+			sb.append(printFormat.format(vectorCriteriaGoal.get(index, 0)));
+			sb.append(") ");
+			sb.append(criteria.toStringRecursive());
 			index++;
 		}
-		return string.toString();
+
+		return sb.toString();
 	}
 
 	/**
@@ -177,7 +179,7 @@ public class AHPRoot {
 	public Element toXml() {
 		final Element xmlRoot = new Element("root");
 		xmlRoot.addContent(new Element("name").setText(name));
-		xmlRoot.addContent(matrixCrCr.toXml());
+		xmlRoot.addContent(matrixCriteriaCriteria.toXml());
 		final Iterator<Criteria> itCriterias = criterias.iterator();
 		while (itCriterias.hasNext()) {
 			xmlRoot.addContent(itCriterias.next().toXml());
@@ -185,18 +187,16 @@ public class AHPRoot {
 		return xmlRoot;
 	}
 
-	/**
-	 * @return
-	 */
+	/** @return  */
 	public String resultToString() {
 		final StringBuilder string = new StringBuilder();
-		if (calculationOccured) {
+		if (isCalculationDone) {
 			string.append(this.toString());
 			final Iterator<Criteria> itCriterias = criterias.iterator();
 			while (itCriterias.hasNext()) {
 				string.append("\n\t").append(itCriterias.next().resultToString());
 			}
-			string.append("\nvectorAltOg=\n").append(PairWiseMatrix.toString(vectorAltOg, null));
+			string.append("\nvectorAlternativesGoal=\n").append(PairWiseMatrix.toString(vectorAlternativesGoal, null));
 		} else {
 			string.append("There is no result, please do a ranking first");
 		}
@@ -212,9 +212,9 @@ public class AHPRoot {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
-				new Document(toXml(),
-					new DocType("root", getClass().getResource(
-						"/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+					new Document(toXml(),
+								 new DocType("root", getClass().getResource(
+										 "/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 //			Use a write format easily readable by a human
 			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
 //			Write the output into the specified file
@@ -225,13 +225,13 @@ public class AHPRoot {
 	}
 
 	/**
-	 * Root method of the AHP execution.
-	 * Calculates the final alternatives ranking with the alternatives priority vectors from the criterias and the criterias priority vectors.
+	 * Root method of the AHP execution. Calculates the final alternatives ranking with the alternatives priority vectors
+	 * from the criterias and the criterias priority vectors.
 	 *
 	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAltCr = new Matrix(alternatives.size(), criterias.size());
+		matrixAlternativesCriteria = new Matrix(alternatives.size(), criterias.size());
 //		Concatenation in a matrix of the vectors calculated by the criterias
 		int index = 0;
 		if (DEBUG) {
@@ -244,17 +244,17 @@ public class AHPRoot {
 				System.out.println("criteria n= " + index);
 				System.out.println("alt vector n= " + temp.getRowDimension());
 				temp.print(5, 4);
-				matrixAltCr.print(5, 4);
+				matrixAlternativesCriteria.print(5, 4);
 			}
-			matrixAltCr.setMatrix(0, alternatives.size() - 1, index, index, temp);
+			matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, temp);
 			index++;
 		}
 //		Calculation of the final alternatives priority vector
-		vectorAltOg = new PriorityVector(matrixAltCr.getRowDimension());
-		vectorAltOg.setMatrix(alternatives.size() - 1, matrixAltCr.times(vectorCrOg));
+		vectorAlternativesGoal = new PriorityVector(matrixAlternativesCriteria.getRowDimension());
+		vectorAlternativesGoal.setMatrix(alternatives.size() - 1, matrixAlternativesCriteria.times(vectorCriteriaGoal));
 //		Ranking of the alternatives with the MOg vector
-		double[][] sortedVectorAltOg = vectorAltOg.getArrayCopy();
-//		vectorAltOg.getVector().print(6, 4);
+		double[][] sortedVectorAltOg = vectorAlternativesGoal.getArrayCopy();
+//		vectorAlternativesGoal.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
@@ -287,41 +287,31 @@ public class AHPRoot {
 			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
 			index++;
 		}
-		calculationOccured = true;
+		isCalculationDone = true;
 	}
 
-	/**
-	 * @return
-	 */
-	public PairWiseMatrix getMatrixCrCr() {
-		return matrixCrCr;
+	/** @return  */
+	public PairWiseMatrix getMatrixCriteriaCriteria() {
+		return matrixCriteriaCriteria;
 	}
 
-	/**
-	 * @return
-	 */
+	/** @return  */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 */
+	/** @param name  */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return
-	 */
+	/** @return  */
 	public Collection<Criteria> getCriterias() {
 		return criterias;
 	}
 
-	/**
-	 * @param matrix
-	 */
-	public void setMatrixCrCr(PairWiseMatrix matrix) {
-		matrixCrCr = matrix;
+	/** @param matrix  */
+	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
+		matrixCriteriaCriteria = matrix;
 	}
 }

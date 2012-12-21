@@ -36,13 +36,25 @@ public final class ControversialTest {
 	private ControversialTest() {
 	}
 
-	/** @param args the command line arguments */
 	public static void main(String[] args) {
 		final URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/controversial_test.xml");
 		final File aFile = new File(resource.getFile());
 
 		final AHPRoot ahpRoot = new AHPRoot(aFile, AHPRoot.indicatorPath);
 		System.out.println(ahpRoot.toStringRecursive());
+
+		final ArrayList<ControversialAlternative> alternatives = makeAlternatives();
+		ahpRoot.calculateRanking(alternatives);
+
+
+		System.out.println("======================================================");
+		System.out.println(ahpRoot.resultToString());
+		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
+
+		printRanking(alternatives);
+	}
+
+	private static ArrayList<ControversialAlternative> makeAlternatives() {
 		final ArrayList<ControversialAlternative> alts = new ArrayList<>(4);
 		alts.add(new ControversialAlternative("Alternative 1",
 											  (1 / 5.) * TEMOIN_MAX,
@@ -68,11 +80,11 @@ public final class ControversialTest {
 											  (5 / 5.) * TEMOIN_MAX,
 											  ((5 / 5.) * VARIABLE_MAX) + DECALAGE));
 		System.out.println("Alternative 5, valueIT=" + (5 / 5.) * TEMOIN_MAX + ", valueIV=" + (((5 / 5.) * VARIABLE_MAX) + DECALAGE));
-		ahpRoot.calculateRanking(alts);
-		System.out.println("======================================================");
-		System.out.println(ahpRoot.resultToString());
-		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
-		for (ControversialAlternative currentAlt : alts) {
+		return alts;
+	}
+
+	private static void printRanking(ArrayList<ControversialAlternative> alternatives) {
+		for (ControversialAlternative currentAlt : alternatives) {
 			System.out.println(currentAlt.name + " = " + currentAlt.getRank());
 		}
 	}

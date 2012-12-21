@@ -161,7 +161,7 @@ public class RootDialog
 				matrix.set(i, j, value);
 			}
 		}
-		AHPRoot.setMatrixCrCr(matrix);
+		AHPRoot.setMatrixCriteriaCriteria(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -184,7 +184,7 @@ public class RootDialog
 		for (int i = 0; i < matrixSize; i++) {
 			columnNames[i] = ((Criteria) AHPRoot.getCriterias().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = AHPRoot.getMatrixCrCr().get(i, j);
+				data[i][j] = AHPRoot.getMatrixCriteriaCriteria().get(i, j);
 			}
 		}
 		guiPrefMatrix.setDataVector(data, columnNames);
@@ -195,7 +195,7 @@ public class RootDialog
 	 * @param column
 	 */
 	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(AHPRoot.getMatrixCrCr().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(AHPRoot.getMatrixCriteriaCriteria().get(row, column), row, column);
 	}
 
 	/**
