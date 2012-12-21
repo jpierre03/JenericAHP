@@ -123,7 +123,6 @@ public class AHPRoot {
 		}
 	}
 
-	/** @param crit  */
 	public void delCriteria(final Criteria crit) {
 		if (criterias.contains(crit)) {
 			final int critIndex = new ArrayList<Criteria>(criterias).lastIndexOf(crit);
@@ -141,7 +140,7 @@ public class AHPRoot {
 	 */
 	@Override
 	public String toString() {
-		return " AHP Root : " + name + ", " + criterias.size() + " criterias";
+		return " AHP Root : " + name + ", " + criterias.size() + " criteria";
 	}
 
 	/**
@@ -290,27 +289,22 @@ public class AHPRoot {
 		isCalculationDone = true;
 	}
 
-	/** @return  */
 	public PairWiseMatrix getMatrixCriteriaCriteria() {
 		return matrixCriteriaCriteria;
 	}
 
-	/** @return  */
 	public String getName() {
 		return name;
 	}
 
-	/** @param name  */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
-	/** @return  */
 	public Collection<Criteria> getCriterias() {
 		return criterias;
 	}
 
-	/** @param matrix  */
 	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
 		matrixCriteriaCriteria = matrix;
 	}
