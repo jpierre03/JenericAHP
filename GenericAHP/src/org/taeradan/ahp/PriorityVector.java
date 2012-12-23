@@ -22,15 +22,11 @@ import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 import java.math.BigDecimal;
 
-/**
- * @author Yves Dubromelle
- */
+/** @author Yves Dubromelle */
 public class PriorityVector
-	extends MyMatrix {
+		extends MyMatrix {
 
-	/**
-	 * @param i
-	 */
+	/** @param i  */
 	public PriorityVector(int i) {
 		super(i, 1);
 	}
@@ -41,20 +37,22 @@ public class PriorityVector
 	 */
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		PriorityVector resultVector;
-//		if (matrix.getRowDimension() < 2) {
-		resultVector = new PriorityVector(dimension);
-//		}
+		assert dimension > 0;
+		assert dimension < 15 : "So huge preference matrix, you should double check";
+
+		final PriorityVector resultVector = new PriorityVector(dimension);
+		final Matrix e = new Matrix(1, dimension, 1);
 		Matrix workVector = new PriorityVector(dimension);
-		Matrix multMatrix = (Matrix) matrix.clone();
-//		matrix.print(5, 4);
-		Matrix e = new Matrix(1, dimension, 1);
+		Matrix multiplyMatrix = (Matrix) matrix.clone();
+
+		final int MAX_ITERATION = 50;
 		Matrix lastVector;
 		boolean isUnderTreshold = true;
+		int iteration = 0;
 		do {
 			lastVector = workVector;
-			final Matrix numerator = multMatrix.times(e.transpose());
-			final Matrix denominator = e.times(multMatrix).times(e.transpose());
+			final Matrix numerator = multiplyMatrix.times(e.transpose());
+			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
 			if (lastVector == null) {
 				isUnderTreshold = false;
@@ -69,8 +67,12 @@ public class PriorityVector
 					}
 				}
 			}
-			multMatrix = multMatrix.times(matrix);
+			multiplyMatrix = multiplyMatrix.times(matrix);
+
+			iteration++;
+			assert iteration < MAX_ITERATION : "This should already be done. Something is wrong";
 		} while (!isUnderTreshold);
+
 		resultVector.setMatrix(dimension - 1, workVector);
 		return resultVector;
 	}
