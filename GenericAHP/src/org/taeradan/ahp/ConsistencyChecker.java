@@ -93,11 +93,14 @@ public class ConsistencyChecker {
 				if (consistencyRatio < 0.1) {
 					isConsistent = true;
 				}
-			} else {
+			}
+
+			if (dimension < 1 || dimension > 15) {
 				Logger.getAnonymousLogger().severe(
 						"Preference matrix and priority vector are too wide (15 max) or empty !!"
 						+ dimension);
 			}
+
 		} else {
 			Logger.getAnonymousLogger().severe(
 					"The matrix and vector dimension does not match !!"
