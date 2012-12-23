@@ -73,7 +73,9 @@ public class AHPRoot {
 			matrixCriteriaCriteria = new PairWiseMatrix();
 			criteria = new ArrayList<>();
 		} else {
-			AHPRoot.indicatorPath = indicatorPath;
+			if (indicatorPath != null) {
+				AHPRoot.indicatorPath = indicatorPath;
+			}
 //			XML parser creation
 			final SAXBuilder parser = new SAXBuilder();
 			try {
@@ -94,8 +96,7 @@ public class AHPRoot {
 				}
 //				Initialisation of the criteria
 				@SuppressWarnings("unchecked")
-				final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren(
-						"criteria");
+				final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
 				@SuppressWarnings("unchecked")
 				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 				criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
@@ -112,9 +113,8 @@ public class AHPRoot {
 					criteria.add(new Criterion(xmlCriteria));
 				}
 			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.
-																									getAbsolutePath());
-				name = "unknow";
+				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.getAbsolutePath());
+				name = "unknown";
 				matrixCriteriaCriteria = new PairWiseMatrix();
 				criteria = new ArrayList<>();
 			} catch (JDOMException e) {
