@@ -15,11 +15,12 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
+import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
-import org.taeradan.ahp.prototype.ConsistencyMaker.*;
+import org.taeradan.ahp.prototype.ConsistencyMaker.RandomTools;
+import org.taeradan.ahp.prototype.ConsistencyMaker.SaatyTools;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
-import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
@@ -850,7 +851,7 @@ public class InterfaceAHP
 			while ((valueIterator.hasNext()) && (!isFound)) {
 
 				tempMatrixValue = valueIterator.next();
-				monCsa.insertLineFeed();
+				monCsa.appendLineFeed();
 
 				/*écriture du best fit associé à la valeur proposée*/
 				//copie de la matrice initiale
@@ -867,15 +868,15 @@ public class InterfaceAHP
 				//écriture du best fit
 				tempString = "" + BestFit;
 				monCsa.append(tempString);
-				monCsa.insertSeparator();
+				monCsa.appendCommaSeparator();
 
 				/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
 				tempString = "" + (tempMatrixValue.getRow() + 1);
 				monCsa.append(tempString);
-				monCsa.insertSeparator();
+				monCsa.appendCommaSeparator();
 				tempString = "" + (tempMatrixValue.getColumn() + 1);
 				monCsa.append(tempString);
-				monCsa.insertSeparator();
+				monCsa.appendCommaSeparator();
 
 				/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
@@ -899,7 +900,7 @@ public class InterfaceAHP
 				saatyConsistency = consistencyChecker.getConsistencyRatio();
 				tempString = "" + consistencyChecker.getConsistencyRatio();
 				monCsa.append(tempString);
-				monCsa.insertSeparator();
+				monCsa.appendCommaSeparator();
 
 
 				if (matrixValue.equals(tempMatrixValue)) {
@@ -948,14 +949,14 @@ public class InterfaceAHP
 			try {
 				csa = new CharSequenceAppender(file);
 				csa.append("Probleme 1");
-				csa.insertSeparator();
+				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
 				if (jRadioButtonSaaty.isSelected() == true) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
 				}
-				csa.insertLineFeed();
+				csa.appendLineFeed();
 			} catch (IOException ex) {
 				Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -966,14 +967,14 @@ public class InterfaceAHP
 			try {
 				csa = new CharSequenceAppender(file);
 				csa.append("Probleme 2");
-				csa.insertSeparator();
+				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
 				if (jRadioButtonSaaty.isSelected() == true) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
 				}
-				csa.insertLineFeed();
+				csa.appendLineFeed();
 			} catch (IOException ex) {
 				Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -1025,13 +1026,13 @@ public class InterfaceAHP
 		int coordColVal;
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.append("Matrice de preferences initiale");
-		csa.insertLineFeed();
-		csa.insertMatrix(myMatrix);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.append(myMatrix);
+		csa.appendLineFeed();
 		csa.append("Vecteur de priorite initial");
-		csa.insertLineFeed();
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		//on crée le fichier et on l'initialise avec la 1ère matrice
 		this.ecrirefichierHistorique(myMatrix, 0, 0, 0, 0);
@@ -1055,15 +1056,15 @@ public class InterfaceAHP
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		String tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR initial");
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		//On affiche le cr
 		jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 		csa.append("Tableau de changement des valeurs");
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
 		if (jRadioButtonSaaty.isSelected() == true) {
 			csa.append(
@@ -1073,7 +1074,7 @@ public class InterfaceAHP
 					"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		}
 
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 		csa.close();
 		int iterationCounter = 0;
 		boolean test = false;
@@ -1153,7 +1154,7 @@ public class InterfaceAHP
 					}
 					tempString = "" + myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 					csa.append(tempString);
-					csa.insertSeparator();
+					csa.appendCommaSeparator();
 					//Si la valeur modifier n'appartient pas à l'échelle de saaty
 					//on demande a l'expert de la modifier
 					while (!isInSaatysSacale(newValue)) {
@@ -1184,7 +1185,7 @@ public class InterfaceAHP
 					/*Ecrire la valeur modifiée par l'utilisateur*/
 					tempString = "" + newValue;
 					csa.append(tempString);
-					csa.insertSeparator();
+					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
 					if (jRadioButtonSaaty.isSelected() == true) {
 						/*Calculer le placement dans le classement de Saaty*/
@@ -1195,7 +1196,7 @@ public class InterfaceAHP
 
 						tempString = "" + location;
 						csa.append(tempString);
-						csa.insertSeparator();
+						csa.appendCommaSeparator();
 					}
 					/*Changement d'une valeur et de la valeur réciproque associée dans
 					la matrice*/
@@ -1227,7 +1228,7 @@ public class InterfaceAHP
 					consistencyChecker.isConsistent(myMatrix, priorityVector);
 					tempString = "" + consistencyChecker.getConsistencyRatio();
 					csa.append(tempString);
-					csa.insertSeparator();
+					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
 					if (jRadioButtonSaaty.isSelected() == true) {
 						tempString = String.valueOf(saatyConsistency - consistencyChecker.getConsistencyRatio());
@@ -1259,16 +1260,16 @@ public class InterfaceAHP
 			Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 		csa.append("Matrice de preference finale");
-		csa.insertLineFeed();
-		csa.insertMatrix(myMatrix);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.append(myMatrix);
+		csa.appendLineFeed();
 		csa.append("Vecteur de priorite final");
-		csa.insertLineFeed();
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		//on va afficher le classement final des critères
 		String[] classementF = this.classerCriteres(priorityVector);
@@ -1290,10 +1291,10 @@ public class InterfaceAHP
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR final");
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		tempString = "Number of Iterations;" + iterationCounter;
 		csa.append(tempString);
@@ -1345,15 +1346,15 @@ public class InterfaceAHP
 		}
 		tempString = "Ancienne valeur: " + oldValue;
 		csa.append(tempString);
-		csa.insertSeparator();
+		csa.appendCommaSeparator();
 		tempString = coordx + "," + coordy;
 		csa.append(tempString);
-		csa.insertSeparator();
+		csa.appendCommaSeparator();
 		tempString = "Nouvelle valeur: " + newVal;
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertMatrix(matrix);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.append(matrix);
+		csa.appendLineFeed();
 		csa.close();
 	}
 

@@ -137,7 +137,7 @@ public final class RandomTools {
 			// SAATY'S PART
 
 			saatyMatrixValue = saatyIterator.next();
-			csa.insertLineFeed();
+			csa.appendLineFeed();
 			/*Writing of de the best fit related to the proposed value*/
 			//Copy of the original matrix
 			saatyMatrix = saatyMatrix.copyMyMatrix(preferenceMatrix);
@@ -153,15 +153,15 @@ public final class RandomTools {
 			//best fit writing
 			tempString = "" + BestFit;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
 			tempString = "" + (saatyMatrixValue.getRow() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 			tempString = "" + (saatyMatrixValue.getColumn() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
@@ -184,7 +184,7 @@ public final class RandomTools {
 			tempBoolean = consistencyChecker.isConsistent(saatyMatrix, saatyVector);
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 
 			//PARTIE ALEATOIRE
@@ -203,23 +203,23 @@ public final class RandomTools {
 												  randomsMatrixValue.getColumn());
 			tempString = "" + BestFit;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture des indices de la valeur aléatoire proposé*/
 			tempString = "" + (randomsMatrixValue.getRow() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			tempString = "" + (randomsMatrixValue.getColumn() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture du placement de la valeur aléatoire dans le classement de Saaty*/
 			tempString = "" + SaatyTools.getLocationInRank(sortedMatrixValues,
 														   randomsMatrixValue.getRow(),
 														   randomsMatrixValue.getColumn());
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture de la cohérence après modification de la valeur aléatoire par le bestfit*/
 
@@ -242,7 +242,7 @@ public final class RandomTools {
 			tempBoolean = consistencyChecker.isConsistent(randomsMatrix, randomsVector);
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 
 			if (chosenValueToBeModified.equals(randomsMatrixValue)) {

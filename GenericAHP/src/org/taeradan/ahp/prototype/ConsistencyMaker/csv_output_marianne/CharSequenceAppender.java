@@ -8,64 +8,57 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * This class allows to insert separators (used in csv files) or datas in a file
+ *
  * @author Marianne
- *         This class allows to insert separators (used in csv files) or datas in a file
+ * @author Jean-Pierre PRUNARET
  */
 public class CharSequenceAppender {
 
 	private PrintWriter output;
 
-	public CharSequenceAppender(String nomFichier) throws IOException {
+	public CharSequenceAppender(String nomFichier)
+			throws
+			IOException {
 		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
 	}
 
-	/**
-	 * Write an object in the opened file
-	 *
-	 * @param object
-	 */
 	public void append(CharSequence object) {
 		output.append(object);
 	}
 
-	/**
-	 * Write a linefeed in the opened file
-	 */
-	public void insertLineFeed() {
+	public void append(MyMatrix myMatrix) {
+		appendMatrix(myMatrix);
+	}
+
+	public void appendLineFeed() {
 		output.append("\n");
 	}
 
-	/**
-	 * Write a separator separator in the opened file
-	 */
-	public void insertSeparator() {
+	public void appendCommaSeparator() {
 		output.append(";");
-	}
-
-
-	/**
-	 * Write a matrix in the opened file
-	 *
-	 * @param myMatrix
-	 */
-	public void insertMatrix(MyMatrix myMatrix) {
-		String chaine = "";
-
-		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
-
-
-				chaine += myMatrix.getMatrixValue(i, j).getValue() + ";";
-
-			}
-			output.append(chaine);
-			insertLineFeed();
-			chaine = "";
-
-		}
 	}
 
 	public void close() {
 		output.close();
 	}
+
+	private void appendMatrix(MyMatrix myMatrix) {
+		String string = "";
+
+		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
+
+
+				string += myMatrix.getMatrixValue(i, j).getValue() + ";";
+
+			}
+			output.append(string);
+			appendLineFeed();
+			string = "";
+
+		}
+	}
+
+
 }

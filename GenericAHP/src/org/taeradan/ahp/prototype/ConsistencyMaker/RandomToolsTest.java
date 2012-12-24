@@ -27,7 +27,7 @@ import java.util.Scanner;
 /**
  * @author Marianne
  */
-public class RandomToolsTest {
+public final class RandomToolsTest {
 
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix) throws HeadlessException {
 		// Show a frame with a table
@@ -85,24 +85,24 @@ public class RandomToolsTest {
 		 */
 
 		//Writing of the matrix
-		csa.insertMatrix(myPreferenceMatrix);
-		csa.insertLineFeed();
+		csa.append(myPreferenceMatrix);
+		csa.appendLineFeed();
 
 		//Writing of the eigenvector
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		//Writing of the CR
 		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		//Writing of the headers of the table in which events are memorised
 		csa.append(
 			"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 
 		csa.close();
 
@@ -126,7 +126,7 @@ public class RandomToolsTest {
 			csa = new CharSequenceAppender(file);
 			tempString = "" + matrixValue.getValue();
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			System.out.println(
 				"Vous avez choisi de remplacer la valeur "
@@ -156,7 +156,7 @@ public class RandomToolsTest {
 			/*Wrriting of the new value*/
 			tempString = "" + newValue;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/
@@ -201,19 +201,19 @@ public class RandomToolsTest {
 
 		csa = new CharSequenceAppender(file);
 		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
-		csa.insertLineFeed();
-		csa.insertLineFeed();
-		csa.insertMatrix(myPreferenceMatrix);
-		csa.insertLineFeed();
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
+		csa.append(myPreferenceMatrix);
+		csa.appendLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		//Ecriture du CR
 		tempBoolean = consistencyChecker.isConsistent(myPreferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		//Ecriture du nombre d'iterations
 		tempString = "Number of Iterations;" + iterationsCounter;

@@ -94,7 +94,7 @@ public final class SaatyToolsTest {
 		while ((valueIterator.hasNext()) && (!isFound)) {
 
 			MatrixValue tempMatrixValue = valueIterator.next();
-			csa.insertLineFeed();
+			csa.appendLineFeed();
 
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
@@ -110,15 +110,15 @@ public final class SaatyToolsTest {
 			//écriture du best fit
 			String tempString = "" + BestFit;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
 			tempString = "" + (tempMatrixValue.getRow() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 			tempString = "" + (tempMatrixValue.getColumn() + 1);
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
@@ -141,7 +141,7 @@ public final class SaatyToolsTest {
 //			consistencyChecker.isConsistent(tempMatrix, tempVector);
 			tempString = "" + new ConsistencyChecker().getConsistencyRatio();
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			if (matrixValue.equals(tempMatrixValue)) {
 				isFound = true;
@@ -249,22 +249,22 @@ public final class SaatyToolsTest {
 
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
-		csa.insertMatrix(myMatrix);
-		csa.insertLineFeed();
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.append(myMatrix);
+		csa.appendLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		/*Ecriture du CR*/
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		//en-tête du tableau
 		csa.append(
 				"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR\n");
-		csa.insertLineFeed();
+		csa.appendLineFeed();
 		csa.close();
 
 		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
@@ -297,7 +297,7 @@ public final class SaatyToolsTest {
 			csa = new CharSequenceAppender(file);
 			tempString = "" + myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*Lecture de la valeur saisie au clavier*/
 			String expertsChoice = userInput.next();
@@ -317,7 +317,7 @@ public final class SaatyToolsTest {
 			/*Ecrire la valeur modifiée par l'utilisateur*/
 			tempString = "" + newValue;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*Calculer le placement dans le classement de Saaty*/
 			int location = SaatyTools.getLocationInRank(collectionOfSortedMatrixValues,
@@ -325,7 +325,7 @@ public final class SaatyToolsTest {
 														matrixValue.getColumn());
 			tempString = "" + location;
 			csa.append(tempString);
-			csa.insertSeparator();
+			csa.appendCommaSeparator();
 
 			/*Changement d'une valeur et de la valeur réciproque associée dans
 			la matrice*/
@@ -369,19 +369,19 @@ public final class SaatyToolsTest {
 
 		csa = new CharSequenceAppender(file);
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
-		csa.insertLineFeed();
-		csa.insertLineFeed();
-		csa.insertMatrix(myMatrix);
-		csa.insertLineFeed();
-		csa.insertMatrix(priorityVector);
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
+		csa.append(myMatrix);
+		csa.appendLineFeed();
+		csa.append(priorityVector);
+		csa.appendLineFeed();
 
 		//Ecriture du CR
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
-		csa.insertLineFeed();
-		csa.insertLineFeed();
+		csa.appendLineFeed();
+		csa.appendLineFeed();
 
 		tempString = "Number of Iterations;" + iterationCounter;
 		csa.append(tempString);
