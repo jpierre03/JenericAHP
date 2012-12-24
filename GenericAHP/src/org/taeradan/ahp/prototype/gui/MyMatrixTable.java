@@ -16,18 +16,9 @@ import javax.swing.*;
 public class MyMatrixTable
 	extends JTable {
 
-	/**
-	 *
-	 */
-	private final static int ROWS = 5;
-	/**
-	 *
-	 */
-	private final static int COLUMN = 5;
+	private static final int ROWS   = 5;
+	private static final int COLUMN = 5;
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(String[] args) {
 		MyMatrix aMatrix = new MyMatrix(ROWS, COLUMN);
 
@@ -43,19 +34,19 @@ public class MyMatrixTable
 			}
 		}
 
-		MyMatrixTable maTable = new MyMatrixTable();
-		MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
+		MyMatrixTable table = new MyMatrixTable();
+		MyMatrixTableModel tableModel = new MyMatrixTableModel();
 
 		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
-		matrixTableModel.setMatrix(aMatrix, true, false);
+		tableModel.setMatrix(aMatrix, true, false);
 
-		maTable.setModel(matrixTableModel);
+		table.setModel(tableModel);
 
 
 		// Show a frame with a table
 		JFrame maFenetre = new JFrame("ma belle fenêtre");
 		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		maFenetre.setContentPane(maTable);
+		maFenetre.setContentPane(table);
 		maFenetre.setSize(1000, 27 * aMatrix.getRowDimension());
 
 		maFenetre.setVisible(true);
