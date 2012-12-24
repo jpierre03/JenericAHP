@@ -248,11 +248,7 @@ public final class RandomTools {
 			if (chosenValueToBeModified.equals(randomsMatrixValue)) {
 				isFound = true;
 			}
-
-
 		}
-
 		csa.close();
-
 	}
 }

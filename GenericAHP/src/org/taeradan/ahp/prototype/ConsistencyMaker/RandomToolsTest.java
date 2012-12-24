@@ -38,9 +38,6 @@ public class RandomToolsTest {
 		maFenetre.setVisible(true);
 	}
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) throws IOException {
 
 		MyMatrix myPreferenceMatrix = new MyMatrix();
@@ -194,7 +191,6 @@ public class RandomToolsTest {
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 
-
 			csa.close();
 		}
 
@@ -224,12 +220,8 @@ public class RandomToolsTest {
 		csa.append(tempString);
 
 		csa.close();
-
 	}
 
-	/**
-	 *
-	 */
 	private RandomToolsTest() {
 	}
 }

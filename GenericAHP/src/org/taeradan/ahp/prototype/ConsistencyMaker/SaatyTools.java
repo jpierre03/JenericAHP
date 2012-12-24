@@ -32,8 +32,6 @@ public final class SaatyTools {
 		int columns = epsilon.getColumnDimension();
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
 
-
-
 		/*Création d'une collection de MatrixValue*/
 		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
 		for (int i = 0; i < rows; i++) {
@@ -44,21 +42,14 @@ public final class SaatyTools {
 			}
 		}
 
-
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
 		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
 			MatrixValue matrixValue = valueIterator.next();
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
-
 		return myTreeMap;
-
 	}
 
-	/*Print a TreeMap
-	 *@param TreeMap<Double, MatrixValue>
-	 * @return void
-	 */
 	public static void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
 		while (!myTreeMap.isEmpty()) {
 			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
@@ -70,14 +61,8 @@ public final class SaatyTools {
 					+ matrixValue.getColumn()
 					+ " )");
 		}
-
 	}
 
-	/*
-	 * Returns the first element of SaatysRanking
-	 * @param MyMatrix
-	 * @return MatrixValue
-	 */
 	public static MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
@@ -96,19 +81,16 @@ public final class SaatyTools {
 			tempMatrixValue.setValue(epsilon.get(j, i));
 		}
 		return tempMatrixValue;
-
-
 	}
 
 	/*
 	 * Calculates the espilon matrix of Saaty ; Epsilon[i][j]=A[i][j]*w[j]/w[j]
-	 * @param MyMatrix myPreferenceMatrix, MyMatrix priorityVector
-	 * @return MyMatrix Epsilon
 	 */
 	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
 												  MyMatrix priorityVector) {
-		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(), myPreferenceMatrix.
-																										getColumnDimension());
+
+		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(),
+										myPreferenceMatrix.getColumnDimension());
 		MatrixValue epsilonValue = new MatrixValue();
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
@@ -133,17 +115,15 @@ public final class SaatyTools {
 				epsilon.setMatrixValue(epsilonValue);
 			}
 		}
-
-
 		return epsilon;
-
 	}
 
 	public static double calculateBestFit(MyMatrix preferenceMatrix,
 										  MyMatrix priorityVector,
 										  int i,
 										  int j) {
-		MatrixValue matrixValue = new MatrixValue();
+
+		MatrixValue matrixValue;
 		MyMatrix tempMatrix = new MyMatrix();
 
 		tempMatrix = tempMatrix.copyMyMatrix(preferenceMatrix);
@@ -157,7 +137,6 @@ public final class SaatyTools {
 		matrixValue.setValue(2);
 		tempMatrix.setMatrixValue(matrixValue);
 
-
 		/*Remplacer aij et aji par 0*/
 		matrixValue = preferenceMatrix.getMatrixValue(i, j);
 		matrixValue.setValue(0);
@@ -167,13 +146,10 @@ public final class SaatyTools {
 		matrixValue.setValue(0);
 		tempMatrix.setMatrixValue(matrixValue);
 
-
 		/*Recalculer vecteur priorité*/
 		priorityVector = PriorityVector.build(tempMatrix);
 
-
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
-
 	}
 
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
@@ -181,69 +157,62 @@ public final class SaatyTools {
 												  MyMatrix epsilon) {
 
 
-		MatrixValue matrixValue = new MatrixValue();
-		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
+		MatrixValue sortedMatrixValue;
+		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		boolean isPresent = false;
 
-
-
 		/*Creation du TreeMap à partir de la matrice epsilon*/
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		myTreeMap = createTreeMap(epsilon);
-
+		TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
 
 		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
 		while (!myTreeMap.isEmpty()) {
+			sortedMatrixValue = myTreeMap.pollLastEntry().getValue();
 
-			matrixValue = myTreeMap.pollLastEntry().getValue();
-
-			int row = matrixValue.getRow();
-			int column = matrixValue.getColumn();
-			double value = matrixValue.getValue();
-
+			int row = sortedMatrixValue.getRow();
+			int column = sortedMatrixValue.getColumn();
+			double value = sortedMatrixValue.getValue();
 
 			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
 			if (row > column) {
 				/*On retient la valeur réciproque*/
 
-				matrixValue.setRow(column);
-				matrixValue.setColumn(row);
-				matrixValue.setValue(1 / value);
+				sortedMatrixValue.setRow(column);
+				sortedMatrixValue.setColumn(row);
+				sortedMatrixValue.setValue(1 / value);
 			}
 
 			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
-			for (MatrixValue matrixValue1 : collectionOfSortedMatrixValues) {
-				if (Math.abs(matrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
+			for (MatrixValue matrixValue1 : matrixValues) {
+				if (Math.abs(sortedMatrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
 					isPresent = true;
 				}
 			}
 
 			if (!isPresent) {
 				/*Ajout dans la collection des éléments triés.*/
-				collectionOfSortedMatrixValues.add(matrixValue);
-
+				matrixValues.add(sortedMatrixValue);
 			}
 
 			isPresent = false;
-
 		}
-
-		return collectionOfSortedMatrixValues;
+		return matrixValues;
 	}
 
-	public static int getLocationInRank(Collection<MatrixValue> collectionOfSortedMatrixValues,
-										int i, int j) {
-		int cptr = 0;
-		MatrixValue matrixValue = new MatrixValue();
+	public static int getLocationInRank(Collection<MatrixValue> sortedMatrixValues, int i, int j) {
+
+		int counter = 0;
 		boolean isFound = false;
-		Iterator<MatrixValue> valueIterator = collectionOfSortedMatrixValues.iterator();
+		MatrixValue matrixValue;
+		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
+
 		while ((valueIterator.hasNext()) && (!isFound)) {
 			matrixValue = valueIterator.next();
+
 			if ((i == matrixValue.getRow()) && (j == matrixValue.getColumn())) {
 				isFound = true;
 			}
-			cptr++;
+			counter++;
 		}
-		return cptr;
+		return counter;
 	}
 }

@@ -46,33 +46,26 @@ public final class SaatyToolsTest {
 	}
 
 	public static MatrixValue readSaatyRanking(
-			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix,
+			Collection<MatrixValue> sortedMatrixValues, MyMatrix myPreferenceMatrix,
 			String file)
 			throws
 			IOException {
 
 		Scanner userInput = new Scanner(System.in);
-		int isValueChosen = 0;
-		String expertsChoice;
-		MatrixValue matrixValue = new MatrixValue();
-		Iterator<MatrixValue> valueIterator;
-		MatrixValue matrixValueToPrint = new MatrixValue();
 		CharSequenceAppender csa = new CharSequenceAppender(file);
-		MyMatrix tempMatrix = new MyMatrix();
-		MyMatrix tempVector = new MyMatrix();
-		String tempString;
-		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+		MatrixValue matrixValue = new MatrixValue();
+
+		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
+		MatrixValue matrixValueToPrint = new MatrixValue();
+		int isValueChosen = 0;
 		boolean isFound = false;
-
-
-		valueIterator = collectionOfSortedMatrixValues.iterator();
 
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
-																													  getColumn()));
+			matrixValueToPrint.setValue(
+					myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.getColumn()));
 
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValueToPrint.getValue()
@@ -83,20 +76,20 @@ public final class SaatyToolsTest {
 							   + " )"
 							   + " ? O/N");
 
-			expertsChoice = userInput.nextLine();
+			String expertsChoice = userInput.nextLine();
 
 			if (expertsChoice.equalsIgnoreCase("O")) {
 				isValueChosen = 1;
 			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
-				valueIterator = collectionOfSortedMatrixValues.iterator();
-
+				valueIterator = sortedMatrixValues.iterator();
 			}
-
 		}
 
 		/*parcours de la liste pour l'écriture dans le fichier*/
-		valueIterator = collectionOfSortedMatrixValues.iterator();
+		valueIterator = sortedMatrixValues.iterator();
+
+		MyMatrix tempMatrix = new MyMatrix();
 
 		while ((valueIterator.hasNext()) && (!isFound)) {
 
@@ -108,14 +101,14 @@ public final class SaatyToolsTest {
 			tempMatrix = tempMatrix.copyMyMatrix(myPreferenceMatrix);
 
 			//calcul du vecteur propre associé à tempMatrix
-			tempVector = PriorityVector.build(tempMatrix);
+			PriorityVector tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
 			double BestFit = SaatyTools.calculateBestFit(tempMatrix,
 														 tempVector,
 														 tempMatrixValue.getRow(),
 														 tempMatrixValue.getColumn());
 			//écriture du best fit
-			tempString = "" + BestFit;
+			String tempString = "" + BestFit;
 			csa.append(tempString);
 			csa.insertSeparator();
 
@@ -146,20 +139,18 @@ public final class SaatyToolsTest {
 			tempVector = PriorityVector.build(tempMatrix);
 			//calcul et écriture de la cohérence
 //			consistencyChecker.isConsistent(tempMatrix, tempVector);
-			tempString = "" + consistencyChecker.getConsistencyRatio();
+			tempString = "" + new ConsistencyChecker().getConsistencyRatio();
 			csa.append(tempString);
 			csa.insertSeparator();
 
 			if (matrixValue.equals(tempMatrixValue)) {
 				isFound = true;
 			}
-
 		}
 
 		csa.close();
 
 		return matrixValue;
-
 	}
 
 	public static MyMatrix createMatrix() {
@@ -218,7 +209,6 @@ public final class SaatyToolsTest {
 			matrixValue.setColumn(i);
 			myMatrix.setMatrixValue(matrixValue);
 		}
-
 		return myMatrix;
 	}
 
@@ -236,7 +226,6 @@ public final class SaatyToolsTest {
 		CharSequenceAppender csa;
 		int iterationCounter = 0;
 		String file;
-
 
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
 		file = userInput.next();
@@ -369,7 +358,6 @@ public final class SaatyToolsTest {
 			consistencyChecker.isConsistent(myMatrix, priorityVector);
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
-
 
 			csa.close();
 		}
