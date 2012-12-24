@@ -859,7 +859,7 @@ public class InterfaceAHP
 				//calcul du vecteur propre associé à tempMatrix
 				tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
-				double BestFit = SaatysTools.calculateBestFit(
+				double BestFit = SaatyTools.calculateBestFit(
 						tempMatrix,
 						tempVector,
 						tempMatrixValue.getRow(),
@@ -1018,7 +1018,6 @@ public class InterfaceAHP
 		PriorityVector priorityVector = PriorityVector.build(myMatrix);
 		MyMatrix epsilon = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
-		SaatysTools saatysTools = new SaatysTools();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
 		double newValue = 0;
 		double oldValue;
@@ -1090,9 +1089,9 @@ public class InterfaceAHP
 				//on teste quelles méthode(aléaloire, saaty)
 				if (jRadioButtonSaaty.isSelected() == true) {
 					/*Calcul matrice epsilon*/
-					epsilon = SaatysTools.calculateEpsilonMatrix(myMatrix, priorityVector);
+					epsilon = SaatyTools.calculateEpsilonMatrix(myMatrix, priorityVector);
 					/*Recherche de la valeur à modifier*/
-					collectionOfSortedMatrixValues = SaatysTools.getRank(myMatrix, priorityVector, epsilon);
+					collectionOfSortedMatrixValues = SaatyTools.getRank(myMatrix, priorityVector, epsilon);
 					try {
 						matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix, file);
 					} catch (IOException ex) {
@@ -1103,7 +1102,7 @@ public class InterfaceAHP
 					matrixValue = getValueToModifiyByRanking(collectionOfSortedMatrixValues);
 					try {
 						/*Writing of Saaty's propositions and of random ranking*/
-						RandomTools.writeRandomAndSaatysProposition(
+						RandomTools.writeRandomAndSaatyPropositions(
 								myMatrix,
 								collectionOfSortedMatrixValues,
 								matrixValue,
@@ -1189,7 +1188,7 @@ public class InterfaceAHP
 					//uniquement si on fai la méthode saaty
 					if (jRadioButtonSaaty.isSelected() == true) {
 						/*Calculer le placement dans le classement de Saaty*/
-						int location = SaatysTools.getLocationInRank(
+						int location = SaatyTools.getLocationInRank(
 								collectionOfSortedMatrixValues,
 								matrixValue.getRow(),
 								matrixValue.getColumn());

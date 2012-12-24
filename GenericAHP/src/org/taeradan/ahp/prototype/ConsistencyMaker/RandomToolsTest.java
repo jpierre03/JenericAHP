@@ -64,7 +64,7 @@ public class RandomToolsTest {
 		CharSequenceAppender csa = new CharSequenceAppender(file);
 
 		/*Matrix creation*/
-		myPreferenceMatrix = SaatysToolsTest.createMatrix();
+		myPreferenceMatrix = SaatyToolsTest.createMatrix();
 		//	myPreferenceMatrix.print(5, 2);
 		priorityVector = PriorityVector.build(myPreferenceMatrix);
 		//	priorityVector.print(5, 3);
@@ -120,10 +120,10 @@ public class RandomToolsTest {
 			matrixValue = RandomTools.getValueToModifiyByRanking(collectionOfNonSortedMatrixValues);
 
 			/*Writing of Saaty's propositions and of random ranking*/
-			RandomTools.writeRandomAndSaatysProposition(myPreferenceMatrix,
-				collectionOfNonSortedMatrixValues,
-				matrixValue,
-				priorityVector, file);
+			RandomTools.writeRandomAndSaatyPropositions(myPreferenceMatrix,
+														collectionOfNonSortedMatrixValues,
+														matrixValue,
+														priorityVector, file);
 
 			/*Writing of the value, which will be changed by the expert*/
 			csa = new CharSequenceAppender(file);
@@ -148,7 +148,7 @@ public class RandomToolsTest {
 			myParser.parseExpression(expertsChoice);
 			double newValue = myParser.getValue();
 
-			while (!SaatysToolsTest.isInSaatysSacale(newValue)) {
+			while (!SaatyToolsTest.isInSaatyScale(newValue)) {
 				System.out.println(
 					"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
