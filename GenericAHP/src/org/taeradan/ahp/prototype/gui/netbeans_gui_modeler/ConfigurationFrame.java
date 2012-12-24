@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.prototype.gui;
+package org.taeradan.ahp.prototype.gui.netbeans_gui_modeler;
 
 import org.taeradan.ahp.AHPRoot;
 import org.taeradan.ahp.Criterion;

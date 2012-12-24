@@ -1,4 +1,4 @@
-package org.taeradan.ahp.prototype.ConsistencyMaker.gui_yannick;
+package org.taeradan.ahp.prototype.gui.yannick;
 
 import org.taeradan.ahp.matrix.MyMatrix;
 

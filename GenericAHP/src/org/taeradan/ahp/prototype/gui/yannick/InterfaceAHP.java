@@ -9,7 +9,7 @@
  * Created on 31 mai 2011, 14:24:44
  */
 
-package org.taeradan.ahp.prototype.ConsistencyMaker.gui_yannick;
+package org.taeradan.ahp.prototype.gui.yannick;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -20,8 +20,8 @@ import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.ConsistencyMaker.*;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.PriorityVector;
-import org.taeradan.ahp.prototype.gui.MyMatrixTable;
-import org.taeradan.ahp.prototype.gui.MyMatrixTableModel;
+import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
+import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
