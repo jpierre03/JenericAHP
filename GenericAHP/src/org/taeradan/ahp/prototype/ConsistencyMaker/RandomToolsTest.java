@@ -1,11 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* This class aims to execute the random method, for a given matrix,
- that you can fill through the console
- */
 package org.taeradan.ahp.prototype.ConsistencyMaker;
 
 import org.nfunk.jep.JEP;
@@ -23,7 +15,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Scanner;
 
-/** @author Marianne */
+/**
+ * This class aims to execute the random method, for a given matrix,
+ * that you can fill through the console
+ * @author Jean-Pierre PRUNARET
+ * @author Marianne
+ */
 public final class RandomToolsTest {
 
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix)
@@ -45,7 +42,7 @@ public final class RandomToolsTest {
 		final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		final MyMatrixTable maTable = new MyMatrixTable();
 		final MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
-		int iterationsCounter = 0;
+		int iterationCounter = 0;
 
 		MyMatrix preferenceMatrix;
 		MyMatrix priorityVector;
@@ -84,8 +81,6 @@ public final class RandomToolsTest {
 		//Writing of the matrix
 		csa.append(preferenceMatrix);
 		csa.appendLineFeed();
-
-		//Writing of the eigenvector
 		csa.append(priorityVector);
 		csa.appendLineFeed();
 
@@ -100,15 +95,17 @@ public final class RandomToolsTest {
 		csa.append(
 				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		csa.appendLineFeed();
-
 		csa.close();
 
 		/*While they are inconsistencies*/
 		while (!consistencyChecker.isConsistent(preferenceMatrix, priorityVector)) {
 
-			iterationsCounter++;
+			//incrémentation du compteur du nombre d'itération
+			iterationCounter++;
 
-			System.out.println("\n**********          Matrice incohérente" + "          **********\n CR = " + consistencyChecker.getConsistencyRatio() + "\n");
+			System.out.println("\n**********          Matrice incohérente"
+							   + "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
+							   + "\n");
 
 			nonSortedMatrixValues = RandomTools.getRank(preferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(nonSortedMatrixValues);
@@ -137,6 +134,7 @@ public final class RandomToolsTest {
 					+ "\nSaisissez la valeur par laquelle vous souhaitez remplacer votre pondération");
 
 
+			/*Lecture de la valeur saisie au clavier*/
 			expertsChoice = userInput.next();
 			final JEP myParser = new JEP();
 			myParser.parseExpression(expertsChoice);
@@ -150,7 +148,7 @@ public final class RandomToolsTest {
 				newValue = myParser.getValue();
 			}
 
-			/*Wrriting of the new value*/
+			/*Ecrire la valeur modifiée par l'utilisateur*/
 			tempString = "" + newValue;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
@@ -178,12 +176,11 @@ public final class RandomToolsTest {
 			matrixTableModel.setMatrix(preferenceMatrix, true, false);
 			maTable.setModel(matrixTableModel);
 
-
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 			priorityVector = PriorityVector.build(preferenceMatrix);
 			//	priorityVector.print(5, 5);
 
-			//écriture du nouveau CR
+			//Ecriture du nouveau CR
 //			tempBoolean = consistencyChecker.isConsistent(preferenceMatrix, priorityVector);
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
@@ -191,13 +188,13 @@ public final class RandomToolsTest {
 			csa.close();
 		}
 
-		System.out.println("CR = " + consistencyChecker.getConsistencyRatio() + "\n");
+		System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
 		csa = new CharSequenceAppender(file);
-		//Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		//Ecriture de la matrice et du vecteur de priorité dans le fichier
 		csa.appendLineFeed();
 		csa.appendLineFeed();
 		csa.append(preferenceMatrix);
@@ -213,7 +210,7 @@ public final class RandomToolsTest {
 		csa.appendLineFeed();
 
 		//Ecriture du nombre d'iterations
-		tempString = "Number of Iterations;" + iterationsCounter;
+		tempString = "Number of Iterations;" + iterationCounter;
 		csa.append(tempString);
 
 		csa.close();

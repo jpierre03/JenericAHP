@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.taeradan.ahp.prototype.ConsistencyMaker;
 
 import org.nfunk.jep.JEP;
@@ -21,6 +17,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
+ * This class aims to execute the Saaty method, for a given matrix,
+ * that you can fill through the console
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  * @author Marianne
@@ -232,42 +230,43 @@ public final class SaatyToolsTest {
 		file += ".csv";
 		csa = new CharSequenceAppender(file);
 
-		MyMatrix myMatrix = createMatrix();
-		//	myMatrix.print(5, 5);
+		MyMatrix preferenceMatrix = createMatrix();
+		//	preferenceMatrix.print(5, 5);
 
 		System.out.println("Merci de patienter");
 
 		/*Interface graphique*/
 		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-		matrixTableModel.setMatrix(myMatrix, true, false);
+		matrixTableModel.setMatrix(preferenceMatrix, true, false);
 		maTable.setModel(matrixTableModel);
 
-		showMatrixTable(maTable, myMatrix);
+		showMatrixTable(maTable, preferenceMatrix);
 
-		PriorityVector priorityVector = PriorityVector.build(myMatrix);
+		PriorityVector priorityVector = PriorityVector.build(preferenceMatrix);
 		//	priorityVector.print(5, 5);
 
 
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
-		csa.append(myMatrix);
+		csa.append(preferenceMatrix);
 		csa.appendLineFeed();
 		csa.append(priorityVector);
 		csa.appendLineFeed();
 
-		/*Ecriture du CR*/
-		consistencyChecker.isConsistent(myMatrix, priorityVector);
+		//Writing of the CR
+//		tempBoolean = consistencyChecker.isConsistent(preferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.appendLineFeed();
 		csa.appendLineFeed();
 
-		//en-tête du tableau
+		//Writing of the headers of the table in which events are memorised
 		csa.append(
 				"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR\n");
 		csa.appendLineFeed();
 		csa.close();
 
-		while (!consistencyChecker.isConsistent(myMatrix, priorityVector)) {
+		/*While they are inconsistencies*/
+		while (!consistencyChecker.isConsistent(preferenceMatrix, priorityVector)) {
 
 			//incrémentation du compteur du nombre d'itération
 			iterationCounter++;
@@ -275,16 +274,17 @@ public final class SaatyToolsTest {
 			System.out.println("\n**********          Matrice incohérente"
 							   + "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
 							   + "\n");
+
 			/*Calcul matrice epsilon*/
-			MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(myMatrix, priorityVector);
+			MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
 
 			/*Recherche de la valeur à modifier*/
-			collectionOfSortedMatrixValues = SaatyTools.getRank(myMatrix, priorityVector, epsilon);
-			MatrixValue matrixValue = readSaatyRanking(collectionOfSortedMatrixValues, myMatrix, file);
+			collectionOfSortedMatrixValues = SaatyTools.getRank(preferenceMatrix, priorityVector, epsilon);
+			MatrixValue matrixValue = readSaatyRanking(collectionOfSortedMatrixValues, preferenceMatrix, file);
 
 			System.out.println(
 					"Vous avez choisi de remplacer la valeur "
-					+ myMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
+					+ preferenceMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
 					+ " de coordonnées "
 					+ " ( "
 					+ (matrixValue.getRow() + 1)
@@ -295,7 +295,7 @@ public final class SaatyToolsTest {
 
 			/*Ecrire la valeur que souhaite modifier l'expert*/
 			csa = new CharSequenceAppender(file);
-			tempString = "" + myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
+			tempString = "" + preferenceMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 			csa.append(tempString);
 			csa.appendCommaSeparator();
 
@@ -312,7 +312,6 @@ public final class SaatyToolsTest {
 				myParser.parseExpression(expertsChoice);
 				newValue = myParser.getValue();
 			}
-
 
 			/*Ecrire la valeur modifiée par l'utilisateur*/
 			tempString = "" + newValue;
@@ -332,7 +331,7 @@ public final class SaatyToolsTest {
 
 			//Valeur directement modifiée
 			matrixValue.setValue(newValue);
-			myMatrix.setMatrixValue(matrixValue);
+			preferenceMatrix.setMatrixValue(matrixValue);
 
 			//Valeur réciproquement modifiée
 			int tempI = matrixValue.getRow();
@@ -340,22 +339,22 @@ public final class SaatyToolsTest {
 			matrixValue.setValue(1 / newValue);
 			matrixValue.setRow(tempJ);
 			matrixValue.setColumn(tempI);
-			myMatrix.setMatrixValue(matrixValue);
+			preferenceMatrix.setMatrixValue(matrixValue);
 
 			//Affichage nouvelle matrice
-			//	myMatrix.print(5, 5);
+			//	preferenceMatrix.print(5, 5);
 
 			//Affichage nouvelle matrice
-			//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-			matrixTableModel.setMatrix(myMatrix, true, false);
+			//Attention true si c'est le 1er problème false si deuxième et false si langue francaise
+			matrixTableModel.setMatrix(preferenceMatrix, true, false);
 			maTable.setModel(matrixTableModel);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice
-			priorityVector = PriorityVector.build(myMatrix);
-			//		priorityVector.print(5, 5);
+			priorityVector = PriorityVector.build(preferenceMatrix);
+			//	priorityVector.print(5, 5);
 
 			//Ecriture du nouveau CR
-			consistencyChecker.isConsistent(myMatrix, priorityVector);
+//			tempBoolean = consistencyChecker.isConsistent(preferenceMatrix, priorityVector);
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 
@@ -363,26 +362,27 @@ public final class SaatyToolsTest {
 		}
 
 		System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
-		System.out.println("\n***********************************************"
+		System.out.println("***********************************************"
 						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
 						   + "***********************************************");
 
 		csa = new CharSequenceAppender(file);
-		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
+		//Ecriture de la matrice et du vecteur de priorité dans le fichier
 		csa.appendLineFeed();
 		csa.appendLineFeed();
-		csa.append(myMatrix);
+		csa.append(preferenceMatrix);
 		csa.appendLineFeed();
 		csa.append(priorityVector);
 		csa.appendLineFeed();
 
 		//Ecriture du CR
-		consistencyChecker.isConsistent(myMatrix, priorityVector);
+//		tempBoolean = consistencyChecker.isConsistent(preferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.appendLineFeed();
 		csa.appendLineFeed();
 
+		//Ecriture du nombre d'iterations
 		tempString = "Number of Iterations;" + iterationCounter;
 		csa.append(tempString);
 
