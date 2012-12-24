@@ -15,22 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.gui;
+package org.taeradan.ahp.prototype.gui;
 
-import org.nfunk.jep.JEP;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
-import org.taeradan.ahp.Criterion;
 import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.PairWiseMatrix;
-
-import java.util.logging.Logger;
 
 /**
- * Dialog used to configure a Criterion's informations and preference matrix
+ * Dialog used to configure an Indicator's informations
  *
  * @author Yves Dubromelle
  */
-public class CriteriaDialog
+public class IndicatorDialog
 	extends javax.swing.JDialog {
 
 	/**
@@ -40,28 +34,22 @@ public class CriteriaDialog
 	/**
 	 *
 	 */
-	final private Criterion                criterion;
-	/**
-	 *
-	 */
-	private final PairWiseMatrixTableModel guiPrefMatrix;
+	transient final private Indicator indicator;
 
 	/**
-	 * Creates new form CriteriaDialog
+	 * Creates new form IndicatorDialog
 	 *
 	 * @param parent
 	 * @param modal
-	 * @param criterion
+	 * @param indicator
 	 */
-	public CriteriaDialog(final java.awt.Frame parent, final boolean modal, final Criterion criterion) {
+	public IndicatorDialog(final java.awt.Frame parent, final boolean modal,
+			       final Indicator indicator) {
 		super(parent, modal);
-		this.criterion = criterion;
-		guiPrefMatrix = new PairWiseMatrixTableModel();
-		initTable();
+		this.indicator = indicator;
 		initComponents();
-		guiPrefMatrix.addTableModelListener(new PairWiseMatrixChangeListener());
-		jTextFieldId.setText(criterion.getIdentifier());
-		jTextFieldName.setText(criterion.getName());
+		jTextFieldId.setText(indicator.getIdentifier());
+		jTextFieldName.setText(indicator.getName());
 	}
 
 	/**
@@ -74,38 +62,32 @@ public class CriteriaDialog
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
+		jTextFieldId = new javax.swing.JTextField();
 		jLabelId = new javax.swing.JLabel();
 		jLabelName = new javax.swing.JLabel();
-		jTextFieldId = new javax.swing.JTextField();
 		jTextFieldName = new javax.swing.JTextField();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		jTablePrefMatrix = new javax.swing.JTable();
-		jButtonReload = new javax.swing.JButton();
 		jButtonSave = new javax.swing.JButton();
+		jButtonReload = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Criteria properties");
+		setTitle("Indicator properties");
 		setResizable(false);
 
 		jLabelId.setText("ID");
 
 		jLabelName.setText("Name");
 
-		jTablePrefMatrix.setModel(guiPrefMatrix);
-		jTablePrefMatrix.setRowHeight(22);
-		jScrollPane1.setViewportView(jTablePrefMatrix);
+		jButtonSave.setText("Save");
+		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButtonSaveActionPerformed(evt);
+			}
+		});
 
 		jButtonReload.setText("Reload");
 		jButtonReload.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonReloadActionPerformed(evt);
-			}
-		});
-
-		jButtonSave.setText("Save");
-		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonSaveActionPerformed(evt);
 			}
 		});
 
@@ -116,15 +98,14 @@ public class CriteriaDialog
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+						.addGroup(layout.createSequentialGroup()
 							.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(jLabelName)
-								.addComponent(jLabelId))
+								.addComponent(jLabelId)
+								.addComponent(jLabelName))
 							.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 							.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-								.addComponent(jTextFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-								.addComponent(jTextFieldId, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+								.addComponent(jTextFieldId, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+								.addComponent(jTextFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)))
 						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
 							.addComponent(jButtonSave)
 							.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -142,9 +123,7 @@ public class CriteriaDialog
 					.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 						.addComponent(jLabelName)
 						.addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-					.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-					.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+					.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
 					.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 						.addComponent(jButtonReload)
 						.addComponent(jButtonSave))
@@ -154,76 +133,23 @@ public class CriteriaDialog
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
-		initTable();
-		jTextFieldId.setText(criterion.getIdentifier());
-		jTextFieldName.setText(criterion.getName());
-	}//GEN-LAST:event_jButtonReloadActionPerformed
-
 	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		criterion.setIdentifier(jTextFieldId.getText());
-		criterion.setName(jTextFieldName.getText());
-		final MyMatrix matrix =
-			new MyMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
-		Logger.getAnonymousLogger().info(
-			guiPrefMatrix.getValueAt(1, 1).getClass().getCanonicalName());
-		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
-			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
-				double value = 0;
-				if (guiPrefMatrix.getValueAt(i, j) instanceof Double) {
-					value = (Double) guiPrefMatrix.getValueAt(i, j);
-				}
-				if (guiPrefMatrix.getValueAt(i, j) instanceof String) {
-					final JEP myParser = new JEP();
-					myParser.parseExpression((String) guiPrefMatrix.getValueAt(i, j));
-					value = myParser.getValue();
-				}
-				matrix.set(i, j, value);
-			}
-		}
-		criterion.setMatrixIndicatorIndicator((PairWiseMatrix) matrix);
+		indicator.setIdentifier(jTextFieldId.getText());
+		indicator.setName(jTextFieldName.getText());
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
+
+	private void jButtonReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReloadActionPerformed
+		jTextFieldId.setText(indicator.getIdentifier());
+		jTextFieldName.setText(indicator.getName());
+	}//GEN-LAST:event_jButtonReloadActionPerformed
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton jButtonReload;
 	private javax.swing.JButton jButtonSave;
 	private javax.swing.JLabel jLabelId;
 	private javax.swing.JLabel jLabelName;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTable jTablePrefMatrix;
 	private javax.swing.JTextField jTextFieldId;
 	private javax.swing.JTextField jTextFieldName;
 	// End of variables declaration//GEN-END:variables
-
-	/**
-	 *
-	 */
-	private void initTable() {
-		final int matrixSize = criterion.getIndicators().size();
-		String[] columnNames = new String[matrixSize];
-		Double[][] data = new Double[matrixSize][matrixSize];
-		for (int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Indicator) criterion.getIndicators().toArray()[i]).getIdentifier();
-			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = criterion.getMatrixIndicatorIndicator().get(i, j);
-			}
-		}
-		guiPrefMatrix.setDataVector(data, columnNames);
-	}
-
-	/**
-	 * @param row
-	 * @param column
-	 */
-	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(criterion.getMatrixIndicatorIndicator().get(row, column), row, column);
-	}
-
-	/**
-	 * @return
-	 */
-	public PairWiseMatrixTableModel getGuiPrefMatrix() {
-		return guiPrefMatrix;
-	}
 }

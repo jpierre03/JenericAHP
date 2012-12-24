@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.taeradan.ahp.gui;
+package org.taeradan.ahp.prototype.gui;
 
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MatrixValue;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 import javax.swing.*;
 

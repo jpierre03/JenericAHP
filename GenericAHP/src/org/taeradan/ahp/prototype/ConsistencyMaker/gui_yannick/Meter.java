@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.taeradan.ahp.ConsistencyMaker.gui_yannick;
+package org.taeradan.ahp.prototype.ConsistencyMaker.gui_yannick;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -9,17 +9,19 @@
  * Created on 31 mai 2011, 14:24:44
  */
 
-package org.taeradan.ahp.ConsistencyMaker.gui_yannick;
+package org.taeradan.ahp.prototype.ConsistencyMaker.gui_yannick;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
-import org.taeradan.ahp.ConsistencyMaker.*;
-import org.taeradan.ahp.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
+import org.taeradan.ahp.matrix.MatrixValue;
+import org.taeradan.ahp.matrix.MyMatrix;
+import org.taeradan.ahp.prototype.ConsistencyMaker.*;
+import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.PriorityVector;
-import org.taeradan.ahp.gui.MyMatrixTable;
-import org.taeradan.ahp.gui.MyMatrixTableModel;
+import org.taeradan.ahp.prototype.gui.MyMatrixTable;
+import org.taeradan.ahp.prototype.gui.MyMatrixTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

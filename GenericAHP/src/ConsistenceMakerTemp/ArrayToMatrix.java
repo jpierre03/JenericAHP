@@ -4,7 +4,7 @@
  */
 package ConsistenceMakerTemp;
 
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 /**
  * @author Marianne

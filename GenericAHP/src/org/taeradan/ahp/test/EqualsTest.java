@@ -4,7 +4,7 @@
  */
 package org.taeradan.ahp.test;
 
-import org.taeradan.ahp.ConsistencyMaker.MatrixValue;
+import org.taeradan.ahp.matrix.MatrixValue;
 
 /** @author Marianne */
 public final class EqualsTest {

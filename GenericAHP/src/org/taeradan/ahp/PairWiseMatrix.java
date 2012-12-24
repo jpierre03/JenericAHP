@@ -20,7 +20,7 @@ package org.taeradan.ahp;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 import java.text.DecimalFormat;
 import java.util.List;

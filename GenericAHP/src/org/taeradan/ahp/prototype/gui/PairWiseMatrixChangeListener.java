@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.gui;
+package org.taeradan.ahp.prototype.gui;
 
 import org.nfunk.jep.JEP;
 

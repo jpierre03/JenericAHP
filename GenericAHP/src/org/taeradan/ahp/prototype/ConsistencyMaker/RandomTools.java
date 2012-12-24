@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.prototype.ConsistencyMaker;
 
 import org.taeradan.ahp.ConsistencyChecker;
-import org.taeradan.ahp.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
+import org.taeradan.ahp.matrix.MatrixValue;
+import org.taeradan.ahp.matrix.MyMatrix;
+import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.PriorityVector;
 
 import java.io.IOException;

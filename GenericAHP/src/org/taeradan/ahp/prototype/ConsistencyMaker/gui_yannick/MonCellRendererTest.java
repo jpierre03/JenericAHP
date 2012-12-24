@@ -1,6 +1,6 @@
-package org.taeradan.ahp.ConsistencyMaker.gui_yannick;
+package org.taeradan.ahp.prototype.ConsistencyMaker.gui_yannick;
 
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;

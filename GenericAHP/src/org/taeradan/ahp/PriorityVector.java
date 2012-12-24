@@ -18,7 +18,7 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 import java.math.BigDecimal;
 

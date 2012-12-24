@@ -1,4 +1,4 @@
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.matrix;
 
 /**
  * @author Jean-Pierre PRUNARET

@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.prototype.ConsistencyMaker;
 
 import org.taeradan.ahp.PriorityVector;
+import org.taeradan.ahp.matrix.MatrixValue;
+import org.taeradan.ahp.matrix.MyMatrix;
 
 import java.util.ArrayList;
 import java.util.Collection;
