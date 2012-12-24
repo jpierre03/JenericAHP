@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.ConsistencyMaker.gui_yannick;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +13,11 @@ import java.awt.event.ActionListener;
  * @author Beal Yannick
  */
 public class Meter implements ActionListener {
-	private Timer timer;
-	private JLabel label;
+	private Timer        timer;
+	private JLabel       label;
 	private InterfaceAHP frame;
-	private int cpM = 0;
-	private int cpS = 0;
+	private int     cpM            = 0;
+	private int     cpS            = 0;
 	private boolean commencerAZero = false;
 
 	public Meter(JLabel label, InterfaceAHP frame) {

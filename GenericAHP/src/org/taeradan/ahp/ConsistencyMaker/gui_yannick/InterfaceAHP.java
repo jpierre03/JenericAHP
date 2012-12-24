@@ -9,10 +9,11 @@
  * Created on 31 mai 2011, 14:24:44
  */
 
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.ConsistencyMaker.gui_yannick;
 
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
+import org.taeradan.ahp.ConsistencyMaker.*;
 import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.gui.MyMatrixTable;
 import org.taeradan.ahp.gui.MyMatrixTableModel;
@@ -36,22 +37,22 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 	 *
 	 */
 	private final static double[] SAATY_VALUES = {1. / 9, 1. / 8, 1. / 7, 1. / 6, 1. / 5, 1. / 4,
-		1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+												  1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 	/*
 	private final static double[] SAATY_VALUES = {0.1111, 0.125, 0.1429, 0.1667, 0.2, 0.25,
 												  0.3333, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 	*/
-	private MyMatrix myMatrix;
-	private MyMatrixTableModel matrixTableModel;
+	private MyMatrix             myMatrix;
+	private MyMatrixTableModel   matrixTableModel;
 	private CharSequenceAppender csa;
-	private String file;
-	private String fileHistorique;
-	private int finSimulation = 0;
-	private boolean changerCoeff = false;
+	private String               file;
+	private String               fileHistorique;
+	private int     finSimulation = 0;
+	private boolean changerCoeff  = false;
 	private Meter monHeure;
 	private boolean boolHeure = true;
-	private JEP monJep;
+	private JEP    monJep;
 	private double saatyConsistency;
 	private boolean modeAnglais = false;
 
@@ -709,8 +710,11 @@ public class InterfaceAHP extends javax.swing.JFrame implements Runnable {
 				//calcul du vecteur propre associé à tempMatrix
 				tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
-				double BestFit = SaatysTools.calculateBestFit(tempMatrix, tempVector, tempMatrixValue.
-					getRow(), tempMatrixValue.getColumn());
+				double BestFit = SaatysTools.calculateBestFit(tempMatrix,
+															  tempVector,
+															  tempMatrixValue.
+																					 getRow(),
+															  tempMatrixValue.getColumn());
 				//écriture du best fit
 				tempString = "" + BestFit;
 				monCsa.append(tempString);
