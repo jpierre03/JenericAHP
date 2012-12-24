@@ -24,25 +24,19 @@ import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PairWiseMatrix;
 import org.taeradan.ahp.PriorityVector;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * @author Yves Dubromelle
+ * @author Jean-Pierre PRUNARET
  */
-public class TestUnconsistencyDetector {
+public final class TestInconsistencyDetector {
 
-	/**
-	 *
-	 */
-	final private static JFileChooser matrixChooser = new JFileChooser(
-		System.getProperty("user.dir"));
+	private static final JFileChooser matrixChooser = new JFileChooser(System.getProperty("user.dir"));
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(final String[] args) {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		matrixChooser.showOpenDialog(null);
@@ -59,19 +53,16 @@ public class TestUnconsistencyDetector {
 			} else {
 				System.out.println("Matrice non consistante");
 
-				//point x,y = saaty.unconsistencyDetector(prefmatrix,...)
+				//point x,y = saaty.inconsistencyDetector(prefmatrix,...)
 				//TODO implémenter
 			}
 		} catch (JDOMException ex) {
-			Logger.getLogger(TestUnconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(TestInconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(TestUnconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(TestInconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
-	/**
-	 *
-	 */
-	private TestUnconsistencyDetector() {
+	private TestInconsistencyDetector() {
 	}
 }
