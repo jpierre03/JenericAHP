@@ -1,4 +1,4 @@
-package ConsistenceMakerTemp;
+package org.taeradan.ahp.prototype.ConsistenceMakerTemp;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
