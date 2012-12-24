@@ -5,6 +5,7 @@
 package org.taeradan.ahp.ConsistencyMaker;
 
 import org.taeradan.ahp.ConsistencyChecker;
+import org.taeradan.ahp.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.PriorityVector;
 
 import java.io.IOException;

@@ -1,4 +1,6 @@
-package org.taeradan.ahp.ConsistencyMaker;
+package org.taeradan.ahp.ConsistencyMaker.csv_output_marianne;
+
+import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
 
 import java.io.IOException;
 import java.util.logging.Level;

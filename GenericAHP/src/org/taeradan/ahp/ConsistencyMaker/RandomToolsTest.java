@@ -10,6 +10,7 @@ package org.taeradan.ahp.ConsistencyMaker;
 
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
+import org.taeradan.ahp.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.gui.MyMatrixTable;
 import org.taeradan.ahp.gui.MyMatrixTableModel;
