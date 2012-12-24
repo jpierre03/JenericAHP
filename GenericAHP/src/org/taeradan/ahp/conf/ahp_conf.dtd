@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-	<!--
-	    TODO define vocabulary identification
-	    PUBLIC ID: -//vendor//vocabulary//EN
-	    SYSTEM ID: http://server/path/ahp_conf.dtd
+		<!--
+			TODO define vocabulary identification
+			PUBLIC ID: -//vendor//vocabulary//EN
+			SYSTEM ID: http://server/path/ahp_conf.dtd
 
-	--><!--
+		--><!--
     An example how to use this DTD from your XML document:
 
     <?xml version="1.0"?>
@@ -17,39 +17,39 @@
     </root>
 -->
 
-	<!--- The root element of the XML document is the root element of the AHP tree.
-	It must contain a name, a preference matrix and an array of criterias elements. -->
-	<!ELEMENT root (name,prefmatrix,criteria*)>
+		<!--- The root element of the XML document is the root element of the AHP tree.
+		It must contain a name, a preference matrix and an array of criterias elements. -->
+		<!ELEMENT root (name,prefmatrix,criteria*)>
 
-	<!--- The name of the AHP tree (or the goal of this AHP instance). -->
-	<!ELEMENT name (#PCDATA)>
+		<!--- The name of the AHP tree (or the goal of this AHP instance). -->
+		<!ELEMENT name (#PCDATA)>
 
-	<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criterion.
-	Contains rows.
-	It must have as much rows and colums than the number of elements compared. -->
-	<!ELEMENT prefmatrix (row)*>
+		<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criterion.
+		Contains rows.
+		It must have as much rows and colums than the number of elements compared. -->
+		<!ELEMENT prefmatrix (row)*>
 
-	<!--- A row of the preference matrix, contains elements. -->
-	<!ELEMENT row (elt)*>
+		<!--- A row of the preference matrix, contains elements. -->
+		<!ELEMENT row (elt)*>
 
-	<!--- An element of the preference matrix, contains the value of a criterion/criterion or indicator/indicator preference. -->
-	<!ELEMENT elt EMPTY>
-	<!ATTLIST elt
-		value CDATA #REQUIRED
-		>
+		<!--- An element of the preference matrix, contains the value of a criterion/criterion or indicator/indicator preference. -->
+		<!ELEMENT elt EMPTY>
+		<!ATTLIST elt
+				value CDATA #REQUIRED
+				>
 
-	<!--- A criterion contains a name, a preference matrix and an array of indicators. -->
-	<!ELEMENT criteria (name,prefmatrix,indicator*)>
-	<!ATTLIST criteria
-		id CDATA #REQUIRED
-		>
+		<!--- A criterion contains a name, a preference matrix and an array of indicators. -->
+		<!ELEMENT criteria (name,prefmatrix,indicator*)>
+		<!ATTLIST criteria
+				id CDATA #REQUIRED
+				>
 
-	<!--- An indicator contains a name, and is it has to be minimized or maximized. -->
-	<!ELEMENT indicator (name,(minimize|maximize))>
-	<!ATTLIST indicator
-		id CDATA #REQUIRED
-		>
+		<!--- An indicator contains a name, and is it has to be minimized or maximized. -->
+		<!ELEMENT indicator (name,(minimize|maximize))>
+		<!ATTLIST indicator
+				id CDATA #REQUIRED
+				>
 
-	<!--- These elements are used to determine if an indicator has to be maximized or minimized. -->
-	<!ELEMENT minimize EMPTY>
-	<!ELEMENT maximize EMPTY>
+		<!--- These elements are used to determine if an indicator has to be maximized or minimized. -->
+		<!ELEMENT minimize EMPTY>
+		<!ELEMENT maximize EMPTY>
