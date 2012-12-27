@@ -45,7 +45,7 @@ public class Criterion {
 
 	//	AHP execution attributes
 	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-	private PriorityVector vectorAltCr;
+	private PriorityVector vectorAlternativesCriteria;
 
 	/**
 	 * Creates a AHP Criterion from a JDOM Element
@@ -137,10 +137,10 @@ public class Criterion {
 		}
 
 //		Calculation of the criteria's alternatives vector
-		vectorAltCr = new PriorityVector(matrixAlternativesIndicator.getRowDimension());
-		vectorAltCr.setMatrix(matrixAlternativesIndicator.getRowDimension() - 1,
+		vectorAlternativesCriteria = new PriorityVector(matrixAlternativesIndicator.getRowDimension());
+		vectorAlternativesCriteria.setMatrix(matrixAlternativesIndicator.getRowDimension() - 1,
 							  matrixAlternativesIndicator.times(vectorIndicatorCriteria));
-		return vectorAltCr;
+		return vectorAlternativesCriteria;
 	}
 
 	/**
@@ -200,8 +200,8 @@ public class Criterion {
 			sb.append("\n\t\t");
 			sb.append(next.resultToString());
 		}
-		sb.append("\n\tvectorAltCr=\n");
-		sb.append(PairWiseMatrix.toString(vectorAltCr, "\t"));
+		sb.append("\n\tvectorAlternativesCriteria=\n");
+		sb.append(PairWiseMatrix.toString(vectorAlternativesCriteria, "\t"));
 
 		return sb;
 	}
