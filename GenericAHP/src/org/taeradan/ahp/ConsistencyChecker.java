@@ -19,8 +19,6 @@ package org.taeradan.ahp;
 
 import Jama.Matrix;
 
-import java.util.logging.Logger;
-
 /**
  * @author Yves Dubromelle
  * @author Jean-Pierre PRUNARET
@@ -44,6 +42,8 @@ public class ConsistencyChecker {
 												 1.59};
 
 	private Double consistencyRatio = null;
+	private boolean isConsistent;
+	private boolean isConsistentValueAssigned = false;
 
 	public boolean isConsistent(final Matrix preferenceMatrix, final Matrix priorityVector) {
 		assert preferenceMatrix != null : "preferenceMatrix should be not null";
@@ -53,58 +53,60 @@ public class ConsistencyChecker {
 		assert priorityVector.getRowDimension() > 0;
 		assert priorityVector.getColumnDimension() > 0;
 
-		boolean isConsistent = false;
+		final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
+		if (preferenceMatrixDimension < 1 || preferenceMatrixDimension > 15) {
+			throw new IllegalArgumentException(
+					"Preference matrix and priority vector are too wide (15 max) or empty !!"
+					+ preferenceMatrixDimension);
+		}
 
 		if (preferenceMatrix.getRowDimension() != priorityVector.getRowDimension()) {
-			Logger.getAnonymousLogger().severe(
+			throw new IllegalArgumentException(
 					"The preference matrix and vector dimensions does not match !!"
 					+ preferenceMatrix.getRowDimension() + "," + priorityVector.getRowDimension());
-		} else {
-			final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
+		}
 
-			if (preferenceMatrixDimension == 1) {
-				isConsistent = true;
-			}
+		setConsistent(false);
 
-			if (preferenceMatrixDimension == 2) {
-				if (preferenceMatrix.get(0, 1) == (1 / preferenceMatrix.get(1, 0))) {
-					isConsistent = true;
-				} else {
-					isConsistent = false;
-				}
-			}
 
-			if (preferenceMatrixDimension > 2 && preferenceMatrixDimension < 15) {
-				final double[] lambdas = new double[preferenceMatrixDimension];
+		if (preferenceMatrixDimension == 1) {
+			setConsistent(true);
+		}
 
-				for (int i = 0; i < preferenceMatrixDimension; i++) {
-					double sum = 0;
-					for (int j = 0; j < preferenceMatrixDimension; j++) {
-						sum = sum + preferenceMatrix.get(i, j) * priorityVector.get(j, 0);
-					}
-					lambdas[i] = sum / priorityVector.get(i, 0);
-				}
-				double lambdaMax = Double.MIN_VALUE;
-				for (int index = 0; index < preferenceMatrixDimension; index++) {
-					if (lambdas[index] > lambdaMax) {
-						lambdaMax = lambdas[index];
-					}
-				}
-
-				final double consistencyIndex = (lambdaMax - preferenceMatrixDimension) / (preferenceMatrixDimension - 1);
-				consistencyRatio = consistencyIndex / randomIndex[preferenceMatrixDimension - 1];
-
-				if (consistencyRatio < 0.1) {
-					isConsistent = true;
-				}
-			}
-
-			if (preferenceMatrixDimension < 1 || preferenceMatrixDimension > 15) {
-				Logger.getAnonymousLogger().severe(
-						"Preference matrix and priority vector are too wide (15 max) or empty !!"
-						+ preferenceMatrixDimension);
+		if (preferenceMatrixDimension == 2) {
+			if (preferenceMatrix.get(0, 1) == (1 / preferenceMatrix.get(1, 0))) {
+				setConsistent(true);
+			} else {
+				setConsistent(false);
 			}
 		}
+
+		if (preferenceMatrixDimension > 2 && preferenceMatrixDimension < 15) {
+			final double[] lambdas = new double[preferenceMatrixDimension];
+
+			for (int i = 0; i < preferenceMatrixDimension; i++) {
+				double sum = 0;
+				for (int j = 0; j < preferenceMatrixDimension; j++) {
+					sum = sum + preferenceMatrix.get(i, j) * priorityVector.get(j, 0);
+				}
+				lambdas[i] = sum / priorityVector.get(i, 0);
+			}
+			double lambdaMax = Double.MIN_VALUE;
+			for (int index = 0; index < preferenceMatrixDimension; index++) {
+				if (lambdas[index] > lambdaMax) {
+					lambdaMax = lambdas[index];
+				}
+			}
+
+			final double consistencyIndex = (lambdaMax - preferenceMatrixDimension) / (preferenceMatrixDimension - 1);
+			consistencyRatio = consistencyIndex / randomIndex[preferenceMatrixDimension - 1];
+
+			if (consistencyRatio < 0.1) {
+				setConsistent(true);
+			}
+		}
+
+		assert isConsistentValueAssigned == true;
 
 		return isConsistent;
 	}
@@ -120,6 +122,13 @@ public class ConsistencyChecker {
 		assert consistencyRatio.doubleValue() <= 100.0 / 100.0;
 		assert consistencyRatio.doubleValue() >= 0.0 / 100.0;
 
+		assert isConsistentValueAssigned == true;
+
 		return consistencyRatio;
+	}
+
+	public void setConsistent(boolean isConsistent) {
+		this.isConsistent = isConsistent;
+		isConsistentValueAssigned = true;
 	}
 }
