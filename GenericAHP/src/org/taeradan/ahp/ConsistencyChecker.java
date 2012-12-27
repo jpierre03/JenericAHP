@@ -23,7 +23,7 @@ import Jama.Matrix;
  * @author Yves Dubromelle
  * @author Jean-Pierre PRUNARET
  */
-public class ConsistencyChecker {
+public final class ConsistencyChecker {
 
 	private static final double[] randomIndex = {0.00,
 												 0.00,
