@@ -42,7 +42,8 @@ public class ConsistencyChecker {
 												 1.56,
 												 1.57,
 												 1.59};
-	private double consistencyRatio;
+
+	private Double consistencyRatio = null;
 
 	public boolean isConsistent(final Matrix preferenceMatrix, final Matrix priorityVector) {
 		assert preferenceMatrix != null : "preferenceMatrix should be not null";
@@ -111,6 +112,16 @@ public class ConsistencyChecker {
 	}
 
 	public double getConsistencyRatio() {
+		if (consistencyRatio == null) {
+			throw new RuntimeException("computing method have to be invoked first");
+		}
+		assert consistencyRatio != null;
+		assert consistencyRatio.isInfinite() == false;
+		assert consistencyRatio.isNaN() == false;
+
+		assert consistencyRatio.doubleValue() <= 100.0 / 100.0;
+		assert consistencyRatio.doubleValue() >= 0.0 / 100.0;
+
 		return consistencyRatio;
 	}
 }
