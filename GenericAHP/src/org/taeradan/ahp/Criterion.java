@@ -138,8 +138,9 @@ public class Criterion {
 
 //		Calculation of the criteria's alternatives vector
 		vectorAlternativesCriteria = new PriorityVector(matrixAlternativesIndicator.getRowDimension());
-		vectorAlternativesCriteria.setMatrix(matrixAlternativesIndicator.getRowDimension() - 1,
-							  matrixAlternativesIndicator.times(vectorIndicatorCriteria));
+		vectorAlternativesCriteria.setMatrix(
+				matrixAlternativesIndicator.getRowDimension() - 1,
+				matrixAlternativesIndicator.times(vectorIndicatorCriteria));
 		return vectorAlternativesCriteria;
 	}
 
@@ -159,19 +160,19 @@ public class Criterion {
 	 * @return Criterion and children as a String
 	 */
 	public String toStringRecursive() {
-		final StringBuilder string = new StringBuilder(this.toString());
-		string.append("\n").append(matrixIndicatorIndicator.toString("\t"));
+		final StringBuilder sb = new StringBuilder(this.toString());
+		sb.append("\n").append(matrixIndicatorIndicator.toString("\t"));
 		DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			string.append("\n\t\t(").
+			sb.append("\n\t\t(").
 					append(printFormat.format(vectorIndicatorCriteria.get(index, 0))).
 						  append(") ").
 						  append(itIndicators.next().toString());
 			index++;
 		}
-		return string.toString();
+		return sb.toString();
 	}
 
 	/**

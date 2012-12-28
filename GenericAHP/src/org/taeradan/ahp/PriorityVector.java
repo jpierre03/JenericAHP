@@ -26,15 +26,10 @@ import java.math.BigDecimal;
 public class PriorityVector
 		extends MyMatrix {
 
-	/** @param i  */
 	public PriorityVector(int i) {
 		super(i, 1);
 	}
 
-	/**
-	 * @param matrix
-	 * @return
-	 */
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
 		assert dimension > 0;
@@ -45,7 +40,7 @@ public class PriorityVector
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
 
-		final int MAX_ITERATION = 50;
+		final int MAX_ITERATION = 40;
 		Matrix lastVector;
 		boolean isUnderTreshold = true;
 		int iteration = 0;
@@ -77,11 +72,7 @@ public class PriorityVector
 		return resultVector;
 	}
 
-	/**
-	 * @param i
-	 * @param matrix
-	 */
-	void setMatrix(int i, Matrix matrix) {
+	protected void setMatrix(int i, final Matrix matrix) {
 		setMatrix(0, i, 0, 0, matrix);
 	}
 }
