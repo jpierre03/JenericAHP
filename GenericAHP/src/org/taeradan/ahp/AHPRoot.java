@@ -238,31 +238,35 @@ public class AHPRoot {
 //		Concatenation in a matrix of the vectors calculated by the criteria
 		int index = 0;
 		if (DEBUG) {
-			System.out.println("alternatives = " + alternatives.size());
-			System.out.println("criteria = " + criteria.size());
+			Logger.getAnonymousLogger().info("alternatives = " + alternatives.size());
+			Logger.getAnonymousLogger().info("criteria = " + criteria.size());
 		}
+
 		for (Criterion criterion : this.criteria) {
 			final PriorityVector priorityVector = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
-				System.out.println("criterion n= " + index);
-				System.out.println("alternatives vector n= " + priorityVector.getRowDimension());
+				Logger.getAnonymousLogger().info("criterion n= " + index);
+				Logger.getAnonymousLogger().info("alternatives vector n= " + priorityVector.getRowDimension());
 				priorityVector.print(5, 4);
 				matrixAlternativesCriteria.print(5, 4);
 			}
 			matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
 			index++;
 		}
+
 //		Calculation of the final alternatives priority vector
 		vectorAlternativesGoal = new PriorityVector(matrixAlternativesCriteria.getRowDimension());
 		vectorAlternativesGoal.setMatrix(alternatives.size() - 1, matrixAlternativesCriteria.times(vectorCriteriaGoal));
 
 //			Ranking of the alternatives with the MOg vector
 		final double[][] sortedVectorAlternativesGoal = vectorAlternativesGoal.getArrayCopy();
+
 //			vectorAlternativesGoal.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
 		}
+
 		int minIndex;
 		double tmpValue;
 		int tmpIndex;
@@ -286,6 +290,7 @@ public class AHPRoot {
 //				System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
 //							   + sortedVectorAlternativesGoal[i][0]);
 		}
+
 		index = 0;
 		for (int i : ranks) {
 			((Alternative) alternatives.toArray()[i]).setRank(index + 1);
