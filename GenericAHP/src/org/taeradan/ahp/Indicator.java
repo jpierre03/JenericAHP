@@ -39,7 +39,7 @@ public abstract class Indicator {
 	//	AHP execution attributes
 	private PriorityVector                    alternativeIndicatorVector;
 	private PairWiseMatrix                    alternativeAlternativeMatrix;
-	private Collection<? extends Alternative> alternatives;
+	private Collection<? extends Alternative> lastAlternatives;
 
 	/** Creates an Indicator from a JDOM Element */
 	protected Indicator(final Element xmlIndicator) {
@@ -50,15 +50,18 @@ public abstract class Indicator {
 	public PriorityVector calculateAlternativesPriorityVector(
 			final Collection<? extends Alternative> alternatives) {
 
-		this.alternatives = alternatives;
-		final int dimension = this.alternatives.size();
+		this.lastAlternatives = alternatives;
+		final int dimension = this.lastAlternatives.size();
 		double[] altValues = new double[dimension];
+
 		alternativeAlternativeMatrix = new PairWiseMatrix(dimension, dimension);
+
 //		For each alternative, evaluation of its value for the indicator
-		for (int i = 0; i < this.alternatives.size(); i++) {
-			altValues[i] = calculateAlternativeValue(i, this.alternatives);
+		for (int i = 0; i < this.lastAlternatives.size(); i++) {
+//			Logger.getAnonymousLogger().info(" -- (" + toString() + ")");
+			altValues[i] = calculateAlternativeValue(i, this.lastAlternatives);
 		}
-//
+
 //		Construction of the alternative/alternative matrix
 		buildAlternativeAlternativeMatrix(dimension, altValues);
 
@@ -95,13 +98,13 @@ public abstract class Indicator {
 
 	@Override
 	public String toString() {
-		final StringBuilder string = new StringBuilder("Indicator " + identifier + " : " + name);
+		final StringBuilder sb = new StringBuilder("Indicator " + identifier + " : " + name);
 		if (maximization) {
-			string.append(", maximize");
+			sb.append(", maximize");
 		} else {
-			string.append(", minimize");
+			sb.append(", minimize");
 		}
-		return string.toString();
+		return sb.toString();
 	}
 
 	/** @return JDOM Element representing the indicator */
@@ -144,7 +147,7 @@ public abstract class Indicator {
 		final int LIMIT_ALTERNATIVES = 30;
 
 		final StringBuilder sb = new StringBuilder(this.toString());
-		if (alternatives.size() < LIMIT_ALTERNATIVES) {
+		if (lastAlternatives.size() < LIMIT_ALTERNATIVES) {
 			sb.append("\n\t\talternativeAlternativeMatrix=\n");
 			sb.append(PairWiseMatrix.toString(alternativeAlternativeMatrix, "\t\t"));
 		} else {
