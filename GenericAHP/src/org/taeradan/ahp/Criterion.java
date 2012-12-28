@@ -119,8 +119,8 @@ public class Criterion {
 
 	public PriorityVector calculateAlternativesPriorityVector(
 			final Collection<? extends Alternative> alternatives) {
-		PairWiseMatrix matrixAlternativesIndicator;
-		matrixAlternativesIndicator = new PairWiseMatrix(alternatives.size(), indicators.size());
+
+		final PairWiseMatrix matrixAlternativesIndicator = new PairWiseMatrix(alternatives.size(), indicators.size());
 
 //		Concatenation of the indicators' alternatives vectors
 		final Iterator<Indicator> indicatorIterator = indicators.iterator();
@@ -141,24 +141,17 @@ public class Criterion {
 		vectorAlternativesCriteria.setMatrix(
 				matrixAlternativesIndicator.getRowDimension() - 1,
 				matrixAlternativesIndicator.times(vectorIndicatorCriteria));
+
 		return vectorAlternativesCriteria;
 	}
 
-	/**
-	 * Returns a string describing the criteria, but not its children
-	 *
-	 * @return Criterion as a String
-	 */
+	/** @return Ca string describing the criteria, but not its children */
 	@Override
 	public String toString() {
 		return "Criterion " + identifier + " : " + name;
 	}
 
-	/**
-	 * Returns a string describing the criteria and all its children
-	 *
-	 * @return Criterion and children as a String
-	 */
+	/** @return a string describing the criterion and all its children */
 	public String toStringRecursive() {
 		final StringBuilder sb = new StringBuilder(this.toString());
 		sb.append("\n").append(matrixIndicatorIndicator.toString("\t"));
@@ -166,20 +159,16 @@ public class Criterion {
 		final Iterator<Indicator> itIndicators = indicators.iterator();
 		int index = 0;
 		while (itIndicators.hasNext()) {
-			sb.append("\n\t\t(").
-					append(printFormat.format(vectorIndicatorCriteria.get(index, 0))).
-						  append(") ").
-						  append(itIndicators.next().toString());
+			sb.append("\n\t\t(");
+			sb.append(printFormat.format(vectorIndicatorCriteria.get(index, 0)));
+			sb.append(") ");
+			sb.append(itIndicators.next().toString());
 			index++;
 		}
 		return sb.toString();
 	}
 
-	/**
-	 * Returns a JDOM element that represents the criteria and all its children
-	 *
-	 * @return JDOM Element representing the criteria and children
-	 */
+	/** @return a JDOM element that represents the criteria and all its children */
 	public Element toXml() {
 		final Element xmlCriteria = new Element("criteria");
 		xmlCriteria.setAttribute("id", identifier);
