@@ -41,8 +41,8 @@ public class IndicatorI42
 	}
 
 	@Override
-	public double calculateAlternativeValue(final int altIndex,
+	public double calculateAlternativeValue(final int alternativeIndex,
 						final Collection<? extends Alternative> alternatives) {
-		return ((TestingAlternative) alternatives.toArray()[altIndex]).valueI41;
+		return ((TestingAlternative) alternatives.toArray()[alternativeIndex]).valueI41;
 	}
 }

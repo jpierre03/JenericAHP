@@ -86,11 +86,11 @@ public abstract class Indicator {
 	/**
 	 * Method that calculates the value (floating point) of the indicator for an alternative i.
 	 *
-	 * @param altIndex     Alternative to be evaluated from the list
+	 * @param alternativeIndex     Alternative to be evaluated from the list
 	 * @param alternatives
 	 * @return Indicator value
 	 */
-	public abstract double calculateAlternativeValue(int altIndex,
+	public abstract double calculateAlternativeValue(int alternativeIndex,
 													 Collection<? extends Alternative> alternatives);
 
 	/**
