@@ -42,7 +42,7 @@ public abstract class Indicator {
 	private Collection<? extends Alternative> alternatives;
 
 	/** Creates an Indicator from a JDOM Element */
-	public Indicator(final Element xmlIndicator) {
+	protected Indicator(final Element xmlIndicator) {
 		this.fromXml(xmlIndicator);
 	}
 
@@ -86,18 +86,13 @@ public abstract class Indicator {
 	/**
 	 * Method that calculates the value (floating point) of the indicator for an alternative i.
 	 *
-	 * @param alternativeIndex     Alternative to be evaluated from the list
+	 * @param alternativeIndex Alternative to be evaluated from the list
 	 * @param alternatives
 	 * @return Indicator value
 	 */
 	public abstract double calculateAlternativeValue(int alternativeIndex,
 													 Collection<? extends Alternative> alternatives);
 
-	/**
-	 * Returns a string describing the indicator
-	 *
-	 * @return String describing the indicator
-	 */
 	@Override
 	public String toString() {
 		final StringBuilder string = new StringBuilder("Indicator " + identifier + " : " + name);
@@ -109,11 +104,7 @@ public abstract class Indicator {
 		return string.toString();
 	}
 
-	/**
-	 * Returns a JDOM element that represents the indicator
-	 *
-	 * @return JDOM Element representing the indicator
-	 */
+	/** @return JDOM Element representing the indicator */
 	public Element toXml() {
 		final Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
@@ -126,7 +117,6 @@ public abstract class Indicator {
 		return xmlIndicator;
 	}
 
-	/** @param xmlIndicator  */
 	protected final void fromXml(final Element xmlIndicator) {
 
 //		Initialisation of the id
@@ -151,43 +141,41 @@ public abstract class Indicator {
 
 	/** @return  */
 	public String resultToString() {
-		final StringBuilder string = new StringBuilder(this.toString());
-		if (alternatives.size() < 30) {
-			string.append("\n\t\talternativeAlternativeMatrix=\n");
-			string.append(PairWiseMatrix.toString(alternativeAlternativeMatrix, "\t\t"));
+		final int LIMIT_ALTERNATIVES = 30;
+
+		final StringBuilder sb = new StringBuilder(this.toString());
+		if (alternatives.size() < LIMIT_ALTERNATIVES) {
+			sb.append("\n\t\talternativeAlternativeMatrix=\n");
+			sb.append(PairWiseMatrix.toString(alternativeAlternativeMatrix, "\t\t"));
+		} else {
+			sb.append("\n\t\t many alternatives (>" + LIMIT_ALTERNATIVES + ")\n");
 		}
-		string.append("\n\t\talternativeIndicatorVector=\n");
-		string.append(PairWiseMatrix.toString(alternativeIndicatorVector,
-											  "\t\t"));
-		return string.toString();
+		sb.append("\n\t\talternativeIndicatorVector=\n");
+		sb.append(PairWiseMatrix.toString(alternativeIndicatorVector, "\t\t"));
+
+		return sb.toString();
 	}
 
-	/** @return  */
 	public String getIdentifier() {
 		return identifier;
 	}
 
-	/** @param identifier  */
 	public void setIdentifier(final String identifier) {
 		this.identifier = identifier;
 	}
 
-	/** @return  */
 	public String getName() {
 		return name;
 	}
 
-	/** @param name  */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
-	/** @return  */
 	public boolean isMaximized() {
 		return maximization;
 	}
 
-	/** @param maximization  */
 	public void setMaximization(final boolean maximization) {
 		this.maximization = maximization;
 	}

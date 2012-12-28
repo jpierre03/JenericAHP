@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
-	extends MyMatrix {
+		extends MyMatrix {
 
 	public PairWiseMatrix() {
 	}
@@ -138,9 +138,9 @@ public class PairWiseMatrix
 
 	public void remove(final int index) {
 		final int newDimension = getRowDimension() - 1;
-		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
+		final MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
-			+ ", nouvelle=" + newDimension + "\n");
+										 + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -149,7 +149,7 @@ public class PairWiseMatrix
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
-							+ "newI=" + newI + "newJ=" + newJ + "\n");
+														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}
