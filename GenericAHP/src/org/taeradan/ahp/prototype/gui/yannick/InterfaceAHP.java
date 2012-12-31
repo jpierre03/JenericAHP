@@ -72,11 +72,13 @@ public class InterfaceAHP
 	/** Creates new form MaMatriceFrame */
 	public InterfaceAHP() {
 		//on redimensionne la taille de la jframe
-		Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
-		tailleEcran.setSize(tailleEcran.getWidth(), tailleEcran.getHeight() - 100);
-		this.setPreferredSize(tailleEcran);
-		this.setResizable(false);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight() - 100);
+		this.setPreferredSize(screenSize);
+		this.setResizable(true);
+
 		initComponents();
+
 		//On initialise la taille de la matrice à 6
 		jTextFieldDimensions.setText("6");
 		monJep = new JEP();
@@ -678,12 +680,7 @@ public class InterfaceAHP
 		return maMatrice;
 	}
 
-	/**
-	 * Cette méthode permet de tester les coefficients de saaty
-	 *
-	 * @param value
-	 * @return
-	 */
+	/** Cette méthode permet de tester les coefficients de saaty */
 	public static boolean isInSaatysSacale(double value) {
 		boolean result = false;
 

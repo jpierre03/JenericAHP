@@ -29,11 +29,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Yves Dubromelle
  */
 public class MyMatrixTableModel
-	extends DefaultTableModel {
+		extends DefaultTableModel {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private MyMatrix matrix;
 
@@ -44,25 +41,41 @@ public class MyMatrixTableModel
 	 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
 	 *
 	 */
-	public String[] getColumnHeader(boolean testB, boolean langueB) {
-		if (testB == true) {
-			if (langueB == false) {
-				String columnNames[] = {"Temps de transport", "Coût", "Confort", "Pollution",
-					"Qualité de service", "Sécurité"};
+	public static String[] getColumnHeader(boolean isTestB, boolean isEnglish) {
+		if (isTestB == true) {
+			if (isEnglish == false) {
+				String columnNames[] = {"Temps de transport",
+										"Coût",
+										"Confort",
+										"Pollution",
+										"Qualité de service",
+										"Sécurité"};
 				return columnNames;
 			} else {
-				String columnNames[] = {"Travel time", "Cost", "Comfort", "Pollution",
-					"Quality of Service", "Security"};
+				String columnNames[] = {"Travel time",
+										"Cost",
+										"Comfort",
+										"Pollution",
+										"Quality of Service",
+										"Security"};
 				return columnNames;
 			}
 		} else {
-			if (langueB == false) {
-				String columnNames[] = {"Prix", "Sécurité", "Pollution", "Design",
-					"Durée de vie", "Taille"};
+			if (isEnglish == false) {
+				String columnNames[] = {"Prix",
+										"Sécurité",
+										"Pollution",
+										"Design",
+										"Durée de vie",
+										"Taille"};
 				return columnNames;
 			} else {
-				String columnNames[] = {"Price", "Security", "Pollution", "Design",
-					"Life", "Size"};
+				String columnNames[] = {"Price",
+										"Security",
+										"Pollution",
+										"Design",
+										"Life",
+										"Size"};
 				return columnNames;
 			}
 		}
@@ -80,29 +93,29 @@ public class MyMatrixTableModel
 
 	/**
 	 * Retourne vrai si la cellule est éditable : celle-ci sera donc éditable
-	 *
-	 * @return boolean
 	 */
 	@Override
 	public boolean isCellEditable(int row, int col) {
 		if (row > 0 && col > row) {
 			setValueAt("", row, col);
 			return true;
-		} else return false;
+		} else {
+			return false;
+		}
 	}
 
-	public void setMatrix(MyMatrix matrix, boolean testPb, boolean langueB) {
+	public void setMatrix(MyMatrix matrix, boolean isTestB, boolean isEnglish) {
 		this.matrix = matrix;
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
 			//on cree les critère en fonction du pb choisi
-			if (testPb == true) {
-				String columnNames[] = getColumnHeader(testPb, langueB);
+			if (isTestB == true) {
+				String columnNames[] = getColumnHeader(isTestB, isEnglish);
 				data[0][i + 1] = columnNames[i];
 				data[i + 1][0] = columnNames[i];
 			} else {
-				String columnNames[] = getColumnHeader(testPb, langueB);
+				String columnNames[] = getColumnHeader(isTestB, isEnglish);
 				data[0][i + 1] = columnNames[i];
 				data[i + 1][0] = columnNames[i];
 			}
@@ -115,12 +128,5 @@ public class MyMatrixTableModel
 			}
 		}
 		setDataVector(data, new String[matrix.getColumnDimension() + 1]);
-	}
-
-	/**
-	 * @return the matrix
-	 */
-	public MyMatrix getMatrix() {
-		return matrix;
 	}
 }
