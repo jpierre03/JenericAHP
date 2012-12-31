@@ -44,9 +44,9 @@ public final class SaatyToolsTest {
 		return result;
 	}
 
-	public static MatrixValue readSaatyRanking(
-			Collection<MatrixValue> sortedMatrixValues, MyMatrix myPreferenceMatrix,
-			String file)
+	public static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
+											   MyMatrix myPreferenceMatrix,
+											   String file)
 			throws
 			IOException {
 
@@ -63,8 +63,8 @@ public final class SaatyToolsTest {
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(
-					myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.getColumn()));
+			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(),
+															   matrixValueToPrint.getColumn()));
 
 			System.out.println("Souhaitez-vous modifier la valeur "
 							   + matrixValueToPrint.getValue()
@@ -90,7 +90,7 @@ public final class SaatyToolsTest {
 
 		while ((valueIterator.hasNext()) && (!isFound)) {
 
-			MatrixValue tempMatrixValue = valueIterator.next();
+			final MatrixValue tempMatrixValue = valueIterator.next();
 			csa.appendLineFeed();
 
 			/*écriture du best fit associé à la valeur proposée*/

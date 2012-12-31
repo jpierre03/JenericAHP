@@ -695,26 +695,19 @@ public class InterfaceAHP
 	/*
 	 * Cette méthode permet de trouver les coefficients de saaty à changer
 	 */
-	public MatrixValue readSaatysRanking(
-			Collection<MatrixValue> collectionOfSortedMatrixValues, MyMatrix myPreferenceMatrix,
-			String file)
+	public MatrixValue readSaatysRanking(Collection<MatrixValue> sortedMatrixValues,
+										 MyMatrix myPreferenceMatrix,
+										 String file)
 			throws
 			IOException {
 
-		boolean tempBoolean;
-		int isValueChosen = 0;
+		CharSequenceAppender csa = new CharSequenceAppender(file);
 		MatrixValue matrixValue = new MatrixValue();
-		Iterator<MatrixValue> valueIterator;
-		MatrixValue matrixValueToPrint = new MatrixValue();
-		CharSequenceAppender monCsa = new CharSequenceAppender(file);
-		MyMatrix tempMatrix = new MyMatrix();
-		MyMatrix tempVector = new MyMatrix();
-		String tempString;
-		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-		boolean isFound = false;
-		MatrixValue tempMatrixValue = new MatrixValue();
 
-		valueIterator = collectionOfSortedMatrixValues.iterator();
+		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
+		MatrixValue matrixValueToPrint = new MatrixValue();
+		int isValueChosen = 0;
+		boolean isFound = false;
 
 		MonCellRenderer monCell = new MonCellRenderer(0, 0);
 		jTableMatrice.setDefaultRenderer(Object.class, monCell);
@@ -723,20 +716,19 @@ public class InterfaceAHP
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.
-																													  getColumn()));
+			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(),
+															   matrixValueToPrint.getColumn()));
 			//on redessine la fenetre
 			this.repaint();
 
 			monCell.setCol(matrixValueToPrint.getColumn() + 1);
 			monCell.setRow(matrixValueToPrint.getRow() + 1);
-			//jTableMatrice.setDefaultRenderer(Object.class,new MonCellRenderer(matrixValueToPrint.getRow()+1,matrixValueToPrint.getColumn()+1));
-			//jTable1.setDefaultRenderer(Object.class,new MonCellRenderer());
+
 			//on ouvre un fenetre de dialogue pour afficher la valeur à modifier
 			JOptionPane jop = new JOptionPane();
 			int option = JOptionPane.showConfirmDialog(
 					null,
-					"Modifier la valeur "
+					"Souhaitez-vous modifier la valeur "
 					+ matrixValueToPrint.getValue()
 					+ " ( "
 					+ (matrixValueToPrint.getRow() + 1)
@@ -747,33 +739,36 @@ public class InterfaceAHP
 					"Modification des valeurs",
 					JOptionPane.YES_NO_CANCEL_OPTION);
 
-			//si on clique sur ok on sor du while
+			//si on clique sur ok on sort du while
 			if (option == JOptionPane.OK_OPTION) {
 				isValueChosen = 1;
 			} else if (option == JOptionPane.CANCEL_OPTION) {
 				isValueChosen = 1;
 				finSimulation = -1;
 			} else if (!valueIterator.hasNext()) {
-				//System.out.println("Retour en haut du classement");
-				valueIterator = collectionOfSortedMatrixValues.iterator();
+				System.out.println("Retour en haut du classement");
+				valueIterator = sortedMatrixValues.iterator();
 			}
 		}
-		//si l'expert n'a pas mit à la simulation
+
+		// si l'expert n'a pas mit à la simulation
 		if (finSimulation != -1) {
+			csa.close();
+		} else {
 			/*parcours de la liste pour l'écriture dans le fichier*/
-			valueIterator = collectionOfSortedMatrixValues.iterator();
+			valueIterator = sortedMatrixValues.iterator();
 
 			while ((valueIterator.hasNext()) && (!isFound)) {
 
-				tempMatrixValue = valueIterator.next();
-				monCsa.appendLineFeed();
+				final MatrixValue tempMatrixValue = valueIterator.next();
+				csa.appendLineFeed();
 
 				/*écriture du best fit associé à la valeur proposée*/
 				//copie de la matrice initiale
-				tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
+				final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
 				//calcul du vecteur propre associé à tempMatrix
-				tempVector = PriorityVector.build(tempMatrix);
+				final PriorityVector tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
 				double BestFit = SaatyTools.calculateBestFit(
 						tempMatrix,
@@ -781,17 +776,17 @@ public class InterfaceAHP
 						tempMatrixValue.getRow(),
 						tempMatrixValue.getColumn());
 				//écriture du best fit
-				tempString = "" + BestFit;
-				monCsa.append(tempString);
-				monCsa.appendCommaSeparator();
+				String tempString = "" + BestFit;
+				csa.append(tempString);
+				csa.appendCommaSeparator();
 
 				/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
 				tempString = "" + (tempMatrixValue.getRow() + 1);
-				monCsa.append(tempString);
-				monCsa.appendCommaSeparator();
+				csa.append(tempString);
+				csa.appendCommaSeparator();
 				tempString = "" + (tempMatrixValue.getColumn() + 1);
-				monCsa.append(tempString);
-				monCsa.appendCommaSeparator();
+				csa.append(tempString);
+				csa.appendCommaSeparator();
 
 				/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
@@ -809,22 +804,22 @@ public class InterfaceAHP
 				tempMatrix.setMatrixValue(newMatrixValue);
 
 				//rafraîchissement du vecteur de priorité
-				tempVector = PriorityVector.build(tempMatrix);
+				final MyMatrix tempVector2 = PriorityVector.build(tempMatrix);
+
 				//calcul et écriture de la cohérence
-				tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector);
+				ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+//				tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector2);
 				saatyConsistency = consistencyChecker.getConsistencyRatio();
 				tempString = "" + consistencyChecker.getConsistencyRatio();
-				monCsa.append(tempString);
-				monCsa.appendCommaSeparator();
+				csa.append(tempString);
+				csa.appendCommaSeparator();
 
 
 				if (matrixValue.equals(tempMatrixValue)) {
 					isFound = true;
 				}
 			}
-			monCsa.close();
-		} else {
-			monCsa.close();
+			csa.close();
 		}
 		return matrixValue;
 	}

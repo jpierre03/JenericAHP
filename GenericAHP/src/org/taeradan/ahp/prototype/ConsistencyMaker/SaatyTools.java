@@ -126,7 +126,7 @@ public final class SaatyTools {
 		MatrixValue matrixValue;
 		MyMatrix tempMatrix = new MyMatrix();
 
-		tempMatrix = tempMatrix.copyMyMatrix(preferenceMatrix);
+		tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
 		/*Remplacer aii et ajj par 2*/
 		matrixValue = preferenceMatrix.getMatrixValue(i, i);
