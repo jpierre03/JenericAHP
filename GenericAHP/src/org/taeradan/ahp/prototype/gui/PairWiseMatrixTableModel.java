@@ -25,23 +25,26 @@ import javax.swing.table.DefaultTableModel;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrixTableModel
-	extends DefaultTableModel {
+		extends DefaultTableModel {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
-	//	We override this method to make editable only half of the matrix.
-//	The other half will be filled automatically by an event listener on the table.
+	/**
+	 * We override this method to make editable only half of the matrix. The other half will be filled automatically by an
+	 * event listener on the table.
+	 */
 	@Override
 	public boolean isCellEditable(final int row, final int column) {
 		//Define wich cells are editable
-//		boolean editable = true;
-//		if (column >= row) {
-//			editable = false;
-//		}
-//		return editable;
-		return false;
+		boolean editable = true;
+		if (column >= row) {
+			editable = false;
+		}
+
+		// NO EDITABLE
+		editable = false;
+
+
+		return editable;
 	}
 }

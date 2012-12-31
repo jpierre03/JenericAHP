@@ -25,6 +25,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -36,28 +40,13 @@ import java.util.Collection;
  * @author Yves Dubromelle
  */
 public class ConfigurationFrame
-	extends javax.swing.JFrame {
+	extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 *
-	 */
-	transient final private DefaultTreeModel guiAhpTree;
-	/**
-	 *
-	 */
-	transient private File currentFile = new File(System.getProperty("user.dir"));
-	/**
-	 *
-	 */
-	transient private AHPRoot ahpAHPRoot;
-	/**
-	 *
-	 */
-	transient private boolean fileOpened = false;
+	private final transient DefaultTreeModel guiAhpTree;
+	private transient File currentFile = new File(System.getProperty("user.dir"));
+	private transient AHPRoot ahpAHPRoot;
+	private transient boolean fileOpened = false;
 
 	/**
 	 * Creates new form ConfigurationFrame
@@ -82,22 +71,23 @@ public class ConfigurationFrame
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		jFileChooser = new javax.swing.JFileChooser();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		jTreeAhp = new javax.swing.JTree();
-		jMenuBar1 = new javax.swing.JMenuBar();
-		jMenuFile = new javax.swing.JMenu();
-		jMenuItemOpen = new javax.swing.JMenuItem();
-		jMenuItemSave = new javax.swing.JMenuItem();
-		jMenuItemSaveUnder = new javax.swing.JMenuItem();
-		jMenuItemQuit = new javax.swing.JMenuItem();
+		jFileChooser = new JFileChooser();
+		jScrollPane1 = new JScrollPane();
+		jTreeAhp = new JTree();
+		jMenuBar1 = new JMenuBar();
+		jMenuFile = new JMenu();
+		jMenuItemOpen = new JMenuItem();
+		jMenuItemSave = new JMenuItem();
+		jMenuItemSaveUnder = new JMenuItem();
+		jMenuItemQuit = new JMenuItem();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("AHP Tree Configuration");
 
 		jTreeAhp.setModel(guiAhpTree);
-		jTreeAhp.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+		jTreeAhp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) {
 				jTreeAhpMouseClicked(evt);
 			}
 		});
@@ -106,24 +96,27 @@ public class ConfigurationFrame
 		jMenuFile.setText("File");
 
 		jMenuItemOpen.setText("Open");
-		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		jMenuItemOpen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
 				jMenuItemOpenActionPerformed(evt);
 			}
 		});
 		jMenuFile.add(jMenuItemOpen);
 
 		jMenuItemSave.setText("Save");
-		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		jMenuItemSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
 				jMenuItemSaveActionPerformed(evt);
 			}
 		});
 		jMenuFile.add(jMenuItemSave);
 
 		jMenuItemSaveUnder.setText("Save under...");
-		jMenuItemSaveUnder.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		jMenuItemSaveUnder.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
 				jMenuItemSaveUnderActionPerformed(evt);
 			}
 		});
@@ -136,15 +129,15 @@ public class ConfigurationFrame
 
 		setJMenuBar(jMenuBar1);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-			layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(
-			layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
 		);
 
 		pack();
@@ -155,7 +148,7 @@ public class ConfigurationFrame
 	 *
 	 * @param evt
 	 */
-	private void jTreeAhpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeAhpMouseClicked
+	private void jTreeAhpMouseClicked(MouseEvent evt) {//GEN-FIRST:event_jTreeAhpMouseClicked
 //			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
 //			If the mouse is over a valid tree node...
 		if (jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null) {
@@ -174,28 +167,29 @@ public class ConfigurationFrame
 				if (object instanceof AHPRoot) {
 					final AHPRoot AHPRoot = (AHPRoot) object;
 					final JMenuItem addItem = new JMenuItem("Add criteria");
-					addItem.addActionListener(new java.awt.event.ActionListener() {
+					addItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
+
 						}
 					});
 //						addItem.addActionListener(this);
 					contextMenu.add(addItem);
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new java.awt.event.ActionListener() {
+					editItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 							editActionPerformed(object);
 						}
 					});
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new java.awt.event.ActionListener() {
+					delItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 							delRootActionPerformed(AHPRoot);
 						}
 					});
@@ -204,27 +198,27 @@ public class ConfigurationFrame
 				if (object instanceof Criterion) {
 					final Criterion criterion = (Criterion) object;
 					final JMenuItem addItem = new JMenuItem("Add indicator");
-					addItem.addActionListener(new java.awt.event.ActionListener() {
+					addItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 						}
 					});
 					contextMenu.add(addItem);
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new java.awt.event.ActionListener() {
+					editItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 							editActionPerformed(object);
 						}
 					});
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new java.awt.event.ActionListener() {
+					delItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 							delCriteriaActionPerformed(criterion);
 						}
 					});
@@ -233,18 +227,18 @@ public class ConfigurationFrame
 				if (object instanceof Indicator) {
 					Indicator indicator = (Indicator) object;
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new java.awt.event.ActionListener() {
+					editItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 						}
 					});
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new java.awt.event.ActionListener() {
+					delItem.addActionListener(new ActionListener() {
 
 						@Override
-						public void actionPerformed(java.awt.event.ActionEvent evt) {
+						public void actionPerformed(ActionEvent evt) {
 							editActionPerformed(object);
 						}
 					});
@@ -261,7 +255,7 @@ public class ConfigurationFrame
 	 *
 	 * @param evt
 	 */
-	private void jMenuItemOpenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemOpenActionPerformed
+	private void jMenuItemOpenActionPerformed(ActionEvent evt)//GEN-FIRST:event_jMenuItemOpenActionPerformed
 	{//GEN-HEADEREND:event_jMenuItemOpenActionPerformed
 		jFileChooser = new JFileChooser(currentFile);
 		jFileChooser.setApproveButtonText("Open");
@@ -281,7 +275,7 @@ public class ConfigurationFrame
 	 *
 	 * @param evt
 	 */
-	private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
+	private void jMenuItemSaveActionPerformed(ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveActionPerformed
 	{//GEN-HEADEREND:event_jMenuItemSaveActionPerformed
 		if (fileOpened) {
 			ahpAHPRoot.saveConfiguration(currentFile.getAbsolutePath());
@@ -296,7 +290,7 @@ public class ConfigurationFrame
 	 *
 	 * @param evt
 	 */
-	private void jMenuItemSaveUnderActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveUnderActionPerformed
+	private void jMenuItemSaveUnderActionPerformed(ActionEvent evt)//GEN-FIRST:event_jMenuItemSaveUnderActionPerformed
 	{//GEN-HEADEREND:event_jMenuItemSaveUnderActionPerformed
 		jFileChooser = new JFileChooser(currentFile);
 		jFileChooser.setApproveButtonText("Save");
@@ -307,9 +301,6 @@ public class ConfigurationFrame
 		}
 	}//GEN-LAST:event_jMenuItemSaveUnderActionPerformed
 
-	/**
-	 * @param object
-	 */
 	private void editActionPerformed(final Object object) {
 		if (object instanceof AHPRoot) {
 			final AHPRoot AHPRoot = (AHPRoot) object;
@@ -328,10 +319,7 @@ public class ConfigurationFrame
 		}
 	}
 
-	/**
-	 * @param AHPRoot
-	 */
-	private void delRootActionPerformed(final AHPRoot AHPRoot) {
+	private void delRootActionPerformed(final AHPRoot ahpRoot) {
 		if (JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
 			ahpAHPRoot = new AHPRoot(null, AHPRoot.indicatorPath);
@@ -340,9 +328,6 @@ public class ConfigurationFrame
 		}
 	}
 
-	/**
-	 * @param criterion
-	 */
 	private void delCriteriaActionPerformed(final Criterion criterion) {
 		if (JOptionPane.showConfirmDialog(this,
 			"Are you sure ? The criterion and its indicators will be destroyed.",
@@ -352,20 +337,14 @@ public class ConfigurationFrame
 		}
 	}
 
-	/**
-	 * @param indicator
-	 */
 	private void delIndicatorActionPerformed(final Indicator indicator) {
 		if (JOptionPane.showConfirmDialog(this, "Are you sure ? The indicator will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
 		}
 	}
 
-	/**
-	 * @param args the command line arguments
-	 */
 	public static void main(final String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
@@ -375,15 +354,15 @@ public class ConfigurationFrame
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JFileChooser jFileChooser;
-	private javax.swing.JMenuBar jMenuBar1;
-	private javax.swing.JMenu jMenuFile;
-	private javax.swing.JMenuItem jMenuItemOpen;
-	private javax.swing.JMenuItem jMenuItemQuit;
-	private javax.swing.JMenuItem jMenuItemSave;
-	private javax.swing.JMenuItem jMenuItemSaveUnder;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTree jTreeAhp;
+	private JFileChooser jFileChooser;
+	private JMenuBar jMenuBar1;
+	private JMenu jMenuFile;
+	private JMenuItem jMenuItemOpen;
+	private JMenuItem jMenuItemQuit;
+	private JMenuItem jMenuItemSave;
+	private JMenuItem jMenuItemSaveUnder;
+	private JScrollPane jScrollPane1;
+	private JTree jTreeAhp;
 	// End of variables declaration//GEN-END:variables
 
 	/**
