@@ -20,8 +20,7 @@ public final class MyMatrixTableTest {
 	}
 
 	public static void main(String[] args) {
-		MyMatrix aMatrix = new MyMatrix(MyMatrixTable.ROWS, MyMatrixTable.COLUMN);
-
+		final MyMatrix matrix = new MyMatrix(MyMatrixTable.ROWS, MyMatrixTable.COLUMN);
 
 		for (int i = 0; i < MyMatrixTable.ROWS; i++) {
 			for (int j = 0; j < MyMatrixTable.COLUMN; j++) {
@@ -30,7 +29,7 @@ public final class MyMatrixTableTest {
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
 
-				aMatrix.setMatrixValue(matrixValue);
+				matrix.setMatrixValue(matrixValue);
 			}
 		}
 
@@ -38,7 +37,7 @@ public final class MyMatrixTableTest {
 		MyMatrixTableModel tableModel = new MyMatrixTableModel();
 
 		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
-		tableModel.setMatrix(aMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
+		tableModel.setMatrix(matrix, SampleMatrixHeaders.getColumnHeader(true, false));
 
 		table.setModel(tableModel);
 
@@ -47,7 +46,7 @@ public final class MyMatrixTableTest {
 		JFrame maFenetre = new JFrame("ma belle fenêtre");
 		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		maFenetre.setContentPane(table);
-		maFenetre.setSize(1000, 27 * aMatrix.getRowDimension());
+		maFenetre.setSize(1000, 27 * matrix.getRowDimension());
 
 		maFenetre.setVisible(true);
 	}

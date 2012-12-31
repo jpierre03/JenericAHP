@@ -7,42 +7,26 @@ import Jama.Matrix;
  * @author Marianne
  */
 public class MyMatrix
-	extends Matrix {
+		extends Matrix {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 *
-	 */
 	public MyMatrix() {
 		super(0, 0);
 	}
 
-	/**
-	 * @param i
-	 * @param j
-	 */
 	public MyMatrix(int i, int j) {
 		super(i, j);
 	}
 
-	/**
-	 * @param matrixValue
-	 */
 	public void setMatrixValue(MatrixValue matrixValue) {
-		super.set(matrixValue.getRow(),
-			matrixValue.getColumn(),
-			matrixValue.getValue());
+		super.set(
+				matrixValue.getRow(),
+				matrixValue.getColumn(),
+				matrixValue.getValue()
+				 );
 	}
 
-	/**
-	 * @param i
-	 * @param j
-	 * @return
-	 */
 	public MatrixValue getMatrixValue(int i, int j) {
 		MatrixValue matrixValue = new MatrixValue();
 		matrixValue.setValue(super.get(i, j));
@@ -52,9 +36,8 @@ public class MyMatrix
 		return matrixValue;
 	}
 
-	public MyMatrix copyMyMatrix(MyMatrix initMatrix) {
-		MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.
-			getColumnDimension());
+	public static MyMatrix copyMyMatrix(final MyMatrix initMatrix) {
+		final MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
 		MatrixValue temp = new MatrixValue();
 
 		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
@@ -66,13 +49,5 @@ public class MyMatrix
 			}
 		}
 		return finalMatrix;
-	}
-
-	public void printCriteriaAndMatrix(MyMatrix matrix/*, String[] criterias*/) {
-		MatrixValue matrixValue = new MatrixValue();
-		String stringToPrint;
-		System.out.println("\tCritère 1\tCritère 2\tCritère 3\tCritère 4\tCritère 5");
-		matrix.print(15, 3);
-
 	}
 }

@@ -48,6 +48,18 @@ public class PairWiseMatrixTableModel
 	}
 
 	public final void setMatrix(final MyMatrix matrix, String... columnNames) {
+		assert matrix != null;
+		assert columnNames != null;
+		if (columnNames.length == 0 || matrix.getColumnDimension() == 0) {
+			throw new IllegalArgumentException("column names and matrix column count should be !=0");
+		}
+		if (matrix.getRowDimension() != matrix.getColumnDimension()) {
+			throw new IllegalArgumentException("matrix should be square");
+		}
+		if (columnNames.length < matrix.getColumnDimension()) {
+			throw new IllegalArgumentException("column names should be (at least) as long as matrix column count !");
+		}
+
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
