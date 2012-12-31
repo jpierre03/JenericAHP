@@ -1,14 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * MaMatriceFrame.java
- *
- * Created on 31 mai 2011, 14:24:44
- */
-
 package org.taeradan.ahp.prototype.gui.yannick;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -40,13 +29,33 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** @author Yannick */
+/**
+ * Created on 31 mai 2011, 14:24:44
+ *
+ * @author Yannick
+ * @author Jean-Pierre PRUNARET
+ */
 public class InterfaceAHP
 		extends JFrame
 		implements Runnable {
 
-	private static final double[] SAATY_VALUES = {1. / 9, 1. / 8, 1. / 7, 1. / 6, 1. / 5, 1. / 4,
-												  1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	private static final double[] SAATY_VALUES = {1. / 9,
+												  1. / 8,
+												  1. / 7,
+												  1. / 6,
+												  1. / 5,
+												  1. / 4,
+												  1. / 3,
+												  1. / 2,
+												  1,
+												  2,
+												  3,
+												  4,
+												  5,
+												  6,
+												  7,
+												  8,
+												  9};
 
 	private MyMatrix             myMatrix;
 	private MyMatrixTableModel   matrixTableModel;
@@ -590,7 +599,7 @@ public class InterfaceAHP
 	 * Cette méthode creer les matrices et les retournes(vide ou rempli)
 	 */
 	public MyMatrix creerMatrice(int matrixSize, int type) {
-		//jatoute un paramétre pour l'init du tableau ou la création de la matrice
+		// ajoute un paramètre pour l'init du tableau ou la création de la matrice
 		MyMatrix maMatrice = null;
 		MatrixValue matrixValue = new MatrixValue();
 		double newValue = 0;
