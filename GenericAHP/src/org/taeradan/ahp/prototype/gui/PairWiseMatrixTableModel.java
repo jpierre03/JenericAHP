@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
  * Specialised implementation of tableModel for the Preference Matrix needs
  *
  * @author Yves Dubromelle
+ * @author Jean-Pierre PRUNARET
  */
 public class PairWiseMatrixTableModel
 		extends DefaultTableModel {
@@ -35,15 +36,11 @@ public class PairWiseMatrixTableModel
 	 */
 	@Override
 	public boolean isCellEditable(final int row, final int column) {
-		//Define wich cells are editable
 		boolean editable = true;
+
 		if (column >= row) {
 			editable = false;
 		}
-
-		// NO EDITABLE
-		editable = false;
-
 
 		return editable;
 	}

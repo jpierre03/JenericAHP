@@ -10,6 +10,7 @@ import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.ConsistencyMaker.RandomTools;
 import org.taeradan.ahp.prototype.ConsistencyMaker.SaatyTools;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
+import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
@@ -906,7 +907,7 @@ public class InterfaceAHP
 		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
 		//on rempli les jComboBox par le nom des column pour le 1er classement
 		String[] mesColonnes = new String[myMatrix.getColumnDimension()];
-		mesColonnes = matrixTableModel.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+		mesColonnes = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
 		remplirJComboBox(jComboBox1erClass1, mesColonnes);
 		remplirJComboBox(jComboBox1erClass2, mesColonnes);
 		remplirJComboBox(jComboBox1erClass3, mesColonnes);
@@ -1359,7 +1360,7 @@ public class InterfaceAHP
 			Arrays.sort(monClassement);
 
 			for (int i = 0; i < v.getRowDimension(); i++) {
-				String columnNames[] = matrixTableModel.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+				String columnNames[] = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
 				for (int j = 0; j < v.getRowDimension(); j++) {
 					int temp = j;
 					//on récupérer les critères classés
@@ -1379,7 +1380,7 @@ public class InterfaceAHP
 			}
 			return classementString;
 		} else {
-			String columnNames[] = matrixTableModel.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+			String columnNames[] = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
 			String[] classementString = new String[v.getRowDimension()];
 			double[] monClassement = new double[v.getRowDimension()];
 			for (int i = 0; i < v.getRowDimension(); i++) {

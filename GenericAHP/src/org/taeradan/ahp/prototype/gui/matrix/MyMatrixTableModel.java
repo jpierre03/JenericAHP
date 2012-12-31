@@ -18,8 +18,8 @@
 package org.taeradan.ahp.prototype.gui.matrix;
 
 import org.taeradan.ahp.matrix.MyMatrix;
-
-import javax.swing.table.DefaultTableModel;
+import org.taeradan.ahp.prototype.SampleMatrixHeaders;
+import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
 
 /**
  * Specialised implementation of tableModel for the Preference Matrix needs
@@ -29,93 +29,37 @@ import javax.swing.table.DefaultTableModel;
  * @author Yves Dubromelle
  */
 public class MyMatrixTableModel
-		extends DefaultTableModel {
+		extends PairWiseMatrixTableModel {
 
 	private static final long serialVersionUID = 1L;
-	private MyMatrix matrix;
 
 	public MyMatrixTableModel() {
 	}
 
-	/*
-	 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
-	 *
-	 */
-	public static String[] getColumnHeader(boolean isTestB, boolean isEnglish) {
-		if (isTestB == true) {
-			if (isEnglish == false) {
-				String columnNames[] = {"Temps de transport",
-										"Coût",
-										"Confort",
-										"Pollution",
-										"Qualité de service",
-										"Sécurité"};
-				return columnNames;
-			} else {
-				String columnNames[] = {"Travel time",
-										"Cost",
-										"Comfort",
-										"Pollution",
-										"Quality of Service",
-										"Security"};
-				return columnNames;
-			}
-		} else {
-			if (isEnglish == false) {
-				String columnNames[] = {"Prix",
-										"Sécurité",
-										"Pollution",
-										"Design",
-										"Durée de vie",
-										"Taille"};
-				return columnNames;
-			} else {
-				String columnNames[] = {"Price",
-										"Security",
-										"Pollution",
-										"Design",
-										"Life",
-										"Size"};
-				return columnNames;
-			}
-		}
-	}
-/*
-	private Collection<String> getColumnHeader(){
-		Collection<String> aLegend = new ArrayList<String>();
-
-		aLegend.add("");
-		for (int i = 0; i < matrix.getColumnDimension(); i++) {
-			aLegend.add("Critere" + (i+1));
-		}
-		return aLegend;
-	}*/
-
-	/**
-	 * Retourne vrai si la cellule est éditable : celle-ci sera donc éditable
-	 */
 	@Override
 	public boolean isCellEditable(int row, int col) {
+		flushContent(row, col);
+
+		return super.isCellEditable(row, col);
+	}
+
+	private void flushContent(int row, int col) {
 		if (row > 0 && col > row) {
 			setValueAt("", row, col);
-			return true;
-		} else {
-			return false;
 		}
 	}
 
-	public void setMatrix(MyMatrix matrix, boolean isTestB, boolean isEnglish) {
-		this.matrix = matrix;
+	public void setMatrix(final MyMatrix matrix, boolean isTestB, boolean isEnglish) {
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
 			//on cree les critère en fonction du pb choisi
 			if (isTestB == true) {
-				String columnNames[] = getColumnHeader(isTestB, isEnglish);
+				String columnNames[] = SampleMatrixHeaders.getColumnHeader(isTestB, isEnglish);
 				data[0][i + 1] = columnNames[i];
 				data[i + 1][0] = columnNames[i];
 			} else {
-				String columnNames[] = getColumnHeader(isTestB, isEnglish);
+				String columnNames[] = SampleMatrixHeaders.getColumnHeader(isTestB, isEnglish);
 				data[0][i + 1] = columnNames[i];
 				data[i + 1][0] = columnNames[i];
 			}
