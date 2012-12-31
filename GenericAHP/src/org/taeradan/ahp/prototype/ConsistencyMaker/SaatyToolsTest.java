@@ -6,6 +6,7 @@ import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
+import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
@@ -237,7 +238,7 @@ public final class SaatyToolsTest {
 
 		/*Interface graphique*/
 		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-		matrixTableModel.setMatrix(preferenceMatrix, true, false);
+		matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
 		maTable.setModel(matrixTableModel);
 
 		showMatrixTable(maTable, preferenceMatrix);
@@ -346,7 +347,7 @@ public final class SaatyToolsTest {
 
 			//Affichage nouvelle matrice
 			//Attention true si c'est le 1er problème false si deuxième et false si langue francaise
-			matrixTableModel.setMatrix(preferenceMatrix, true, false);
+			matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
 			maTable.setModel(matrixTableModel);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice

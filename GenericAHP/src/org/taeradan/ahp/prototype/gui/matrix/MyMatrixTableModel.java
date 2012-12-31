@@ -18,7 +18,6 @@
 package org.taeradan.ahp.prototype.gui.matrix;
 
 import org.taeradan.ahp.matrix.MyMatrix;
-import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
 
 /**
@@ -49,23 +48,12 @@ public class MyMatrixTableModel
 		}
 	}
 
-	public void setMatrix(final MyMatrix matrix, boolean isTestB, boolean isEnglish) {
+	public void setMatrix(final MyMatrix matrix, String... columnNames) {
 		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
-			//on cree les critère en fonction du pb choisi
-			if (isTestB == true) {
-				String columnNames[] = SampleMatrixHeaders.getColumnHeader(isTestB, isEnglish);
-				data[0][i + 1] = columnNames[i];
-				data[i + 1][0] = columnNames[i];
-			} else {
-				String columnNames[] = SampleMatrixHeaders.getColumnHeader(isTestB, isEnglish);
-				data[0][i + 1] = columnNames[i];
-				data[i + 1][0] = columnNames[i];
-			}
-			//String columnNames = "Critere" + (i+1);
-			//data[0][i+1] = columnNames[i];
-			//data[i+1][0] = columnNames;
+			data[0][i + 1] = columnNames[i];
+			data[i + 1][0] = columnNames[i];
 
 			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 				data[i + 1][j + 1] = matrix.getMatrixValue(i, j);

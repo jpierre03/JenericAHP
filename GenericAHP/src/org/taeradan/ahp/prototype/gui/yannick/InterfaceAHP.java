@@ -897,7 +897,8 @@ public class InterfaceAHP
 			}
 		}
 		/*Interface graphique*/
-		matrixTableModel.setMatrix(myMatrix, jRadioButtonP1.isSelected(), modeAnglais);
+		matrixTableModel.setMatrix(myMatrix,
+								   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrice.setModel(matrixTableModel);
 		//maTable.setModel(matrixTableModel);
@@ -1134,7 +1135,9 @@ public class InterfaceAHP
 					//	myMatrix.print(5, 5);
 
 					//Affichage nouvelle matrice
-					matrixTableModel.setMatrix(myMatrix, jRadioButtonP1.isSelected(), modeAnglais);
+					matrixTableModel.setMatrix(myMatrix,
+											   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+																				   modeAnglais));
 					jTableMatrice.setModel(matrixTableModel);
 
 					//Réactualisation du vecteur de priorité associé à la nouvelle matrice
@@ -1229,7 +1232,8 @@ public class InterfaceAHP
 		myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 1);
 		//maTable = new MyMatrixTable();
 		/*Interface graphique*/
-		matrixTableModel.setMatrix(myMatrix, jRadioButtonP1.isSelected(), modeAnglais);
+		matrixTableModel.setMatrix(myMatrix,
+								   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrice.setModel(matrixTableModel);
 		//maTable.setModel(matrixTableModel);

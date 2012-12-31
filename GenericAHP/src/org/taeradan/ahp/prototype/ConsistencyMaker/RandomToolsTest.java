@@ -6,6 +6,7 @@ import org.taeradan.ahp.PriorityVector;
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
+import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
@@ -16,8 +17,8 @@ import java.util.Collection;
 import java.util.Scanner;
 
 /**
- * This class aims to execute the random method, for a given matrix,
- * that you can fill through the console
+ * This class aims to execute the random method, for a given matrix, that you can fill through the console
+ *
  * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
@@ -65,7 +66,7 @@ public final class RandomToolsTest {
 		System.out.println("Merci de patienter.");
 
 		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-		matrixTableModel.setMatrix(preferenceMatrix, true, false);
+		matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
 		maTable.setModel(matrixTableModel);
 
 		/*Print a matrix view*/
@@ -173,7 +174,7 @@ public final class RandomToolsTest {
 
 			//Affichage nouvelle matrice
 			//Attention true si c'est le 1er problème false si deuxième et false si langue francaise
-			matrixTableModel.setMatrix(preferenceMatrix, true, false);
+			matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
 			maTable.setModel(matrixTableModel);
 
 			//Réactualisation du vecteur de priorité associé à la nouvelle matrice

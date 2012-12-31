@@ -6,6 +6,7 @@ package org.taeradan.ahp.prototype.gui.matrix;
 
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
+import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 
 import javax.swing.JFrame;
 
@@ -37,7 +38,7 @@ public final class MyMatrixTableTest {
 		MyMatrixTableModel tableModel = new MyMatrixTableModel();
 
 		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
-		tableModel.setMatrix(aMatrix, true, false);
+		tableModel.setMatrix(aMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
 
 		table.setModel(tableModel);
 
