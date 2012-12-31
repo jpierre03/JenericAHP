@@ -20,8 +20,16 @@ public final class MyMatrixTableTest {
 	}
 
 	public static void main(String[] args) {
+
+		final MyMatrixTable table = new MyMatrixTable();
 		final MyMatrix matrix = new MyMatrix(MyMatrixTable.ROWS, MyMatrixTable.COLUMN);
 
+		setTableFromMatrix(table, matrix);
+
+		showTableInFrame(27 * matrix.getRowDimension(), table);
+	}
+
+	private static void setTableFromMatrix(MyMatrixTable table, MyMatrix matrix) {
 		for (int i = 0; i < MyMatrixTable.ROWS; i++) {
 			for (int j = 0; j < MyMatrixTable.COLUMN; j++) {
 				MatrixValue matrixValue = new MatrixValue();
@@ -33,21 +41,22 @@ public final class MyMatrixTableTest {
 			}
 		}
 
-		MyMatrixTable table = new MyMatrixTable();
+
 		MyMatrixTableModel tableModel = new MyMatrixTableModel();
 
 		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
 		tableModel.setMatrix(matrix, SampleMatrixHeaders.getColumnHeader(true, false));
 
 		table.setModel(tableModel);
+	}
 
-
+	private static void showTableInFrame(int height, MyMatrixTable table) {
 		// Show a frame with a table
-		JFrame maFenetre = new JFrame("ma belle fenêtre");
-		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		maFenetre.setContentPane(table);
-		maFenetre.setSize(1000, 27 * matrix.getRowDimension());
+		JFrame frame = new JFrame("A beautiful frame");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(table);
+		frame.setSize(1000, height);
 
-		maFenetre.setVisible(true);
+		frame.setVisible(true);
 	}
 }
