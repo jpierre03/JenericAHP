@@ -35,8 +35,7 @@ public final class SaatyToolsTest {
 	public static boolean isInSaatyScale(double value) {
 		boolean result = false;
 
-		for (int i = 0; i < SAATY_VALUES.length; i++) {
-			double d = SAATY_VALUES[i];
+		for (double d : SAATY_VALUES) {
 			if (value == d) {
 				result = true;
 			}

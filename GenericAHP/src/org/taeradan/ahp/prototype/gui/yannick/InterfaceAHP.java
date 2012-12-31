@@ -768,13 +768,12 @@ public class InterfaceAHP
 				final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
 				//calcul du vecteur propre associé à tempMatrix
-				final PriorityVector tempVector = PriorityVector.build(tempMatrix);
+				PriorityVector tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
-				double BestFit = SaatyTools.calculateBestFit(
-						tempMatrix,
-						tempVector,
-						tempMatrixValue.getRow(),
-						tempMatrixValue.getColumn());
+				double BestFit = SaatyTools.calculateBestFit(tempMatrix,
+															 tempVector,
+															 tempMatrixValue.getRow(),
+															 tempMatrixValue.getColumn());
 				//écriture du best fit
 				String tempString = "" + BestFit;
 				csa.append(tempString);
@@ -813,7 +812,6 @@ public class InterfaceAHP
 				tempString = "" + consistencyChecker.getConsistencyRatio();
 				csa.append(tempString);
 				csa.appendCommaSeparator();
-
 
 				if (matrixValue.equals(tempMatrixValue)) {
 					isFound = true;
@@ -921,6 +919,8 @@ public class InterfaceAHP
 		double oldValue;
 		int coordRowVal;
 		int coordColVal;
+
+
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.append("Matrice de preferences initiale");
 		csa.appendLineFeed();
@@ -949,7 +949,8 @@ public class InterfaceAHP
 		jLabelClassInit4.setText(classementVal[2] + "%");
 		jLabelClassInit5.setText(classementVal[1] + "%");
 		jLabelClassInit6.setText(classementVal[0] + "%");
-		/*Ecriture du CR*/
+
+		//Writing of the CR
 		consistencyChecker.isConsistent(myMatrix, priorityVector);
 		String tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR initial");
