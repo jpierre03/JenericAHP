@@ -17,7 +17,6 @@
  */
 package org.taeradan.ahp.prototype.gui.matrix;
 
-import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
 
 /**
@@ -27,7 +26,7 @@ import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
  * @author Marianne
  * @author Yves Dubromelle
  */
-public class MyMatrixTableModel
+public final class MyMatrixTableModel
 		extends PairWiseMatrixTableModel {
 
 	private static final long serialVersionUID = 1L;
@@ -46,19 +45,5 @@ public class MyMatrixTableModel
 		if (row > 0 && col > row) {
 			setValueAt("", row, col);
 		}
-	}
-
-	public void setMatrix(final MyMatrix matrix, String... columnNames) {
-		Object[][] data = new Object[matrix.getRowDimension() + 1][matrix.getColumnDimension() + 1];
-
-		for (int i = 0; i < matrix.getRowDimension(); i++) {
-			data[0][i + 1] = columnNames[i];
-			data[i + 1][0] = columnNames[i];
-
-			for (int j = 0; j < matrix.getColumnDimension(); j++) {
-				data[i + 1][j + 1] = matrix.getMatrixValue(i, j);
-			}
-		}
-		setDataVector(data, new String[matrix.getColumnDimension() + 1]);
 	}
 }
