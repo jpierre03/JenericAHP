@@ -11,14 +11,12 @@ import org.taeradan.ahp.prototype.ConsistencyMaker.RandomTools;
 import org.taeradan.ahp.prototype.ConsistencyMaker.SaatyTools;
 import org.taeradan.ahp.prototype.ConsistencyMaker.csv_output_marianne.CharSequenceAppender;
 import org.taeradan.ahp.prototype.SampleMatrixHeaders;
-import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -93,8 +91,8 @@ public class InterfaceAHP
 		jButtonValiderMatrice.setText("Valider Matrice");
 		jButtonValiderMatrice.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonValiderMatriceActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonValiderMatriceActionPerformed(event);
 			}
 		});
 
@@ -144,8 +142,8 @@ public class InterfaceAHP
 		jButtonOK.setText("Ok");
 		jButtonOK.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonOKActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonOKActionPerformed(event);
 			}
 		});
 		jPanelInit.add(jButtonOK, new AbsoluteConstraints(617, 97, -1, -1));
@@ -153,8 +151,8 @@ public class InterfaceAHP
 		jButtonParcourir.setText("Parcourir");
 		jButtonParcourir.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonParcourirActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonParcourirActionPerformed(event);
 			}
 		});
 		jPanelInit.add(jButtonParcourir, new AbsoluteConstraints(590, 70, -1, -1));
@@ -199,8 +197,8 @@ public class InterfaceAHP
 		jButtonOkClassIntuitif.setText("OK");
 		jButtonOkClassIntuitif.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonOkClassIntuitifActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonOkClassIntuitifActionPerformed(event);
 			}
 		});
 		jPanel1erClassement.add(jButtonOkClassIntuitif,
@@ -365,24 +363,24 @@ public class InterfaceAHP
 		jButtonNewSimul.setText("Nouvelle Simulation");
 		jButtonNewSimul.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonNewSimulActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonNewSimulActionPerformed(event);
 			}
 		});
 
 		jButtonAnglais.setText("Anglais");
 		jButtonAnglais.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonAnglaisActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonAnglaisActionPerformed(event);
 			}
 		});
 
 		jButtonFrench.setText("Français");
 		jButtonFrench.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonFrenchActionPerformed(evt);
+			public void actionPerformed(ActionEvent event) {
+				jButtonFrenchActionPerformed(event);
 			}
 		});
 
@@ -772,7 +770,7 @@ public class InterfaceAHP
 
 				/*écriture du best fit associé à la valeur proposée*/
 				//copie de la matrice initiale
-				tempMatrix = tempMatrix.copyMyMatrix(myPreferenceMatrix);
+				tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
 				//calcul du vecteur propre associé à tempMatrix
 				tempVector = PriorityVector.build(tempMatrix);
@@ -831,21 +829,7 @@ public class InterfaceAHP
 		return matrixValue;
 	}
 
-	private void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix)
-			throws
-			HeadlessException {
-		// Show a frame with a table
-		//this.setSize(1000, 35 * myMatrix.getRowDimension());
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//JPanel pan = new JPanel();
-		//pan.add(new JButton("Valider"));
-		this.setContentPane(maTable);
-		//this.setContentPane(pan, BorderLayout.SOUTH);
-		//this.setContentPane(maTable);
-		//this.setSize(1000, 27 * myMatrix.getRowDimension());
-	}
-
-	private void jButtonOKActionPerformed(ActionEvent evt) {
+	private void jButtonOKActionPerformed(ActionEvent event) {
 		//on crée et lance le thread pour afficher un compteur
 
 		monHeure = new Meter(jLabelTime, this);
@@ -1223,7 +1207,7 @@ public class InterfaceAHP
 		return consistencyChecker.getConsistencyRatio();
 	}
 
-	private void jButtonValiderMatriceActionPerformed(ActionEvent evt) {
+	private void jButtonValiderMatriceActionPerformed(ActionEvent event) {
 		// TODO add your handling code here:
 
 		myMatrix = new MyMatrix();
@@ -1415,13 +1399,13 @@ public class InterfaceAHP
 		}
 	}
 
-	private void jButtonNewSimulActionPerformed(ActionEvent evt) {
+	private void jButtonNewSimulActionPerformed(ActionEvent event) {
 		initComponents();
 		this.dispose();
 		new InterfaceAHP().setVisible(true);
 	}
 
-	private void jButtonParcourirActionPerformed(ActionEvent evt) {
+	private void jButtonParcourirActionPerformed(ActionEvent event) {
 		JFileChooser jfc = new JFileChooser();
 		jfc.setVisible(true);
 		int choix = jfc.showSaveDialog(this);
@@ -1433,11 +1417,11 @@ public class InterfaceAHP
 		}
 	}
 
-	private void jButtonOkClassIntuitifActionPerformed(ActionEvent evt) {
+	private void jButtonOkClassIntuitifActionPerformed(ActionEvent event) {
 		jPanel1erClassement.setVisible(false);
 	}
 
-	private void jButtonAnglaisActionPerformed(ActionEvent evt) {
+	private void jButtonAnglaisActionPerformed(ActionEvent event) {
 		// TODO add your handling code here:
 		modeAnglais = true;
 		jButtonFrench.setText("French");
@@ -1483,7 +1467,7 @@ public class InterfaceAHP
 		jLabel20.setText("3th:");
 	}
 
-	private void jButtonFrenchActionPerformed(ActionEvent evt) {
+	private void jButtonFrenchActionPerformed(ActionEvent event) {
 		//on repass à false le mode anglais
 		modeAnglais = false;
 		initComponents();
