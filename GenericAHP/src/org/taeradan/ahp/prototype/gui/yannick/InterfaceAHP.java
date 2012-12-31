@@ -36,8 +36,7 @@ import java.util.logging.Logger;
  * @author Jean-Pierre PRUNARET
  */
 public class InterfaceAHP
-		extends JFrame
-		implements Runnable {
+		extends JFrame {
 
 	private static final double[] SAATY_VALUES = {1. / 9,
 												  1. / 8,
@@ -1585,9 +1584,4 @@ public class InterfaceAHP
 	private JTextField        jTextFieldClassMat6     = new JTextField();
 	private JTextField        jTextFieldDimensions    = new JTextField();
 	// End of variables declaration
-
-	@Override
-	public void run() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
 }
