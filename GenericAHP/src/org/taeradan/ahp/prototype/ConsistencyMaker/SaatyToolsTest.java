@@ -18,8 +18,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- * This class aims to execute the Saaty method, for a given matrix,
- * that you can fill through the console
+ * This class aims to execute the Saaty method, for a given matrix, that you can fill through the console
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  * @author Marianne
@@ -88,8 +88,6 @@ public final class SaatyToolsTest {
 		/*parcours de la liste pour l'écriture dans le fichier*/
 		valueIterator = sortedMatrixValues.iterator();
 
-		MyMatrix tempMatrix = new MyMatrix();
-
 		while ((valueIterator.hasNext()) && (!isFound)) {
 
 			MatrixValue tempMatrixValue = valueIterator.next();
@@ -97,7 +95,7 @@ public final class SaatyToolsTest {
 
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
-			tempMatrix = tempMatrix.copyMyMatrix(myPreferenceMatrix);
+			final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
 			//calcul du vecteur propre associé à tempMatrix
 			PriorityVector tempVector = PriorityVector.build(tempMatrix);
@@ -161,7 +159,7 @@ public final class SaatyToolsTest {
 		expertsChoice = userInput.next();
 		int matrixSize = Integer.parseInt(expertsChoice);
 
-		MyMatrix myMatrix = new MyMatrix(matrixSize, matrixSize);
+		final MyMatrix myMatrix = new MyMatrix(matrixSize, matrixSize);
 
 		/*Saisie matrice*/
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
