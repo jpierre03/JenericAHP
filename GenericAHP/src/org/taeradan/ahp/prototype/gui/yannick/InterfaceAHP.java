@@ -37,35 +37,50 @@ import java.util.logging.Logger;
 public class InterfaceAHP
 		extends JFrame {
 
-	private static final double[] SAATY_VALUES = {1. / 9,
-												  1. / 8,
-												  1. / 7,
-												  1. / 6,
-												  1. / 5,
-												  1. / 4,
-												  1. / 3,
-												  1. / 2,
-												  1,
-												  2,
-												  3,
-												  4,
-												  5,
-												  6,
-												  7,
-												  8,
-												  9};
-
-	private boolean finSimulation = false;
-	private boolean modeAnglais   = false;
-	private MyMatrix             myMatrix;
-	private MyMatrixTableModel   matrixTableModel;
+	private AHP_Data ahpData       = new AHP_Data();
+	private boolean  finSimulation = false;
+	private boolean  modeAnglais   = false;
 	private CharSequenceAppender csa;
 	private String               file;
 	private String               fileHistorique;
 	private Meter                monHeure;
 	private JEP                  monJep;
-	private double               saatyConsistency;
 
+	private class AHP_Data {
+		private final double[] saatyValues = {1. / 9,
+											  1. / 8,
+											  1. / 7,
+											  1. / 6,
+											  1. / 5,
+											  1. / 4,
+											  1. / 3,
+											  1. / 2,
+											  1,
+											  2,
+											  3,
+											  4,
+											  5,
+											  6,
+											  7,
+											  8,
+											  9};
+
+		private MyMatrix           myMatrix         = new MyMatrix();
+		private MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
+		private double             saatyConsistency = Double.NaN;
+
+		public boolean isInSaatyScale(double value) {
+			boolean result = false;
+
+			for (int i = 0; i < saatyValues.length; i++) {
+				double d = saatyValues[i];
+				if (value == d) {
+					result = true;
+				}
+			}
+			return result;
+		}
+	}
 
 	/** Creates new form MaMatriceFrame */
 	public InterfaceAHP() {
@@ -622,7 +637,7 @@ public class InterfaceAHP
 					//newValue = Double.parseDouble(jTableMatrice.getValueAt(i+1, j+1).toString());
 					//Si la valeur n'appartient pas à l'échelle de saaty
 					//on demande a l'expert de la modifier
-					while (!isInSaatysSacale(newValue)) {
+					while (!ahpData.isInSaatyScale(newValue)) {
 						choix = 0;
 						while (choix == 0) {
 							String val = JOptionPane.showInputDialog(
@@ -676,19 +691,6 @@ public class InterfaceAHP
 			}
 		}
 		return maMatrice;
-	}
-
-	/** Cette méthode permet de tester les coefficients de saaty */
-	public static boolean isInSaatysSacale(double value) {
-		boolean result = false;
-
-		for (int i = 0; i < SAATY_VALUES.length; i++) {
-			double d = SAATY_VALUES[i];
-			if (value == d) {
-				result = true;
-			}
-		}
-		return result;
 	}
 
 	/*
@@ -807,7 +809,7 @@ public class InterfaceAHP
 				//calcul et écriture de la cohérence
 				ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 //				tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector2);
-				saatyConsistency = consistencyChecker.getConsistencyRatio();
+				ahpData.saatyConsistency = consistencyChecker.getConsistencyRatio();
 				tempString = "" + consistencyChecker.getConsistencyRatio();
 				csa.append(tempString);
 				csa.appendCommaSeparator();
@@ -828,10 +830,10 @@ public class InterfaceAHP
 		monHeure.setCommencerAZero(false);
 		monHeure.start();
 
-		myMatrix = new MyMatrix();
-		matrixTableModel = new MyMatrixTableModel();
+		ahpData.myMatrix = new MyMatrix();
+		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice vide
-		myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 0);
+		ahpData.myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 0);
 		//maTable = new MyMatrixTable();
 
 		//on teste pour savoir quelle est le pb choisi
@@ -873,17 +875,18 @@ public class InterfaceAHP
 			}
 		}
 		/*Interface graphique*/
-		matrixTableModel.setMatrix(myMatrix,
-								   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais));
+		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
+										   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrice.setModel(matrixTableModel);
+		jTableMatrice.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		jLabel6.setText(
 				"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
 		//on affiche la matrice
 		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
 		//on rempli les jComboBox par le nom des column pour le 1er classement
-		String[] mesColonnes = new String[myMatrix.getColumnDimension()];
+		String[] mesColonnes = new String[ahpData.myMatrix.getColumnDimension()];
 		mesColonnes = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
 		remplirJComboBox(jComboBox1erClass1, mesColonnes);
 		remplirJComboBox(jComboBox1erClass2, mesColonnes);
@@ -910,7 +913,7 @@ public class InterfaceAHP
 	 */
 	private double creerFichierCsv() {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-		PriorityVector priorityVector = PriorityVector.build(myMatrix);
+		PriorityVector priorityVector = PriorityVector.build(ahpData.myMatrix);
 		MyMatrix epsilon = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
 		Collection<MatrixValue> collectionOfSortedMatrixValues = new ArrayList<MatrixValue>();
@@ -923,7 +926,7 @@ public class InterfaceAHP
 		/*Ecriture de la matrice et du vecteur de priorité dans le fichier*/
 		csa.append("Matrice de preferences initiale");
 		csa.appendLineFeed();
-		csa.append(myMatrix);
+		csa.append(ahpData.myMatrix);
 		csa.appendLineFeed();
 		csa.append("Vecteur de priorite initial");
 		csa.appendLineFeed();
@@ -931,7 +934,7 @@ public class InterfaceAHP
 		csa.appendLineFeed();
 
 		//on crée le fichier et on l'initialise avec la 1ère matrice
-		this.ecrirefichierHistorique(myMatrix, 0, 0, 0, 0);
+		this.ecrirefichierHistorique(ahpData.myMatrix, 0, 0, 0, 0);
 
 		//on va afficher le classement des critères de la 1ere matrice
 		String[] classement = this.classerCriteres(priorityVector);
@@ -950,7 +953,7 @@ public class InterfaceAHP
 		jLabelClassInit6.setText(classementVal[0] + "%");
 
 		//Writing of the CR
-		consistencyChecker.isConsistent(myMatrix, priorityVector);
+		consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 		String tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR initial");
 		csa.appendLineFeed();
@@ -975,7 +978,7 @@ public class InterfaceAHP
 		csa.close();
 		int iterationCounter = 0;
 		boolean test = false;
-		boolean myConsistent = consistencyChecker.isConsistent(myMatrix, priorityVector);
+		boolean myConsistent = consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 
 		while (!myConsistent) {
 
@@ -987,21 +990,21 @@ public class InterfaceAHP
 				//on teste quelles méthode(aléaloire, saaty)
 				if (jRadioButtonSaaty.isSelected() == true) {
 					/*Calcul matrice epsilon*/
-					epsilon = SaatyTools.calculateEpsilonMatrix(myMatrix, priorityVector);
+					epsilon = SaatyTools.calculateEpsilonMatrix(ahpData.myMatrix, priorityVector);
 					/*Recherche de la valeur à modifier*/
-					collectionOfSortedMatrixValues = SaatyTools.getRank(myMatrix, priorityVector, epsilon);
+					collectionOfSortedMatrixValues = SaatyTools.getRank(ahpData.myMatrix, priorityVector, epsilon);
 					try {
-						matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, myMatrix, file);
+						matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, ahpData.myMatrix, file);
 					} catch (IOException ex) {
 						Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 					}
 				} else {
-					collectionOfSortedMatrixValues = RandomTools.getRank(myMatrix);
+					collectionOfSortedMatrixValues = RandomTools.getRank(ahpData.myMatrix);
 					matrixValue = getValueToModifiyByRanking(collectionOfSortedMatrixValues);
 					try {
 						/*Writing of Saaty's propositions and of random ranking*/
 						RandomTools.writeRandomAndSaatyPropositions(
-								myMatrix,
+								ahpData.myMatrix,
 								collectionOfSortedMatrixValues,
 								matrixValue,
 								priorityVector,
@@ -1014,7 +1017,7 @@ public class InterfaceAHP
 				//si l'expert n'a pas mis fin è la simulation et veut changer le coeff
 				if (finSimulation == false) {
 					//on stocke les différentes valeur pour le fichier historique
-					oldValue = myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
+					oldValue = ahpData.myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 					coordRowVal = (matrixValue.getRow() + 1);
 					coordColVal = (matrixValue.getColumn() + 1);
 					//on va tester le joptionPane
@@ -1049,12 +1052,12 @@ public class InterfaceAHP
 					} catch (IOException ex) {
 						Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 					}
-					tempString = "" + myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
+					tempString = "" + ahpData.myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//Si la valeur modifier n'appartient pas à l'échelle de saaty
 					//on demande a l'expert de la modifier
-					while (!isInSaatysSacale(newValue)) {
+					while (!ahpData.isInSaatyScale(newValue)) {
 						int choix = 0;
 						while (choix == 0) {
 							JOptionPane jop = new JOptionPane();
@@ -1100,7 +1103,7 @@ public class InterfaceAHP
 
 					//Valeur directement modifiée
 					matrixValue.setValue(newValue);
-					myMatrix.setMatrixValue(matrixValue);
+					ahpData.myMatrix.setMatrixValue(matrixValue);
 
 					//Valeur réciproquement modifiée
 					int tempI = matrixValue.getRow();
@@ -1108,36 +1111,36 @@ public class InterfaceAHP
 					matrixValue.setValue(1 / newValue);
 					matrixValue.setRow(tempJ);
 					matrixValue.setColumn(tempI);
-					myMatrix.setMatrixValue(matrixValue);
+					ahpData.myMatrix.setMatrixValue(matrixValue);
 
 					//Affichage nouvelle matrice
 					//	myMatrix.print(5, 5);
 
 					//Affichage nouvelle matrice
-					matrixTableModel.setMatrix(myMatrix,
-											   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
-																				   modeAnglais));
-					jTableMatrice.setModel(matrixTableModel);
+					ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
+													   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+																						   modeAnglais));
+					jTableMatrice.setModel(ahpData.matrixTableModel);
 
 					//Réactualisation du vecteur de priorité associé à la nouvelle matrice
-					priorityVector = PriorityVector.build(myMatrix);
+					priorityVector = PriorityVector.build(ahpData.myMatrix);
 					//		priorityVector.print(5, 5);
 
 					//Ecriture du nouveau CR
-					consistencyChecker.isConsistent(myMatrix, priorityVector);
+					consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 					tempString = "" + consistencyChecker.getConsistencyRatio();
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
 					if (jRadioButtonSaaty.isSelected() == true) {
-						tempString = String.valueOf(saatyConsistency - consistencyChecker.getConsistencyRatio());
+						tempString = String.valueOf(ahpData.saatyConsistency - consistencyChecker.getConsistencyRatio());
 						csa.append(tempString);
 					}
 					csa.close();
 					//on va ecrire dans le fichier historique
-					this.ecrirefichierHistorique(myMatrix, oldValue, coordRowVal, coordColVal, newValue);
+					this.ecrirefichierHistorique(ahpData.myMatrix, oldValue, coordRowVal, coordColVal, newValue);
 					//on récupére la nouvelle valeur
-					myConsistent = consistencyChecker.isConsistent(myMatrix, priorityVector);
+					myConsistent = consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 				}
 				//si il à mi fin on sort de la boucle
 				else if (finSimulation == true) {
@@ -1163,7 +1166,7 @@ public class InterfaceAHP
 		csa.appendLineFeed();
 		csa.append("Matrice de preference finale");
 		csa.appendLineFeed();
-		csa.append(myMatrix);
+		csa.append(ahpData.myMatrix);
 		csa.appendLineFeed();
 		csa.append("Vecteur de priorite final");
 		csa.appendLineFeed();
@@ -1187,7 +1190,7 @@ public class InterfaceAHP
 		jLabelClassFinal6.setText(classementValF[0] + "%");
 
 		//Ecriture du CR
-		consistencyChecker.isConsistent(myMatrix, priorityVector);
+		consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append("CR final");
 		csa.appendLineFeed();
@@ -1205,16 +1208,17 @@ public class InterfaceAHP
 	private void jButtonValiderMatriceActionPerformed(ActionEvent event) {
 		// TODO add your handling code here:
 
-		myMatrix = new MyMatrix();
-		matrixTableModel = new MyMatrixTableModel();
+		ahpData.myMatrix = new MyMatrix();
+		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice rempli
-		myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 1);
+		ahpData.myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 1);
 		//maTable = new MyMatrixTable();
 		/*Interface graphique*/
-		matrixTableModel.setMatrix(myMatrix,
-								   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais));
+		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
+										   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrice.setModel(matrixTableModel);
+		jTableMatrice.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		//on va cree le fichier .csv et le modifier et on récupérer le CR et afficher
 		jTextFieldCR.setText(String.valueOf(creerFichierCsv()));
