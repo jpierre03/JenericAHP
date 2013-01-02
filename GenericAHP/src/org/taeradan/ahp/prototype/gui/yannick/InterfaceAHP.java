@@ -829,7 +829,7 @@ public class InterfaceAHP
 
 				//calcul et écriture de la cohérence
 				ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-//				tempBoolean = consistencyChecker.isConsistent(tempMatrix, tempVector2);
+				consistencyChecker.isConsistent(tempMatrix, tempVector2);
 				ahpData.saatyConsistency = consistencyChecker.getConsistencyRatio();
 				tempString = "" + consistencyChecker.getConsistencyRatio();
 				csa.append(tempString);
@@ -1227,8 +1227,6 @@ public class InterfaceAHP
 	}
 
 	private void jButtonValiderMatriceActionPerformed(ActionEvent event) {
-		// TODO add your handling code here:
-
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice rempli
