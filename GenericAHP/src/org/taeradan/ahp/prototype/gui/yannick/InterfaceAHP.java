@@ -174,6 +174,12 @@ public class InterfaceAHP
 			}
 		});
 
+		makeGlobalLayout();
+
+		pack();
+	}
+
+	private void makeGlobalLayout() {
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
@@ -381,8 +387,6 @@ public class InterfaceAHP
 																					GroupLayout.PREFERRED_SIZE)))
 									  .addContainerGap())
 							   );
-
-		pack();
 	}
 
 	private void makeRankingPanel() {
