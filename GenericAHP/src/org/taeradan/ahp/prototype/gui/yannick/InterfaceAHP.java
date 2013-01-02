@@ -87,9 +87,6 @@ public class InterfaceAHP
 		definePreferredFrameSize();
 
 		initComponents();
-
-		//On initialise la taille de la matrice à 6
-		jTextFieldDimensions.setText("6");
 	}
 
 	private void definePreferredFrameSize() {
@@ -120,51 +117,8 @@ public class InterfaceAHP
 
 		jLabel3.setText("CR:");
 
-		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialisation"));
-		initialisationPanel.setLayout(new AbsoluteLayout());
+		makeInitialisationPanel();
 
-		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeRandomRadioButton);
-		consistencyMakerTypeRandomRadioButton.setText("A");
-		initialisationPanel.add(consistencyMakerTypeRandomRadioButton, new AbsoluteConstraints(14, 27, -1, -1));
-
-		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeSaatyRadioButton);
-		consistencyMakerTypeSaatyRadioButton.setText("S");
-		initialisationPanel.add(consistencyMakerTypeSaatyRadioButton, new AbsoluteConstraints(49, 27, -1, -1));
-
-		buttonGroup2.add(jRadioButtonP1);
-		jRadioButtonP1.setText("P1");
-		initialisationPanel.add(jRadioButtonP1, new AbsoluteConstraints(98, 27, -1, -1));
-
-		buttonGroup2.add(jRadioButtonP2);
-		jRadioButtonP2.setText("P2");
-		initialisationPanel.add(jRadioButtonP2, new AbsoluteConstraints(137, 27, -1, -1));
-
-		jLabel1.setText("Taille matrice:");
-		initialisationPanel.add(jLabel1, new AbsoluteConstraints(10, 70, -1, -1));
-		initialisationPanel.add(jTextFieldDimensions, new AbsoluteConstraints(100, 70, 43, -1));
-
-		initialisationPanel.add(jTextFieldChemin, new AbsoluteConstraints(290, 70, 299, -1));
-
-		jLabel2.setText("Chemin de sauvegarde:");
-		initialisationPanel.add(jLabel2, new AbsoluteConstraints(156, 72, -1, -1));
-
-		jButtonOK.setText("Ok");
-		jButtonOK.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				jButtonOKActionPerformed(event);
-			}
-		});
-		initialisationPanel.add(jButtonOK, new AbsoluteConstraints(617, 97, -1, -1));
-
-		jButtonParcourir.setText("Parcourir");
-		jButtonParcourir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				jButtonParcourirActionPerformed(event);
-			}
-		});
-		initialisationPanel.add(jButtonParcourir, new AbsoluteConstraints(590, 70, -1, -1));
 
 		jPanelClassemnt.setBorder(BorderFactory.createTitledBorder("Classement"));
 		jPanelClassemnt.setMaximumSize(new Dimension(635, 273));
@@ -604,6 +558,56 @@ public class InterfaceAHP
 		pack();
 	}
 
+	private void makeInitialisationPanel() {
+		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialisation"));
+		initialisationPanel.setLayout(new AbsoluteLayout());
+
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeRandomRadioButton);
+		consistencyMakerTypeRandomRadioButton.setText("A");
+		initialisationPanel.add(consistencyMakerTypeRandomRadioButton, new AbsoluteConstraints(14, 27, -1, -1));
+
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeSaatyRadioButton);
+		consistencyMakerTypeSaatyRadioButton.setText("S");
+		initialisationPanel.add(consistencyMakerTypeSaatyRadioButton, new AbsoluteConstraints(49, 27, -1, -1));
+
+		datasetButtonGroup.add(datasetP1RadioButton);
+		datasetP1RadioButton.setText("P1");
+		initialisationPanel.add(datasetP1RadioButton, new AbsoluteConstraints(98, 27, -1, -1));
+
+		datasetButtonGroup.add(datasetP2RadioButton);
+		datasetP2RadioButton.setText("P2");
+		initialisationPanel.add(datasetP2RadioButton, new AbsoluteConstraints(137, 27, -1, -1));
+
+		matrixSizeLabel.setText("Taille matrice:");
+		initialisationPanel.add(matrixSizeLabel, new AbsoluteConstraints(10, 70, -1, -1));
+
+		matrixSizeTextField.setText("6");
+		initialisationPanel.add(matrixSizeTextField, new AbsoluteConstraints(100, 70, 43, -1));
+
+		initialisationPanel.add(saveFilePathTextField, new AbsoluteConstraints(290, 70, 299, -1));
+
+		saveFilePathLabel.setText("Chemin de sauvegarde:");
+		initialisationPanel.add(saveFilePathLabel, new AbsoluteConstraints(156, 72, -1, -1));
+
+		saveFilePathOkButton.setText("Ok");
+		saveFilePathOkButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				saveFilePathOkButtonActionPerformed(event);
+			}
+		});
+		initialisationPanel.add(saveFilePathOkButton, new AbsoluteConstraints(617, 97, -1, -1));
+
+		saveFilePathExploreButton.setText("Parcourir");
+		saveFilePathExploreButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				saveFilePathExploreButtonActionPerformed(event);
+			}
+		});
+		initialisationPanel.add(saveFilePathExploreButton, new AbsoluteConstraints(590, 70, -1, -1));
+	}
+
 	/*
 	 * Cette méthode creer les matrices et les retournes(vide ou rempli)
 	 */
@@ -818,7 +822,7 @@ public class InterfaceAHP
 		return matrixValue;
 	}
 
-	private void jButtonOKActionPerformed(ActionEvent event) {
+	private void saveFilePathOkButtonActionPerformed(ActionEvent event) {
 		//on crée et lance le thread pour afficher un compteur
 
 		monHeure = new Meter(jLabelTime, this);
@@ -828,11 +832,11 @@ public class InterfaceAHP
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice vide
-		ahpData.myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 0);
+		ahpData.myMatrix = creerMatrice(Integer.parseInt(matrixSizeTextField.getText()), 0);
 		//maTable = new MyMatrixTable();
 
 		//on teste pour savoir quelle est le pb choisi
-		if (jRadioButtonP1.isSelected() == true) {
+		if (datasetP1RadioButton.isSelected() == true) {
 			//on crée le fichier historique à partir de "file"
 			fileHistorique = file + "histI.csv";
 			file += "I.csv";
@@ -871,7 +875,7 @@ public class InterfaceAHP
 		}
 		/*Interface graphique*/
 		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-										   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrice.setModel(ahpData.matrixTableModel);
@@ -882,7 +886,7 @@ public class InterfaceAHP
 		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
 		//on rempli les jComboBox par le nom des column pour le 1er classement
 		String[] mesColonnes = new String[ahpData.myMatrix.getColumnDimension()];
-		mesColonnes = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+		mesColonnes = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
 		remplirJComboBox(jComboBox1erClass1, mesColonnes);
 		remplirJComboBox(jComboBox1erClass2, mesColonnes);
 		remplirJComboBox(jComboBox1erClass3, mesColonnes);
@@ -1113,7 +1117,7 @@ public class InterfaceAHP
 
 					//Affichage nouvelle matrice
 					ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-													   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+													   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																						   modeAnglais));
 					jTableMatrice.setModel(ahpData.matrixTableModel);
 
@@ -1206,11 +1210,11 @@ public class InterfaceAHP
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice rempli
-		ahpData.myMatrix = creerMatrice(Integer.parseInt(jTextFieldDimensions.getText()), 1);
+		ahpData.myMatrix = creerMatrice(Integer.parseInt(matrixSizeTextField.getText()), 1);
 		//maTable = new MyMatrixTable();
 		/*Interface graphique*/
 		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-										   SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(),
+										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrice.setModel(ahpData.matrixTableModel);
@@ -1330,7 +1334,7 @@ public class InterfaceAHP
 	 */
 	private String[] classerCriteres(PriorityVector v) {
 		//on teste quel est le pb choisi
-		if (jRadioButtonP1.isSelected() == true) {
+		if (datasetP1RadioButton.isSelected() == true) {
 
 			String[] classementString = new String[v.getRowDimension()];
 			double[] monClassement = new double[v.getRowDimension()];
@@ -1341,7 +1345,8 @@ public class InterfaceAHP
 			Arrays.sort(monClassement);
 
 			for (int i = 0; i < v.getRowDimension(); i++) {
-				String columnNames[] = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+				String columnNames[] = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
+																		   modeAnglais);
 				for (int j = 0; j < v.getRowDimension(); j++) {
 					int temp = j;
 					//on récupérer les critères classés
@@ -1361,7 +1366,7 @@ public class InterfaceAHP
 			}
 			return classementString;
 		} else {
-			String columnNames[] = SampleMatrixHeaders.getColumnHeader(jRadioButtonP1.isSelected(), modeAnglais);
+			String columnNames[] = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
 			String[] classementString = new String[v.getRowDimension()];
 			double[] monClassement = new double[v.getRowDimension()];
 			for (int i = 0; i < v.getRowDimension(); i++) {
@@ -1398,7 +1403,7 @@ public class InterfaceAHP
 		new InterfaceAHP().setVisible(true);
 	}
 
-	private void jButtonParcourirActionPerformed(ActionEvent event) {
+	private void saveFilePathExploreButtonActionPerformed(ActionEvent event) {
 		JFileChooser jfc = new JFileChooser();
 		jfc.setVisible(true);
 		int choix = jfc.showSaveDialog(this);
@@ -1406,7 +1411,7 @@ public class InterfaceAHP
 			//On récup le chemin
 			file = jfc.getSelectedFile().getAbsolutePath();
 			//On affiche le chemin de sauvegarde
-			jTextFieldChemin.setText(file);
+			saveFilePathTextField.setText(file);
 		}
 	}
 
@@ -1421,9 +1426,9 @@ public class InterfaceAHP
 		//Panel init
 		jButtonNewSimul.setText("New Simulation");
 		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialization"));
-		jLabel1.setText("Matrix size:");
-		jLabel2.setText("Saving in:");
-		jButtonParcourir.setText("Browse");
+		matrixSizeLabel.setText("Matrix size:");
+		saveFilePathLabel.setText("Saving in:");
+		saveFilePathExploreButton.setText("Browse");
 		//Tables échelle saaty
 		jTable3.setValueAt("1: equally important ", 0, 0);
 		jTable3.setValueAt("3: slightly larger ", 1, 0);
@@ -1481,13 +1486,13 @@ public class InterfaceAHP
 
 	// Variables declaration
 	private ButtonGroup       consistencyMakerTypeButtonGroup       = new ButtonGroup();
-	private ButtonGroup       buttonGroup2                          = new ButtonGroup();
+	private ButtonGroup       datasetButtonGroup                    = new ButtonGroup();
 	private JButton           jButtonAnglais                        = new JButton();
 	private JButton           jButtonFrench                         = new JButton();
 	private JButton           jButtonNewSimul                       = new JButton();
-	private JButton           jButtonOK                             = new JButton();
+	private JButton           saveFilePathOkButton                  = new JButton();
 	private JButton           jButtonOkClassIntuitif                = new JButton();
-	private JButton           jButtonParcourir                      = new JButton();
+	private JButton           saveFilePathExploreButton             = new JButton();
 	private JButton           jButtonValiderMatrice                 = new JButton();
 	private JComboBox<String> jComboBox1erClass1                    = new JComboBox();
 	private JComboBox<String> jComboBox1erClass2                    = new JComboBox();
@@ -1495,7 +1500,7 @@ public class InterfaceAHP
 	private JComboBox<String> jComboBox1erClass4                    = new JComboBox();
 	private JComboBox<String> jComboBox1erClass5                    = new JComboBox();
 	private JComboBox<String> jComboBox1erClass6                    = new JComboBox();
-	private JLabel            jLabel1                               = new JLabel();
+	private JLabel            matrixSizeLabel                       = new JLabel();
 	private JLabel            jLabel10                              = new JLabel();
 	private JLabel            jLabel11                              = new JLabel();
 	private JLabel            jLabel12                              = new JLabel();
@@ -1506,7 +1511,7 @@ public class InterfaceAHP
 	private JLabel            jLabel17                              = new JLabel();
 	private JLabel            jLabel18                              = new JLabel();
 	private JLabel            jLabel19                              = new JLabel();
-	private JLabel            jLabel2                               = new JLabel();
+	private JLabel            saveFilePathLabel                     = new JLabel();
 	private JLabel            jLabel20                              = new JLabel();
 	private JLabel            jLabel21                              = new JLabel();
 	private JLabel            jLabel22                              = new JLabel();
@@ -1538,8 +1543,8 @@ public class InterfaceAHP
 	private JPanel            jPanelClassemnt                       = new JPanel();
 	private JPanel            initialisationPanel                   = new JPanel();
 	private JRadioButton      consistencyMakerTypeRandomRadioButton = new JRadioButton();
-	private JRadioButton      jRadioButtonP1                        = new JRadioButton();
-	private JRadioButton      jRadioButtonP2                        = new JRadioButton();
+	private JRadioButton      datasetP1RadioButton                  = new JRadioButton();
+	private JRadioButton      datasetP2RadioButton                  = new JRadioButton();
 	private JRadioButton      consistencyMakerTypeSaatyRadioButton  = new JRadioButton();
 	private JScrollPane       jScrollPane1                          = new JScrollPane();
 	private JScrollPane       jScrollPane3                          = new JScrollPane();
@@ -1548,7 +1553,7 @@ public class InterfaceAHP
 	private JTable            jTable4                               = new JTable();
 	private JTable            jTableMatrice                         = new JTable();
 	private JTextField        jTextFieldCR                          = new JTextField();
-	private JTextField        jTextFieldChemin                      = new JTextField();
+	private JTextField        saveFilePathTextField                 = new JTextField();
 	private JTextField        jTextFieldClassFinal1                 = new JTextField();
 	private JTextField        jTextFieldClassFinal2                 = new JTextField();
 	private JTextField        jTextFieldClassFinal3                 = new JTextField();
@@ -1561,6 +1566,6 @@ public class InterfaceAHP
 	private JTextField        jTextFieldClassMat4                   = new JTextField();
 	private JTextField        jTextFieldClassMat5                   = new JTextField();
 	private JTextField        jTextFieldClassMat6                   = new JTextField();
-	private JTextField        jTextFieldDimensions                  = new JTextField();
+	private JTextField        matrixSizeTextField                   = new JTextField();
 	// End of variables declaration
 }
