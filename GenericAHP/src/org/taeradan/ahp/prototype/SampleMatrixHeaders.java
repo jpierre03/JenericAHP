@@ -4,11 +4,14 @@ package org.taeradan.ahp.prototype;
  * Created with IntelliJ IDEA. User: jpierre03 Date: 31/12/12 Time: 03:02 To change this template use File | Settings |
  * File Templates.
  */
-public class SampleMatrixHeaders {
+public final class SampleMatrixHeaders {
+	private SampleMatrixHeaders() {
+	}
+
 	/*
-		 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
-		 *
-		 */
+			 * redéfinition de la classe getColumnHeader(), elle permet de retourner le tableau de string des column
+			 *
+			 */
 	public static String[] getColumnHeader(boolean isTestB, boolean isEnglish) {
 		if (isTestB == true) {
 			if (isEnglish == false) {
