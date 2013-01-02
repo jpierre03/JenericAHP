@@ -120,33 +120,33 @@ public class InterfaceAHP
 
 		jLabel3.setText("CR:");
 
-		jPanelInit.setBorder(BorderFactory.createTitledBorder("Initialisation"));
-		jPanelInit.setLayout(new AbsoluteLayout());
+		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialisation"));
+		initialisationPanel.setLayout(new AbsoluteLayout());
 
-		buttonGroup1.add(jRadioButtonAleatoire);
-		jRadioButtonAleatoire.setText("A");
-		jPanelInit.add(jRadioButtonAleatoire, new AbsoluteConstraints(14, 27, -1, -1));
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeRandomRadioButton);
+		consistencyMakerTypeRandomRadioButton.setText("A");
+		initialisationPanel.add(consistencyMakerTypeRandomRadioButton, new AbsoluteConstraints(14, 27, -1, -1));
 
-		buttonGroup1.add(jRadioButtonSaaty);
-		jRadioButtonSaaty.setText("S");
-		jPanelInit.add(jRadioButtonSaaty, new AbsoluteConstraints(49, 27, -1, -1));
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeSaatyRadioButton);
+		consistencyMakerTypeSaatyRadioButton.setText("S");
+		initialisationPanel.add(consistencyMakerTypeSaatyRadioButton, new AbsoluteConstraints(49, 27, -1, -1));
 
 		buttonGroup2.add(jRadioButtonP1);
 		jRadioButtonP1.setText("P1");
-		jPanelInit.add(jRadioButtonP1, new AbsoluteConstraints(98, 27, -1, -1));
+		initialisationPanel.add(jRadioButtonP1, new AbsoluteConstraints(98, 27, -1, -1));
 
 		buttonGroup2.add(jRadioButtonP2);
 		jRadioButtonP2.setText("P2");
-		jPanelInit.add(jRadioButtonP2, new AbsoluteConstraints(137, 27, -1, -1));
+		initialisationPanel.add(jRadioButtonP2, new AbsoluteConstraints(137, 27, -1, -1));
 
 		jLabel1.setText("Taille matrice:");
-		jPanelInit.add(jLabel1, new AbsoluteConstraints(10, 70, -1, -1));
-		jPanelInit.add(jTextFieldDimensions, new AbsoluteConstraints(100, 70, 43, -1));
+		initialisationPanel.add(jLabel1, new AbsoluteConstraints(10, 70, -1, -1));
+		initialisationPanel.add(jTextFieldDimensions, new AbsoluteConstraints(100, 70, 43, -1));
 
-		jPanelInit.add(jTextFieldChemin, new AbsoluteConstraints(290, 70, 299, -1));
+		initialisationPanel.add(jTextFieldChemin, new AbsoluteConstraints(290, 70, 299, -1));
 
 		jLabel2.setText("Chemin de sauvegarde:");
-		jPanelInit.add(jLabel2, new AbsoluteConstraints(156, 72, -1, -1));
+		initialisationPanel.add(jLabel2, new AbsoluteConstraints(156, 72, -1, -1));
 
 		jButtonOK.setText("Ok");
 		jButtonOK.addActionListener(new ActionListener() {
@@ -155,7 +155,7 @@ public class InterfaceAHP
 				jButtonOKActionPerformed(event);
 			}
 		});
-		jPanelInit.add(jButtonOK, new AbsoluteConstraints(617, 97, -1, -1));
+		initialisationPanel.add(jButtonOK, new AbsoluteConstraints(617, 97, -1, -1));
 
 		jButtonParcourir.setText("Parcourir");
 		jButtonParcourir.addActionListener(new ActionListener() {
@@ -164,7 +164,7 @@ public class InterfaceAHP
 				jButtonParcourirActionPerformed(event);
 			}
 		});
-		jPanelInit.add(jButtonParcourir, new AbsoluteConstraints(590, 70, -1, -1));
+		initialisationPanel.add(jButtonParcourir, new AbsoluteConstraints(590, 70, -1, -1));
 
 		jPanelClassemnt.setBorder(BorderFactory.createTitledBorder("Classement"));
 		jPanelClassemnt.setMaximumSize(new Dimension(635, 273));
@@ -429,7 +429,7 @@ public class InterfaceAHP
 																															  LayoutStyle.ComponentPlacement.RELATED)))
 																					  .addGroup(layout.createSequentialGroup()
 																									  .addComponent(
-																											  jPanelInit,
+																											  initialisationPanel,
 																											  GroupLayout.PREFERRED_SIZE,
 																											  684,
 																											  GroupLayout.PREFERRED_SIZE)
@@ -522,7 +522,7 @@ public class InterfaceAHP
 																									  .addPreferredGap(
 																											  LayoutStyle.ComponentPlacement.RELATED)
 																									  .addComponent(
-																											  jPanelInit,
+																											  initialisationPanel,
 																											  GroupLayout.DEFAULT_SIZE,
 																											  134,
 																											  Short.MAX_VALUE)
@@ -841,7 +841,7 @@ public class InterfaceAHP
 				csa.append("Probleme 1");
 				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
-				if (jRadioButtonSaaty.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
@@ -859,7 +859,7 @@ public class InterfaceAHP
 				csa.append("Probleme 2");
 				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
-				if (jRadioButtonSaaty.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
@@ -961,7 +961,7 @@ public class InterfaceAHP
 		csa.append("Tableau de changement des valeurs");
 		csa.appendLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
-		if (jRadioButtonSaaty.isSelected() == true) {
+		if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 			csa.append(
 					"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR;SaatyC-CR\n");
 		} else {
@@ -983,7 +983,7 @@ public class InterfaceAHP
 				iterationCounter++;
 
 				//on teste quelles méthode(aléaloire, saaty)
-				if (jRadioButtonSaaty.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 					/*Calcul matrice epsilon*/
 					epsilon = SaatyTools.calculateEpsilonMatrix(ahpData.myMatrix, priorityVector);
 					/*Recherche de la valeur à modifier*/
@@ -1082,7 +1082,7 @@ public class InterfaceAHP
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
-					if (jRadioButtonSaaty.isSelected() == true) {
+					if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 						/*Calculer le placement dans le classement de Saaty*/
 						int location = SaatyTools.getLocationInRank(
 								collectionOfSortedMatrixValues,
@@ -1127,7 +1127,7 @@ public class InterfaceAHP
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
-					if (jRadioButtonSaaty.isSelected() == true) {
+					if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 						tempString = String.valueOf(ahpData.saatyConsistency - consistencyChecker.getConsistencyRatio());
 						csa.append(tempString);
 					}
@@ -1420,7 +1420,7 @@ public class InterfaceAHP
 		jButtonFrench.setText("French");
 		//Panel init
 		jButtonNewSimul.setText("New Simulation");
-		jPanelInit.setBorder(BorderFactory.createTitledBorder("Initialization"));
+		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialization"));
 		jLabel1.setText("Matrix size:");
 		jLabel2.setText("Saving in:");
 		jButtonParcourir.setText("Browse");
@@ -1480,87 +1480,87 @@ public class InterfaceAHP
 	}
 
 	// Variables declaration
-	private ButtonGroup       buttonGroup1            = new ButtonGroup();
-	private ButtonGroup       buttonGroup2            = new ButtonGroup();
-	private JButton           jButtonAnglais          = new JButton();
-	private JButton           jButtonFrench           = new JButton();
-	private JButton           jButtonNewSimul         = new JButton();
-	private JButton           jButtonOK               = new JButton();
-	private JButton           jButtonOkClassIntuitif  = new JButton();
-	private JButton           jButtonParcourir        = new JButton();
-	private JButton           jButtonValiderMatrice   = new JButton();
-	private JComboBox<String> jComboBox1erClass1      = new JComboBox();
-	private JComboBox<String> jComboBox1erClass2      = new JComboBox();
-	private JComboBox<String> jComboBox1erClass3      = new JComboBox();
-	private JComboBox<String> jComboBox1erClass4      = new JComboBox();
-	private JComboBox<String> jComboBox1erClass5      = new JComboBox();
-	private JComboBox<String> jComboBox1erClass6      = new JComboBox();
-	private JLabel            jLabel1                 = new JLabel();
-	private JLabel            jLabel10                = new JLabel();
-	private JLabel            jLabel11                = new JLabel();
-	private JLabel            jLabel12                = new JLabel();
-	private JLabel            jLabel13                = new JLabel();
-	private JLabel            jLabel14                = new JLabel();
-	private JLabel            jLabel15                = new JLabel();
-	private JLabel            jLabel16                = new JLabel();
-	private JLabel            jLabel17                = new JLabel();
-	private JLabel            jLabel18                = new JLabel();
-	private JLabel            jLabel19                = new JLabel();
-	private JLabel            jLabel2                 = new JLabel();
-	private JLabel            jLabel20                = new JLabel();
-	private JLabel            jLabel21                = new JLabel();
-	private JLabel            jLabel22                = new JLabel();
-	private JLabel            jLabel23                = new JLabel();
-	private JLabel            jLabel3                 = new JLabel();
-	private JLabel            jLabel4                 = new JLabel();
-	private JLabel            jLabel5                 = new JLabel();
-	private JLabel            jLabel6                 = new JLabel();
-	private JLabel            jLabel7                 = new JLabel();
-	private JLabel            jLabel8                 = new JLabel();
-	private JLabel            jLabel9                 = new JLabel();
-	private JLabel            jLabelClassFinal1       = new JLabel();
-	private JLabel            jLabelClassFinal2       = new JLabel();
-	private JLabel            jLabelClassFinal3       = new JLabel();
-	private JLabel            jLabelClassFinal4       = new JLabel();
-	private JLabel            jLabelClassFinal5       = new JLabel();
-	private JLabel            jLabelClassFinal6       = new JLabel();
-	private JLabel            jLabelClassInit1        = new JLabel();
-	private JLabel            jLabelClassInit2        = new JLabel();
-	private JLabel            jLabelClassInit3        = new JLabel();
-	private JLabel            jLabelClassInit4        = new JLabel();
-	private JLabel            jLabelClassInit5        = new JLabel();
-	private JLabel            jLabelClassInit6        = new JLabel();
-	private JLabel            jLabelCompteur          = new JLabel();
-	private JLabel            jLabelTime              = new JLabel();
-	private JPanel            jPanel1erClassement     = new JPanel();
-	private JPanel            jPanelClassementFinal   = new JPanel();
-	private JPanel            jPanelClassementMatrice = new JPanel();
-	private JPanel            jPanelClassemnt         = new JPanel();
-	private JPanel            jPanelInit              = new JPanel();
-	private JRadioButton      jRadioButtonAleatoire   = new JRadioButton();
-	private JRadioButton      jRadioButtonP1          = new JRadioButton();
-	private JRadioButton      jRadioButtonP2          = new JRadioButton();
-	private JRadioButton      jRadioButtonSaaty       = new JRadioButton();
-	private JScrollPane       jScrollPane1            = new JScrollPane();
-	private JScrollPane       jScrollPane3            = new JScrollPane();
-	private JScrollPane       jScrollPane4            = new JScrollPane();
-	private JTable            jTable3                 = new JTable();
-	private JTable            jTable4                 = new JTable();
-	private JTable            jTableMatrice           = new JTable();
-	private JTextField        jTextFieldCR            = new JTextField();
-	private JTextField        jTextFieldChemin        = new JTextField();
-	private JTextField        jTextFieldClassFinal1   = new JTextField();
-	private JTextField        jTextFieldClassFinal2   = new JTextField();
-	private JTextField        jTextFieldClassFinal3   = new JTextField();
-	private JTextField        jTextFieldClassFinal4   = new JTextField();
-	private JTextField        jTextFieldClassFinal5   = new JTextField();
-	private JTextField        jTextFieldClassFinal6   = new JTextField();
-	private JTextField        jTextFieldClassMat1     = new JTextField();
-	private JTextField        jTextFieldClassMat2     = new JTextField();
-	private JTextField        jTextFieldClassMat3     = new JTextField();
-	private JTextField        jTextFieldClassMat4     = new JTextField();
-	private JTextField        jTextFieldClassMat5     = new JTextField();
-	private JTextField        jTextFieldClassMat6     = new JTextField();
-	private JTextField        jTextFieldDimensions    = new JTextField();
+	private ButtonGroup       consistencyMakerTypeButtonGroup       = new ButtonGroup();
+	private ButtonGroup       buttonGroup2                          = new ButtonGroup();
+	private JButton           jButtonAnglais                        = new JButton();
+	private JButton           jButtonFrench                         = new JButton();
+	private JButton           jButtonNewSimul                       = new JButton();
+	private JButton           jButtonOK                             = new JButton();
+	private JButton           jButtonOkClassIntuitif                = new JButton();
+	private JButton           jButtonParcourir                      = new JButton();
+	private JButton           jButtonValiderMatrice                 = new JButton();
+	private JComboBox<String> jComboBox1erClass1                    = new JComboBox();
+	private JComboBox<String> jComboBox1erClass2                    = new JComboBox();
+	private JComboBox<String> jComboBox1erClass3                    = new JComboBox();
+	private JComboBox<String> jComboBox1erClass4                    = new JComboBox();
+	private JComboBox<String> jComboBox1erClass5                    = new JComboBox();
+	private JComboBox<String> jComboBox1erClass6                    = new JComboBox();
+	private JLabel            jLabel1                               = new JLabel();
+	private JLabel            jLabel10                              = new JLabel();
+	private JLabel            jLabel11                              = new JLabel();
+	private JLabel            jLabel12                              = new JLabel();
+	private JLabel            jLabel13                              = new JLabel();
+	private JLabel            jLabel14                              = new JLabel();
+	private JLabel            jLabel15                              = new JLabel();
+	private JLabel            jLabel16                              = new JLabel();
+	private JLabel            jLabel17                              = new JLabel();
+	private JLabel            jLabel18                              = new JLabel();
+	private JLabel            jLabel19                              = new JLabel();
+	private JLabel            jLabel2                               = new JLabel();
+	private JLabel            jLabel20                              = new JLabel();
+	private JLabel            jLabel21                              = new JLabel();
+	private JLabel            jLabel22                              = new JLabel();
+	private JLabel            jLabel23                              = new JLabel();
+	private JLabel            jLabel3                               = new JLabel();
+	private JLabel            jLabel4                               = new JLabel();
+	private JLabel            jLabel5                               = new JLabel();
+	private JLabel            jLabel6                               = new JLabel();
+	private JLabel            jLabel7                               = new JLabel();
+	private JLabel            jLabel8                               = new JLabel();
+	private JLabel            jLabel9                               = new JLabel();
+	private JLabel            jLabelClassFinal1                     = new JLabel();
+	private JLabel            jLabelClassFinal2                     = new JLabel();
+	private JLabel            jLabelClassFinal3                     = new JLabel();
+	private JLabel            jLabelClassFinal4                     = new JLabel();
+	private JLabel            jLabelClassFinal5                     = new JLabel();
+	private JLabel            jLabelClassFinal6                     = new JLabel();
+	private JLabel            jLabelClassInit1                      = new JLabel();
+	private JLabel            jLabelClassInit2                      = new JLabel();
+	private JLabel            jLabelClassInit3                      = new JLabel();
+	private JLabel            jLabelClassInit4                      = new JLabel();
+	private JLabel            jLabelClassInit5                      = new JLabel();
+	private JLabel            jLabelClassInit6                      = new JLabel();
+	private JLabel            jLabelCompteur                        = new JLabel();
+	private JLabel            jLabelTime                            = new JLabel();
+	private JPanel            jPanel1erClassement                   = new JPanel();
+	private JPanel            jPanelClassementFinal                 = new JPanel();
+	private JPanel            jPanelClassementMatrice               = new JPanel();
+	private JPanel            jPanelClassemnt                       = new JPanel();
+	private JPanel            initialisationPanel                   = new JPanel();
+	private JRadioButton      consistencyMakerTypeRandomRadioButton = new JRadioButton();
+	private JRadioButton      jRadioButtonP1                        = new JRadioButton();
+	private JRadioButton      jRadioButtonP2                        = new JRadioButton();
+	private JRadioButton      consistencyMakerTypeSaatyRadioButton  = new JRadioButton();
+	private JScrollPane       jScrollPane1                          = new JScrollPane();
+	private JScrollPane       jScrollPane3                          = new JScrollPane();
+	private JScrollPane       jScrollPane4                          = new JScrollPane();
+	private JTable            jTable3                               = new JTable();
+	private JTable            jTable4                               = new JTable();
+	private JTable            jTableMatrice                         = new JTable();
+	private JTextField        jTextFieldCR                          = new JTextField();
+	private JTextField        jTextFieldChemin                      = new JTextField();
+	private JTextField        jTextFieldClassFinal1                 = new JTextField();
+	private JTextField        jTextFieldClassFinal2                 = new JTextField();
+	private JTextField        jTextFieldClassFinal3                 = new JTextField();
+	private JTextField        jTextFieldClassFinal4                 = new JTextField();
+	private JTextField        jTextFieldClassFinal5                 = new JTextField();
+	private JTextField        jTextFieldClassFinal6                 = new JTextField();
+	private JTextField        jTextFieldClassMat1                   = new JTextField();
+	private JTextField        jTextFieldClassMat2                   = new JTextField();
+	private JTextField        jTextFieldClassMat3                   = new JTextField();
+	private JTextField        jTextFieldClassMat4                   = new JTextField();
+	private JTextField        jTextFieldClassMat5                   = new JTextField();
+	private JTextField        jTextFieldClassMat6                   = new JTextField();
+	private JTextField        jTextFieldDimensions                  = new JTextField();
 	// End of variables declaration
 }
