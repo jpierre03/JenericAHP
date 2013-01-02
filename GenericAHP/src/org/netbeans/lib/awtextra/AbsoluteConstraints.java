@@ -15,6 +15,7 @@ package org.netbeans.lib.awtextra;
 
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * An object that encapsulates position and (optionally) size for
@@ -23,7 +24,7 @@ import java.awt.*;
  * @version 1.01, Aug 19, 1998
  * @see AbsoluteLayout
  */
-public class AbsoluteConstraints implements java.io.Serializable {
+public class AbsoluteConstraints implements Serializable {
 	/**
 	 * generated Serialized Version UID
 	 */
