@@ -132,9 +132,9 @@ public class InterfaceAHP
 				},
 				new String[]{"Scale of Saaty"}
 		));
-		jScrollPane3.setViewportView(saatyScaleTable);
+		saatyScaleScrollPane.setViewportView(saatyScaleTable);
 
-		jTable4.setModel(new DefaultTableModel(
+		reverseSaatyScaleTable.setModel(new DefaultTableModel(
 				new Object[][]{
 						{"1/1: 1"},
 						{"1/2: 0.5"},
@@ -148,29 +148,29 @@ public class InterfaceAHP
 				},
 				new String[]{"Reverse scale of Saaty"}
 		));
-		jScrollPane4.setViewportView(jTable4);
+		reverseSaatyScaleScrollPane.setViewportView(reverseSaatyScaleTable);
 
-		jButtonNewSimul.setText("Nouvelle Simulation");
-		jButtonNewSimul.addActionListener(new ActionListener() {
+		newSimulationButton.setText("Nouvelle Simulation");
+		newSimulationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				jButtonNewSimulActionPerformed(event);
+				newSimulationButtonActionPerformed(event);
 			}
 		});
 
-		jButtonAnglais.setText("Anglais");
-		jButtonAnglais.addActionListener(new ActionListener() {
+		setEnglishLangButton.setText("English");
+		setEnglishLangButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				jButtonAnglaisActionPerformed(event);
+				setEnglishLangButtonActionPerformed(event);
 			}
 		});
 
-		jButtonFrench.setText("Français");
-		jButtonFrench.addActionListener(new ActionListener() {
+		setFrenchLangButton.setText("Français");
+		setFrenchLangButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				jButtonFrenchActionPerformed(event);
+				setFrenchLangButtonActionPerformed(event);
 			}
 		});
 
@@ -193,7 +193,7 @@ public class InterfaceAHP
 																							  GroupLayout.Alignment.LEADING)
 																									  .addGroup(layout.createSequentialGroup()
 																													  .addComponent(
-																															  jButtonNewSimul)
+																															  newSimulationButton)
 																													  .addPreferredGap(
 																															  LayoutStyle.ComponentPlacement.RELATED,
 																															  439,
@@ -249,7 +249,7 @@ public class InterfaceAHP
 																													  .addGroup(
 																															  layout.createSequentialGroup()
 																																	.addComponent(
-																																			jScrollPane3,
+																																			saatyScaleScrollPane,
 																																			GroupLayout.PREFERRED_SIZE,
 																																			175,
 																																			GroupLayout.PREFERRED_SIZE)
@@ -257,7 +257,7 @@ public class InterfaceAHP
 																																			18,
 																																			18)
 																																	.addComponent(
-																																			jScrollPane4,
+																																			reverseSaatyScaleScrollPane,
 																																			GroupLayout.PREFERRED_SIZE,
 																																			192,
 																																			GroupLayout.PREFERRED_SIZE)
@@ -269,9 +269,9 @@ public class InterfaceAHP
 																																			layout.createParallelGroup(
 																																					GroupLayout.Alignment.LEADING)
 																																				  .addComponent(
-																																						  jButtonFrench)
+																																						  setFrenchLangButton)
 																																				  .addComponent(
-																																						  jButtonAnglais)))
+																																						  setEnglishLangButton)))
 																													  .addComponent(
 																															  jButtonValiderMatrice)))))
 													  .addGroup(layout.createSequentialGroup()
@@ -303,7 +303,7 @@ public class InterfaceAHP
 																									  .addGroup(layout.createParallelGroup(
 																											  GroupLayout.Alignment.LEADING)
 																													  .addComponent(
-																															  jButtonNewSimul)
+																															  newSimulationButton)
 																													  .addComponent(
 																															  jLabelTime))
 																									  .addPreferredGap(
@@ -326,7 +326,7 @@ public class InterfaceAHP
 																										GroupLayout.Alignment.TRAILING)
 																									  .addGroup(layout.createSequentialGroup()
 																													  .addComponent(
-																															  jScrollPane3,
+																															  saatyScaleScrollPane,
 																															  GroupLayout.PREFERRED_SIZE,
 																															  128,
 																															  GroupLayout.PREFERRED_SIZE)
@@ -337,16 +337,16 @@ public class InterfaceAHP
 																											  GroupLayout.Alignment.LEADING,
 																											  layout.createSequentialGroup()
 																													.addComponent(
-																															jScrollPane4,
+																															reverseSaatyScaleScrollPane,
 																															GroupLayout.PREFERRED_SIZE,
 																															171,
 																															GroupLayout.PREFERRED_SIZE)
 																													.addPreferredGap(
 																															LayoutStyle.ComponentPlacement.RELATED)))))
 													  .addGroup(layout.createSequentialGroup()
-																	  .addComponent(jButtonAnglais)
+																	  .addComponent(setEnglishLangButton)
 																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addComponent(jButtonFrench)
+																	  .addComponent(setFrenchLangButton)
 																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)))
 									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 													  .addGroup(layout.createSequentialGroup()
@@ -1400,7 +1400,7 @@ public class InterfaceAHP
 		}
 	}
 
-	private void jButtonNewSimulActionPerformed(ActionEvent event) {
+	private void newSimulationButtonActionPerformed(ActionEvent event) {
 		initComponents();
 		this.dispose();
 		new InterfaceAHP().setVisible(true);
@@ -1422,12 +1422,12 @@ public class InterfaceAHP
 		intuitiveRankingPanel.setVisible(false);
 	}
 
-	private void jButtonAnglaisActionPerformed(ActionEvent event) {
+	private void setEnglishLangButtonActionPerformed(ActionEvent event) {
 		// TODO add your handling code here:
 		modeAnglais = true;
-		jButtonFrench.setText("French");
+		setFrenchLangButton.setText("French");
 		//Panel init
-		jButtonNewSimul.setText("New Simulation");
+		newSimulationButton.setText("New Simulation");
 		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialization"));
 		matrixSizeLabel.setText("Matrix size:");
 		saveFilePathLabel.setText("Saving in:");
@@ -1468,7 +1468,7 @@ public class InterfaceAHP
 		finalRanking_rank3_Label.setText("3th:");
 	}
 
-	private void jButtonFrenchActionPerformed(ActionEvent event) {
+	private void setFrenchLangButtonActionPerformed(ActionEvent event) {
 		//on repass à false le mode anglais
 		modeAnglais = false;
 		initComponents();
@@ -1490,9 +1490,9 @@ public class InterfaceAHP
 	// Variables declaration
 	private ButtonGroup       consistencyMakerTypeButtonGroup       = new ButtonGroup();
 	private ButtonGroup       datasetButtonGroup                    = new ButtonGroup();
-	private JButton           jButtonAnglais                        = new JButton();
-	private JButton           jButtonFrench                         = new JButton();
-	private JButton           jButtonNewSimul                       = new JButton();
+	private JButton           setEnglishLangButton                  = new JButton();
+	private JButton           setFrenchLangButton                   = new JButton();
+	private JButton           newSimulationButton                   = new JButton();
 	private JButton           saveFilePathOkButton                  = new JButton();
 	private JButton           intuitiveRankingOKButton              = new JButton();
 	private JButton           saveFilePathExploreButton             = new JButton();
@@ -1550,10 +1550,10 @@ public class InterfaceAHP
 	private JRadioButton      datasetP2RadioButton                  = new JRadioButton();
 	private JRadioButton      consistencyMakerTypeSaatyRadioButton  = new JRadioButton();
 	private JScrollPane       jScrollPane1                          = new JScrollPane();
-	private JScrollPane       jScrollPane3                          = new JScrollPane();
-	private JScrollPane       jScrollPane4                          = new JScrollPane();
+	private JScrollPane       saatyScaleScrollPane                  = new JScrollPane();
+	private JScrollPane       reverseSaatyScaleScrollPane           = new JScrollPane();
 	private JTable            saatyScaleTable                       = new JTable();
-	private JTable            jTable4                               = new JTable();
+	private JTable            reverseSaatyScaleTable                = new JTable();
 	private JTable            jTableMatrice                         = new JTable();
 	private JTextField        jTextFieldCR                          = new JTextField();
 	private JTextField        saveFilePathTextField                 = new JTextField();
