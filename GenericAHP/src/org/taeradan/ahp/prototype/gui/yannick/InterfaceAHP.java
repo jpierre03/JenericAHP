@@ -40,11 +40,12 @@ public class InterfaceAHP
 	private AHP_Data ahpData       = new AHP_Data();
 	private boolean  finSimulation = false;
 	private boolean  modeAnglais   = false;
+	private JEP      monJep        = new JEP();
 	private CharSequenceAppender csa;
 	private String               file;
 	private String               fileHistorique;
 	private Meter                monHeure;
-	private JEP                  monJep;
+
 
 	private class AHP_Data {
 		private final double[] saatyValues = {1. / 9,
@@ -82,19 +83,20 @@ public class InterfaceAHP
 		}
 	}
 
-	/** Creates new form MaMatriceFrame */
 	public InterfaceAHP() {
-		//on redimensionne la taille de la jframe
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight() - 100);
-		this.setPreferredSize(screenSize);
-		this.setResizable(true);
+		definePreferredFrameSize();
 
 		initComponents();
 
 		//On initialise la taille de la matrice à 6
 		jTextFieldDimensions.setText("6");
-		monJep = new JEP();
+	}
+
+	private void definePreferredFrameSize() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight() - 100);
+		this.setPreferredSize(screenSize);
+		this.setResizable(true);
 	}
 
 	private void initComponents() {
@@ -111,15 +113,8 @@ public class InterfaceAHP
 		});
 
 		jTableMatrice.setModel(new DefaultTableModel(
-				new Object[][]{
-						{},
-						{},
-						{},
-						{}
-				},
-				new String[]{
-
-				}
+				new Object[][]{{}, {}, {}, {}},
+				new String[]{}
 		));
 		jScrollPane1.setViewportView(jTableMatrice);
 
