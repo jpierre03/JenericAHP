@@ -60,8 +60,8 @@ public class InterfaceAHP
 	private CharSequenceAppender csa;
 	private String               file;
 	private String               fileHistorique;
-	private int     finSimulation = 0;
-	private Meter monHeure;
+	private boolean finSimulation = false;
+	private Meter  monHeure;
 	private JEP    monJep;
 	private double saatyConsistency;
 	private boolean modeAnglais = false;
@@ -742,7 +742,7 @@ public class InterfaceAHP
 				isValueChosen = 1;
 			} else if (option == JOptionPane.CANCEL_OPTION) {
 				isValueChosen = 1;
-				finSimulation = -1;
+				finSimulation = true;
 			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
 				valueIterator = sortedMatrixValues.iterator();
@@ -750,7 +750,7 @@ public class InterfaceAHP
 		}
 
 		// si l'expert n'a pas mit à la simulation
-		if (finSimulation != -1) {
+		if (finSimulation == true) {
 			csa.close();
 		} else {
 			/*parcours de la liste pour l'écriture dans le fichier*/
@@ -979,7 +979,7 @@ public class InterfaceAHP
 		while (!myConsistent) {
 
 			//On continue si l'expert n'a pas choisi de mettre fin à la simulation
-			if (finSimulation != -1) {
+			if (finSimulation == false) {
 				//incrémentation du compteur du nombre d'itération
 				iterationCounter++;
 
@@ -1011,7 +1011,7 @@ public class InterfaceAHP
 
 				}
 				//si l'expert n'a pas mis fin è la simulation et veut changer le coeff
-				if (finSimulation != -1) {
+				if (finSimulation == false) {
 					//on stocke les différentes valeur pour le fichier historique
 					oldValue = myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 					coordRowVal = (matrixValue.getRow() + 1);
@@ -1139,7 +1139,7 @@ public class InterfaceAHP
 					myConsistent = consistencyChecker.isConsistent(myMatrix, priorityVector);
 				}
 				//si il à mi fin on sort de la boucle
-				else if (finSimulation == -1) {
+				else if (finSimulation == true) {
 					//on arrete le thread
 					monHeure.stop();
 					myConsistent = true;
@@ -1149,7 +1149,7 @@ public class InterfaceAHP
 				jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 			}
 		}
-		if (finSimulation != -1) {
+		if (finSimulation == true) {
 			jLabel4.setText("Bravo la matrice est cohérente!!!!!");
 		}
 		try {
@@ -1222,9 +1222,9 @@ public class InterfaceAHP
 		//on ferme le flux
 		csa.close();
 		//on remet à 0 l'attribut
-		finSimulation = 0;
+		finSimulation = false;
 		//on arrete le thread si c pas déja fait
-		if (finSimulation != -1) {
+		if (finSimulation == false) {
 			monHeure.stop();
 		}
 		//on réaffiche le classement intuitif
@@ -1294,10 +1294,9 @@ public class InterfaceAHP
 			//si on clique sur ok on sor du while
 			if (option == JOptionPane.OK_OPTION) {
 				isValueChosen = 1;
-				changerCoeff = true;
 			} else if (option == JOptionPane.CANCEL_OPTION) {
 				isValueChosen = 1;
-				finSimulation = -1;
+				finSimulation = true;
 			} else if (!valueIterator.hasNext()) {
 				//System.out.println("Retour en haut du classement");
 				valueIterator = collectionOfNonSortedMatrixValues.iterator();
