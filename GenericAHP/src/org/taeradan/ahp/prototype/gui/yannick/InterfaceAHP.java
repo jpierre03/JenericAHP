@@ -119,182 +119,9 @@ public class InterfaceAHP
 
 		makeInitialisationPanel();
 
+		makeRankingPanel();
 
-		jPanelClassemnt.setBorder(BorderFactory.createTitledBorder("Classement"));
-		jPanelClassemnt.setMaximumSize(new Dimension(635, 273));
-
-		jPanel1erClassement.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
-		jPanel1erClassement.setMaximumSize(new Dimension(184, 224));
-		jPanel1erClassement.setLayout(new AbsoluteLayout());
-
-		jLabel5.setText("1er:");
-		jPanel1erClassement.add(jLabel5, new AbsoluteConstraints(26, 34, -1, -1));
-
-		jLabel7.setText("2ème:");
-		jPanel1erClassement.add(jLabel7, new AbsoluteConstraints(16, 60, -1, -1));
-
-		jLabel8.setText("3ème:");
-		jPanel1erClassement.add(jLabel8, new AbsoluteConstraints(16, 86, -1, -1));
-
-		jLabel9.setText("4ème:");
-		jPanel1erClassement.add(jLabel9, new AbsoluteConstraints(16, 112, -1, -1));
-
-		jLabel10.setText("5ème:");
-		jPanel1erClassement.add(jLabel10, new AbsoluteConstraints(16, 138, -1, -1));
-
-		jLabel11.setText("6ème:");
-		jPanel1erClassement.add(jLabel11, new AbsoluteConstraints(16, 164, -1, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass2, new AbsoluteConstraints(50, 57, 118, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass3, new AbsoluteConstraints(50, 83, 118, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass4, new AbsoluteConstraints(50, 109, 118, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass5, new AbsoluteConstraints(50, 135, 118, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass6, new AbsoluteConstraints(50, 161, 118, -1));
-
-		jPanel1erClassement.add(jComboBox1erClass1, new AbsoluteConstraints(50, 31, 118, -1));
-
-		jButtonOkClassIntuitif.setText("OK");
-		jButtonOkClassIntuitif.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				jButtonOkClassIntuitifActionPerformed(event);
-			}
-		});
-		jPanel1erClassement.add(jButtonOkClassIntuitif,
-								new AbsoluteConstraints(81, 187, -1, -1));
-
-		jPanelClassementFinal.setBorder(BorderFactory.createTitledBorder("Classement Final"));
-		jPanelClassementFinal.setMaximumSize(new Dimension(203, 199));
-		jPanelClassementFinal.setLayout(new AbsoluteLayout());
-		jPanelClassementFinal.add(jTextFieldClassFinal1, new AbsoluteConstraints(64, 31, 80, -1));
-		jPanelClassementFinal.add(jTextFieldClassFinal2, new AbsoluteConstraints(64, 57, 80, -1));
-		jPanelClassementFinal.add(jTextFieldClassFinal3, new AbsoluteConstraints(64, 83, 80, -1));
-		jPanelClassementFinal.add(jTextFieldClassFinal4, new AbsoluteConstraints(64, 109, 80, -1));
-		jPanelClassementFinal.add(jTextFieldClassFinal5, new AbsoluteConstraints(64, 135, 80, -1));
-		jPanelClassementFinal.add(jTextFieldClassFinal6, new AbsoluteConstraints(64, 161, 80, -1));
-
-		jLabel18.setText("1er:");
-		jPanelClassementFinal.add(jLabel18, new AbsoluteConstraints(26, 34, -1, -1));
-
-		jLabel19.setText("2ème:");
-		jPanelClassementFinal.add(jLabel19, new AbsoluteConstraints(16, 60, -1, -1));
-
-		jLabel20.setText("3ème:");
-		jPanelClassementFinal.add(jLabel20, new AbsoluteConstraints(16, 86, -1, -1));
-
-		jLabel21.setText("4ème:");
-		jPanelClassementFinal.add(jLabel21, new AbsoluteConstraints(16, 112, -1, -1));
-
-		jLabel22.setText("5ème:");
-		jPanelClassementFinal.add(jLabel22, new AbsoluteConstraints(16, 138, -1, -1));
-
-		jLabel23.setText("6ème:");
-		jPanelClassementFinal.add(jLabel23, new AbsoluteConstraints(16, 164, -1, -1));
-		jPanelClassementFinal.add(jLabelClassFinal1, new AbsoluteConstraints(148, 31, 39, 20));
-		jPanelClassementFinal.add(jLabelClassFinal2, new AbsoluteConstraints(148, 57, 39, 20));
-		jPanelClassementFinal.add(jLabelClassFinal3, new AbsoluteConstraints(148, 83, 39, 20));
-		jPanelClassementFinal.add(jLabelClassFinal4, new AbsoluteConstraints(148, 109, 39, 20));
-		jPanelClassementFinal.add(jLabelClassFinal5, new AbsoluteConstraints(148, 135, 39, 20));
-		jPanelClassementFinal.add(jLabelClassFinal6, new AbsoluteConstraints(148, 161, 39, 20));
-
-		jPanelClassementMatrice.setBorder(BorderFactory.createTitledBorder("Classement initial"));
-		jPanelClassementMatrice.setMaximumSize(new Dimension(204, 231));
-		jPanelClassementMatrice.setLayout(new AbsoluteLayout());
-		jPanelClassementMatrice.add(jTextFieldClassMat1, new AbsoluteConstraints(64, 31, 80, -1));
-		jPanelClassementMatrice.add(jTextFieldClassMat2, new AbsoluteConstraints(64, 57, 80, -1));
-		jPanelClassementMatrice.add(jTextFieldClassMat3, new AbsoluteConstraints(64, 83, 80, -1));
-		jPanelClassementMatrice.add(jTextFieldClassMat4, new AbsoluteConstraints(64, 109, 80, -1));
-		jPanelClassementMatrice.add(jTextFieldClassMat5, new AbsoluteConstraints(64, 135, 80, -1));
-		jPanelClassementMatrice.add(jTextFieldClassMat6, new AbsoluteConstraints(64, 161, 80, -1));
-
-		jLabel12.setText("1er:");
-		jPanelClassementMatrice.add(jLabel12, new AbsoluteConstraints(26, 34, -1, -1));
-
-		jLabel13.setText("2ème:");
-		jPanelClassementMatrice.add(jLabel13, new AbsoluteConstraints(16, 60, -1, -1));
-
-		jLabel14.setText("3ème:");
-		jPanelClassementMatrice.add(jLabel14, new AbsoluteConstraints(16, 86, -1, -1));
-
-		jLabel15.setText("4ème:");
-		jPanelClassementMatrice.add(jLabel15, new AbsoluteConstraints(16, 112, -1, -1));
-
-		jLabel16.setText("5ème:");
-		jPanelClassementMatrice.add(jLabel16, new AbsoluteConstraints(16, 138, -1, -1));
-
-		jLabel17.setText("6ème:");
-		jPanelClassementMatrice.add(jLabel17, new AbsoluteConstraints(16, 164, -1, -1));
-		jPanelClassementMatrice.add(jLabelClassInit1, new AbsoluteConstraints(148, 31, 40, 20));
-		jPanelClassementMatrice.add(jLabelClassInit2, new AbsoluteConstraints(148, 57, 40, 20));
-		jPanelClassementMatrice.add(jLabelClassInit3, new AbsoluteConstraints(148, 83, 40, 20));
-		jPanelClassementMatrice.add(jLabelClassInit4, new AbsoluteConstraints(148, 109, 40, 20));
-		jPanelClassementMatrice.add(jLabelClassInit5, new AbsoluteConstraints(148, 135, 40, 20));
-		jPanelClassementMatrice.add(jLabelClassInit6, new AbsoluteConstraints(148, 161, 40, 20));
-
-		GroupLayout jPanelClassementLayout = new GroupLayout(jPanelClassemnt);
-		jPanelClassemnt.setLayout(jPanelClassementLayout);
-		jPanelClassementLayout.setHorizontalGroup(
-				jPanelClassementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-									  .addGroup(jPanelClassementLayout.createSequentialGroup()
-																	  .addGap(14, 14, 14)
-																	  .addComponent(jPanel1erClassement,
-																					GroupLayout.PREFERRED_SIZE,
-																					192,
-																					GroupLayout.PREFERRED_SIZE)
-																	  .addGap(18, 18, 18)
-																	  .addComponent(jPanelClassementMatrice,
-																					GroupLayout.PREFERRED_SIZE,
-																					200,
-																					GroupLayout.PREFERRED_SIZE)
-																	  .addComponent(jPanelClassementFinal,
-																					GroupLayout.PREFERRED_SIZE,
-																					GroupLayout.DEFAULT_SIZE,
-																					GroupLayout.PREFERRED_SIZE))
-												 );
-		jPanelClassementLayout.setVerticalGroup(
-				jPanelClassementLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-									  .addGroup(jPanelClassementLayout.createSequentialGroup()
-																	  .addGroup(jPanelClassementLayout.createParallelGroup(
-																			  GroupLayout.Alignment.TRAILING,
-																			  false)
-																									  .addGroup(
-																											  jPanelClassementLayout.createSequentialGroup()
-																																	.addContainerGap()
-																																	.addComponent(
-																																			jPanel1erClassement,
-																																			GroupLayout.DEFAULT_SIZE,
-																																			GroupLayout.DEFAULT_SIZE,
-																																			Short.MAX_VALUE))
-																									  .addGroup(
-																											  GroupLayout.Alignment.LEADING,
-																											  jPanelClassementLayout.createSequentialGroup()
-																																	.addGap(10,
-																																			10,
-																																			10)
-																																	.addComponent(
-																																			jPanelClassementMatrice,
-																																			GroupLayout.PREFERRED_SIZE,
-																																			230,
-																																			GroupLayout.PREFERRED_SIZE))
-																									  .addGroup(
-																											  GroupLayout.Alignment.LEADING,
-																											  jPanelClassementLayout.createSequentialGroup()
-																																	.addGap(10,
-																																			10,
-																																			10)
-																																	.addComponent(
-																																			jPanelClassementFinal,
-																																			GroupLayout.PREFERRED_SIZE,
-																																			230,
-																																			GroupLayout.PREFERRED_SIZE)))
-																	  .addContainerGap(14, Short.MAX_VALUE))
-											   );
-
-		jTable3.setModel(new DefaultTableModel(
+		saatyScaleTable.setModel(new DefaultTableModel(
 				new Object[][]{
 						{"1: Importance égale"},
 						{"3: Un peu plus important"},
@@ -305,7 +132,7 @@ public class InterfaceAHP
 				},
 				new String[]{"Scale of Saaty"}
 		));
-		jScrollPane3.setViewportView(jTable3);
+		jScrollPane3.setViewportView(saatyScaleTable);
 
 		jTable4.setModel(new DefaultTableModel(
 				new Object[][]{
@@ -452,7 +279,7 @@ public class InterfaceAHP
 																									610,
 																									GroupLayout.PREFERRED_SIZE))
 																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addComponent(jPanelClassemnt,
+																	  .addComponent(rankingPanel,
 																					GroupLayout.DEFAULT_SIZE,
 																					639,
 																					Short.MAX_VALUE)))
@@ -548,7 +375,7 @@ public class InterfaceAHP
 																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED,
 																					   23,
 																					   Short.MAX_VALUE)
-																	  .addComponent(jPanelClassemnt,
+																	  .addComponent(rankingPanel,
 																					GroupLayout.PREFERRED_SIZE,
 																					GroupLayout.DEFAULT_SIZE,
 																					GroupLayout.PREFERRED_SIZE)))
@@ -556,6 +383,178 @@ public class InterfaceAHP
 							   );
 
 		pack();
+	}
+
+	private void makeRankingPanel() {
+		rankingPanel.setBorder(BorderFactory.createTitledBorder("Classement"));
+		rankingPanel.setMaximumSize(new Dimension(635, 273));
+
+		intuitiveRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
+		intuitiveRankingPanel.setMaximumSize(new Dimension(184, 224));
+		intuitiveRankingPanel.setLayout(new AbsoluteLayout());
+
+		intuitiveRanking_rank1_Label.setText("1er:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+
+		intuitiveRanking_rank2_Label.setText("2ème:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+
+		intuitiveRanking_rank3_Label.setText("3ème:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+
+		intuitiveRanking_rank4_Label.setText("4ème:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+
+		intuitiveRanking_rank5_Label.setText("5ème:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+
+		intuitiveRanking_rank6_Label.setText("6ème:");
+		intuitiveRankingPanel.add(intuitiveRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
+
+		intuitiveRankingPanel.add(intuitiveRanking_rank1_ComboBox, new AbsoluteConstraints(50, 31, 118, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank2_ComboBox, new AbsoluteConstraints(50, 57, 118, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank3_ComboBox, new AbsoluteConstraints(50, 83, 118, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank4_ComboBox, new AbsoluteConstraints(50, 109, 118, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank5_ComboBox, new AbsoluteConstraints(50, 135, 118, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank6_ComboBox, new AbsoluteConstraints(50, 161, 118, -1));
+
+
+		intuitiveRankingOKButton.setText("OK");
+		intuitiveRankingOKButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				intuitiveRankingOKActionPerformed(event);
+			}
+		});
+		intuitiveRankingPanel.add(intuitiveRankingOKButton, new AbsoluteConstraints(81, 187, -1, -1));
+
+		finalRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement Final"));
+		finalRankingPanel.setMaximumSize(new Dimension(203, 199));
+		finalRankingPanel.setLayout(new AbsoluteLayout());
+		finalRankingPanel.add(finalRanking_rank1_TextField, new AbsoluteConstraints(64, 31, 80, -1));
+		finalRankingPanel.add(finalRanking_rank2_TextField, new AbsoluteConstraints(64, 57, 80, -1));
+		finalRankingPanel.add(finalRanking_rank3_TextField, new AbsoluteConstraints(64, 83, 80, -1));
+		finalRankingPanel.add(finalRanking_rank4_TextField, new AbsoluteConstraints(64, 109, 80, -1));
+		finalRankingPanel.add(finalRanking_rank5_TextField, new AbsoluteConstraints(64, 135, 80, -1));
+		finalRankingPanel.add(finalRanking_rank6_TextField, new AbsoluteConstraints(64, 161, 80, -1));
+
+		finalRanking_rank1_Label.setText("1er:");
+		finalRankingPanel.add(finalRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+
+		finalRanking_rank2_Label.setText("2ème:");
+		finalRankingPanel.add(finalRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+
+		finalRanking_rank3_Label.setText("3ème:");
+		finalRankingPanel.add(finalRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+
+		finalRanking_rank4_Label.setText("4ème:");
+		finalRankingPanel.add(finalRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+
+		finalRanking_rank5_Label.setText("5ème:");
+		finalRankingPanel.add(finalRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+
+		finalRanking_rank6_Label.setText("6ème:");
+		finalRankingPanel.add(finalRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
+
+		finalRankingPanel.add(finalRanking_rank1_PercentLabel, new AbsoluteConstraints(148, 31, 39, 20));
+		finalRankingPanel.add(finalRanking_rank2_PercentLabel, new AbsoluteConstraints(148, 57, 39, 20));
+		finalRankingPanel.add(finalRanking_rank3_PercentLabel, new AbsoluteConstraints(148, 83, 39, 20));
+		finalRankingPanel.add(finalRanking_rank4_PercentLabel, new AbsoluteConstraints(148, 109, 39, 20));
+		finalRankingPanel.add(finalRanking_rank5_PercentLabel, new AbsoluteConstraints(148, 135, 39, 20));
+		finalRankingPanel.add(finalRanking_rank6_PercentLabel, new AbsoluteConstraints(148, 161, 39, 20));
+
+		initialRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement initial"));
+		initialRankingPanel.setMaximumSize(new Dimension(204, 231));
+		initialRankingPanel.setLayout(new AbsoluteLayout());
+		initialRankingPanel.add(initialRanking_rank1_TextField, new AbsoluteConstraints(64, 31, 80, -1));
+		initialRankingPanel.add(initialRanking_rank2_TextField, new AbsoluteConstraints(64, 57, 80, -1));
+		initialRankingPanel.add(initialRanking_rank3_TextField, new AbsoluteConstraints(64, 83, 80, -1));
+		initialRankingPanel.add(initialRanking_rank4_TextField, new AbsoluteConstraints(64, 109, 80, -1));
+		initialRankingPanel.add(initialRanking_rank5_TextField, new AbsoluteConstraints(64, 135, 80, -1));
+		initialRankingPanel.add(initialRanking_rank6_TextField, new AbsoluteConstraints(64, 161, 80, -1));
+
+		initialRanking_rank1_Label.setText("1er:");
+		initialRankingPanel.add(initialRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+
+		initialRanking_rank2_Label.setText("2ème:");
+		initialRankingPanel.add(initialRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+
+		initialRanking_rank3_Label.setText("3ème:");
+		initialRankingPanel.add(initialRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+
+		initialRanking_rank4_Label.setText("4ème:");
+		initialRankingPanel.add(initialRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+
+		initialRanking_rank5_Label.setText("5ème:");
+		initialRankingPanel.add(initialRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+
+		initialRanking_rank6_Label.setText("6ème:");
+		initialRankingPanel.add(initialRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
+
+		initialRankingPanel.add(initialRanking_rank1_PercentLabel, new AbsoluteConstraints(148, 31, 40, 20));
+		initialRankingPanel.add(initialRanking_rank2_PercentLabel, new AbsoluteConstraints(148, 57, 40, 20));
+		initialRankingPanel.add(initialRanking_rank3_PercentLabel, new AbsoluteConstraints(148, 83, 40, 20));
+		initialRankingPanel.add(initialRanking_rank4_PercentLabel, new AbsoluteConstraints(148, 109, 40, 20));
+		initialRankingPanel.add(initialRanking_rank5_PercentLabel, new AbsoluteConstraints(148, 135, 40, 20));
+		initialRankingPanel.add(initialRanking_rank6_PercentLabel, new AbsoluteConstraints(148, 161, 40, 20));
+
+		final GroupLayout rankingPanelLayout = new GroupLayout(rankingPanel);
+		rankingPanel.setLayout(rankingPanelLayout);
+		rankingPanelLayout.setHorizontalGroup(
+				rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								  .addGroup(rankingPanelLayout.createSequentialGroup()
+															  .addGap(14, 14, 14)
+															  .addComponent(intuitiveRankingPanel,
+																			GroupLayout.PREFERRED_SIZE,
+																			192,
+																			GroupLayout.PREFERRED_SIZE)
+															  .addGap(18, 18, 18)
+															  .addComponent(initialRankingPanel,
+																			GroupLayout.PREFERRED_SIZE,
+																			200,
+																			GroupLayout.PREFERRED_SIZE)
+															  .addComponent(finalRankingPanel,
+																			GroupLayout.PREFERRED_SIZE,
+																			GroupLayout.DEFAULT_SIZE,
+																			GroupLayout.PREFERRED_SIZE))
+											 );
+		rankingPanelLayout.setVerticalGroup(
+				rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								  .addGroup(rankingPanelLayout.createSequentialGroup().addGroup(
+										  rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING,
+																				 false)
+															.addGroup(
+																	rankingPanelLayout.createSequentialGroup()
+																					  .addContainerGap()
+																					  .addComponent(
+																							  intuitiveRankingPanel,
+																							  GroupLayout.DEFAULT_SIZE,
+																							  GroupLayout.DEFAULT_SIZE,
+																							  Short.MAX_VALUE))
+															.addGroup(
+																	GroupLayout.Alignment.LEADING,
+																	rankingPanelLayout.createSequentialGroup()
+																					  .addGap(10,
+																							  10,
+																							  10)
+																					  .addComponent(
+																							  initialRankingPanel,
+																							  GroupLayout.PREFERRED_SIZE,
+																							  230,
+																							  GroupLayout.PREFERRED_SIZE))
+															.addGroup(
+																	GroupLayout.Alignment.LEADING,
+																	rankingPanelLayout.createSequentialGroup()
+																					  .addGap(10,
+																							  10,
+																							  10)
+																					  .addComponent(
+																							  finalRankingPanel,
+																							  GroupLayout.PREFERRED_SIZE,
+																							  230,
+																							  GroupLayout.PREFERRED_SIZE)))
+															  .addContainerGap(14, Short.MAX_VALUE))
+										   );
 	}
 
 	private void makeInitialisationPanel() {
@@ -887,12 +886,12 @@ public class InterfaceAHP
 		//on rempli les jComboBox par le nom des column pour le 1er classement
 		String[] mesColonnes = new String[ahpData.myMatrix.getColumnDimension()];
 		mesColonnes = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
-		remplirJComboBox(jComboBox1erClass1, mesColonnes);
-		remplirJComboBox(jComboBox1erClass2, mesColonnes);
-		remplirJComboBox(jComboBox1erClass3, mesColonnes);
-		remplirJComboBox(jComboBox1erClass4, mesColonnes);
-		remplirJComboBox(jComboBox1erClass5, mesColonnes);
-		remplirJComboBox(jComboBox1erClass6, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank1_ComboBox, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank2_ComboBox, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank3_ComboBox, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank4_ComboBox, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank5_ComboBox, mesColonnes);
+		remplirJComboBox(intuitiveRanking_rank6_ComboBox, mesColonnes);
 		//on modifie l'affichage de la table
 		MonCellRenderer monCellRenderer = new MonCellRenderer(0, 0);
 		jTableMatrice.setDefaultRenderer(Object.class, monCellRenderer);
@@ -937,19 +936,19 @@ public class InterfaceAHP
 
 		//on va afficher le classement des critères de la 1ere matrice
 		String[] classement = this.classerCriteres(priorityVector);
-		jTextFieldClassMat1.setText(classement[5]);
-		jTextFieldClassMat2.setText(classement[4]);
-		jTextFieldClassMat3.setText(classement[3]);
-		jTextFieldClassMat4.setText(classement[2]);
-		jTextFieldClassMat5.setText(classement[1]);
-		jTextFieldClassMat6.setText(classement[0]);
+		initialRanking_rank1_TextField.setText(classement[5]);
+		initialRanking_rank2_TextField.setText(classement[4]);
+		initialRanking_rank3_TextField.setText(classement[3]);
+		initialRanking_rank4_TextField.setText(classement[2]);
+		initialRanking_rank5_TextField.setText(classement[1]);
+		initialRanking_rank6_TextField.setText(classement[0]);
 		double[] classementVal = classerPourcentageCritères(priorityVector);
-		jLabelClassInit1.setText(classementVal[5] + "%");
-		jLabelClassInit2.setText(classementVal[4] + "%");
-		jLabelClassInit3.setText(classementVal[3] + "%");
-		jLabelClassInit4.setText(classementVal[2] + "%");
-		jLabelClassInit5.setText(classementVal[1] + "%");
-		jLabelClassInit6.setText(classementVal[0] + "%");
+		initialRanking_rank1_PercentLabel.setText(classementVal[5] + "%");
+		initialRanking_rank2_PercentLabel.setText(classementVal[4] + "%");
+		initialRanking_rank3_PercentLabel.setText(classementVal[3] + "%");
+		initialRanking_rank4_PercentLabel.setText(classementVal[2] + "%");
+		initialRanking_rank5_PercentLabel.setText(classementVal[1] + "%");
+		initialRanking_rank6_PercentLabel.setText(classementVal[0] + "%");
 
 		//Writing of the CR
 		consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
@@ -1174,19 +1173,19 @@ public class InterfaceAHP
 
 		//on va afficher le classement final des critères
 		String[] classementF = this.classerCriteres(priorityVector);
-		jTextFieldClassFinal1.setText(classementF[5]);
-		jTextFieldClassFinal2.setText(classementF[4]);
-		jTextFieldClassFinal3.setText(classementF[3]);
-		jTextFieldClassFinal4.setText(classementF[2]);
-		jTextFieldClassFinal5.setText(classementF[1]);
-		jTextFieldClassFinal6.setText(classementF[0]);
+		finalRanking_rank1_TextField.setText(classementF[5]);
+		finalRanking_rank2_TextField.setText(classementF[4]);
+		finalRanking_rank3_TextField.setText(classementF[3]);
+		finalRanking_rank4_TextField.setText(classementF[2]);
+		finalRanking_rank5_TextField.setText(classementF[1]);
+		finalRanking_rank6_TextField.setText(classementF[0]);
 		double[] classementValF = classerPourcentageCritères(priorityVector);
-		jLabelClassFinal1.setText(classementValF[5] + "%");
-		jLabelClassFinal2.setText(classementValF[4] + "%");
-		jLabelClassFinal3.setText(classementValF[3] + "%");
-		jLabelClassFinal4.setText(classementValF[2] + "%");
-		jLabelClassFinal5.setText(classementValF[1] + "%");
-		jLabelClassFinal6.setText(classementValF[0] + "%");
+		finalRanking_rank1_PercentLabel.setText(classementValF[5] + "%");
+		finalRanking_rank2_PercentLabel.setText(classementValF[4] + "%");
+		finalRanking_rank3_PercentLabel.setText(classementValF[3] + "%");
+		finalRanking_rank4_PercentLabel.setText(classementValF[2] + "%");
+		finalRanking_rank5_PercentLabel.setText(classementValF[1] + "%");
+		finalRanking_rank6_PercentLabel.setText(classementValF[0] + "%");
 
 		//Ecriture du CR
 		consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
@@ -1232,7 +1231,7 @@ public class InterfaceAHP
 			monHeure.stop();
 		}
 		//on réaffiche le classement intuitif
-		jPanel1erClassement.setVisible(true);
+		intuitiveRankingPanel.setVisible(true);
 	}
 
 	/*
@@ -1415,8 +1414,8 @@ public class InterfaceAHP
 		}
 	}
 
-	private void jButtonOkClassIntuitifActionPerformed(ActionEvent event) {
-		jPanel1erClassement.setVisible(false);
+	private void intuitiveRankingOKActionPerformed(ActionEvent event) {
+		intuitiveRankingPanel.setVisible(false);
 	}
 
 	private void jButtonAnglaisActionPerformed(ActionEvent event) {
@@ -1430,39 +1429,39 @@ public class InterfaceAHP
 		saveFilePathLabel.setText("Saving in:");
 		saveFilePathExploreButton.setText("Browse");
 		//Tables échelle saaty
-		jTable3.setValueAt("1: equally important ", 0, 0);
-		jTable3.setValueAt("3: slightly larger ", 1, 0);
-		jTable3.setValueAt("5: largest ", 2, 0);
-		jTable3.setValueAt("7: much larger ", 3, 0);
-		jTable3.setValueAt("9: absolutely more important ", 4, 0);
-		jTable3.setValueAt("2,4,6: intermediate values ", 5, 0);
+		saatyScaleTable.setValueAt("1: equally important ", 0, 0);
+		saatyScaleTable.setValueAt("3: slightly larger ", 1, 0);
+		saatyScaleTable.setValueAt("5: largest ", 2, 0);
+		saatyScaleTable.setValueAt("7: much larger ", 3, 0);
+		saatyScaleTable.setValueAt("9: absolutely more important ", 4, 0);
+		saatyScaleTable.setValueAt("2,4,6: intermediate values ", 5, 0);
 		//panel classement
-		jPanel1erClassement.setBorder(BorderFactory.createTitledBorder("Intuitive classement"));
-		jPanelClassementMatrice.setBorder(BorderFactory.createTitledBorder("Initial classement"));
-		jPanelClassementFinal.setBorder(BorderFactory.createTitledBorder("Final classement"));
+		intuitiveRankingPanel.setBorder(BorderFactory.createTitledBorder("Intuitive classement"));
+		initialRankingPanel.setBorder(BorderFactory.createTitledBorder("Initial classement"));
+		finalRankingPanel.setBorder(BorderFactory.createTitledBorder("Final classement"));
 		//bouton valider matrice
 		jButtonValiderMatrice.setText("Validate Matrix");
 		//Jlabel dans panel classement
-		jLabel5.setText("1st:");
-		jLabel12.setText("1st:");
-		jLabel18.setText("1st:");
-		jLabel7.setText("2nd:");
-		jLabel13.setText("2nd:");
-		jLabel19.setText("2nd:");
-		jLabel8.setText("3th:");
-		jLabel14.setText("3th:");
-		jLabel20.setText("3th:");
-		jLabel9.setText("4th:");
-		jLabel15.setText("4th:");
-		jLabel21.setText("4th:");
-		jLabel10.setText("5th:");
-		jLabel16.setText("5th:");
-		jLabel22.setText("5th:");
-		jLabel11.setText("6th:");
-		jLabel17.setText("6th:");
-		jLabel23.setText("6th:");
-		jLabel20.setText("3th:");
-		jLabel20.setText("3th:");
+		intuitiveRanking_rank1_Label.setText("1st:");
+		initialRanking_rank1_Label.setText("1st:");
+		finalRanking_rank1_Label.setText("1st:");
+		intuitiveRanking_rank2_Label.setText("2nd:");
+		initialRanking_rank2_Label.setText("2nd:");
+		finalRanking_rank2_Label.setText("2nd:");
+		intuitiveRanking_rank3_Label.setText("3th:");
+		initialRanking_rank3_Label.setText("3th:");
+		finalRanking_rank3_Label.setText("3th:");
+		intuitiveRanking_rank4_Label.setText("4th:");
+		initialRanking_rank4_Label.setText("4th:");
+		finalRanking_rank4_Label.setText("4th:");
+		intuitiveRanking_rank5_Label.setText("5th:");
+		initialRanking_rank5_Label.setText("5th:");
+		finalRanking_rank5_Label.setText("5th:");
+		intuitiveRanking_rank6_Label.setText("6th:");
+		initialRanking_rank6_Label.setText("6th:");
+		finalRanking_rank6_Label.setText("6th:");
+		finalRanking_rank3_Label.setText("3th:");
+		finalRanking_rank3_Label.setText("3th:");
 	}
 
 	private void jButtonFrenchActionPerformed(ActionEvent event) {
@@ -1491,56 +1490,56 @@ public class InterfaceAHP
 	private JButton           jButtonFrench                         = new JButton();
 	private JButton           jButtonNewSimul                       = new JButton();
 	private JButton           saveFilePathOkButton                  = new JButton();
-	private JButton           jButtonOkClassIntuitif                = new JButton();
+	private JButton           intuitiveRankingOKButton              = new JButton();
 	private JButton           saveFilePathExploreButton             = new JButton();
 	private JButton           jButtonValiderMatrice                 = new JButton();
-	private JComboBox<String> jComboBox1erClass1                    = new JComboBox();
-	private JComboBox<String> jComboBox1erClass2                    = new JComboBox();
-	private JComboBox<String> jComboBox1erClass3                    = new JComboBox();
-	private JComboBox<String> jComboBox1erClass4                    = new JComboBox();
-	private JComboBox<String> jComboBox1erClass5                    = new JComboBox();
-	private JComboBox<String> jComboBox1erClass6                    = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank1_ComboBox       = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank2_ComboBox       = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank3_ComboBox       = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank4_ComboBox       = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank5_ComboBox       = new JComboBox();
+	private JComboBox<String> intuitiveRanking_rank6_ComboBox       = new JComboBox();
 	private JLabel            matrixSizeLabel                       = new JLabel();
-	private JLabel            jLabel10                              = new JLabel();
-	private JLabel            jLabel11                              = new JLabel();
-	private JLabel            jLabel12                              = new JLabel();
-	private JLabel            jLabel13                              = new JLabel();
-	private JLabel            jLabel14                              = new JLabel();
-	private JLabel            jLabel15                              = new JLabel();
-	private JLabel            jLabel16                              = new JLabel();
-	private JLabel            jLabel17                              = new JLabel();
-	private JLabel            jLabel18                              = new JLabel();
-	private JLabel            jLabel19                              = new JLabel();
+	private JLabel            intuitiveRanking_rank5_Label          = new JLabel();
+	private JLabel            intuitiveRanking_rank6_Label          = new JLabel();
+	private JLabel            initialRanking_rank1_Label            = new JLabel();
+	private JLabel            initialRanking_rank2_Label            = new JLabel();
+	private JLabel            initialRanking_rank3_Label            = new JLabel();
+	private JLabel            initialRanking_rank4_Label            = new JLabel();
+	private JLabel            initialRanking_rank5_Label            = new JLabel();
+	private JLabel            initialRanking_rank6_Label            = new JLabel();
+	private JLabel            finalRanking_rank1_Label              = new JLabel();
+	private JLabel            finalRanking_rank2_Label              = new JLabel();
 	private JLabel            saveFilePathLabel                     = new JLabel();
-	private JLabel            jLabel20                              = new JLabel();
-	private JLabel            jLabel21                              = new JLabel();
-	private JLabel            jLabel22                              = new JLabel();
-	private JLabel            jLabel23                              = new JLabel();
+	private JLabel            finalRanking_rank3_Label              = new JLabel();
+	private JLabel            finalRanking_rank4_Label              = new JLabel();
+	private JLabel            finalRanking_rank5_Label              = new JLabel();
+	private JLabel            finalRanking_rank6_Label              = new JLabel();
 	private JLabel            jLabel3                               = new JLabel();
 	private JLabel            jLabel4                               = new JLabel();
-	private JLabel            jLabel5                               = new JLabel();
+	private JLabel            intuitiveRanking_rank1_Label          = new JLabel();
 	private JLabel            jLabel6                               = new JLabel();
-	private JLabel            jLabel7                               = new JLabel();
-	private JLabel            jLabel8                               = new JLabel();
-	private JLabel            jLabel9                               = new JLabel();
-	private JLabel            jLabelClassFinal1                     = new JLabel();
-	private JLabel            jLabelClassFinal2                     = new JLabel();
-	private JLabel            jLabelClassFinal3                     = new JLabel();
-	private JLabel            jLabelClassFinal4                     = new JLabel();
-	private JLabel            jLabelClassFinal5                     = new JLabel();
-	private JLabel            jLabelClassFinal6                     = new JLabel();
-	private JLabel            jLabelClassInit1                      = new JLabel();
-	private JLabel            jLabelClassInit2                      = new JLabel();
-	private JLabel            jLabelClassInit3                      = new JLabel();
-	private JLabel            jLabelClassInit4                      = new JLabel();
-	private JLabel            jLabelClassInit5                      = new JLabel();
-	private JLabel            jLabelClassInit6                      = new JLabel();
+	private JLabel            intuitiveRanking_rank2_Label          = new JLabel();
+	private JLabel            intuitiveRanking_rank3_Label          = new JLabel();
+	private JLabel            intuitiveRanking_rank4_Label          = new JLabel();
+	private JLabel            finalRanking_rank1_PercentLabel       = new JLabel();
+	private JLabel            finalRanking_rank2_PercentLabel       = new JLabel();
+	private JLabel            finalRanking_rank3_PercentLabel       = new JLabel();
+	private JLabel            finalRanking_rank4_PercentLabel       = new JLabel();
+	private JLabel            finalRanking_rank5_PercentLabel       = new JLabel();
+	private JLabel            finalRanking_rank6_PercentLabel       = new JLabel();
+	private JLabel            initialRanking_rank1_PercentLabel     = new JLabel();
+	private JLabel            initialRanking_rank2_PercentLabel     = new JLabel();
+	private JLabel            initialRanking_rank3_PercentLabel     = new JLabel();
+	private JLabel            initialRanking_rank4_PercentLabel     = new JLabel();
+	private JLabel            initialRanking_rank5_PercentLabel     = new JLabel();
+	private JLabel            initialRanking_rank6_PercentLabel     = new JLabel();
 	private JLabel            jLabelCompteur                        = new JLabel();
 	private JLabel            jLabelTime                            = new JLabel();
-	private JPanel            jPanel1erClassement                   = new JPanel();
-	private JPanel            jPanelClassementFinal                 = new JPanel();
-	private JPanel            jPanelClassementMatrice               = new JPanel();
-	private JPanel            jPanelClassemnt                       = new JPanel();
+	private JPanel            intuitiveRankingPanel                 = new JPanel();
+	private JPanel            finalRankingPanel                     = new JPanel();
+	private JPanel            initialRankingPanel                   = new JPanel();
+	private JPanel            rankingPanel                          = new JPanel();
 	private JPanel            initialisationPanel                   = new JPanel();
 	private JRadioButton      consistencyMakerTypeRandomRadioButton = new JRadioButton();
 	private JRadioButton      datasetP1RadioButton                  = new JRadioButton();
@@ -1549,23 +1548,23 @@ public class InterfaceAHP
 	private JScrollPane       jScrollPane1                          = new JScrollPane();
 	private JScrollPane       jScrollPane3                          = new JScrollPane();
 	private JScrollPane       jScrollPane4                          = new JScrollPane();
-	private JTable            jTable3                               = new JTable();
+	private JTable            saatyScaleTable                       = new JTable();
 	private JTable            jTable4                               = new JTable();
 	private JTable            jTableMatrice                         = new JTable();
 	private JTextField        jTextFieldCR                          = new JTextField();
 	private JTextField        saveFilePathTextField                 = new JTextField();
-	private JTextField        jTextFieldClassFinal1                 = new JTextField();
-	private JTextField        jTextFieldClassFinal2                 = new JTextField();
-	private JTextField        jTextFieldClassFinal3                 = new JTextField();
-	private JTextField        jTextFieldClassFinal4                 = new JTextField();
-	private JTextField        jTextFieldClassFinal5                 = new JTextField();
-	private JTextField        jTextFieldClassFinal6                 = new JTextField();
-	private JTextField        jTextFieldClassMat1                   = new JTextField();
-	private JTextField        jTextFieldClassMat2                   = new JTextField();
-	private JTextField        jTextFieldClassMat3                   = new JTextField();
-	private JTextField        jTextFieldClassMat4                   = new JTextField();
-	private JTextField        jTextFieldClassMat5                   = new JTextField();
-	private JTextField        jTextFieldClassMat6                   = new JTextField();
+	private JTextField        finalRanking_rank1_TextField          = new JTextField();
+	private JTextField        finalRanking_rank2_TextField          = new JTextField();
+	private JTextField        finalRanking_rank3_TextField          = new JTextField();
+	private JTextField        finalRanking_rank4_TextField          = new JTextField();
+	private JTextField        finalRanking_rank5_TextField          = new JTextField();
+	private JTextField        finalRanking_rank6_TextField          = new JTextField();
+	private JTextField        initialRanking_rank1_TextField        = new JTextField();
+	private JTextField        initialRanking_rank2_TextField        = new JTextField();
+	private JTextField        initialRanking_rank3_TextField        = new JTextField();
+	private JTextField        initialRanking_rank4_TextField        = new JTextField();
+	private JTextField        initialRanking_rank5_TextField        = new JTextField();
+	private JTextField        initialRanking_rank6_TextField        = new JTextField();
 	private JTextField        matrixSizeTextField                   = new JTextField();
 	// End of variables declaration
 }
