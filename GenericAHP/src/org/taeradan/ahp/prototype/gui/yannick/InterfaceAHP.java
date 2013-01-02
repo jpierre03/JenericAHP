@@ -61,9 +61,7 @@ public class InterfaceAHP
 	private String               file;
 	private String               fileHistorique;
 	private int     finSimulation = 0;
-	private boolean changerCoeff  = false;
 	private Meter monHeure;
-	private boolean boolHeure = true;
 	private JEP    monJep;
 	private double saatyConsistency;
 	private boolean modeAnglais = false;
