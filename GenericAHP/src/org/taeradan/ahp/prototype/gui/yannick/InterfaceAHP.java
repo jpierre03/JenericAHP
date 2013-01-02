@@ -55,16 +55,17 @@ public class InterfaceAHP
 												  8,
 												  9};
 
+	private boolean finSimulation = false;
+	private boolean modeAnglais   = false;
 	private MyMatrix             myMatrix;
 	private MyMatrixTableModel   matrixTableModel;
 	private CharSequenceAppender csa;
 	private String               file;
 	private String               fileHistorique;
-	private boolean finSimulation = false;
-	private Meter  monHeure;
-	private JEP    monJep;
-	private double saatyConsistency;
-	private boolean modeAnglais = false;
+	private Meter                monHeure;
+	private JEP                  monJep;
+	private double               saatyConsistency;
+
 
 	/** Creates new form MaMatriceFrame */
 	public InterfaceAHP() {
