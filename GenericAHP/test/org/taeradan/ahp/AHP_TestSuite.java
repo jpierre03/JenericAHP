@@ -8,5 +8,5 @@ import org.taeradan.ahp.controversial.ControversialTest;
 /** @author Jean-Pierre PRUNARET */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ControversialTest.class, ConsistencyTest.class})
-public class AHPTestSuite {
+public class AHP_TestSuite {
 }
