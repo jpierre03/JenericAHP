@@ -56,7 +56,7 @@ public class ConfigurationFrame
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
 //		Instantiation of an empty AHP root to use as default while no file is loaded
-		ahpAHPRoot = new AHPRoot(null, AHPRoot.indicatorPath);
+		ahpAHPRoot = new AHPRoot(null, AHPRoot.DEFAULT_INDICATOR_PATH);
 //		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
 		guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		initComponents();
@@ -262,7 +262,7 @@ public class ConfigurationFrame
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
 		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			currentFile = jFileChooser.getSelectedFile();
-			ahpAHPRoot = new AHPRoot(new File(currentFile.getAbsolutePath()), AHPRoot.indicatorPath);
+			ahpAHPRoot = new AHPRoot(new File(currentFile.getAbsolutePath()), AHPRoot.DEFAULT_INDICATOR_PATH);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 			fileOpened = true;
 		}
@@ -322,7 +322,7 @@ public class ConfigurationFrame
 	private void delRootActionPerformed(final AHPRoot ahpRoot) {
 		if (JOptionPane.showConfirmDialog(this, "Are you sure ? The whole tree will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpAHPRoot = new AHPRoot(null, AHPRoot.indicatorPath);
+			ahpAHPRoot = new AHPRoot(null, AHPRoot.DEFAULT_INDICATOR_PATH);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 			editActionPerformed(ahpAHPRoot);
 		}

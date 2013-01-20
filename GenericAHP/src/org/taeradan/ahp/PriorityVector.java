@@ -33,7 +33,7 @@ public class PriorityVector
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
 		assert dimension > 0;
-		assert dimension <= 1000 : "So huge preference matrix, you should double check (size=" + dimension + ")";
+		assert dimension <= 1000 : "So huge matrix, you should double check (size=" + dimension + ")";
 
 		final PriorityVector resultVector = new PriorityVector(dimension);
 		final Matrix e = new Matrix(1, dimension, 1);

@@ -36,7 +36,7 @@ public class TestingAlternative
 	public final double valueI32;
 	public final double valueI41;
 	public final double valueI51;
-	private      int    rank;
+	private int rank = Integer.MAX_VALUE;
 
 	public TestingAlternative(String name,
 							  double valueI11,

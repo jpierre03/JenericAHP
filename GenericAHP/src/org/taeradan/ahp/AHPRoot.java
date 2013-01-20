@@ -46,18 +46,20 @@ import java.util.logging.Logger;
  */
 public class AHPRoot {
 
+
 	/** Contains the path to access indicators */
-	public static String indicatorPath = "org.taeradan.ahp.test.ind.";
+	public static final String DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+	public static       String indicatorPath          = DEFAULT_INDICATOR_PATH;
 	//	AHP configuration attributes
-	private           String                name;
-	private transient PairWiseMatrix        matrixCriteriaCriteria;
-	private transient PriorityVector        vectorCriteriaGoal;
-	private transient Collection<Criterion> criteria;
+	private String                name;
+	private PairWiseMatrix        matrixCriteriaCriteria;
+	private PriorityVector        vectorCriteriaGoal;
+	private Collection<Criterion> criteria;
 	//	AHP execution attributes
-	private transient PriorityVector        vectorAlternativesGoal;
-	private transient Matrix                matrixAlternativesCriteria;
+	private PriorityVector        vectorAlternativesGoal;
+	private Matrix                matrixAlternativesCriteria;
 	//	Execution control attributes
-	private transient    boolean            isCalculationDone  = false;
+	private              boolean            isCalculationDone  = false;
 	private final        ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 	private static final boolean            DEBUG              = false;
 
@@ -68,14 +70,23 @@ public class AHPRoot {
 	 * @param indicatorPath
 	 */
 	public AHPRoot(final File inFile, final String indicatorPath) {
+		if (inFile == null
+			|| inFile.exists() == false
+			|| inFile.canRead() == false) {
+			throw new IllegalArgumentException("File should exist and be read");
+		}
+		if (indicatorPath == null
+			|| indicatorPath.isEmpty()) {
+			throw new IllegalArgumentException("indicatorPath should be defined");
+		}
+
 		if (inFile == null) {
 			name = "";
 			matrixCriteriaCriteria = new PairWiseMatrix();
 			criteria = new ArrayList<>();
 		} else {
-			if (indicatorPath != null) {
-				AHPRoot.indicatorPath = indicatorPath;
-			}
+			this.indicatorPath = indicatorPath;
+
 //			XML parser creation
 			final SAXBuilder parser = new SAXBuilder();
 			try {
@@ -182,9 +193,9 @@ public class AHPRoot {
 		final Element xmlRoot = new Element("root");
 		xmlRoot.addContent(new Element("name").setText(name));
 		xmlRoot.addContent(matrixCriteriaCriteria.toXml());
-		final Iterator<Criterion> itCriterias = criteria.iterator();
-		while (itCriterias.hasNext()) {
-			xmlRoot.addContent(itCriterias.next().toXml());
+		final Iterator<Criterion> iterator = criteria.iterator();
+		while (iterator.hasNext()) {
+			xmlRoot.addContent(iterator.next().toXml());
 		}
 		return xmlRoot;
 	}
