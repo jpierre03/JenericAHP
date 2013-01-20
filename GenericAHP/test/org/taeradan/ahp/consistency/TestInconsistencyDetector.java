@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.test;
+package org.taeradan.ahp.consistency;
 
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -29,11 +29,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** @author Yves Dubromelle */
-public final class TestConsistency {
+/**
+ * @author Yves Dubromelle
+ * @author Jean-Pierre PRUNARET
+ */
+public final class TestInconsistencyDetector {
 
 	private static final JFileChooser matrixChooser = new JFileChooser(System.getProperty("user.dir"));
-
 
 	public static void main(final String[] args) {
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
@@ -45,19 +47,22 @@ public final class TestConsistency {
 			final PriorityVector vector = PriorityVector.build(matrix);
 			System.out.println(PairWiseMatrix.toString(vector, null));
 			final boolean result = consistencyChecker.isConsistent(matrix, vector);
-			System.out.println("ConsistencyRatio = " + consistencyChecker.getConsistencyRatio());
+			System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 			if (result) {
 				System.out.println("Matrice consistante");
 			} else {
 				System.out.println("Matrice non consistante");
+
+				//point x,y = saaty.inconsistencyDetector(prefmatrix,...)
+				//TODO implémenter
 			}
 		} catch (JDOMException ex) {
-			Logger.getLogger(TestConsistency.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(TestInconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(TestConsistency.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(TestInconsistencyDetector.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
-	private TestConsistency() {
+	private TestInconsistencyDetector() {
 	}
 }
