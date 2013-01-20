@@ -4,18 +4,16 @@
 			TODO define vocabulary identification
 			PUBLIC ID: -//vendor//vocabulary//EN
 			SYSTEM ID: http://server/path/ahp_conf.dtd
+		-->
+		<!--
+			An example how to use this DTD from your XML document:
 
-		--><!--
-    An example how to use this DTD from your XML document:
-
-    <?xml version="1.0"?>
-
-    <!DOCTYPE root SYSTEM "ahp_conf.dtd">
-
-    <root>
-    ...
-    </root>
--->
+			<?xml version="1.0"?>
+			<!DOCTYPE root SYSTEM "ahp_conf.dtd">
+			<root>
+			...
+			</root>
+		-->
 
 		<!--- The root element of the XML document is the root element of the AHP tree.
 		It must contain a name, a preference matrix and an array of criterias elements. -->
@@ -24,9 +22,9 @@
 		<!--- The name of the AHP tree (or the goal of this AHP instance). -->
 		<!ELEMENT name (#PCDATA)>
 
-		<!--- The preference matrix is a square matrix that establish preferences between each criterias in the root or each indicators of a given criterion.
-		Contains rows.
-		It must have as much rows and colums than the number of elements compared. -->
+		<!--- The preference matrix is a square matrix that establish preferences between each criteria in the root
+		or each indicators of a given criterion. Contains rows.
+		It must have as much rows and columns than the number of elements compared (criteria or indicators). -->
 		<!ELEMENT prefmatrix (row)*>
 
 		<!--- A row of the preference matrix, contains elements. -->
