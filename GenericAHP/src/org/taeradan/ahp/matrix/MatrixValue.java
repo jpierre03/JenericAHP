@@ -22,6 +22,13 @@ public class MatrixValue {
 	}
 
 	public void setValue(double value) {
+		if (value <= 0) {
+			throw new IllegalArgumentException("Value can't be negative (nor 0)");
+		}
+		if (value > 9) {
+			throw new IllegalArgumentException("Value can't be greater than 9");
+		}
+
 		if (value < 1) {
 			this.value = round(value, 4);
 		} else {
