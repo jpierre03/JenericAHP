@@ -1,7 +1,9 @@
 package org.taeradan.ahp.controversial;
 
 import org.junit.*;
+import org.junit.rules.MethodRule;
 import org.taeradan.ahp.AHPRoot;
+import org.taeradan.ahp.TimeConsumeRule;
 
 import java.io.File;
 import java.net.URL;
@@ -66,6 +68,9 @@ public class ControversialTest {
 	public ControversialTest() {
 	}
 
+	@Rule
+	public MethodRule rule = new TimeConsumeRule();
+
 	@BeforeClass
 	public static void setUpClass()
 			throws
@@ -94,7 +99,7 @@ public class ControversialTest {
 
 
 	@Test
-	public void initialState() {
+	public void test100_initialState() {
 		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(ALTERNATIVES);
 
 		assertTrue(alternatives.size() == 5);
@@ -113,7 +118,7 @@ public class ControversialTest {
 	}
 
 	@Test
-	public void ranking() {
+	public void test200_ranking() {
 		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(ALTERNATIVES);
 
 		ahpRoot.calculateRanking(alternatives);

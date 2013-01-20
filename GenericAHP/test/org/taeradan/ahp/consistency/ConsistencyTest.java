@@ -20,9 +20,11 @@ package org.taeradan.ahp.consistency;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.junit.*;
+import org.junit.rules.MethodRule;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PairWiseMatrix;
 import org.taeradan.ahp.PriorityVector;
+import org.taeradan.ahp.TimeConsumeRule;
 
 import static org.junit.Assert.*;
 
@@ -33,6 +35,9 @@ import static org.junit.Assert.*;
  */
 public final class ConsistencyTest {
 	private static final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+
+	@Rule
+	public MethodRule rule = new TimeConsumeRule();
 
 	@BeforeClass
 	public static void setUpClass()
@@ -56,7 +61,7 @@ public final class ConsistencyTest {
 	}
 
 	@Test
-	public void consistentMatrix() {
+	public void test100_consistentMatrix() {
 
 		final SAXBuilder parser = new SAXBuilder();
 		try {
@@ -73,7 +78,7 @@ public final class ConsistencyTest {
 	}
 
 	@Test
-	public void unconsistentMatrix() {
+	public void test200_unconsistentMatrix() {
 		final SAXBuilder parser = new SAXBuilder();
 		try {
 			final Document inDocument = parser.build(ConsistencyTest.class.getResource("unconsistent-matrix.xml"));
