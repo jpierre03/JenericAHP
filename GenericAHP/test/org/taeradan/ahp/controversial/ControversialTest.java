@@ -85,7 +85,7 @@ public class ControversialTest {
 		System.out.println(resource);
 		final File aFile = new File(resource.getFile());
 
-		ahpRoot = new AHPRoot(aFile, "org.taeradan.ahp.controversial.indicator.");
+		ahpRoot = new AHPRoot(aFile, "org.taeradan.ahp.controversial.");
 	}
 
 	@After

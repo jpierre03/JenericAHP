@@ -15,12 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.controversial.indicator;
+package org.taeradan.ahp.controversial;
 
 import org.jdom.Element;
 import org.taeradan.ahp.Alternative;
 import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.controversial.ControversialAlternative;
 
 import java.util.Collection;
 
@@ -31,18 +30,15 @@ import java.util.Collection;
  * @author Yves Dubromelle
  */
 public class IndicatorIV
-	extends Indicator {
+		extends Indicator {
 
-	/**
-	 * @param xmlIndicator
-	 */
 	public IndicatorIV(final Element xmlIndicator) {
 		super(xmlIndicator);
 	}
 
 	@Override
 	public double calculateAlternativeValue(final int alternativeIndex,
-						final Collection<? extends Alternative> alternatives) {
+											final Collection<? extends Alternative> alternatives) {
 		return ((ControversialAlternative) alternatives.toArray()[alternativeIndex]).valueIV;
 	}
 }

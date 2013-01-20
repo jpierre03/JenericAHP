@@ -23,7 +23,7 @@ import org.taeradan.ahp.Alternative;
  * @author Yves Dubromelle
  * @author Jean-Pierre PRUNARET
  */
-public class ControversialAlternative
+class ControversialAlternative
 		implements Alternative {
 
 	public final String name;
@@ -31,7 +31,7 @@ public class ControversialAlternative
 	public  double valueIT = Double.NaN;
 	public  double valueIV = Double.NaN;
 
-	public ControversialAlternative(String name, double valueIT, double valueIV) {
+	ControversialAlternative(String name, double valueIT, double valueIV) {
 		this.name = name;
 		this.valueIT = valueIT;
 		this.valueIV = valueIV;
