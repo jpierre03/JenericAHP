@@ -40,7 +40,7 @@ public class PriorityVector
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
 
-		final int MAX_ITERATION = 40;
+		final int MAX_ITERATION = 150; // high value (normal genetic operation require high value)
 		Matrix lastVector;
 		boolean isUnderTreshold = true;
 		int iteration = 0;
