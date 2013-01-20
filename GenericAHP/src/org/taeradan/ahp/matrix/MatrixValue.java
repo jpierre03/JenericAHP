@@ -6,71 +6,42 @@ package org.taeradan.ahp.matrix;
  */
 public class MatrixValue {
 
-	/**
-	 *
-	 */
-	private double value = 0;
-	/**
-	 *
-	 */
-	private int row = 0;
-	/**
-	 *
-	 */
-	private int column = 0;
+	private double value  = 0;
+	private int    row    = 0;
+	private int    column = 0;
 
-	/**
-	 *
-	 */
 	public MatrixValue() {
 	}
 
-	/*
-	 * méthode qui arrondi la valeur
-	 */
-	private double round(double what, int howmuch) {
+	private static double round(double what, int howmuch) {
 		return (double) ((int) (what * Math.pow(10, howmuch) + .5)) / Math.pow(10, howmuch);
 	}
 
-	/**
-	 * @return the value
-	 */
 	public double getValue() {
 		return value;
 	}
 
-	/**
-	 * @param value the value to set
-	 */
 	public void setValue(double value) {
-		if (value < 1) this.value = round(value, 4);
-		else this.value = round(value, 0);
+		if (value < 1) {
+			this.value = round(value, 4);
+		} else {
+			this.value = round(value, 0);
+		}
 	}
 
-	/**
-	 * @return the row
-	 */
 	public int getRow() {
 		return row;
 	}
 
-	/**
-	 * @param row the row to set
-	 */
 	public void setRow(int row) {
 		this.row = row;
 	}
 
-	/**
-	 * @return the column
-	 */
+	/** @return the column */
 	public int getColumn() {
 		return column;
 	}
 
-	/**
-	 * @param column the column to set
-	 */
 	public void setColumn(int column) {
 		this.column = column;
 	}
@@ -99,17 +70,12 @@ public class MatrixValue {
 	@Override
 	public int hashCode() {
 		int hash = 3;
-		hash =
-			97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value)
-				>>> 32));
+		hash = 97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
 		hash = 97 * hash + this.row;
 		hash = 97 * hash + this.column;
 		return hash;
 	}
 
-	/**
-	 * @return
-	 */
 	@Override
 	public String toString() {
 		return value + " ";
