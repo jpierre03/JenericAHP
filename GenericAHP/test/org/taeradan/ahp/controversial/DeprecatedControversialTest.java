@@ -15,9 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.test;
+package org.taeradan.ahp.controversial;
 
 import org.taeradan.ahp.AHPRoot;
+import org.taeradan.ahp.test.TestAhp;
 
 import java.io.File;
 import java.net.URL;
@@ -27,13 +28,13 @@ import java.util.ArrayList;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public final class ControversialTest {
+public final class DeprecatedControversialTest {
 
 	private static final double TEMOIN_MAX   = 1000;
 	private static final double VARIABLE_MAX = 1000000000;
 	private static final double DECALAGE     = 0;
 
-	private ControversialTest() {
+	private DeprecatedControversialTest() {
 	}
 
 	public static void main(String[] args) {

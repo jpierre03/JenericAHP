@@ -15,34 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.test.ind;
+package org.taeradan.ahp.controversial;
 
-import org.jdom.Element;
 import org.taeradan.ahp.Alternative;
-import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.test.ControversialAlternative;
-
-import java.util.Collection;
 
 /**
- * Dummy implementation of an AHP indicator
- *
- * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
+ * @author Jean-Pierre PRUNARET
  */
-public class IndicatorIV
-	extends Indicator {
+public class ControversialAlternative
+		implements Alternative {
 
-	/**
-	 * @param xmlIndicator
-	 */
-	public IndicatorIV(final Element xmlIndicator) {
-		super(xmlIndicator);
+	public final String name;
+	private int    rank    = Integer.MAX_VALUE;
+	public  double valueIT = Double.NaN;
+	public  double valueIV = Double.NaN;
+
+	public ControversialAlternative(String name, double valueIT, double valueIV) {
+		this.name = name;
+		this.valueIT = valueIT;
+		this.valueIV = valueIV;
 	}
 
 	@Override
-	public double calculateAlternativeValue(final int alternativeIndex,
-						final Collection<? extends Alternative> alternatives) {
-		return ((ControversialAlternative) alternatives.toArray()[alternativeIndex]).valueIV;
+	public int getRank() {
+		return rank;
+	}
+
+	@Override
+	public void setRank(final int rank) {
+		this.rank = rank;
 	}
 }

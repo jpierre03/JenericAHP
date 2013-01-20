@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.test.ind;
+package org.taeradan.ahp.controversial.indicator;
 
 import org.jdom.Element;
 import org.taeradan.ahp.Alternative;
 import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.test.ControversialAlternative;
+import org.taeradan.ahp.controversial.ControversialAlternative;
 
 import java.util.Collection;
 
