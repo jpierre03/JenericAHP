@@ -4,20 +4,14 @@ package org.taeradan.ahp.matrix;
  * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
-public class MyMatrixTest {
+public final class MyMatrixTest {
 
-	/**
-	 *
-	 */
-	private final static int ROWS = 5;
-	/**
-	 *
-	 */
-	private final static int COLUMN = 5;
+	private static final int ROWS   = 5;
+	private static final int COLUMN = 5;
 
-	/**
-	 * @param args
-	 */
+	private MyMatrixTest() {
+	}
+
 	public static void main(String[] args) {
 
 		MyMatrix myMatrix = new MyMatrix(ROWS, COLUMN);
@@ -25,7 +19,6 @@ public class MyMatrixTest {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMN; j++) {
 				MatrixValue matrixValue = new MatrixValue();
-//				matrixValue.setValue((i + 1) * (j + 1));
 				matrixValue.setValue((i - j) * (j + i));
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
