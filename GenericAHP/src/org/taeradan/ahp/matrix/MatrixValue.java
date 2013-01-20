@@ -13,8 +13,8 @@ public class MatrixValue {
 	public MatrixValue() {
 	}
 
-	private static double round(double what, int howmuch) {
-		return (double) ((int) (what * Math.pow(10, howmuch) + .5)) / Math.pow(10, howmuch);
+	private static double round(double what, int precision) {
+		return (double) ((int) (what * Math.pow(10, precision) + .5)) / Math.pow(10, precision);
 	}
 
 	public double getValue() {
@@ -44,7 +44,6 @@ public class MatrixValue {
 		this.row = row;
 	}
 
-	/** @return the column */
 	public int getColumn() {
 		return column;
 	}
