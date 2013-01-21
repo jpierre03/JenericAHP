@@ -29,10 +29,10 @@ public class MatrixValue {
 
 	public void setValue(double value) {
 		if (value <= 0) {
-			throw new IllegalArgumentException("Value can't be negative (nor 0)");
+			throw new IllegalArgumentException("Value can't be negative (nor 0) [value=" + value + "]");
 		}
 		if (value > 9) {
-			throw new IllegalArgumentException("Value can't be greater than 9");
+			throw new IllegalArgumentException("Value can't be greater than 9 [value=" + value + "]");
 		}
 
 		if (value < 1) {
