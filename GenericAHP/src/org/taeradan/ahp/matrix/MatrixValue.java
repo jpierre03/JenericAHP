@@ -6,17 +6,22 @@ package org.taeradan.ahp.matrix;
  */
 public class MatrixValue {
 
-	private double value  = 0;
-	private int    row    = 0;
-	private int    column = 0;
-
-	public MatrixValue() {
-	}
+	private double value;
+	private int    row;
+	private int    column;
 
 	public MatrixValue(int row, int column, double value) {
 		this.row = row;
 		this.column = column;
 		this.value = value;
+	}
+
+	public MatrixValue() {
+		this(0, 0, 0);
+	}
+
+	public MatrixValue(final MatrixValue toClone) {
+		this(toClone.getRow(), toClone.getColumn(), toClone.getValue());
 	}
 
 	private static double round(double what, int precision) {

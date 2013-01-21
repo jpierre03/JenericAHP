@@ -28,26 +28,18 @@ public class MyMatrix
 	}
 
 	public MatrixValue getMatrixValue(int i, int j) {
-		MatrixValue matrixValue = new MatrixValue();
-		matrixValue.setValue(super.get(i, j));
-		matrixValue.setRow(i);
-		matrixValue.setColumn(j);
-
-		return matrixValue;
+		return new MatrixValue(i, j, super.get(i, j));
 	}
 
-	public static MyMatrix copyMyMatrix(final MyMatrix initMatrix) {
-		final MyMatrix finalMatrix = new MyMatrix(initMatrix.getRowDimension(), initMatrix.getColumnDimension());
-		MatrixValue temp = new MatrixValue();
-
-		for (int i = 0; i < initMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < initMatrix.getColumnDimension(); j++) {
-				temp.setRow(i);
-				temp.setColumn(j);
-				temp.setValue(initMatrix.getMatrixValue(i, j).getValue());
-				finalMatrix.setMatrixValue(temp);
+	public static MyMatrix copyMyMatrix(final MyMatrix originalMatrix) {
+		final MyMatrix duplicateMatrix = new MyMatrix(originalMatrix.getRowDimension(),
+													  originalMatrix.getColumnDimension());
+		for (int i = 0; i < originalMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < originalMatrix.getColumnDimension(); j++) {
+				duplicateMatrix.setMatrixValue(new MatrixValue(originalMatrix.getMatrixValue(i, j)));
 			}
 		}
-		return finalMatrix;
+
+		return duplicateMatrix;
 	}
 }
