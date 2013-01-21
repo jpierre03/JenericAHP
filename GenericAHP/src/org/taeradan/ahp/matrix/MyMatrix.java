@@ -12,7 +12,7 @@ public class MyMatrix
 	private static final long serialVersionUID = 1L;
 
 	public MyMatrix() {
-		super(0, 0);
+		this(0, 0);
 	}
 
 	public MyMatrix(int i, int j) {

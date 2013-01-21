@@ -13,6 +13,12 @@ public class MatrixValue {
 	public MatrixValue() {
 	}
 
+	public MatrixValue(int row, int column, double value) {
+		this.row = row;
+		this.column = column;
+		this.value = value;
+	}
+
 	private static double round(double what, int precision) {
 		return (double) ((int) (what * Math.pow(10, precision) + .5)) / Math.pow(10, precision);
 	}
