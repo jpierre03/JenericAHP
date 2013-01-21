@@ -43,7 +43,7 @@ public final class MyMatrixTest {
 
 		System.out.print(matrixValues);
 
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<>();
 
 		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
 			MatrixValue matrixValue = valueIterator.next();

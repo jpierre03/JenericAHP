@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test class for the AHP tree
@@ -122,6 +123,7 @@ public class TestAhp {
 		assertTrue(alternatives.get(5 - 1).getRank() == 3);
 	}
 
+	@Test
 	public void test200_NSP() {
 		URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
 		File aFile = new File(resource.getFile());
@@ -142,7 +144,7 @@ public class TestAhp {
 //		alts.add(new TestingAlternative("Alternative 4", 3, 3, 3, 3 / 4., 3, 7136, 1, 300, 1));
 		System.out.println("Calculate Ranking =============");
 		ahpRoot.calculateRanking(alts);
-		assertTrue(false);
+		fail("TODO");
 
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
 //		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));

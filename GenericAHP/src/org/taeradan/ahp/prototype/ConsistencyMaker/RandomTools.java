@@ -140,7 +140,7 @@ public final class RandomTools {
 			csa.appendLineFeed();
 			/*Writing of de the best fit related to the proposed value*/
 			//Copy of the original matrix
-			saatyMatrix = saatyMatrix.copyMyMatrix(preferenceMatrix);
+			saatyMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 			//saatyMatrix's eigenvector calculation
 			saatyVector = PriorityVector.build(saatyMatrix);
 			//best fit calculation
@@ -166,10 +166,9 @@ public final class RandomTools {
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
 			//remplacement de la valeur (i,j) par BestFit
-			MatrixValue newMatrixValue = new MatrixValue();
-			newMatrixValue.setRow(saatyMatrixValue.getRow());
-			newMatrixValue.setColumn(saatyMatrixValue.getColumn());
-			newMatrixValue.setValue(BestFit);
+			MatrixValue newMatrixValue = new MatrixValue(saatyMatrixValue.getRow(),
+														 saatyMatrixValue.getColumn(),
+														 BestFit);
 			saatyMatrix.setMatrixValue(newMatrixValue);
 
 			//remplacement de la valeur (j,i) par 1/BestFit
@@ -192,7 +191,7 @@ public final class RandomTools {
 			randomsMatrixValue = randomsIterator.next();
 
 			//copie de la matrice initiale
-			randomsMatrix = randomsMatrix.copyMyMatrix(preferenceMatrix);
+			randomsMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 			//calcul du vecteur propre associé à randomsMatrix
 			randomsVector = PriorityVector.build(randomsMatrix);
 
@@ -243,7 +242,6 @@ public final class RandomTools {
 			tempString = "" + consistencyChecker.getConsistencyRatio();
 			csa.append(tempString);
 			csa.appendCommaSeparator();
-
 
 			if (chosenValueToBeModified.equals(randomsMatrixValue)) {
 				isFound = true;

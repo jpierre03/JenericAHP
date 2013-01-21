@@ -18,7 +18,7 @@ public final class MatrixValueTest {
 	}
 
 	@Test
-	public void test100_idempotence() {
+	public void test100_idempotent() {
 		MatrixValue m1 = new MatrixValue();
 		MatrixValue m2 = new MatrixValue();
 		MatrixValue m3 = new MatrixValue();
