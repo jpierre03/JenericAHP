@@ -21,7 +21,6 @@ import Jama.Matrix;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -107,7 +106,7 @@ public class AHPRoot {
 			criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
 //				Verification that the number of criteria matches the size of the preference matrix
 			if (xmlCriteriaList.size() != xmlRowsList.size()) {
-				Logger.getAnonymousLogger().severe(
+				throw new IllegalArgumentException(
 						"Error : the number of criteria and the size of the preference matrix does not match !");
 			}
 
@@ -118,14 +117,9 @@ public class AHPRoot {
 				criteria.add(new Criterion(xmlCriteria));
 			}
 		} catch (FileNotFoundException e) {
-			Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.getAbsolutePath());
-			name = "unknown";
-			matrixCriteriaCriteria = new PairWiseMatrix();
-			criteria = new ArrayList<>();
-		} catch (JDOMException e) {
-			Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
-		} catch (IOException e) {
-			Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
+			throw new IllegalArgumentException("File not found : " + inFile.getAbsolutePath(), e);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("AHPRoot instantiation error", e);
 		}
 	}
 
