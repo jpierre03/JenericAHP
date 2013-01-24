@@ -116,11 +116,19 @@ public final class TestAhp {
 		assertTrue(alternatives.get(4 - 1).name.equalsIgnoreCase(ALTERNATIVE_4));
 		assertTrue(alternatives.get(5 - 1).name.equalsIgnoreCase(ALTERNATIVE_5));
 
+		// by id
 		assertTrue(alternatives.get(1 - 1).getRank() == 1);
 		assertTrue(alternatives.get(2 - 1).getRank() == 5);
 		assertTrue(alternatives.get(3 - 1).getRank() == 2);
 		assertTrue(alternatives.get(4 - 1).getRank() == 4);
 		assertTrue(alternatives.get(5 - 1).getRank() == 3);
+
+		// by rank
+		assertTrue(alternatives.get(1 - 1).getRank() == 1);
+		assertTrue(alternatives.get(3 - 1).getRank() == 2);
+		assertTrue(alternatives.get(5 - 1).getRank() == 3);
+		assertTrue(alternatives.get(4 - 1).getRank() == 4);
+		assertTrue(alternatives.get(2 - 1).getRank() == 5);
 	}
 
 	@Test
