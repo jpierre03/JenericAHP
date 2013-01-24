@@ -19,7 +19,7 @@ public class MyMatrix
 		super(i, j);
 	}
 
-	public void setMatrixValue(MatrixValue matrixValue) {
+	public final void setMatrixValue(MatrixValue matrixValue) {
 		super.set(
 				matrixValue.getRow(),
 				matrixValue.getColumn(),
@@ -27,7 +27,7 @@ public class MyMatrix
 				 );
 	}
 
-	public MatrixValue getMatrixValue(int i, int j) {
+	public final MatrixValue getMatrixValue(int i, int j) {
 		return new MatrixValue(i, j, super.get(i, j));
 	}
 
