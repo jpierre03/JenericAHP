@@ -65,10 +65,8 @@ public final class SaatyTools {
 
 	public static MatrixValue getFirstValueOfSaatysRanking(MyMatrix epsilon) {
 
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
-		MatrixValue tempMatrixValue = new MatrixValue();
-		myTreeMap = createTreeMap(epsilon);
-		tempMatrixValue = myTreeMap.pollLastEntry().getValue();
+		final TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
+		final MatrixValue tempMatrixValue = myTreeMap.pollLastEntry().getValue();
 
 		int i = tempMatrixValue.getRow();
 		int j = tempMatrixValue.getColumn();
@@ -80,6 +78,7 @@ public final class SaatyTools {
 			tempMatrixValue.setColumn(i);
 			tempMatrixValue.setValue(epsilon.get(j, i));
 		}
+
 		return tempMatrixValue;
 	}
 
@@ -91,7 +90,6 @@ public final class SaatyTools {
 
 		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(),
 										myPreferenceMatrix.getColumnDimension());
-		MatrixValue epsilonValue = new MatrixValue();
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
 			for (int j = 0; j < myPreferenceMatrix.getColumnDimension(); j++) {
@@ -108,10 +106,7 @@ public final class SaatyTools {
 
 				eij = aij * wj / wi;
 
-				epsilonValue.setValue(eij);
-				epsilonValue.setRow(i);
-				epsilonValue.setColumn(j);
-
+				final MatrixValue epsilonValue = new MatrixValue(i, j, eij);
 				epsilon.setMatrixValue(epsilonValue);
 			}
 		}

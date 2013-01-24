@@ -72,10 +72,7 @@ public final class RandomTools {
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
 			for (int j = i + 1; j < myPreferenceMatrix.getColumnDimension(); j++) {
-				matrixValue = new MatrixValue();
-				matrixValue.setRow(i);
-				matrixValue.setColumn(j);
-				matrixValue.setValue(myPreferenceMatrix.get(i, j));
+				matrixValue = new MatrixValue(i, j, myPreferenceMatrix.get(i, j));
 				listOfMatrixValue.add(matrixValue);
 			}
 		}
@@ -223,16 +220,15 @@ public final class RandomTools {
 			/*écriture de la cohérence après modification de la valeur aléatoire par le bestfit*/
 
 			//remplacement de la valeur (i,j) par BestFit
-			newMatrixValue = new MatrixValue();
-			newMatrixValue.setRow(randomsMatrixValue.getRow());
-			newMatrixValue.setColumn(randomsMatrixValue.getColumn());
-			newMatrixValue.setValue(BestFit);
+			newMatrixValue = new MatrixValue(randomsMatrixValue.getRow(),
+											 randomsMatrixValue.getColumn(),
+											 BestFit);
 			randomsMatrix.setMatrixValue(newMatrixValue);
 
 			//remplacement de la valeur (j,i) par 1/BestFit
-			newMatrixValue.setRow(randomsMatrixValue.getColumn());
-			newMatrixValue.setColumn(randomsMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
+			newMatrixValue = new MatrixValue(randomsMatrixValue.getColumn(),
+											 randomsMatrixValue.getRow(),
+											 1. / BestFit);
 			randomsMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité
