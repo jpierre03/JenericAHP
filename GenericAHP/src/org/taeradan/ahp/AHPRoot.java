@@ -30,10 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -314,7 +311,7 @@ public class AHPRoot {
 	}
 
 	public Collection<Criterion> getCriteria() {
-		return criteria;
+		return Collections.unmodifiableCollection(criteria);
 	}
 
 	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
