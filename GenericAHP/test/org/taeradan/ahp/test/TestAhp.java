@@ -40,7 +40,7 @@ import static org.junit.Assert.fail;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public class TestAhp {
+public final class TestAhp {
 
 	private static AHPRoot ahpRoot;
 	private static final String                   ALTERNATIVE_1 = "Alternative 1";
@@ -53,7 +53,7 @@ public class TestAhp {
 	public TestAhp() {
 	}
 
-	private static final List<TestingAlternative> makeAlternatives() {
+	private static List<TestingAlternative> makeAlternatives() {
 		final ArrayList<TestingAlternative> alts = new ArrayList<>(4);
 
 		alts.add(new TestingAlternative(ALTERNATIVE_1, 3, 5, 3, 1 / 2., 3, 1200, 1, 100, 1));
