@@ -74,11 +74,6 @@ public class PairWiseMatrix
 		return matrix;
 	}
 
-	/**
-	 * Describes a preference matrix in a String
-	 *
-	 * @return String description
-	 */
 	@Override
 	public String toString() {
 		return makeString(this, null);
@@ -93,26 +88,26 @@ public class PairWiseMatrix
 	}
 
 	private static String makeString(final MyMatrix matrix, final String prefix) {
-		final StringBuilder string = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.00000000");
 //		For each row in the matrix
 		for (int i = 0; i < nRows; i++) {
 			if (prefix != null) {
-				string.append(prefix);
+				sb.append(prefix);
 			}
 //			For each element of the row
 			for (int j = 0; j < nCols; j++) {
-				string.append(" ");
-				string.append(printFormat.format(matrix.get(i, j)));
+				sb.append(" ");
+				sb.append(printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
 			if (i < nRows - 1) {
-				string.append("\n");
+				sb.append("\n");
 			}
 		}
-		return string.toString();
+		return sb.toString();
 	}
 
 	/**
