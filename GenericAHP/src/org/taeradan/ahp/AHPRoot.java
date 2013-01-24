@@ -48,16 +48,16 @@ public class AHPRoot {
 
 
 	/** Contains the path to access indicators */
-	public static final String DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
-	public static       String indicatorPath          = DEFAULT_INDICATOR_PATH;
+	public static final String         DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+	public static       String         indicatorPath          = DEFAULT_INDICATOR_PATH;
 	//	AHP configuration attributes
-	private String                name;
-	private PairWiseMatrix        matrixCriteriaCriteria;
-	private PriorityVector        vectorCriteriaGoal;
-	private Collection<Criterion> criteria;
+	private             String         name                   = "";
+	private             PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
+	private PriorityVector vectorCriteriaGoal;
+	private Collection<Criterion> criteria = new ArrayList<>();
 	//	AHP execution attributes
-	private PriorityVector        vectorAlternativesGoal;
-	private Matrix                matrixAlternativesCriteria;
+	private PriorityVector vectorAlternativesGoal;
+	private Matrix         matrixAlternativesCriteria;
 	//	Execution control attributes
 	private              boolean            isCalculationDone  = false;
 	private final        ConsistencyChecker consistencyChecker = new ConsistencyChecker();
@@ -80,59 +80,52 @@ public class AHPRoot {
 			throw new IllegalArgumentException("indicatorPath should be defined");
 		}
 
-		if (inFile == null) {
-			name = "";
-			matrixCriteriaCriteria = new PairWiseMatrix();
-			criteria = new ArrayList<>();
-		} else {
-			this.indicatorPath = indicatorPath;
+		AHPRoot.indicatorPath = indicatorPath;
 
 //			XML parser creation
-			final SAXBuilder parser = new SAXBuilder();
-			try {
+		final SAXBuilder parser = new SAXBuilder();
+		try {
 //				JDOM document created from XML configuration file
-				final Document inXmlDocument = parser.build(inFile);
+			final Document inXmlDocument = parser.build(inFile);
 //				Extraction of the root element from the JDOM document
-				final Element xmlRoot = inXmlDocument.getRootElement();
+			final Element xmlRoot = inXmlDocument.getRootElement();
 //				Initialisation of the AHP tree name
-				name = xmlRoot.getChildText("name");
+			name = xmlRoot.getChildText("name");
 //				Initialisation of the preference matrix
-				final Element xmlPrefMatrix = xmlRoot.getChild("prefmatrix");
-				matrixCriteriaCriteria = PairWiseMatrix.builder(xmlPrefMatrix);
-				vectorCriteriaGoal = PriorityVector.build(matrixCriteriaCriteria);
+			final Element xmlCriteriaCriteriaPreferenceMatrix = xmlRoot.getChild("prefmatrix");
+			matrixCriteriaCriteria = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
+			vectorCriteriaGoal = PriorityVector.build(matrixCriteriaCriteria);
 //				Consistency verification
-				if (!consistencyChecker.isConsistent(matrixCriteriaCriteria, vectorCriteriaGoal)) {
-					Logger.getAnonymousLogger().severe(
-							"Is not consistent (root)");
-				}
-//				Initialisation of the criteria
-				@SuppressWarnings("unchecked")
-				final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
-				@SuppressWarnings("unchecked")
-				final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
-				criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
-//				Verification that the number of criteria matches the size of the preference matrix
-				if (xmlCriteriaList.size() != xmlRowsList.size()) {
-					Logger.getAnonymousLogger().severe(
-							"Error : the number of criteria and the size of the preference matrix does not match !");
-				}
-
-				final Iterator<Element> xmlCriteriaListIterator = xmlCriteriaList.iterator();
-				while (xmlCriteriaListIterator.hasNext()) {
-					final Element xmlCriteria = xmlCriteriaListIterator.next();
-
-					criteria.add(new Criterion(xmlCriteria));
-				}
-			} catch (FileNotFoundException e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.getAbsolutePath());
-				name = "unknown";
-				matrixCriteriaCriteria = new PairWiseMatrix();
-				criteria = new ArrayList<>();
-			} catch (JDOMException e) {
-				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
-			} catch (IOException e) {
-				Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
+			if (!consistencyChecker.isConsistent(matrixCriteriaCriteria, vectorCriteriaGoal)) {
+				throw new IllegalArgumentException("AHP preference matrix not consistent (root)");
 			}
+//				Initialisation of the criteria
+			@SuppressWarnings("unchecked")
+			final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
+			@SuppressWarnings("unchecked")
+			final List<Element> xmlRowsList = (List<Element>) xmlCriteriaCriteriaPreferenceMatrix.getChildren("row");
+			criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
+//				Verification that the number of criteria matches the size of the preference matrix
+			if (xmlCriteriaList.size() != xmlRowsList.size()) {
+				Logger.getAnonymousLogger().severe(
+						"Error : the number of criteria and the size of the preference matrix does not match !");
+			}
+
+			final Iterator<Element> xmlCriteriaListIterator = xmlCriteriaList.iterator();
+			while (xmlCriteriaListIterator.hasNext()) {
+				final Element xmlCriteria = xmlCriteriaListIterator.next();
+
+				criteria.add(new Criterion(xmlCriteria));
+			}
+		} catch (FileNotFoundException e) {
+			Logger.getAnonymousLogger().log(Level.SEVERE, "File not found : {0}", inFile.getAbsolutePath());
+			name = "unknown";
+			matrixCriteriaCriteria = new PairWiseMatrix();
+			criteria = new ArrayList<>();
+		} catch (JDOMException e) {
+			Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
+		} catch (IOException e) {
+			Logger.getAnonymousLogger().severe(e.getLocalizedMessage());
 		}
 	}
 
