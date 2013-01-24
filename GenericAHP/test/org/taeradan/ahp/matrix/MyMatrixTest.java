@@ -23,10 +23,7 @@ public final class MyMatrixTest {
 
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMN; j++) {
-				MatrixValue matrixValue = new MatrixValue();
-				matrixValue.setValue((i - j) * (j + i));
-				matrixValue.setRow(i);
-				matrixValue.setColumn(j);
+				MatrixValue matrixValue = new MatrixValue(i, j, (i - j) * (j + i));
 
 				myMatrix.setMatrixValue(matrixValue);
 			}
