@@ -21,6 +21,7 @@ import Jama.Matrix;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -42,22 +43,84 @@ import java.util.logging.Logger;
  */
 public class AHPRoot {
 
-
 	/** Contains the path to access indicators */
-	public static final String         DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
-	public static       String         indicatorPath          = DEFAULT_INDICATOR_PATH;
-	//	AHP configuration attributes
-	private             String         name                   = "";
-	private             PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
-	private PriorityVector vectorCriteriaGoal;
-	private Collection<Criterion> criteria = new ArrayList<>();
-	//	AHP execution attributes
-	private PriorityVector vectorAlternativesGoal;
-	private Matrix         matrixAlternativesCriteria;
-	//	Execution control attributes
-	private              boolean            isCalculationDone  = false;
-	private final        ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-	private static final boolean            DEBUG              = false;
+	public static final  String        DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+	public static        String        indicatorPath          = DEFAULT_INDICATOR_PATH;
+	private final        AHP_Structure structure              = new AHP_Structure();
+	private final        AHP_Execution execution              = new AHP_Execution();
+	private static final boolean       DEBUG                  = false;
+
+	private class AHP_Structure {
+		private String name = "";
+		private Matrix matrixAlternativesCriteria;
+		private PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
+		private PriorityVector vectorAlternativesGoal;
+		private PriorityVector vectorCriteriaGoal;
+		private Collection<Criterion> criteria = new ArrayList<>();
+
+		public void build(File inFile)
+				throws
+				JDOMException,
+				IOException {
+			//			XML parser creation
+			final SAXBuilder parser = new SAXBuilder();
+//			JDOM document created from XML configuration file
+			final Document inXmlDocument = parser.build(inFile);
+//			Extraction of the root element from the JDOM document
+			final Element xmlRoot = inXmlDocument.getRootElement();
+//			Initialisation of the AHP tree name
+			structure.name = xmlRoot.getChildText("name");
+//			Initialisation of the preference matrix
+			final Element xmlCriteriaCriteriaPreferenceMatrix = xmlRoot.getChild("prefmatrix");
+			structure.matrixCriteriaCriteria = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
+			structure.vectorCriteriaGoal = PriorityVector.build(structure.matrixCriteriaCriteria);
+
+			//			Initialisation of the criteria
+			@SuppressWarnings("unchecked")
+			final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
+			@SuppressWarnings("unchecked")
+			final List<Element> xmlRowsList = (List<Element>) xmlCriteriaCriteriaPreferenceMatrix.getChildren("row");
+			structure.criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
+//			Verification that the number of criteria matches the size of the preference matrix
+			if (xmlCriteriaList.size() != xmlRowsList.size()) {
+				throw new IllegalArgumentException(
+						"Error : the number of criteria and the size of the preference matrix does not match !");
+			}
+
+			final Iterator<Element> xmlCriteriaListIterator = xmlCriteriaList.iterator();
+			while (xmlCriteriaListIterator.hasNext()) {
+				final Element xmlCriteria = xmlCriteriaListIterator.next();
+
+				structure.criteria.add(new Criterion(xmlCriteria));
+			}
+		}
+	}
+
+	private class AHP_Execution {
+		private       boolean            isCalculationDone  = false;
+		private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+
+		private AHP_Execution() {
+		}
+
+		private boolean isCalculationDone() {
+			return isCalculationDone;
+		}
+
+		private void setCalculationDone(boolean calculationDone) {
+			isCalculationDone = calculationDone;
+		}
+
+		public boolean isConsistent(PairWiseMatrix matrixCriteriaCriteria, PriorityVector vectorCriteriaGoal) {
+			return consistencyChecker.isConsistent(matrixCriteriaCriteria, vectorCriteriaGoal);
+		}
+
+		public void assertConsistency() {
+			if (!isConsistent(structure.matrixCriteriaCriteria, structure.vectorCriteriaGoal)) {
+				throw new IllegalArgumentException("AHP preference matrix not consistent (root)");
+			}
+		}
+	}
 
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
@@ -78,54 +141,25 @@ public class AHPRoot {
 
 		AHPRoot.indicatorPath = indicatorPath;
 
-//			XML parser creation
-		final SAXBuilder parser = new SAXBuilder();
 		try {
-//				JDOM document created from XML configuration file
-			final Document inXmlDocument = parser.build(inFile);
-//				Extraction of the root element from the JDOM document
-			final Element xmlRoot = inXmlDocument.getRootElement();
-//				Initialisation of the AHP tree name
-			name = xmlRoot.getChildText("name");
-//				Initialisation of the preference matrix
-			final Element xmlCriteriaCriteriaPreferenceMatrix = xmlRoot.getChild("prefmatrix");
-			matrixCriteriaCriteria = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
-			vectorCriteriaGoal = PriorityVector.build(matrixCriteriaCriteria);
-//				Consistency verification
-			if (!consistencyChecker.isConsistent(matrixCriteriaCriteria, vectorCriteriaGoal)) {
-				throw new IllegalArgumentException("AHP preference matrix not consistent (root)");
-			}
-//				Initialisation of the criteria
-			@SuppressWarnings("unchecked")
-			final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
-			@SuppressWarnings("unchecked")
-			final List<Element> xmlRowsList = (List<Element>) xmlCriteriaCriteriaPreferenceMatrix.getChildren("row");
-			criteria = new ArrayList<Criterion>(xmlCriteriaList.size());
-//				Verification that the number of criteria matches the size of the preference matrix
-			if (xmlCriteriaList.size() != xmlRowsList.size()) {
-				throw new IllegalArgumentException(
-						"Error : the number of criteria and the size of the preference matrix does not match !");
-			}
+			structure.build(inFile);
 
-			final Iterator<Element> xmlCriteriaListIterator = xmlCriteriaList.iterator();
-			while (xmlCriteriaListIterator.hasNext()) {
-				final Element xmlCriteria = xmlCriteriaListIterator.next();
-
-				criteria.add(new Criterion(xmlCriteria));
-			}
+			execution.assertConsistency();
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("File not found : " + inFile.getAbsolutePath(), e);
-		} catch (Exception e) {
+		} catch (JDOMException e) {
+			throw new IllegalArgumentException("AHPRoot instantiation error", e);
+		} catch (IOException e) {
 			throw new IllegalArgumentException("AHPRoot instantiation error", e);
 		}
 	}
 
 	public void removeCriterion(final Criterion criterion) {
-		if (criteria.contains(criterion)) {
+		if (structure.criteria.contains(criterion)) {
 
-			final int criterionIndex = new ArrayList<>(criteria).lastIndexOf(criterion);
-			criteria.remove(criterion);
-			matrixCriteriaCriteria.remove(criterionIndex);
+			final int criterionIndex = new ArrayList<>(structure.criteria).lastIndexOf(criterion);
+			structure.criteria.remove(criterion);
+			structure.matrixCriteriaCriteria.remove(criterionIndex);
 		} else {
 			Logger.getAnonymousLogger().severe("Criterion not found");
 		}
@@ -138,7 +172,7 @@ public class AHPRoot {
 	 */
 	@Override
 	public String toString() {
-		return " AHP Root : " + name + ", " + criteria.size() + " criteria";
+		return " AHP Root : " + structure.name + ", " + structure.criteria.size() + " criteria";
 	}
 
 	/**
@@ -150,16 +184,16 @@ public class AHPRoot {
 	public String toStringRecursive() {
 		final StringBuilder sb = new StringBuilder(this.toString());
 
-		sb.append("\n").append(matrixCriteriaCriteria);
+		sb.append("\n").append(structure.matrixCriteriaCriteria);
 		final DecimalFormat printFormat = new DecimalFormat("0.000");
-		final Iterator<Criterion> criteriaIterator = criteria.iterator();
+		final Iterator<Criterion> criteriaIterator = structure.criteria.iterator();
 		int index = 0;
 
 		while (criteriaIterator.hasNext()) {
 			final Criterion criterion = criteriaIterator.next();
 
 			sb.append("\n\t(");
-			sb.append(printFormat.format(vectorCriteriaGoal.get(index, 0)));
+			sb.append(printFormat.format(structure.vectorCriteriaGoal.get(index, 0)));
 			sb.append(") ");
 			sb.append(criterion.toStringRecursive());
 			index++;
@@ -175,9 +209,9 @@ public class AHPRoot {
 	 */
 	public Element toXml() {
 		final Element xmlRoot = new Element("root");
-		xmlRoot.addContent(new Element("name").setText(name));
-		xmlRoot.addContent(matrixCriteriaCriteria.toXml());
-		final Iterator<Criterion> iterator = criteria.iterator();
+		xmlRoot.addContent(new Element("name").setText(structure.name));
+		xmlRoot.addContent(structure.matrixCriteriaCriteria.toXml());
+		final Iterator<Criterion> iterator = structure.criteria.iterator();
 		while (iterator.hasNext()) {
 			xmlRoot.addContent(iterator.next().toXml());
 		}
@@ -186,14 +220,15 @@ public class AHPRoot {
 
 	public StringBuilder resultToString() {
 		final StringBuilder sb = new StringBuilder();
-		if (isCalculationDone) {
+		if (execution.isCalculationDone()) {
 			sb.append(this.toString());
-			final Iterator<Criterion> itCriterias = criteria.iterator();
+			final Iterator<Criterion> itCriterias = structure.criteria.iterator();
 			while (itCriterias.hasNext()) {
 				sb.append("\n\t");
 				sb.append(itCriterias.next().resultToString());
 			}
-			sb.append("\nvectorAlternativesGoal=\n").append(PairWiseMatrix.toString(vectorAlternativesGoal, null));
+			sb.append("\nvectorAlternativesGoal=\n");
+			sb.append(PairWiseMatrix.toString(structure.vectorAlternativesGoal, null));
 		} else {
 			sb.append("There is no result, please do a ranking first");
 		}
@@ -229,32 +264,33 @@ public class AHPRoot {
 	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		matrixAlternativesCriteria = new Matrix(alternatives.size(), criteria.size());
+		structure.matrixAlternativesCriteria = new Matrix(alternatives.size(), structure.criteria.size());
 //		Concatenation in a matrix of the vectors calculated by the criteria
 		int index = 0;
 		if (DEBUG) {
 			Logger.getAnonymousLogger().info("alternatives = " + alternatives.size());
-			Logger.getAnonymousLogger().info("criteria = " + criteria.size());
+			Logger.getAnonymousLogger().info("criteria = " + structure.criteria.size());
 		}
 
-		for (Criterion criterion : this.criteria) {
+		for (Criterion criterion : structure.criteria) {
 			final PriorityVector priorityVector = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
 				Logger.getAnonymousLogger().info("criterion n= " + index);
 				Logger.getAnonymousLogger().info("alternatives vector n= " + priorityVector.getRowDimension());
 				priorityVector.print(5, 4);
-				matrixAlternativesCriteria.print(5, 4);
+				structure.matrixAlternativesCriteria.print(5, 4);
 			}
-			matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
+			structure.matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
 			index++;
 		}
 
 //		Calculation of the final alternatives priority vector
-		vectorAlternativesGoal = new PriorityVector(matrixAlternativesCriteria.getRowDimension());
-		vectorAlternativesGoal.setMatrix(alternatives.size() - 1, matrixAlternativesCriteria.times(vectorCriteriaGoal));
+		structure.vectorAlternativesGoal = new PriorityVector(structure.matrixAlternativesCriteria.getRowDimension());
+		structure.vectorAlternativesGoal.setMatrix(alternatives.size() - 1,
+												   structure.matrixAlternativesCriteria.times(structure.vectorCriteriaGoal));
 
 //			Ranking of the alternatives with the MOg vector
-		final double[][] sortedVectorAlternativesGoal = vectorAlternativesGoal.getArrayCopy();
+		final double[][] sortedVectorAlternativesGoal = structure.vectorAlternativesGoal.getArrayCopy();
 
 //			vectorAlternativesGoal.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
@@ -292,26 +328,26 @@ public class AHPRoot {
 			index++;
 		}
 
-		isCalculationDone = true;
+		execution.setCalculationDone(true);
 	}
 
 	public PairWiseMatrix getMatrixCriteriaCriteria() {
-		return matrixCriteriaCriteria;
+		return structure.matrixCriteriaCriteria;
 	}
 
 	public String getName() {
-		return name;
+		return structure.name;
 	}
 
 	public void setName(final String name) {
 		assert name != null;
 		assert name.isEmpty() == false;
 
-		this.name = name;
+		structure.name = name;
 	}
 
 	public Collection<Criterion> getCriteria() {
-		return Collections.unmodifiableCollection(criteria);
+		return Collections.unmodifiableCollection(structure.criteria);
 	}
 
 	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
@@ -319,6 +355,6 @@ public class AHPRoot {
 		assert matrix.getColumnDimension() > 0;
 		assert matrix.getRowDimension() > 0;
 
-		matrixCriteriaCriteria = matrix;
+		structure.matrixCriteriaCriteria = matrix;
 	}
 }
