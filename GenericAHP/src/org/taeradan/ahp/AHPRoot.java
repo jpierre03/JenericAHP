@@ -94,6 +94,17 @@ public class AHPRoot {
 				structure.criteria.add(new Criterion(xmlCriteria));
 			}
 		}
+
+		public Element toXml() {
+			final Element xmlRoot = new Element("root");
+			xmlRoot.addContent(new Element("name").setText(name));
+			xmlRoot.addContent(matrixCriteriaCriteria.toXml());
+			final Iterator<Criterion> iterator = criteria.iterator();
+			while (iterator.hasNext()) {
+				xmlRoot.addContent(iterator.next().toXml());
+			}
+			return xmlRoot;
+		}
 	}
 
 	private class AHP_Execution {
@@ -154,6 +165,7 @@ public class AHPRoot {
 		}
 	}
 
+	@Deprecated
 	public void removeCriterion(final Criterion criterion) {
 		if (structure.criteria.contains(criterion)) {
 
@@ -182,8 +194,9 @@ public class AHPRoot {
 	 * @return Multiline string describing the AHP tree
 	 */
 	public String toStringRecursive() {
-		final StringBuilder sb = new StringBuilder(this.toString());
+		final StringBuilder sb = new StringBuilder();
 
+		sb.append(this.toString());
 		sb.append("\n").append(structure.matrixCriteriaCriteria);
 		final DecimalFormat printFormat = new DecimalFormat("0.000");
 		final Iterator<Criterion> criteriaIterator = structure.criteria.iterator();
@@ -208,24 +221,17 @@ public class AHPRoot {
 	 * @return JDOM Element representing the whole AHP tree
 	 */
 	public Element toXml() {
-		final Element xmlRoot = new Element("root");
-		xmlRoot.addContent(new Element("name").setText(structure.name));
-		xmlRoot.addContent(structure.matrixCriteriaCriteria.toXml());
-		final Iterator<Criterion> iterator = structure.criteria.iterator();
-		while (iterator.hasNext()) {
-			xmlRoot.addContent(iterator.next().toXml());
-		}
-		return xmlRoot;
+		return structure.toXml();
 	}
 
 	public StringBuilder resultToString() {
 		final StringBuilder sb = new StringBuilder();
 		if (execution.isCalculationDone()) {
 			sb.append(this.toString());
-			final Iterator<Criterion> itCriterias = structure.criteria.iterator();
-			while (itCriterias.hasNext()) {
+			final Iterator<Criterion> criteriaIterator = structure.criteria.iterator();
+			while (criteriaIterator.hasNext()) {
 				sb.append("\n\t");
-				sb.append(itCriterias.next().resultToString());
+				sb.append(criteriaIterator.next().resultToString());
 			}
 			sb.append("\nvectorAlternativesGoal=\n");
 			sb.append(PairWiseMatrix.toString(structure.vectorAlternativesGoal, null));
