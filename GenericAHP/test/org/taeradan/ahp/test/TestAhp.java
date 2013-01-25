@@ -159,7 +159,7 @@ public final class TestAhp {
 //		ahpRoot.calculateRanking(alts);
 		System.out.println(
 				"======================================================");
-		System.out.println(ahpRoot.resultToString());
+		System.out.println(ahpRoot.guiMethods.resultToString());
 		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
 		for (TestingAlternative currentAlt : alts) {
 			System.out.println(currentAlt.name + " = " + currentAlt.getRank());

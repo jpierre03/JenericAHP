@@ -146,7 +146,7 @@ public class RootDialog
 	}//GEN-LAST:event_jButtonReloadActionPerformed
 
 	private void jButtonSaveActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-		AHPRoot.setName(jTextFieldObjective.getText());
+		AHPRoot.guiMethods.setName(jTextFieldObjective.getText());
 		final PairWiseMatrix matrix =
 				new PairWiseMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
@@ -163,7 +163,7 @@ public class RootDialog
 				matrix.set(i, j, value);
 			}
 		}
-		AHPRoot.setMatrixCriteriaCriteria(matrix);
+		AHPRoot.guiMethods.setMatrixCriteriaCriteria(matrix);
 		this.dispose();
 	}//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -177,20 +177,20 @@ public class RootDialog
 	// End of variables declaration//GEN-END:variables
 
 	private void initTable() {
-		final int matrixSize = AHPRoot.getCriteria().size();
+		final int matrixSize = AHPRoot.guiMethods.getCriteria().size();
 		String[] columnNames = new String[matrixSize];
 		Double[][] data = new Double[matrixSize][matrixSize];
 		for (int i = 0; i < matrixSize; i++) {
-			columnNames[i] = ((Criterion) AHPRoot.getCriteria().toArray()[i]).getIdentifier();
+			columnNames[i] = ((Criterion) AHPRoot.guiMethods.getCriteria().toArray()[i]).getIdentifier();
 			for (int j = 0; j < matrixSize; j++) {
-				data[i][j] = AHPRoot.getMatrixCriteriaCriteria().get(i, j);
+				data[i][j] = AHPRoot.guiMethods.getMatrixCriteriaCriteria().get(i, j);
 			}
 		}
 		guiPrefMatrix.setDataVector(data, columnNames);
 	}
 
 	public void reloadCell(final int row, final int column) {
-		guiPrefMatrix.setValueAt(AHPRoot.getMatrixCriteriaCriteria().get(row, column), row, column);
+		guiPrefMatrix.setValueAt(AHPRoot.guiMethods.getMatrixCriteriaCriteria().get(row, column), row, column);
 	}
 
 	public PairWiseMatrixTableModel getGuiPrefMatrix() {

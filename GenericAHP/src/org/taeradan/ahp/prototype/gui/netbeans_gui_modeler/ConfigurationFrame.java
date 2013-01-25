@@ -332,7 +332,7 @@ public class ConfigurationFrame
 		if (JOptionPane.showConfirmDialog(this,
 			"Are you sure ? The criterion and its indicators will be destroyed.",
 			"Confirmation needed", JOptionPane.YES_NO_OPTION) == 0) {
-			ahpAHPRoot.removeCriterion(criterion);
+			ahpAHPRoot.guiMethods.removeCriterion(criterion);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		}
 	}
@@ -374,7 +374,7 @@ public class ConfigurationFrame
 	public static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
 //		Creation of the root node
 		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
-		final Collection<Criterion> ahpCriteria = ahpAHPRoot.getCriteria();
+		final Collection<Criterion> ahpCriteria = ahpAHPRoot.guiMethods.getCriteria();
 		ArrayList<DefaultMutableTreeNode> guiCriterias = new ArrayList<DefaultMutableTreeNode>();
 //		For each criteria in root
 		for (int i = 0; i < ahpCriteria.size(); i++) {

@@ -44,11 +44,12 @@ import java.util.logging.Logger;
 public class AHPRoot {
 
 	/** Contains the path to access indicators */
-	public static final  String        DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
-	public static        String        indicatorPath          = DEFAULT_INDICATOR_PATH;
-	private final        AHP_Structure structure              = new AHP_Structure();
-	private final        AHP_Execution execution              = new AHP_Execution();
-	private static final boolean       DEBUG                  = false;
+	public static final  String          DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+	public static        String          indicatorPath          = DEFAULT_INDICATOR_PATH;
+	private final        AHP_Structure   structure              = new AHP_Structure();
+	private final        AHP_Execution   execution              = new AHP_Execution();
+	public final         AHP_GUI_methods guiMethods             = new AHP_GUI_methods();
+	private static final boolean         DEBUG                  = false;
 
 	private class AHP_Structure {
 		private String name = "";
@@ -133,6 +134,65 @@ public class AHPRoot {
 		}
 	}
 
+	public class AHP_GUI_methods {
+		@Deprecated
+		public void removeCriterion(final Criterion criterion) {
+			if (structure.criteria.contains(criterion)) {
+
+				final int criterionIndex = new ArrayList<>(structure.criteria).lastIndexOf(criterion);
+				structure.criteria.remove(criterion);
+				structure.matrixCriteriaCriteria.remove(criterionIndex);
+			} else {
+				Logger.getAnonymousLogger().severe("Criterion not found");
+			}
+		}
+
+		@Deprecated
+		public StringBuilder resultToString() {
+			final StringBuilder sb = new StringBuilder();
+			if (execution.isCalculationDone()) {
+				sb.append(this.toString());
+				final Iterator<Criterion> criteriaIterator = structure.criteria.iterator();
+				while (criteriaIterator.hasNext()) {
+					sb.append("\n\t");
+					sb.append(criteriaIterator.next().resultToString());
+				}
+				sb.append("\nvectorAlternativesGoal=\n");
+				sb.append(PairWiseMatrix.toString(structure.vectorAlternativesGoal, null));
+			} else {
+				sb.append("There is no result, please do a ranking first");
+			}
+			return sb;
+		}
+
+		@Deprecated
+		public void setName(final String name) {
+			assert name != null;
+			assert name.isEmpty() == false;
+
+			structure.name = name;
+		}
+
+		@Deprecated
+		public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
+			assert matrix != null;
+			assert matrix.getColumnDimension() > 0;
+			assert matrix.getRowDimension() > 0;
+
+			structure.matrixCriteriaCriteria = matrix;
+		}
+
+		@Deprecated
+		public PairWiseMatrix getMatrixCriteriaCriteria() {
+			return structure.matrixCriteriaCriteria;
+		}
+
+		@Deprecated
+		public Collection<Criterion> getCriteria() {
+			return Collections.unmodifiableCollection(structure.criteria);
+		}
+	}
+
 	/**
 	 * Class constructor that creates the AHP tree from a configuration file given in argument.
 	 *
@@ -165,23 +225,7 @@ public class AHPRoot {
 		}
 	}
 
-	@Deprecated
-	public void removeCriterion(final Criterion criterion) {
-		if (structure.criteria.contains(criterion)) {
-
-			final int criterionIndex = new ArrayList<>(structure.criteria).lastIndexOf(criterion);
-			structure.criteria.remove(criterion);
-			structure.matrixCriteriaCriteria.remove(criterionIndex);
-		} else {
-			Logger.getAnonymousLogger().severe("Criterion not found");
-		}
-	}
-
-	/**
-	 * Returns a string describing the AHP root, and NOT its children.
-	 *
-	 * @return Describing string
-	 */
+	/** @return String describing the AHP root, and NOT its children. */
 	@Override
 	public String toString() {
 		return " AHP Root : " + structure.name + ", " + structure.criteria.size() + " criteria";
@@ -216,32 +260,6 @@ public class AHPRoot {
 	}
 
 	/**
-	 * Returns a JDOM element that represents the AHP root and its children
-	 *
-	 * @return JDOM Element representing the whole AHP tree
-	 */
-	public Element toXml() {
-		return structure.toXml();
-	}
-
-	public StringBuilder resultToString() {
-		final StringBuilder sb = new StringBuilder();
-		if (execution.isCalculationDone()) {
-			sb.append(this.toString());
-			final Iterator<Criterion> criteriaIterator = structure.criteria.iterator();
-			while (criteriaIterator.hasNext()) {
-				sb.append("\n\t");
-				sb.append(criteriaIterator.next().resultToString());
-			}
-			sb.append("\nvectorAlternativesGoal=\n");
-			sb.append(PairWiseMatrix.toString(structure.vectorAlternativesGoal, null));
-		} else {
-			sb.append("There is no result, please do a ranking first");
-		}
-		return sb;
-	}
-
-	/**
 	 * Saves the whole AHP tree in a XML file
 	 *
 	 * @param outputFile Output XML file path
@@ -250,7 +268,7 @@ public class AHPRoot {
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
-					new Document(toXml(),
+					new Document(structure.toXml(),
 								 new DocType("root",
 											 getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 
@@ -266,8 +284,6 @@ public class AHPRoot {
 	/**
 	 * Root method of the AHP execution. Calculates the final alternatives ranking with the alternatives priority vectors
 	 * from the criteria and the criteria priority vectors.
-	 *
-	 * @param alternatives
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
 		structure.matrixAlternativesCriteria = new Matrix(alternatives.size(), structure.criteria.size());
@@ -337,30 +353,7 @@ public class AHPRoot {
 		execution.setCalculationDone(true);
 	}
 
-	public PairWiseMatrix getMatrixCriteriaCriteria() {
-		return structure.matrixCriteriaCriteria;
-	}
-
 	public String getName() {
 		return structure.name;
-	}
-
-	public void setName(final String name) {
-		assert name != null;
-		assert name.isEmpty() == false;
-
-		structure.name = name;
-	}
-
-	public Collection<Criterion> getCriteria() {
-		return Collections.unmodifiableCollection(structure.criteria);
-	}
-
-	public void setMatrixCriteriaCriteria(PairWiseMatrix matrix) {
-		assert matrix != null;
-		assert matrix.getColumnDimension() > 0;
-		assert matrix.getRowDimension() > 0;
-
-		structure.matrixCriteriaCriteria = matrix;
 	}
 }
