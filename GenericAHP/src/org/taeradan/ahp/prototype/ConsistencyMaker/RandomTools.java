@@ -23,28 +23,27 @@ public final class RandomTools {
 
 	/** This method returns the value which will be modified by the expert */
 	public static MatrixValue getValueToModifiyByRanking(Collection<MatrixValue> nonSortedMatrixValues) {
+		if (nonSortedMatrixValues == null
+			|| nonSortedMatrixValues.size() <= 0) {
+			throw new IllegalArgumentException("Collection should contain element");
+		}
 
+		boolean isValueChosen = false;
+		MatrixValue resultMatrixValue = new MatrixValue();
 		final Scanner sc = new Scanner(System.in);
-
-		// boolean
-		int isValueChosen = 0;
-		MatrixValue matrixValue = new MatrixValue();
-
-		/* While loop which proposes a random ranking of MatrixValue
-		 * while the expert hasn't chosen the value he wants to modify
-		 */
 		Iterator<MatrixValue> valueIterator = nonSortedMatrixValues.iterator();
 
-		while (isValueChosen == 0) {
-			matrixValue = valueIterator.next();
+		/** Proposes a random ranking while the expert hasn't chosen the value he wants to modify */
+		while (isValueChosen == false) {
+			resultMatrixValue = valueIterator.next();
 
-			StringBuffer sb = new StringBuffer();
+			final StringBuffer sb = new StringBuffer();
 			sb.append("Souhaitez-vous modifier la valeur ");
-			sb.append(matrixValue.getValue());
+			sb.append(resultMatrixValue.getValue());
 			sb.append(" ( ");
-			sb.append((matrixValue.getRow() + 1));
+			sb.append((resultMatrixValue.getRow() + 1));
 			sb.append(" , ");
-			sb.append((matrixValue.getColumn() + 1));
+			sb.append((resultMatrixValue.getColumn() + 1));
 			sb.append(" )");
 			sb.append(" ? O/N");
 
@@ -53,26 +52,25 @@ public final class RandomTools {
 			final String expertsChoice = sc.nextLine();
 
 			if (expertsChoice.equalsIgnoreCase("O")) {
-				isValueChosen = 1;
+				isValueChosen = true;
 			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
 				valueIterator = nonSortedMatrixValues.iterator();
 			}
 		}
 
-		return matrixValue;
+		return resultMatrixValue;
 	}
 
 	/** Build randomly a rank of MatrixValue from a MyMatrix */
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix) {
 
-		MatrixValue matrixValue = new MatrixValue();
-		Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<MatrixValue>();
-		List<MatrixValue> listOfMatrixValue = new ArrayList<MatrixValue>();
+		final Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<>();
+		final List<MatrixValue> listOfMatrixValue = new ArrayList<>();
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
 			for (int j = i + 1; j < myPreferenceMatrix.getColumnDimension(); j++) {
-				matrixValue = new MatrixValue(i, j, myPreferenceMatrix.get(i, j));
+				MatrixValue matrixValue = new MatrixValue(i, j, myPreferenceMatrix.get(i, j));
 				listOfMatrixValue.add(matrixValue);
 			}
 		}
