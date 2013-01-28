@@ -38,10 +38,10 @@ public class PairWiseMatrixTableModel
 	 */
 	@Override
 	public boolean isCellEditable(final int row, final int column) {
-		boolean editable = true;
+		boolean editable = false;
 
-		if (column >= row) {
-			editable = false;
+		if (column > row) {
+			editable = true;
 		}
 
 		return editable;

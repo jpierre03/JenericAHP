@@ -1,7 +1,5 @@
 package org.taeradan.ahp.prototype.gui.yannick;
 
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
@@ -97,7 +95,7 @@ public class InterfaceAHP
 	private void initComponents() {
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setResizable(false);
+		setResizable(true);
 
 		jButtonValiderMatrice.setText("Valider Matrice");
 		jButtonValiderMatrice.addActionListener(new ActionListener() {
@@ -107,11 +105,11 @@ public class InterfaceAHP
 			}
 		});
 
-		jTableMatrice.setModel(new DefaultTableModel(
+		jTableMatrix.setModel(new DefaultTableModel(
 				new Object[][]{{}, {}, {}, {}},
 				new String[]{}
 		));
-		jScrollPane1.setViewportView(jTableMatrice);
+		jScrollPane1.setViewportView(jTableMatrix);
 
 		jLabel3.setText("CR:");
 
@@ -179,7 +177,7 @@ public class InterfaceAHP
 
 	private void makeGlobalLayout() {
 
-		JPanel p = new JPanel(new GridLayout(5, 3, 2, 2));
+		final JPanel p = new JPanel(new GridLayout(5, 3, 20, 20));
 		p.add(newSimulationButton);
 		p.add(jLabelTime);
 		p.add(jLabel6);
@@ -196,251 +194,39 @@ public class InterfaceAHP
 		p.add(jScrollPane1);
 		p.add(rankingPanel);
 
-
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(p);
-
-//		GroupLayout layout = new GroupLayout(getContentPane());
-//		getContentPane().setLayout(layout);
-//		layout.setHorizontalGroup(
-//				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//					  .addGroup(layout.createSequentialGroup()
-//									  .addContainerGap()
-//									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//																					  .addGroup(layout.createParallelGroup(
-//																							  GroupLayout.Alignment.LEADING)
-//																									  .addGroup(layout.createSequentialGroup()
-//																													  .addComponent(
-//																															  newSimulationButton)
-//																													  .addPreferredGap(
-//																															  LayoutStyle.ComponentPlacement.RELATED,
-//																															  439,
-//																															  Short.MAX_VALUE)
-//																													  .addComponent(
-//																															  jLabelTime,
-//																															  GroupLayout.PREFERRED_SIZE,
-//																															  90,
-//																															  GroupLayout.PREFERRED_SIZE)
-//																													  .addGap(30,
-//																															  30,
-//																															  30))
-//																									  .addGroup(layout.createSequentialGroup()
-//																													  .addComponent(
-//																															  jLabel6,
-//																															  GroupLayout.PREFERRED_SIZE,
-//																															  562,
-//																															  GroupLayout.PREFERRED_SIZE)
-//																													  .addPreferredGap(
-//																															  LayoutStyle.ComponentPlacement.RELATED)))
-//																					  .addGroup(layout.createSequentialGroup()
-//																									  .addComponent(
-//																											  initialisationPanel,
-//																											  GroupLayout.PREFERRED_SIZE,
-//																											  684,
-//																											  GroupLayout.PREFERRED_SIZE)
-//																									  .addPreferredGap(
-//																											  LayoutStyle.ComponentPlacement.RELATED)))
-//																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//																					  .addGroup(layout.createSequentialGroup()
-//																									  .addComponent(
-//																											  jLabel3)
-//																									  .addPreferredGap(
-//																											  LayoutStyle.ComponentPlacement.UNRELATED)
-//																									  .addComponent(
-//																											  jTextFieldCR,
-//																											  GroupLayout.PREFERRED_SIZE,
-//																											  219,
-//																											  GroupLayout.PREFERRED_SIZE)
-//																									  .addPreferredGap(
-//																											  LayoutStyle.ComponentPlacement.RELATED)
-//																									  .addComponent(
-//																											  jLabel4,
-//																											  GroupLayout.DEFAULT_SIZE,
-//																											  320,
-//																											  Short.MAX_VALUE))
-//																					  .addGroup(layout.createSequentialGroup()
-//																									  .addGap(10,
-//																											  10,
-//																											  10)
-//																									  .addGroup(layout.createParallelGroup(
-//																											  GroupLayout.Alignment.LEADING)
-//																													  .addGroup(
-//																															  layout.createSequentialGroup()
-//																																	.addComponent(
-//																																			saatyScaleScrollPane,
-//																																			GroupLayout.PREFERRED_SIZE,
-//																																			175,
-//																																			GroupLayout.PREFERRED_SIZE)
-//																																	.addGap(18,
-//																																			18,
-//																																			18)
-//																																	.addComponent(
-//																																			reverseSaatyScaleScrollPane,
-//																																			GroupLayout.PREFERRED_SIZE,
-//																																			192,
-//																																			GroupLayout.PREFERRED_SIZE)
-//																																	.addPreferredGap(
-//																																			LayoutStyle.ComponentPlacement.RELATED,
-//																																			103,
-//																																			Short.MAX_VALUE)
-//																																	.addGroup(
-//																																			layout.createParallelGroup(
-//																																					GroupLayout.Alignment.LEADING)
-//																																				  .addComponent(
-//																																						  setFrenchLangButton)
-//																																				  .addComponent(
-//																																						  setEnglishLangButton)))
-//																													  .addComponent(
-//																															  jButtonValiderMatrice)))))
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//																					  .addComponent(jLabelCompteur,
-//																									GroupLayout.PREFERRED_SIZE,
-//																									105,
-//																									GroupLayout.PREFERRED_SIZE)
-//																					  .addComponent(jScrollPane1,
-//																									GroupLayout.PREFERRED_SIZE,
-//																									610,
-//																									GroupLayout.PREFERRED_SIZE))
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//																	  .addComponent(rankingPanel,
-//																					GroupLayout.DEFAULT_SIZE,
-//																					639,
-//																					Short.MAX_VALUE)))
-//									  .addContainerGap())
-//								 );
-//		layout.setVerticalGroup(
-//				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//					  .addGroup(layout.createSequentialGroup()
-//									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addContainerGap()
-//																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-//																					  .addGroup(GroupLayout.Alignment.LEADING,
-//																								layout.createSequentialGroup()
-//																									  .addGroup(layout.createParallelGroup(
-//																											  GroupLayout.Alignment.LEADING)
-//																													  .addComponent(
-//																															  newSimulationButton)
-//																													  .addComponent(
-//																															  jLabelTime))
-//																									  .addPreferredGap(
-//																											  LayoutStyle.ComponentPlacement.RELATED)
-//																									  .addComponent(
-//																											  initialisationPanel,
-//																											  GroupLayout.DEFAULT_SIZE,
-//																											  134,
-//																											  Short.MAX_VALUE)
-//																									  .addPreferredGap(
-//																											  LayoutStyle.ComponentPlacement.RELATED)
-//																									  .addComponent(
-//																											  jLabel6,
-//																											  GroupLayout.PREFERRED_SIZE,
-//																											  22,
-//																											  GroupLayout.PREFERRED_SIZE)
-//																									  .addGap(6, 6, 6))
-//																					  .addGroup(GroupLayout.Alignment.LEADING,
-//																								layout.createParallelGroup(
-//																										GroupLayout.Alignment.TRAILING)
-//																									  .addGroup(layout.createSequentialGroup()
-//																													  .addComponent(
-//																															  saatyScaleScrollPane,
-//																															  GroupLayout.PREFERRED_SIZE,
-//																															  128,
-//																															  GroupLayout.PREFERRED_SIZE)
-//																													  .addGap(18,
-//																															  18,
-//																															  18))
-//																									  .addGroup(
-//																											  GroupLayout.Alignment.LEADING,
-//																											  layout.createSequentialGroup()
-//																													.addComponent(
-//																															reverseSaatyScaleScrollPane,
-//																															GroupLayout.PREFERRED_SIZE,
-//																															171,
-//																															GroupLayout.PREFERRED_SIZE)
-//																													.addPreferredGap(
-//																															LayoutStyle.ComponentPlacement.RELATED)))))
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addComponent(setEnglishLangButton)
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//																	  .addComponent(setFrenchLangButton)
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)))
-//									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//																	  .addComponent(jScrollPane1,
-//																					GroupLayout.PREFERRED_SIZE,
-//																					336,
-//																					GroupLayout.PREFERRED_SIZE)
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//																	  .addComponent(jLabelCompteur,
-//																					GroupLayout.DEFAULT_SIZE,
-//																					34,
-//																					Short.MAX_VALUE))
-//													  .addGroup(layout.createSequentialGroup()
-//																	  .addGap(11, 11, 11)
-//																	  .addComponent(jButtonValiderMatrice)
-//																	  .addGap(18, 18, 18)
-//																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-//																					  .addGroup(layout.createParallelGroup(
-//																							  GroupLayout.Alignment.BASELINE)
-//																									  .addComponent(
-//																											  jTextFieldCR,
-//																											  GroupLayout.PREFERRED_SIZE,
-//																											  GroupLayout.DEFAULT_SIZE,
-//																											  GroupLayout.PREFERRED_SIZE)
-//																									  .addComponent(jLabel3))
-//																					  .addComponent(jLabel4,
-//																									GroupLayout.PREFERRED_SIZE,
-//																									20,
-//																									GroupLayout.PREFERRED_SIZE))
-//																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED,
-//																					   23,
-//																					   Short.MAX_VALUE)
-//																	  .addComponent(rankingPanel,
-//																					GroupLayout.PREFERRED_SIZE,
-//																					GroupLayout.DEFAULT_SIZE,
-//																					GroupLayout.PREFERRED_SIZE)))
-//									  .addContainerGap())
-//							   );
+		getContentPane().add(p, BorderLayout.CENTER);
 	}
 
 	private void makeRankingPanel() {
 		rankingPanel.setBorder(BorderFactory.createTitledBorder("Classement"));
-		rankingPanel.setMaximumSize(new Dimension(635, 273));
 
 		intuitiveRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
-		intuitiveRankingPanel.setMaximumSize(new Dimension(184, 224));
-		intuitiveRankingPanel.setLayout(new AbsoluteLayout());
+		intuitiveRankingPanel.setLayout(new GridLayout(6 + 1, 2));
 
 		intuitiveRanking_rank1_Label.setText("1er:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank1_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank1_ComboBox);
 
 		intuitiveRanking_rank2_Label.setText("2ème:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank2_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank2_ComboBox);
 
 		intuitiveRanking_rank3_Label.setText("3ème:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank3_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank3_ComboBox);
 
 		intuitiveRanking_rank4_Label.setText("4ème:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank4_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank4_ComboBox);
 
 		intuitiveRanking_rank5_Label.setText("5ème:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRanking_rank5_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank5_ComboBox);
 
 		intuitiveRanking_rank6_Label.setText("6ème:");
-		intuitiveRankingPanel.add(intuitiveRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
-
-		intuitiveRankingPanel.add(intuitiveRanking_rank1_ComboBox, new AbsoluteConstraints(50, 31, 118, -1));
-		intuitiveRankingPanel.add(intuitiveRanking_rank2_ComboBox, new AbsoluteConstraints(50, 57, 118, -1));
-		intuitiveRankingPanel.add(intuitiveRanking_rank3_ComboBox, new AbsoluteConstraints(50, 83, 118, -1));
-		intuitiveRankingPanel.add(intuitiveRanking_rank4_ComboBox, new AbsoluteConstraints(50, 109, 118, -1));
-		intuitiveRankingPanel.add(intuitiveRanking_rank5_ComboBox, new AbsoluteConstraints(50, 135, 118, -1));
-		intuitiveRankingPanel.add(intuitiveRanking_rank6_ComboBox, new AbsoluteConstraints(50, 161, 118, -1));
-
+		intuitiveRankingPanel.add(intuitiveRanking_rank6_Label);
+		intuitiveRankingPanel.add(intuitiveRanking_rank6_ComboBox);
 
 		intuitiveRankingOKButton.setText("OK");
 		intuitiveRankingOKButton.addActionListener(new ActionListener() {
@@ -449,167 +235,112 @@ public class InterfaceAHP
 				intuitiveRankingOKActionPerformed(event);
 			}
 		});
-		intuitiveRankingPanel.add(intuitiveRankingOKButton, new AbsoluteConstraints(81, 187, -1, -1));
+		intuitiveRankingPanel.add(intuitiveRankingOKButton);
 
 		finalRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement Final"));
-		finalRankingPanel.setMaximumSize(new Dimension(203, 199));
-		finalRankingPanel.setLayout(new AbsoluteLayout());
-		finalRankingPanel.add(finalRanking_rank1_TextField, new AbsoluteConstraints(64, 31, 80, -1));
-		finalRankingPanel.add(finalRanking_rank2_TextField, new AbsoluteConstraints(64, 57, 80, -1));
-		finalRankingPanel.add(finalRanking_rank3_TextField, new AbsoluteConstraints(64, 83, 80, -1));
-		finalRankingPanel.add(finalRanking_rank4_TextField, new AbsoluteConstraints(64, 109, 80, -1));
-		finalRankingPanel.add(finalRanking_rank5_TextField, new AbsoluteConstraints(64, 135, 80, -1));
-		finalRankingPanel.add(finalRanking_rank6_TextField, new AbsoluteConstraints(64, 161, 80, -1));
+		finalRankingPanel.setLayout(new GridLayout(6 + 1, 3));
 
 		finalRanking_rank1_Label.setText("1er:");
-		finalRankingPanel.add(finalRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+		finalRankingPanel.add(finalRanking_rank1_Label);
+		finalRankingPanel.add(finalRanking_rank1_TextField);
+		finalRankingPanel.add(finalRanking_rank1_PercentLabel);
 
 		finalRanking_rank2_Label.setText("2ème:");
-		finalRankingPanel.add(finalRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+		finalRankingPanel.add(finalRanking_rank2_Label);
+		finalRankingPanel.add(finalRanking_rank2_TextField);
+		finalRankingPanel.add(finalRanking_rank2_PercentLabel);
 
 		finalRanking_rank3_Label.setText("3ème:");
-		finalRankingPanel.add(finalRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+		finalRankingPanel.add(finalRanking_rank3_Label);
+		finalRankingPanel.add(finalRanking_rank3_TextField);
+		finalRankingPanel.add(finalRanking_rank3_PercentLabel);
 
 		finalRanking_rank4_Label.setText("4ème:");
-		finalRankingPanel.add(finalRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+		finalRankingPanel.add(finalRanking_rank4_Label);
+		finalRankingPanel.add(finalRanking_rank4_TextField);
+		finalRankingPanel.add(finalRanking_rank4_PercentLabel);
 
 		finalRanking_rank5_Label.setText("5ème:");
-		finalRankingPanel.add(finalRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+		finalRankingPanel.add(finalRanking_rank5_Label);
+		finalRankingPanel.add(finalRanking_rank5_TextField);
+		finalRankingPanel.add(finalRanking_rank5_PercentLabel);
 
 		finalRanking_rank6_Label.setText("6ème:");
-		finalRankingPanel.add(finalRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
-
-		finalRankingPanel.add(finalRanking_rank1_PercentLabel, new AbsoluteConstraints(148, 31, 39, 20));
-		finalRankingPanel.add(finalRanking_rank2_PercentLabel, new AbsoluteConstraints(148, 57, 39, 20));
-		finalRankingPanel.add(finalRanking_rank3_PercentLabel, new AbsoluteConstraints(148, 83, 39, 20));
-		finalRankingPanel.add(finalRanking_rank4_PercentLabel, new AbsoluteConstraints(148, 109, 39, 20));
-		finalRankingPanel.add(finalRanking_rank5_PercentLabel, new AbsoluteConstraints(148, 135, 39, 20));
-		finalRankingPanel.add(finalRanking_rank6_PercentLabel, new AbsoluteConstraints(148, 161, 39, 20));
+		finalRankingPanel.add(finalRanking_rank6_Label);
+		finalRankingPanel.add(finalRanking_rank6_TextField);
+		finalRankingPanel.add(finalRanking_rank6_PercentLabel);
 
 		initialRankingPanel.setBorder(BorderFactory.createTitledBorder("Classement initial"));
-		initialRankingPanel.setMaximumSize(new Dimension(204, 231));
-		initialRankingPanel.setLayout(new AbsoluteLayout());
-		initialRankingPanel.add(initialRanking_rank1_TextField, new AbsoluteConstraints(64, 31, 80, -1));
-		initialRankingPanel.add(initialRanking_rank2_TextField, new AbsoluteConstraints(64, 57, 80, -1));
-		initialRankingPanel.add(initialRanking_rank3_TextField, new AbsoluteConstraints(64, 83, 80, -1));
-		initialRankingPanel.add(initialRanking_rank4_TextField, new AbsoluteConstraints(64, 109, 80, -1));
-		initialRankingPanel.add(initialRanking_rank5_TextField, new AbsoluteConstraints(64, 135, 80, -1));
-		initialRankingPanel.add(initialRanking_rank6_TextField, new AbsoluteConstraints(64, 161, 80, -1));
+		initialRankingPanel.setLayout(new GridLayout(6 + 1, 3));
 
 		initialRanking_rank1_Label.setText("1er:");
-		initialRankingPanel.add(initialRanking_rank1_Label, new AbsoluteConstraints(26, 34, -1, -1));
+		initialRankingPanel.add(initialRanking_rank1_Label);
+		initialRankingPanel.add(initialRanking_rank1_TextField);
+		initialRankingPanel.add(initialRanking_rank1_PercentLabel);
 
 		initialRanking_rank2_Label.setText("2ème:");
-		initialRankingPanel.add(initialRanking_rank2_Label, new AbsoluteConstraints(16, 60, -1, -1));
+		initialRankingPanel.add(initialRanking_rank2_Label);
+		initialRankingPanel.add(initialRanking_rank2_TextField);
+		initialRankingPanel.add(initialRanking_rank2_PercentLabel);
 
 		initialRanking_rank3_Label.setText("3ème:");
-		initialRankingPanel.add(initialRanking_rank3_Label, new AbsoluteConstraints(16, 86, -1, -1));
+		initialRankingPanel.add(initialRanking_rank3_Label);
+		initialRankingPanel.add(initialRanking_rank3_TextField);
+		initialRankingPanel.add(initialRanking_rank3_PercentLabel);
 
 		initialRanking_rank4_Label.setText("4ème:");
-		initialRankingPanel.add(initialRanking_rank4_Label, new AbsoluteConstraints(16, 112, -1, -1));
+		initialRankingPanel.add(initialRanking_rank4_Label);
+		initialRankingPanel.add(initialRanking_rank4_TextField);
+		initialRankingPanel.add(initialRanking_rank4_PercentLabel);
 
 		initialRanking_rank5_Label.setText("5ème:");
-		initialRankingPanel.add(initialRanking_rank5_Label, new AbsoluteConstraints(16, 138, -1, -1));
+		initialRankingPanel.add(initialRanking_rank5_Label);
+		initialRankingPanel.add(initialRanking_rank5_TextField);
+		initialRankingPanel.add(initialRanking_rank5_PercentLabel);
 
 		initialRanking_rank6_Label.setText("6ème:");
-		initialRankingPanel.add(initialRanking_rank6_Label, new AbsoluteConstraints(16, 164, -1, -1));
+		initialRankingPanel.add(initialRanking_rank6_Label);
+		initialRankingPanel.add(initialRanking_rank6_TextField);
+		initialRankingPanel.add(initialRanking_rank6_PercentLabel);
 
-		initialRankingPanel.add(initialRanking_rank1_PercentLabel, new AbsoluteConstraints(148, 31, 40, 20));
-		initialRankingPanel.add(initialRanking_rank2_PercentLabel, new AbsoluteConstraints(148, 57, 40, 20));
-		initialRankingPanel.add(initialRanking_rank3_PercentLabel, new AbsoluteConstraints(148, 83, 40, 20));
-		initialRankingPanel.add(initialRanking_rank4_PercentLabel, new AbsoluteConstraints(148, 109, 40, 20));
-		initialRankingPanel.add(initialRanking_rank5_PercentLabel, new AbsoluteConstraints(148, 135, 40, 20));
-		initialRankingPanel.add(initialRanking_rank6_PercentLabel, new AbsoluteConstraints(148, 161, 40, 20));
-
-		final GroupLayout rankingPanelLayout = new GroupLayout(rankingPanel);
-		rankingPanel.setLayout(rankingPanelLayout);
-		rankingPanelLayout.setHorizontalGroup(
-				rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								  .addGroup(rankingPanelLayout.createSequentialGroup()
-															  .addGap(14, 14, 14)
-															  .addComponent(intuitiveRankingPanel,
-																			GroupLayout.PREFERRED_SIZE,
-																			192,
-																			GroupLayout.PREFERRED_SIZE)
-															  .addGap(18, 18, 18)
-															  .addComponent(initialRankingPanel,
-																			GroupLayout.PREFERRED_SIZE,
-																			200,
-																			GroupLayout.PREFERRED_SIZE)
-															  .addComponent(finalRankingPanel,
-																			GroupLayout.PREFERRED_SIZE,
-																			GroupLayout.DEFAULT_SIZE,
-																			GroupLayout.PREFERRED_SIZE))
-											 );
-		rankingPanelLayout.setVerticalGroup(
-				rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								  .addGroup(rankingPanelLayout.createSequentialGroup().addGroup(
-										  rankingPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING,
-																				 false)
-															.addGroup(
-																	rankingPanelLayout.createSequentialGroup()
-																					  .addContainerGap()
-																					  .addComponent(
-																							  intuitiveRankingPanel,
-																							  GroupLayout.DEFAULT_SIZE,
-																							  GroupLayout.DEFAULT_SIZE,
-																							  Short.MAX_VALUE))
-															.addGroup(
-																	GroupLayout.Alignment.LEADING,
-																	rankingPanelLayout.createSequentialGroup()
-																					  .addGap(10,
-																							  10,
-																							  10)
-																					  .addComponent(
-																							  initialRankingPanel,
-																							  GroupLayout.PREFERRED_SIZE,
-																							  230,
-																							  GroupLayout.PREFERRED_SIZE))
-															.addGroup(
-																	GroupLayout.Alignment.LEADING,
-																	rankingPanelLayout.createSequentialGroup()
-																					  .addGap(10,
-																							  10,
-																							  10)
-																					  .addComponent(
-																							  finalRankingPanel,
-																							  GroupLayout.PREFERRED_SIZE,
-																							  230,
-																							  GroupLayout.PREFERRED_SIZE)))
-															  .addContainerGap(14, Short.MAX_VALUE))
-										   );
+		rankingPanel.setLayout(new GridLayout(1, 3));
+		rankingPanel.add(intuitiveRankingPanel);
+		rankingPanel.add(initialRankingPanel);
+		rankingPanel.add(finalRankingPanel);
 	}
 
 	private void makeInitialisationPanel() {
 		initialisationPanel.setBorder(BorderFactory.createTitledBorder("Initialisation"));
-		initialisationPanel.setLayout(new AbsoluteLayout());
+		initialisationPanel.setLayout(new GridLayout(3, 4));
 
-		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeRandomRadioButton);
 		consistencyMakerTypeRandomRadioButton.setText("A");
-		initialisationPanel.add(consistencyMakerTypeRandomRadioButton, new AbsoluteConstraints(14, 27, -1, -1));
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeRandomRadioButton);
+		initialisationPanel.add(consistencyMakerTypeRandomRadioButton);
 
-		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeSaatyRadioButton);
 		consistencyMakerTypeSaatyRadioButton.setText("S");
-		initialisationPanel.add(consistencyMakerTypeSaatyRadioButton, new AbsoluteConstraints(49, 27, -1, -1));
+		consistencyMakerTypeButtonGroup.add(consistencyMakerTypeSaatyRadioButton);
+		initialisationPanel.add(consistencyMakerTypeSaatyRadioButton);
 
-		datasetButtonGroup.add(datasetP1RadioButton);
 		datasetP1RadioButton.setText("P1");
-		initialisationPanel.add(datasetP1RadioButton, new AbsoluteConstraints(98, 27, -1, -1));
+		datasetButtonGroup.add(datasetP1RadioButton);
+		initialisationPanel.add(datasetP1RadioButton);
 
-		datasetButtonGroup.add(datasetP2RadioButton);
 		datasetP2RadioButton.setText("P2");
-		initialisationPanel.add(datasetP2RadioButton, new AbsoluteConstraints(137, 27, -1, -1));
+		datasetButtonGroup.add(datasetP2RadioButton);
+		initialisationPanel.add(datasetP2RadioButton);
 
 		matrixSizeLabel.setText("Taille matrice:");
-		initialisationPanel.add(matrixSizeLabel, new AbsoluteConstraints(10, 70, -1, -1));
+		initialisationPanel.add(matrixSizeLabel);
 
 		matrixSizeTextField.setText("6");
-		initialisationPanel.add(matrixSizeTextField, new AbsoluteConstraints(100, 70, 43, -1));
-
-		initialisationPanel.add(saveFilePathTextField, new AbsoluteConstraints(290, 70, 299, -1));
+		initialisationPanel.add(matrixSizeTextField);
 
 		saveFilePathLabel.setText("Chemin de sauvegarde:");
-		initialisationPanel.add(saveFilePathLabel, new AbsoluteConstraints(156, 72, -1, -1));
+		initialisationPanel.add(saveFilePathLabel);
+		initialisationPanel.add(saveFilePathTextField);
+
+		initialisationPanel.add(new JPanel());
+		initialisationPanel.add(new JPanel());
 
 		saveFilePathOkButton.setText("Ok");
 		saveFilePathOkButton.addActionListener(new ActionListener() {
@@ -618,7 +349,7 @@ public class InterfaceAHP
 				saveFilePathOkButtonActionPerformed(event);
 			}
 		});
-		initialisationPanel.add(saveFilePathOkButton, new AbsoluteConstraints(617, 97, -1, -1));
+		initialisationPanel.add(saveFilePathOkButton);
 
 		saveFilePathExploreButton.setText("Parcourir");
 		saveFilePathExploreButton.addActionListener(new ActionListener() {
@@ -627,90 +358,69 @@ public class InterfaceAHP
 				saveFilePathExploreButtonActionPerformed(event);
 			}
 		});
-		initialisationPanel.add(saveFilePathExploreButton, new AbsoluteConstraints(590, 70, -1, -1));
+		initialisationPanel.add(saveFilePathExploreButton);
 	}
 
 	/*
 	 * Cette méthode creer les matrices et les retournes(vide ou rempli)
 	 */
-	public MyMatrix creerMatrice(int matrixSize, int type) {
+	public MyMatrix createMatrix(int matrixSize, int type) {
+
 		// ajoute un paramètre pour l'init du tableau ou la création de la matrice
-		MyMatrix maMatrice = null;
-		MatrixValue matrixValue = new MatrixValue();
-		double newValue = 0;
+		final MyMatrix maMatrice = new MyMatrix(matrixSize, matrixSize);
 
-		//Création matrice vide
-		if (type == 0) {
-			maMatrice = new MyMatrix(matrixSize, matrixSize);
-		}
-		//Création matrice rempli
-		else {
-			maMatrice = new MyMatrix(matrixSize, matrixSize);
-			int choix;
-
+		if (type != 0) { //Création matrice pleine
 			for (int i = 0; i < maMatrice.getRowDimension(); i++) {
 				for (int j = i + 1; j < maMatrice.getColumnDimension(); j++) {
+					boolean choix = false;
 
 					//on récupère les valeurs saisies de la matrice
-					monJep.parseExpression(jTableMatrice.getValueAt(i + 1, j + 1).toString());
+					monJep.parseExpression(jTableMatrix.getValueAt(i + 1, j + 1).toString());
 					//on la stocke
-					newValue = monJep.getValue();
-					//newValue = Double.parseDouble(jTableMatrice.getValueAt(i+1, j+1).toString());
-					//Si la valeur n'appartient pas à l'échelle de saaty
-					//on demande a l'expert de la modifier
+					double newValue = monJep.getValue();
+					//Si la valeur n'appartient pas à l'échelle de Saaty. On demande a l'expert de la modifier
 					while (!ahpData.isInSaatyScale(newValue)) {
-						choix = 0;
-						while (choix == 0) {
-							String val = JOptionPane.showInputDialog(
+						while (choix == false) {
+							final String val = JOptionPane.showInputDialog(
 									null,
 									"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
 									"Erreur saisi",
 									JOptionPane.QUESTION_MESSAGE);
-							jTableMatrice.setValueAt(val, i + 1, j + 1);
-							//si clik Ok
-							if (val != null) {
-								//Si pas de saisi
-								if (val.equalsIgnoreCase("")) {
+							jTableMatrix.setValueAt(val, i + 1, j + 1);
+
+							if (val == null) { //si clik Annuler
+								choix = true;
+							} else { //si clik Ok
+								if (val.equalsIgnoreCase("")) { //Si pas de saisi
 									JOptionPane.showMessageDialog(
 											null,
-											"Veuillez saisir une valeur", "Information",
+											"Veuillez saisir une valeur",
+											"Information",
 											JOptionPane.INFORMATION_MESSAGE);
-								}
-								//si saisi on récup la valeur
-								else {
-									choix = 1;
+								} else { //si saisi on récup la valeur
+									choix = true;
 									//on récupère les valeurs saisies de la matrice
 									monJep.parseExpression(val);
 									//on la stocke
 									newValue = monJep.getValue();
 								}
 							}
-							//si clik Annuler
-							else {
-								choix = 1;
-							}
 						}
 					}
 					/*Partie supérieure*/
-					matrixValue.setValue(newValue);
-					matrixValue.setRow(i);
-					matrixValue.setColumn(j);
-					maMatrice.setMatrixValue(matrixValue);
+					maMatrice.setMatrixValue(new MatrixValue(i, j, newValue));
 					/*Réciprocité*/
-					matrixValue.setValue(1 / newValue);
-					matrixValue.setRow(j);
-					matrixValue.setColumn(i);
-					maMatrice.setMatrixValue(matrixValue);
+					maMatrice.setMatrixValue(new MatrixValue(j, i, 1 / newValue));
 				}
 			}
 			/*Diagonale*/
 			for (int i = 0; i < maMatrice.getRowDimension(); i++) {
-				matrixValue.setValue(1);
-				matrixValue.setRow(i);
-				matrixValue.setColumn(i);
-				maMatrice.setMatrixValue(matrixValue);
+				maMatrice.setMatrixValue(new MatrixValue(i, i, 1));
 			}
+		} else { //Création matrice vide
+			// default values
 		}
+
 		return maMatrice;
 	}
 
@@ -723,7 +433,7 @@ public class InterfaceAHP
 			throws
 			IOException {
 
-		CharSequenceAppender csa = new CharSequenceAppender(file);
+		final CharSequenceAppender csa = new CharSequenceAppender(file);
 		MatrixValue matrixValue = new MatrixValue();
 
 		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
@@ -732,14 +442,14 @@ public class InterfaceAHP
 		boolean isFound = false;
 
 		MonCellRenderer monCell = new MonCellRenderer(0, 0);
-		jTableMatrice.setDefaultRenderer(Object.class, monCell);
+		jTableMatrix.setDefaultRenderer(Object.class, monCell);
 
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(),
-															   matrixValueToPrint.getColumn()));
+			matrixValueToPrint.setValue(
+					myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.getColumn()));
 			//on redessine la fenetre
 			this.repaint();
 
@@ -854,7 +564,7 @@ public class InterfaceAHP
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice vide
-		ahpData.myMatrix = creerMatrice(Integer.parseInt(matrixSizeTextField.getText()), 0);
+		ahpData.myMatrix = createMatrix(Integer.parseInt(matrixSizeTextField.getText()), 0);
 		//maTable = new MyMatrixTable();
 
 		//on teste pour savoir quelle est le pb choisi
@@ -900,7 +610,7 @@ public class InterfaceAHP
 										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrice.setModel(ahpData.matrixTableModel);
+		jTableMatrix.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		jLabel6.setText(
 				"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
@@ -917,7 +627,7 @@ public class InterfaceAHP
 		remplirJComboBox(intuitiveRanking_rank6_ComboBox, mesColonnes);
 		//on modifie l'affichage de la table
 		MonCellRenderer monCellRenderer = new MonCellRenderer(0, 0);
-		jTableMatrice.setDefaultRenderer(Object.class, monCellRenderer);
+		jTableMatrix.setDefaultRenderer(Object.class, monCellRenderer);
 	}
 
 	/*
@@ -1141,7 +851,7 @@ public class InterfaceAHP
 					ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
 													   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																						   modeAnglais));
-					jTableMatrice.setModel(ahpData.matrixTableModel);
+					jTableMatrix.setModel(ahpData.matrixTableModel);
 
 					//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 					priorityVector = PriorityVector.build(ahpData.myMatrix);
@@ -1230,14 +940,14 @@ public class InterfaceAHP
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice rempli
-		ahpData.myMatrix = creerMatrice(Integer.parseInt(matrixSizeTextField.getText()), 1);
+		ahpData.myMatrix = createMatrix(Integer.parseInt(matrixSizeTextField.getText()), 1);
 		//maTable = new MyMatrixTable();
 		/*Interface graphique*/
 		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
 										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 																			   modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrice.setModel(ahpData.matrixTableModel);
+		jTableMatrix.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		//on va cree le fichier .csv et le modifier et on récupérer le CR et afficher
 		jTextFieldCR.setText(String.valueOf(creerFichierCsv()));
@@ -1293,7 +1003,7 @@ public class InterfaceAHP
 		 */
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
 		MonCellRenderer monCell = new MonCellRenderer(0, 0);
-		jTableMatrice.setDefaultRenderer(Object.class, monCell);
+		jTableMatrix.setDefaultRenderer(Object.class, monCell);
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			//on redessine la fenetre
@@ -1571,7 +1281,7 @@ public class InterfaceAHP
 	private JScrollPane       reverseSaatyScaleScrollPane           = new JScrollPane();
 	private JTable            saatyScaleTable                       = new JTable();
 	private JTable            reverseSaatyScaleTable                = new JTable();
-	private JTable            jTableMatrice                         = new JTable();
+	private JTable            jTableMatrix                          = new JTable();
 	private JTextField        jTextFieldCR                          = new JTextField();
 	private JTextField        saveFilePathTextField                 = new JTextField();
 	private JTextField        finalRanking_rank1_TextField          = new JTextField();
