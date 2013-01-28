@@ -1,4 +1,4 @@
-package org.taeradan.ahp.prototype.ConsistenceMakerTemp;
+package org.taeradan.ahp.prototype.deprecated;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.taeradan.ahp.prototype.ConsistenceMakerTemp;
+package org.taeradan.ahp.prototype.deprecated;
 
 import org.taeradan.ahp.matrix.MyMatrix;
 
