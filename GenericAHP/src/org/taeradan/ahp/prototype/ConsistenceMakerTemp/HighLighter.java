@@ -1,44 +1,30 @@
 package org.taeradan.ahp.prototype.ConsistenceMakerTemp;
 
-import javax.swing.*;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 
 /**
  * @author Jean-Pierre PRUNARET
  * @author Marianne
  */
-public class HighLighter
-	extends DefaultTableCellRenderer {
+@Deprecated
+public final class HighLighter
+		extends DefaultTableCellRenderer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param table
-	 * @param value
-	 * @param isSelected
-	 * @param hasFocus
-	 * @param row
-	 * @param column
-	 * @return
-	 */
 	@Override
-	public Component getTableCellRendererComponent(JTable table,
-						       Object value,
-						       boolean isSelected,
-						       boolean hasFocus,
-						       int row,
-						       int column) {
+	public Component getTableCellRendererComponent(
+			JTable table,
+			Object value,
+			boolean isSelected,
+			boolean hasFocus,
+			int row,
+			int column) {
 
-		Component cell = super.getTableCellRendererComponent(table,
-			value,
-			isSelected,
-			hasFocus,
-			row,
-			column);
+		Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 		if (row == 1 && column == 1) {
 			cell.setBackground(Color.PINK);

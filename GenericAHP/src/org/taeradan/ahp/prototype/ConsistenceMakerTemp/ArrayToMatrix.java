@@ -7,34 +7,27 @@ package org.taeradan.ahp.prototype.ConsistenceMakerTemp;
 import org.taeradan.ahp.matrix.MyMatrix;
 
 /**
- * @author Marianne
- */
-/*
  * This class aims to provide a Matrix created from an Array
+ *
+ * @author Marianne
+ * @author Jean-Pierre PRUNARET
  */
-public class ArrayToMatrix {
+@Deprecated
+public final class ArrayToMatrix {
 
-	/**
-	 * constructeur
-	 */
-	public ArrayToMatrix() {
+	private ArrayToMatrix() {
 	}
 
-	/**
-	 * @param rowData
-	 * @param rows
-	 * @param columns
-	 * @return
-	 */
-	public MyMatrix convertArrayToMatrix(double[][] rowData, int rows, int columns) {
+	@Deprecated
+	public static MyMatrix convertArrayToMatrix(double[][] rowData, int rows, int columns) {
 
-		MyMatrix m = new MyMatrix(rows, columns);
+		final MyMatrix matrix = new MyMatrix(rows, columns);
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				m.set(i, j, rowData[i][j]);
+				matrix.set(i, j, rowData[i][j]);
 			}
 		}
-		return m;
 
+		return matrix;
 	}
 }
