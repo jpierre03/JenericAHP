@@ -30,19 +30,19 @@ import java.util.Collection;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public class IndicatorI51
+public class IndicatorI33
 	extends Indicator {
 
 	/**
 	 * @param xmlIndicator
 	 */
-	public IndicatorI51(final Element xmlIndicator) {
+	public IndicatorI33(final Element xmlIndicator) {
 		super(xmlIndicator);
 	}
 
 	@Override
 	public double calculateAlternativeValue(final int alternativeIndex,
 						final Collection<? extends Alternative> alternatives) {
-		return ((TestingAlternative) alternatives.toArray()[alternativeIndex]).valueI51;
+		return ((TestingAlternative) alternatives.toArray()[alternativeIndex]).valueI32;
 	}
 }

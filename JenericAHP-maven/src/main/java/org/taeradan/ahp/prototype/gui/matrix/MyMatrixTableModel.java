@@ -1,4 +1,4 @@
-/* Copyright 2009-2010 Yves Dubromelle
+/* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
  *
  * This file is part of JenericAHP.
  *
@@ -15,34 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with JenericAHP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.taeradan.ahp.test.ind;
+package org.taeradan.ahp.prototype.gui.matrix;
 
-import org.jdom.Element;
-import org.taeradan.ahp.Alternative;
-import org.taeradan.ahp.Indicator;
-import org.taeradan.ahp.test.TestingAlternative;
-
-import java.util.Collection;
+import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
 
 /**
- * Dummy implementation of an AHP indicator
+ * Specialised implementation of tableModel for the Preference Matrix needs
  *
  * @author Jean-Pierre PRUNARET
+ * @author Marianne
  * @author Yves Dubromelle
  */
-public class IndicatorI51
-	extends Indicator {
+public final class MyMatrixTableModel
+		extends PairWiseMatrixTableModel {
 
-	/**
-	 * @param xmlIndicator
-	 */
-	public IndicatorI51(final Element xmlIndicator) {
-		super(xmlIndicator);
+	private static final long serialVersionUID = 1L;
+
+	public MyMatrixTableModel() {
 	}
 
 	@Override
-	public double calculateAlternativeValue(final int alternativeIndex,
-						final Collection<? extends Alternative> alternatives) {
-		return ((TestingAlternative) alternatives.toArray()[alternativeIndex]).valueI51;
+	public boolean isCellEditable(int row, int col) {
+		flushContent(row, col);
+
+		return super.isCellEditable(row, col);
+	}
+
+	private void flushContent(int row, int col) {
+		if (row > 0 && col > row) {
+			setValueAt("", row, col);
+		}
 	}
 }

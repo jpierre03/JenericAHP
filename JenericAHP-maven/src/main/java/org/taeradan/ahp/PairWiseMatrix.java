@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -17,48 +17,40 @@
  */
 package org.taeradan.ahp;
 
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.nfunk.jep.JEP;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * The PairWiseMatrix class is a container for a Matrix adapted to the needs of AHP in terms of configuration.
+ *
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
 		extends MyMatrix {
 
-	/**
-	 * Class default Constructor.
-	 */
 	public PairWiseMatrix() {
 	}
 
-	/**
-	 *
-	 * @param i
-	 * @param j
-	 */
-	public PairWiseMatrix(int i,
-						  int j) {
+	public PairWiseMatrix(int i, int j) {
 		super(i, j);
 	}
 
 	/**
 	 * Creates a PairWiseMatrix from a JDOM Element
+	 *
 	 * @param xmlPrefMatrix JDOM Element
-	 * @return 
+	 * @return
 	 */
 	public static PairWiseMatrix builder(final Element xmlPrefMatrix) {
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.
-				getChildren("row");
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
 		final int size = xmlRowsList.size();
 		PairWiseMatrix matrix = new PairWiseMatrix(size, size);
 		final JEP myParser = new JEP();
@@ -66,8 +58,7 @@ public class PairWiseMatrix
 //			Extraction of a row from the matrix
 			final Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
-			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren(
-					"elt");
+			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
 			for (int j = 0; j < xmlEltsList.size(); j++) {
 //				Extraction of an element from a row
 				final Element xmlElt = xmlEltsList.get(j);
@@ -83,67 +74,45 @@ public class PairWiseMatrix
 		return matrix;
 	}
 
-	/**
-	 * Describes a preference matrix in a String
-	 * @return String description
-	 */
 	@Override
 	public String toString() {
 		return makeString(this, null);
 	}
 
-	/**
-	 *
-	 * @param prefix
-	 * @return
-	 */
 	public String toString(final String prefix) {
 		return makeString(this, prefix);
 	}
 
-	/**
-	 *
-	 * @param matrix
-	 * @param prefix
-	 * @return
-	 */
-	public static String toString(final MyMatrix matrix,
-								  final String prefix) {
+	public static String toString(final MyMatrix matrix, final String prefix) {
 		return makeString(matrix, prefix);
 	}
 
-	/**
-	 * 
-	 * @param matrix
-	 * @param prefix
-	 * @return
-	 */
-	private static String makeString(final MyMatrix matrix,
-									 final String prefix) {
-		final StringBuilder string = new StringBuilder();
+	private static String makeString(final MyMatrix matrix, final String prefix) {
+		final StringBuilder sb = new StringBuilder();
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
-		DecimalFormat printFormat = new DecimalFormat("0.000");
+		DecimalFormat printFormat = new DecimalFormat("0.00000000");
 //		For each row in the matrix
 		for (int i = 0; i < nRows; i++) {
 			if (prefix != null) {
-				string.append(prefix);
+				sb.append(prefix);
 			}
 //			For each element of the row
 			for (int j = 0; j < nCols; j++) {
-				string.append(" ");
-				string.append(printFormat.format(matrix.get(i, j)));
+				sb.append(" ");
+				sb.append(printFormat.format(matrix.get(i, j)));
 			}
 //			Last row line return
 			if (i < nRows - 1) {
-				string.append("\n");
+				sb.append("\n");
 			}
 		}
-		return string.toString();
+		return sb.toString();
 	}
 
 	/**
 	 * Returns a JDOM element that represents the preference matrix
+	 *
 	 * @return JDOM element representing the preference matrix
 	 */
 	public Element toXml() {
@@ -154,8 +123,7 @@ public class PairWiseMatrix
 //			For each element in the row
 			for (int j = 0; j < getColumnDimension(); j++) {
 				final Element xmlElt = new Element("elt");
-				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).
-						getValue()));
+				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).getValue()));
 				xmlRow.addContent(xmlElt);
 			}
 			xmlPrefMatrix.addContent(xmlRow);
@@ -163,17 +131,11 @@ public class PairWiseMatrix
 		return xmlPrefMatrix;
 	}
 
-	/**
-	 * 
-	 * @param index
-	 */
 	public void remove(final int index) {
 		final int newDimension = getRowDimension() - 1;
-		MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
-		Logger.getAnonymousLogger().log(Level.INFO,
-										"Ancienne dimension ={0}, nouvelle={1}\n",
-										new Object[]{getRowDimension(),
-													 newDimension});
+		final MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
+		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
+										 + ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -181,13 +143,8 @@ public class PairWiseMatrix
 				for (int j = 0; j < getColumnDimension(); j++) {
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
-						Logger.getAnonymousLogger().log(Level.INFO,
-														"i={0}j={1}value={2}newI={3}newJ={4}\n",
-														new Object[]{i,
-																	 j,
-																	 newValue,
-																	 newI,
-																	 newJ});
+						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
+														 + "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

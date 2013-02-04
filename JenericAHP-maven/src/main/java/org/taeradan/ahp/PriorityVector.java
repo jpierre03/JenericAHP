@@ -1,7 +1,7 @@
 /* Copyright 2009-2010 Yves Dubromelle @ LSIS(www.lsis.org)
- * 
+ *
  * This file is part of JenericAHP.
- * 
+ *
  * JenericAHP is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,45 +18,36 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.math.BigDecimal;
-import org.taeradan.ahp.ConsistencyMaker.MyMatrix;
+import org.taeradan.ahp.matrix.MyMatrix;
 
-/**
- *
- * @author Yves Dubromelle
- */
+import java.math.BigDecimal;
+
+/** @author Yves Dubromelle */
 public class PriorityVector
 		extends MyMatrix {
 
-	/**
-	 *
-	 * @param i
-	 */
 	public PriorityVector(int i) {
 		super(i, 1);
 	}
 
-	/**
-	 *
-	 * @param matrix
-	 * @return
-	 */
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		PriorityVector resultVector;
-//		if (matrix.getRowDimension() < 2) {
-		resultVector = new PriorityVector(dimension);
-//		}
+		assert dimension > 0;
+		assert dimension <= 1000 : "So huge matrix, you should double check (size=" + dimension + ")";
+
+		final PriorityVector resultVector = new PriorityVector(dimension);
+		final Matrix e = new Matrix(1, dimension, 1);
 		Matrix workVector = new PriorityVector(dimension);
-		Matrix multMatrix = (Matrix) matrix.clone();
-//		matrix.print(5, 4);
-		Matrix e = new Matrix(1, dimension, 1);
+		Matrix multiplyMatrix = (Matrix) matrix.clone();
+
+		final int MAX_ITERATION = 150; // high value (normal genetic operation require high value)
 		Matrix lastVector;
 		boolean isUnderTreshold = true;
+		int iteration = 0;
 		do {
 			lastVector = workVector;
-			final Matrix numerator = multMatrix.times(e.transpose());
-			final Matrix denominator = e.times(multMatrix).times(e.transpose());
+			final Matrix numerator = multiplyMatrix.times(e.transpose());
+			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
 			if (lastVector == null) {
 				isUnderTreshold = false;
@@ -71,18 +62,17 @@ public class PriorityVector
 					}
 				}
 			}
-			multMatrix = multMatrix.times(matrix);
+			multiplyMatrix = multiplyMatrix.times(matrix);
+
+			iteration++;
+			assert iteration < MAX_ITERATION : "This should already be done. Something is wrong";
 		} while (!isUnderTreshold);
+
 		resultVector.setMatrix(dimension - 1, workVector);
 		return resultVector;
 	}
 
-	/**
-	 *
-	 * @param i
-	 * @param matrix
-	 */
-	void setMatrix(int i, Matrix matrix) {
+	protected void setMatrix(int i, final Matrix matrix) {
 		setMatrix(0, i, 0, 0, matrix);
 	}
 }

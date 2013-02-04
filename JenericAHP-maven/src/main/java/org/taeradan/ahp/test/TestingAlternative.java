@@ -20,71 +20,24 @@ package org.taeradan.ahp.test;
 import org.taeradan.ahp.Alternative;
 
 /**
- *
  * @author Yves Dubromelle
  * @author Jean-Pierre PRUNARET
  */
 public class TestingAlternative
 		implements Alternative {
 
-	/**
-	 *
-	 */
-	transient public final String name;
-	/**
-	 *
-	 */
-	transient private int rank;
-	/**
-	 *
-	 */
-	transient public final double valueI11;
-	/**
-	 *
-	 */
-	transient public final double valueI12;
-	/**
-	 *
-	 */
-	transient public final double valueI13;
-	/**
-	 *
-	 */
-	transient public final double valueI21;
-	/**
-	 *
-	 */
-	transient public final double valueI22;
-	/**
-	 *
-	 */
-	transient public final double valueI31;
-	/**
-	 *
-	 */
-	transient public final double valueI32;
-	/**
-	 * 
-	 */
-	transient public final double valueI41;
-	/**
-	 *
-	 */
-	transient public final double valueI51;
+	public final String name;
+	public final double valueI11;
+	public final double valueI12;
+	public final double valueI13;
+	public final double valueI21;
+	public final double valueI22;
+	public final double valueI31;
+	public final double valueI32;
+	public final double valueI41;
+	public final double valueI51;
+	private int rank = Integer.MAX_VALUE;
 
-	/**
-	 * 
-	 * @param name
-	 * @param valueI11
-	 * @param valueI12
-	 * @param valueI13
-	 * @param valueI21
-	 * @param valueI22
-	 * @param valueI31
-	 * @param valueI32
-	 * @param valueI41
-	 * @param valueI51
-	 */
 	public TestingAlternative(String name,
 							  double valueI11,
 							  double valueI12,

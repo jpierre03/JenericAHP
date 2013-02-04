@@ -19,18 +19,21 @@ package org.taeradan.ahp;
 
 /**
  * Alternative to be processed by AHP
+ *
  * @author Yves Dubromelle
  */
 public interface Alternative {
 
 	/**
 	 * Méthod that returns the current rank of the alternative.
+	 *
 	 * @return Rank value.
 	 */
 	int getRank();
 
 	/**
 	 * Méthod that writes the rank of the alternative.
+	 *
 	 * @param rank Rank value.
 	 */
 	void setRank(int rank);

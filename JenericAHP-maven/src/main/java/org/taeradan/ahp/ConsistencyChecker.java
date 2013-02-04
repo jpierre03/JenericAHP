@@ -18,87 +18,153 @@
 package org.taeradan.ahp;
 
 import Jama.Matrix;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
  * @author Yves Dubromelle
  * @author Jean-Pierre PRUNARET
  */
-public class ConsistencyChecker {
+public final class ConsistencyChecker {
 
-	/**
-	 *
-	 */
-	private static final double[] randomIndex = {0.00, 0.00, 0.58, 0.90, 1.12,
-												 1.24, 1.32, 1.41,
-												 1.45, 1.49, 1.51, 1.48, 1.56,
-												 1.57, 1.59};
-	/**
-	 * 
-	 */
-	private double consistenceCrit = 0;
+	private static final double[] randomIndex = {0.00,
+												 0.00,
+												 0.58,
+												 0.90,
+												 1.12,
+												 1.24,
+												 1.32,
+												 1.41,
+												 1.45,
+												 1.49,
+												 1.51,
+												 1.48,
+												 1.56,
+												 1.57,
+												 1.59};
 
-	/**
-	 *
-	 * @param prefMatrix
-	 * @param prioVector
-	 * @return
-	 */
-	public boolean isConsistent(final Matrix prefMatrix,
-								final Matrix prioVector) {
-		boolean consistent = false;
+	private static final int             MAX_NORMAL_MATRIX_SIZE = 15;
+	private static final double          CONSISTENCY_THRESHOLD  = 10.0 / 100.0;
+	private final        ConsistencyData consistencyData        = new ConsistencyData();
 
-		double[] lambdas;
-		int dimension = 0;
-		if (prefMatrix.getRowDimension() == prioVector.getRowDimension()) {
-			dimension = prefMatrix.getRowDimension();
-			if (dimension == 1) {
-				consistent = true;
-			} else if (dimension == 2) {
-				if (prefMatrix.get(0, 1) == ( 1 / prefMatrix.get(1, 0) )) {
-					consistent = true;
-				} else {
-					consistent = false;
-				}
-			} else if (dimension < 15 && dimension > 0) {
-				lambdas = new double[dimension];
-				for (int i = 0; i < dimension; i++) {
-					double sum = 0;
-					for (int j = 0; j < dimension; j++) {
-						sum += prefMatrix.get(i, j) * prioVector.get(j, 0);
-					}
-					lambdas[i] = sum / prioVector.get(i, 0);
-				}
-				double lambdaMax = Double.MIN_VALUE;
-				for (int index = 0; index < dimension; index++) {
-					if (lambdas[index] > lambdaMax) {
-						lambdaMax = lambdas[index];
-					}
-				}
-				final double CI = ( lambdaMax - dimension ) / ( dimension - 1 );
-				consistenceCrit = CI / randomIndex[dimension - 1];
-				if (consistenceCrit < 0.1) {
-					consistent = true;
-				}
-			} else {
-				Logger.getAnonymousLogger().log(Level.SEVERE,
-												"Preference matrix and priority vector are too wide (15 max) or empty !!{0}",
-												dimension);
-			}
-		} else {
-			Logger.getAnonymousLogger().severe("The matrix and vector dimension does not match !!" + prefMatrix.
-					getRowDimension() + "," + prioVector.getRowDimension());
+
+	private class ConsistencyData {
+
+		private Double consistencyRatio = null;
+		private boolean isConsistent;
+
+		public Double getConsistencyRatio() {
+			return consistencyRatio;
 		}
-		return consistent;
+
+		public void setConsistencyRatio(Double consistencyRatio) {
+			this.consistencyRatio = consistencyRatio;
+
+			if (this.consistencyRatio < CONSISTENCY_THRESHOLD) {
+				setConsistent(true);
+			}
+		}
+
+		public boolean isConsistent() {
+			return isConsistent;
+		}
+
+		public void setConsistent(boolean consistent) {
+			isConsistent = consistent;
+		}
 	}
 
-	/**
-	 *
-	 * @return
-	 */
-	public double getCrResult() {
-		return consistenceCrit;
+	public boolean isConsistent(final Matrix preferenceMatrix,
+								final Matrix priorityVector) {
+		assert preferenceMatrix != null : "preferenceMatrix should be not null";
+		assert preferenceMatrix.getRowDimension() > 0;
+		assert preferenceMatrix.getColumnDimension() > 0;
+		assert priorityVector != null : "priorityVector should be not null";
+		assert priorityVector.getRowDimension() > 0;
+		assert priorityVector.getColumnDimension() > 0;
+
+		final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
+		if (preferenceMatrixDimension < 1) {
+			throw new IllegalArgumentException(
+					"Preference matrix is empty !!"
+					+ preferenceMatrixDimension);
+		}
+
+		if (preferenceMatrixDimension > MAX_NORMAL_MATRIX_SIZE) {
+			throw new IllegalArgumentException(
+					"Preference matrix is too wide (" + MAX_NORMAL_MATRIX_SIZE + " max)!!"
+					+ preferenceMatrixDimension);
+		}
+
+		if (preferenceMatrix.getRowDimension() != priorityVector.getRowDimension()) {
+			throw new IllegalArgumentException(
+					"The preference matrix and vector dimensions does not match (Row) !!"
+					+ preferenceMatrix.getRowDimension() + "," + priorityVector.getRowDimension());
+		}
+
+		consistencyData.setConsistent(false);
+
+		if (preferenceMatrixDimension == 1) {
+			caseDimension_One();
+		}
+
+		if (preferenceMatrixDimension == 2) {
+			caseDimension_Two(preferenceMatrix);
+		}
+
+		if (preferenceMatrixDimension > 2 && preferenceMatrixDimension <= MAX_NORMAL_MATRIX_SIZE) {
+			caseDimension_NormalRange(preferenceMatrix, priorityVector, preferenceMatrixDimension);
+		}
+
+		return consistencyData.isConsistent();
+	}
+
+	private void caseDimension_One() {
+		consistencyData.setConsistent(true);
+	}
+
+	private void caseDimension_Two(final Matrix preferenceMatrix) {
+		if (preferenceMatrix.get(0, 1) == (1 / preferenceMatrix.get(1, 0))) {
+			consistencyData.setConsistent(true);
+		} else {
+			consistencyData.setConsistent(false);
+		}
+	}
+
+	private void caseDimension_NormalRange(final Matrix preferenceMatrix,
+										   final Matrix priorityVector,
+										   int preferenceMatrixDimension) {
+		final double[] lambdas = new double[preferenceMatrixDimension];
+
+		for (int i = 0; i < preferenceMatrixDimension; i++) {
+			double sum = 0;
+			for (int j = 0; j < preferenceMatrixDimension; j++) {
+				sum = sum + preferenceMatrix.get(i, j) * priorityVector.get(j, 0);
+			}
+			lambdas[i] = sum / priorityVector.get(i, 0);
+		}
+		double lambdaMax = Double.MIN_VALUE;
+		for (int index = 0; index < preferenceMatrixDimension; index++) {
+			if (lambdas[index] > lambdaMax) {
+				lambdaMax = lambdas[index];
+			}
+		}
+
+		assert preferenceMatrixDimension - 1 != 0.0;
+
+		final double consistencyIndex = (lambdaMax - preferenceMatrixDimension) / (preferenceMatrixDimension - 1);
+		consistencyData.setConsistencyRatio(consistencyIndex / randomIndex[preferenceMatrixDimension - 1]);
+	}
+
+	public double getConsistencyRatio() {
+		if (consistencyData.getConsistencyRatio() == null) {
+			throw new RuntimeException("computing method have to be invoked first");
+		}
+		assert consistencyData.getConsistencyRatio() != null;
+		assert consistencyData.getConsistencyRatio().isInfinite() == false;
+		assert consistencyData.getConsistencyRatio().isNaN() == false;
+
+		assert consistencyData.getConsistencyRatio().doubleValue() <= 100.0 / 100.0;
+		assert consistencyData.getConsistencyRatio().doubleValue() >= 0.0 / 100.0;
+
+		return consistencyData.getConsistencyRatio();
 	}
 }
