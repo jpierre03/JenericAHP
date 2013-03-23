@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GenericAHP.iml" filepath="$PROJECT_DIR$/GenericAHP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JenericAHP.iml" filepath="$PROJECT_DIR$/JenericAHP.iml" />
     </modules>
   </component>
 </project>
