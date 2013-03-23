@@ -86,7 +86,7 @@ public final class CriteriaDialog
 		jButtonReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed(evt);
+				jButtonReloadActionPerformed();
 			}
 		});
 
@@ -94,7 +94,7 @@ public final class CriteriaDialog
 		jButtonSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed(evt);
+				jButtonSaveActionPerformed();
 			}
 		});
 
@@ -160,13 +160,13 @@ public final class CriteriaDialog
 		pack();
 	}
 
-	private void jButtonReloadActionPerformed(ActionEvent evt) {
+	private void jButtonReloadActionPerformed() {
 		initTable();
 		jTextFieldId.setText(criterion.getIdentifier());
 		jTextFieldName.setText(criterion.getName());
 	}
 
-	private void jButtonSaveActionPerformed(ActionEvent evt) {
+	private void jButtonSaveActionPerformed() {
 		criterion.setIdentifier(jTextFieldId.getText());
 		criterion.setName(jTextFieldName.getText());
 		final MyMatrix matrix =

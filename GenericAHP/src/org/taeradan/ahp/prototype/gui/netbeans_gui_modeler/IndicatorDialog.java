@@ -71,7 +71,7 @@ public final class IndicatorDialog
 		jButtonSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed(evt);
+				jButtonSaveActionPerformed();
 			}
 		});
 
@@ -79,7 +79,7 @@ public final class IndicatorDialog
 		jButtonReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed(evt);
+				jButtonReloadActionPerformed();
 			}
 		});
 
@@ -138,13 +138,13 @@ public final class IndicatorDialog
 		pack();
 	}
 
-	private void jButtonSaveActionPerformed(ActionEvent evt) {
+	private void jButtonSaveActionPerformed() {
 		indicator.setIdentifier(jTextFieldId.getText());
 		indicator.setName(jTextFieldName.getText());
 		this.dispose();
 	}
 
-	private void jButtonReloadActionPerformed(ActionEvent evt) {
+	private void jButtonReloadActionPerformed() {
 		jTextFieldId.setText(indicator.getIdentifier());
 		jTextFieldName.setText(indicator.getName());
 	}

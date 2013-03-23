@@ -55,7 +55,7 @@ public class PairWiseMatrixChangeListener
 			}
 
 			assert value != null;
-			Logger.getAnonymousLogger().info("Parsed value = " + value.doubleValue());
+			Logger.getAnonymousLogger().info("Parsed value = " + value);
 
 //			Case where the value is "0". Must be avoid because there will be a division later
 			if (value == 0) {

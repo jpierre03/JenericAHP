@@ -37,7 +37,7 @@ public final class RandomTools {
 		while (isValueChosen == false) {
 			resultMatrixValue = valueIterator.next();
 
-			final StringBuffer sb = new StringBuffer();
+			final StringBuilder sb = new StringBuilder();
 			sb.append("Souhaitez-vous modifier la valeur ");
 			sb.append(resultMatrixValue.getValue());
 			sb.append(" ( ");
@@ -95,7 +95,7 @@ public final class RandomTools {
 			IOException {
 
 		MyMatrix epsilon = new MyMatrix();
-		Collection<MatrixValue> sortedMatrixValues = new ArrayList<MatrixValue>();
+		Collection<MatrixValue> sortedMatrixValues = new ArrayList<>();
 		Iterator<MatrixValue> saatyIterator;
 		Iterator<MatrixValue> randomsIterator;
 		CharSequenceAppender csa = new CharSequenceAppender(file);

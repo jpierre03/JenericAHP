@@ -26,40 +26,40 @@ import java.math.BigDecimal;
 public class PriorityVector
 		extends MyMatrix {
 
+	private static final int MAX_DIMENSION = 1000;
+	private static final int MAX_ITERATION = 150;
+
 	public PriorityVector(int i) {
 		super(i, 1);
 	}
 
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		assert dimension > 0;
-		assert dimension <= 1000 : "So huge matrix, you should double check (size=" + dimension + ")";
+		assert dimension > 0: "Matrix dimension, can't be negative";
+		assert dimension <= MAX_DIMENSION : "So huge matrix, you should double check (size=" + dimension + ")";
 
 		final PriorityVector resultVector = new PriorityVector(dimension);
 		final Matrix e = new Matrix(1, dimension, 1);
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
 
-		final int MAX_ITERATION = 150; // high value (normal genetic operation require high value)
+		// high value (normal genetic operations require high value)
+
 		Matrix lastVector;
-		boolean isUnderTreshold = true;
+		boolean isUnderTreshold;
 		int iteration = 0;
 		do {
 			lastVector = workVector;
 			final Matrix numerator = multiplyMatrix.times(e.transpose());
 			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
-			if (lastVector == null) {
-				isUnderTreshold = false;
-			} else {
-				Matrix difference = workVector.minus(lastVector);
-				isUnderTreshold = true;
-				for (int i = 0; i < dimension; i++) {
-					double valeur0 = difference.get(i, 0);
-					if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
+			Matrix difference = workVector.minus(lastVector);
+			isUnderTreshold = true;
+			for (int i = 0; i < dimension; i++) {
+				double valeur0 = difference.get(i, 0);
+				if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
 //						difference en dessous du seuil
-						isUnderTreshold = false;
-					}
+					isUnderTreshold = false;
 				}
 			}
 			multiplyMatrix = multiplyMatrix.times(matrix);

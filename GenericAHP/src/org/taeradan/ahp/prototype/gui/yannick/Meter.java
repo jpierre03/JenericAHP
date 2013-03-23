@@ -12,12 +12,12 @@ import java.awt.event.ActionListener;
 /**
  * @author Beal Yannick
  */
-public class Meter implements ActionListener {
-	private Timer        timer;
-	private JLabel       label;
-	private InterfaceAHP frame;
-	private int     cpM            = 0;
-	private int     cpS            = 0;
+class Meter implements ActionListener {
+	private final Timer timer;
+	private final JLabel label;
+	private final InterfaceAHP frame;
+	private int cpM = 0;
+	private int cpS = 0;
 	private boolean commencerAZero = false;
 
 	public Meter(JLabel label, InterfaceAHP frame) {
@@ -57,12 +57,9 @@ public class Meter implements ActionListener {
 			cpS = 0;
 			cpM = 0;
 		}
-	/*
-	String time = "" + (new Hour(new Date(System.currentTimeMillis()))).getHour();
-        time += ":" + (new Minute(new Date(System.currentTimeMillis()))).getMinute();
-        time += ":" + (new Second(new Date(System.currentTimeMillis()))).getSecond();*/
-		String stS, stM, stH;
-		stS = stM = stH = "";
+
+		String stS, stM;
+
 		if (cpS < 10)
 			stS = "0" + cpS;
 		else
@@ -79,7 +76,5 @@ public class Meter implements ActionListener {
 	public void setCommencerAZero(boolean commencerAZero) {
 		this.commencerAZero = commencerAZero;
 	}
-
-
 }
 

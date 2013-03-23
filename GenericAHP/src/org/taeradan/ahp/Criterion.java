@@ -34,7 +34,8 @@ import java.util.logging.Logger;
  *
  * @author Yves Dubromelle
  */
-public class Criterion {
+public class Criterion
+	implements XmlOutputable{
 
 	//	AHP configuration attributes
 	private final PriorityVector        vectorIndicatorCriteria;
@@ -85,14 +86,12 @@ public class Criterion {
 					"Error : the number of Indicators and the size of the preference matrix does not match !");
 		}
 //		For each indicator declared in the configuration file
-		final Iterator<Element> itxmlIndList = xmlIndicatorsList.iterator();
-		while (itxmlIndList.hasNext()) {
-			final Element xmlIndicator = itxmlIndList.next();
-//				System.out.println("\tCriterion.xmlIndicator="+xmlIndicator);
+		for (Element xmlIndicator : xmlIndicatorsList) {
+			//				System.out.println("\tCriterion.xmlIndicator="+xmlIndicator);
 //				System.out.println("\tCriterion.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
 			final String indicatorName = AHPRoot.indicatorPath
-										 + Indicator.class.getSimpleName()
-										 + xmlIndicator.getAttributeValue("id");
+					+ Indicator.class.getSimpleName()
+					+ xmlIndicator.getAttributeValue("id");
 			try {
 //					Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy"
 				@SuppressWarnings("unchecked")
@@ -109,8 +108,8 @@ public class Criterion {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : no such constructor :{0}", e);
 			} catch (ClassNotFoundException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE,
-												"Error : class {0} not found :{1}",
-												new Object[]{indicatorName, e});
+						"Error : class {0} not found :{1}",
+						new Object[]{indicatorName, e});
 			} catch (Exception e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
 			}
@@ -169,24 +168,21 @@ public class Criterion {
 	}
 
 	/** @return a JDOM element that represents the criteria and all its children */
+	@Override
 	public Element toXml() {
 		final Element xmlCriteria = new Element("criteria");
 		xmlCriteria.setAttribute("id", identifier);
 		xmlCriteria.addContent(new Element("name").setText(name));
 		xmlCriteria.addContent(matrixIndicatorIndicator.toXml());
-		final Iterator<Indicator> itIndicators = indicators.iterator();
-		while (itIndicators.hasNext()) {
-			xmlCriteria.addContent(itIndicators.next().toXml());
+		for (Indicator indicator : indicators) {
+			xmlCriteria.addContent(indicator.toXml());
 		}
 		return xmlCriteria;
 	}
 
 	public StringBuilder resultToString() {
 		final StringBuilder sb = new StringBuilder(this.toString());
-		final Iterator<Indicator> itIndicators = indicators.iterator();
-		while (itIndicators.hasNext()) {
-			final Indicator next = itIndicators.next();
-
+		for (Indicator next : indicators) {
 			sb.append("\n\t\t");
 			sb.append(next.resultToString());
 		}

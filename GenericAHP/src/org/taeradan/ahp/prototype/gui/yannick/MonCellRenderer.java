@@ -14,11 +14,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
 
-public class MonCellRenderer
+class MonCellRenderer
 		extends DefaultTableCellRenderer {
 
-	int row;
-	int col;
+	private int row;
+	private int col;
 
 	public int getCol() {
 		return col;

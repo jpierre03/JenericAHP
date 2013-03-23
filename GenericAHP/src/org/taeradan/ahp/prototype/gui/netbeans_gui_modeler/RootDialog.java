@@ -79,7 +79,7 @@ public final class RootDialog
 		jButtonReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed(evt);
+				jButtonReloadActionPerformed();
 			}
 		});
 
@@ -87,7 +87,7 @@ public final class RootDialog
 		jButtonSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed(evt);
+				jButtonSaveActionPerformed();
 			}
 		});
 
@@ -138,12 +138,12 @@ public final class RootDialog
 		pack();
 	}
 
-	private void jButtonReloadActionPerformed(ActionEvent evt) {
+	private void jButtonReloadActionPerformed() {
 		initTable();
 		jTextFieldObjective.setText(AHPRoot.getName());
 	}
 
-	private void jButtonSaveActionPerformed(ActionEvent evt) {
+	private void jButtonSaveActionPerformed() {
 		AHPRoot.guiMethods.setName(jTextFieldObjective.getText());
 		final PairWiseMatrix matrix =
 				new PairWiseMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());

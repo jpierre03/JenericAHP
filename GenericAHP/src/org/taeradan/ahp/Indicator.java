@@ -29,7 +29,8 @@ import java.util.Collection;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public abstract class Indicator {
+public abstract class Indicator
+		implements XmlOutputable {
 
 	//	AHP configuration attributes
 	private String identifier;
@@ -58,7 +59,6 @@ public abstract class Indicator {
 
 //		For each alternative, evaluation of its value for the indicator
 		for (int i = 0; i < this.lastAlternatives.size(); i++) {
-//			Logger.getAnonymousLogger().info(" -- (" + toString() + ")");
 			altValues[i] = calculateAlternativeValue(i, this.lastAlternatives);
 		}
 
@@ -107,7 +107,7 @@ public abstract class Indicator {
 		return sb.toString();
 	}
 
-	/** @return JDOM Element representing the indicator */
+	@Override
 	public Element toXml() {
 		final Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
@@ -142,7 +142,9 @@ public abstract class Indicator {
 		}
 	}
 
-	/** @return  */
+	/**
+	 * @return
+	 */
 	public String resultToString() {
 		final int LIMIT_ALTERNATIVES = 30;
 

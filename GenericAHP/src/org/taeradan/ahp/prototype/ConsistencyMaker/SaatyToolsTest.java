@@ -43,9 +43,9 @@ public final class SaatyToolsTest {
 		return result;
 	}
 
-	public static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
-											   MyMatrix myPreferenceMatrix,
-											   String file)
+	private static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
+												MyMatrix myPreferenceMatrix,
+												String file)
 			throws
 			IOException {
 

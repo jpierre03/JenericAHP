@@ -26,14 +26,14 @@ public final class SaatyTools {
 	private SaatyTools() {
 	}
 
-	public static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix epsilon) {
+	private static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix epsilon) {
 
 		int rows = epsilon.getRowDimension();
 		int columns = epsilon.getColumnDimension();
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<>();
 
 		/*Création d'une collection de MatrixValue*/
-		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
+		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				if (i != j) {
@@ -43,8 +43,7 @@ public final class SaatyTools {
 		}
 
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
-			MatrixValue matrixValue = valueIterator.next();
+		for (MatrixValue matrixValue : matrixValues) {
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
 		return myTreeMap;
