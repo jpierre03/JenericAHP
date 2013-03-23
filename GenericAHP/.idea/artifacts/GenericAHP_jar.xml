@@ -4,8 +4,8 @@
     <root id="archive" name="GenericAHP.jar">
       <element id="module-output" name="GenericAHP" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jdom.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/Jama-1.0.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jep-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/Jama-1.0.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
