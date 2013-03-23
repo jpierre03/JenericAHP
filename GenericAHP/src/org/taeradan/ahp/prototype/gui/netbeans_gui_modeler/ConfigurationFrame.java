@@ -51,7 +51,7 @@ public final class ConfigurationFrame
 	private transient boolean fileOpened = false;
 
 	/** Creates new form ConfigurationFrame */
-	public ConfigurationFrame() {
+	private ConfigurationFrame() {
 		super();
 //		Instanciation of an empty TreeModel
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
@@ -96,7 +96,7 @@ public final class ConfigurationFrame
 		jMenuItemOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jMenuItemOpenActionPerformed(evt);
+				jMenuItemOpenActionPerformed();
 			}
 		});
 		jMenuFile.add(jMenuItemOpen);
@@ -114,7 +114,7 @@ public final class ConfigurationFrame
 		jMenuItemSaveUnder.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jMenuItemSaveUnderActionPerformed(evt);
+				jMenuItemSaveUnderActionPerformed();
 			}
 		});
 		jMenuFile.add(jMenuItemSaveUnder);
@@ -188,7 +188,7 @@ public final class ConfigurationFrame
 
 						@Override
 						public void actionPerformed(ActionEvent evt) {
-							delRootActionPerformed(AHPRoot);
+							delRootActionPerformed();
 						}
 					});
 					contextMenu.add(delItem);
@@ -250,9 +250,8 @@ public final class ConfigurationFrame
 	/**
 	 * Handles the event of the "Open" menu. Launch a file selector to choose a configuration file to open.
 	 *
-	 * @param evt
 	 */
-	private void jMenuItemOpenActionPerformed(ActionEvent evt) {
+	private void jMenuItemOpenActionPerformed() {
 		jFileChooser = new JFileChooser(currentFile);
 		jFileChooser.setApproveButtonText("Open");
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
@@ -274,12 +273,12 @@ public final class ConfigurationFrame
 		if (fileOpened) {
 			ahpAHPRoot.saveConfiguration(currentFile.getAbsolutePath());
 		} else {
-			jMenuItemSaveUnderActionPerformed(evt);
+			jMenuItemSaveUnderActionPerformed();
 		}
 	}
 
 	/** Handles the event of the "Save under" menu. Launch a file selector to choose a file to write. */
-	private void jMenuItemSaveUnderActionPerformed(ActionEvent evt) {
+	private void jMenuItemSaveUnderActionPerformed() {
 		jFileChooser = new JFileChooser(currentFile);
 		jFileChooser.setApproveButtonText("Save");
 		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
@@ -307,7 +306,7 @@ public final class ConfigurationFrame
 		}
 	}
 
-	private void delRootActionPerformed(final AHPRoot ahpRoot) {
+	private void delRootActionPerformed() {
 		if (JOptionPane.showConfirmDialog(
 				this,
 				"Are you sure ? The whole tree will be destroyed.",
@@ -332,7 +331,7 @@ public final class ConfigurationFrame
 		}
 	}
 
-	private void delIndicatorActionPerformed(final Indicator indicator) {
+	private void delIndicatorActionPerformed() {
 		if (JOptionPane.showConfirmDialog(
 				this,
 				"Are you sure ? The indicator will be destroyed.",
@@ -367,7 +366,7 @@ public final class ConfigurationFrame
 	 * @param ahpAHPRoot Initialised AHP root
 	 * @return node containing a AHP tree
 	 */
-	public static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
+	private static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
 //		Creation of the root node
 		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
 		final Collection<Criterion> ahpCriteria = ahpAHPRoot.guiMethods.getCriteria();

@@ -1,11 +1,15 @@
 package org.taeradan.ahp;
 
+import org.jdom.Element;
+
 /**
- * Created with IntelliJ IDEA.
- * User: jpierre03
- * Date: 23/03/13
- * Time: 20:08
- * To change this template use File | Settings | File Templates.
+ * @author Jean-Pierre PRUNARET
  */
-public class XmlOutputable {
+public interface XmlOutputable {
+
+	/**
+	 * @return jdom element representing the object
+	 * @see org.jdom.Element
+	 */
+	Element toXml();
 }

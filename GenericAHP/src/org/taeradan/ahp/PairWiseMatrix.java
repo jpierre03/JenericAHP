@@ -33,7 +33,8 @@ import java.util.logging.Logger;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
-		extends MyMatrix {
+		extends MyMatrix
+		implements XmlOutputable{
 
 	public PairWiseMatrix() {
 	}
@@ -110,11 +111,7 @@ public class PairWiseMatrix
 		return sb.toString();
 	}
 
-	/**
-	 * Returns a JDOM element that represents the preference matrix
-	 *
-	 * @return JDOM element representing the preference matrix
-	 */
+	@Override
 	public Element toXml() {
 		final Element xmlPrefMatrix = new Element("prefmatrix");
 //		For each row in the matrix

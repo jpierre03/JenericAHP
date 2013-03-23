@@ -2,7 +2,6 @@ package org.taeradan.ahp.matrix;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.TreeMap;
 
 /**
@@ -29,7 +28,7 @@ public final class MyMatrixTest {
 			}
 		}
 
-		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
+		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMN; j++) {
 				if (j > i) {
@@ -42,8 +41,7 @@ public final class MyMatrixTest {
 
 		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<>();
 
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
-			MatrixValue matrixValue = valueIterator.next();
+		for (MatrixValue matrixValue : matrixValues) {
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
 

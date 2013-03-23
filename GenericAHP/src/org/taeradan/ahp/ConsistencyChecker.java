@@ -162,8 +162,8 @@ public final class ConsistencyChecker {
 		assert consistencyData.getConsistencyRatio().isInfinite() == false;
 		assert consistencyData.getConsistencyRatio().isNaN() == false;
 
-		assert consistencyData.getConsistencyRatio().doubleValue() <= 100.0 / 100.0;
-		assert consistencyData.getConsistencyRatio().doubleValue() >= 0.0 / 100.0;
+		assert consistencyData.getConsistencyRatio() <= 100.0 / 100.0;
+		assert consistencyData.getConsistencyRatio() >= 0.0 / 100.0;
 
 		return consistencyData.getConsistencyRatio();
 	}

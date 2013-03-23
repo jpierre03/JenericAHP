@@ -196,5 +196,5 @@ public class AbsoluteLayout
 
 
 	/** A mapping <Component, AbsoluteConstraints> */
-	protected Hashtable constraints = new Hashtable();
+	private final Hashtable constraints = new Hashtable();
 }

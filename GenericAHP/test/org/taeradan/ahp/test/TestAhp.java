@@ -138,7 +138,7 @@ public final class TestAhp {
 
 		final AHPRoot ahpRoot = new AHPRoot(aFile, AHPRoot.DEFAULT_INDICATOR_PATH);
 //		System.out.println(ahpRoot.toStringRecursive());
-		final ArrayList<TestingAlternative> alts = new ArrayList<TestingAlternative>(4);
+		final ArrayList<TestingAlternative> alts = new ArrayList<>(4);
 		for (int index = 0; index < 1; index++) {
 			alts.add(new TestingAlternative("Alternative 1-" + index, 3, 3, 3, 3, 3, 3, 3, 3, 3));
 			alts.add(new TestingAlternative("Alternative 2-" + index, 1, 1, 1, 1, 1, 5, 5, 1, 5));
