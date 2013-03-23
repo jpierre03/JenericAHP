@@ -2,10 +2,15 @@
   <library name="lib">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/jdom.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/Jama-1.0.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jep-2.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Jama-1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Jama-1.0.3-src.zip!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/Jama-1.0.3-src.zip!/Jama/doc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/Jama-1.0.3-src.zip!/" />
+    </SOURCES>
   </library>
 </component>
