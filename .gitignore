@@ -9,3 +9,5 @@
 
 # IntelliJ Idea files
 */.idea/workspace.xml
+/GenericAHP/build/
+/GenericAHP/dist/
