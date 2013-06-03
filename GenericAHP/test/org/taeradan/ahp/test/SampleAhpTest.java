@@ -40,7 +40,7 @@ import static org.junit.Assert.fail;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public final class TestAhp {
+public final class SampleAhpTest {
 
 	private static AHPRoot ahpRoot;
 	private static final String                   ALTERNATIVE_1 = "Alternative 1";
@@ -50,7 +50,7 @@ public final class TestAhp {
 	private static final String                   ALTERNATIVE_5 = "Alternative 5";
 	private static final List<TestingAlternative> ALTERNATIVES  = makeAlternatives();
 
-	public TestAhp() {
+	public SampleAhpTest() {
 	}
 
 	private static List<TestingAlternative> makeAlternatives() {
@@ -77,7 +77,7 @@ public final class TestAhp {
 	@Before
 	public void setUp() {
 
-		URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
+		URL resource = SampleAhpTest.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
 		File aFile = new File(resource.getFile());
 
 		ahpRoot = new AHPRoot(aFile, AHPRoot.DEFAULT_INDICATOR_PATH);
@@ -133,7 +133,7 @@ public final class TestAhp {
 
 	@Test
 	public void test200_NSP() {
-		URL resource = TestAhp.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
+		URL resource = SampleAhpTest.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
 		File aFile = new File(resource.getFile());
 
 		final AHPRoot ahpRoot = new AHPRoot(aFile, AHPRoot.DEFAULT_INDICATOR_PATH);
