@@ -17,16 +17,16 @@ import static org.junit.Assert.assertTrue;
 /** @author Jean-Pierre PRUNARET */
 public class ControversialTest {
 
-	private static final double                         TEMOIN_MAX    = 1000;
-	private static final double                         VARIABLE_MAX  = 1000000000;
-	private static final double                         DECALAGE      = 0;
-	private static final String                         ALTERNATIVE_1 = "Alternative 1";
-	private static final String                         ALTERNATIVE_2 = "Alternative 2";
-	private static final String                         ALTERNATIVE_3 = "Alternative 3";
-	private static final String                         ALTERNATIVE_4 = "Alternative 4";
-	private static final String                         ALTERNATIVE_5 = "Alternative 5";
-	private static final List<ControversialAlternative> ALTERNATIVES  = makeAlternatives();
-	private static AHPRoot ahpRoot;
+	private static final double                  TEMOIN_MAX    = 1000;
+	private static final double                  VARIABLE_MAX  = 1000000000;
+	private static final double                  DECALAGE      = 0;
+	private static final String                  ALTERNATIVE_1 = "Alternative 1";
+	private static final String                  ALTERNATIVE_2 = "Alternative 2";
+	private static final String                  ALTERNATIVE_3 = "Alternative 3";
+	private static final String                  ALTERNATIVE_4 = "Alternative 4";
+	private static final String                  ALTERNATIVE_5 = "Alternative 5";
+	private final List<ControversialAlternative> alternatives  = new ArrayList<>(makeAlternatives());
+    private static AHPRoot ahpRoot;
 
 	private static List<ControversialAlternative> makeAlternatives() {
 		final List<ControversialAlternative> alts = new ArrayList<>(5);
@@ -91,6 +91,9 @@ public class ControversialTest {
 		final File aFile = new File(resource.getFile());
 
 		ahpRoot = new AHPRoot(aFile, "org.taeradan.ahp.controversial.");
+
+        alternatives.clear();
+        alternatives.addAll(makeAlternatives());
 	}
 
 	@After
@@ -100,7 +103,7 @@ public class ControversialTest {
 
 	@Test
 	public void test100_initialState() {
-		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(ALTERNATIVES);
+		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(this.alternatives);
 
 		assertTrue(alternatives.size() == 5);
 
@@ -119,7 +122,7 @@ public class ControversialTest {
 
 	@Test
 	public void test200_ranking() {
-		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(ALTERNATIVES);
+		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(this.alternatives);
 
 		ahpRoot.calculateRanking(alternatives);
 
@@ -127,7 +130,7 @@ public class ControversialTest {
 //		System.out.println(ahpRoot.resultToString());
 //		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
 
-		printRanking(ALTERNATIVES);
+		printRanking(this.alternatives);
 
 		assertTrue(alternatives.size() == 5);
 
