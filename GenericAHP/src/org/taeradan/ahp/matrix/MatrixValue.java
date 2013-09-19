@@ -95,6 +95,6 @@ public class MatrixValue {
 
 	@Override
 	public String toString() {
-		return value + " ";
+		return value + "";
 	}
 }
