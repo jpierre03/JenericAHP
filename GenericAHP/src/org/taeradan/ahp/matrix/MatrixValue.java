@@ -85,15 +85,6 @@ public class MatrixValue {
 	}
 
 	@Override
-	public int hashCode() {
-		int hash = 3;
-		hash = 97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
-		hash = 97 * hash + this.row;
-		hash = 97 * hash + this.column;
-		return hash;
-	}
-
-	@Override
 	public String toString() {
 		return value + "";
 	}
