@@ -32,7 +32,10 @@ import java.util.Collection;
 public abstract class Indicator
 		implements XmlOutputable {
 
-	//	AHP configuration attributes
+    private static final String MAXIMIZE = "maximize";
+    private static final String MINIMIZE = "minimize";
+
+    //	AHP configuration attributes
 	private String identifier;
 	private String name;
 	private boolean maximization = true;
@@ -99,10 +102,12 @@ public abstract class Indicator
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Indicator " + identifier + " : " + name);
-		if (maximization) {
-			sb.append(", maximize");
+
+        sb.append(", ");
+		if (isMaximized()) {
+            sb.append(MAXIMIZE);
 		} else {
-			sb.append(", minimize");
+			sb.append(MINIMIZE);
 		}
 		return sb.toString();
 	}
@@ -112,10 +117,10 @@ public abstract class Indicator
 		final Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
 		xmlIndicator.addContent(new Element("name").setText(name));
-		if (maximization) {
-			xmlIndicator.addContent(new Element("maximize"));
+		if (isMaximized()) {
+			xmlIndicator.addContent(new Element(MAXIMIZE));
 		} else {
-			xmlIndicator.addContent(new Element("maximize"));
+			xmlIndicator.addContent(new Element(MINIMIZE));
 		}
 		return xmlIndicator;
 	}
@@ -132,8 +137,8 @@ public abstract class Indicator
 
 //		Initialisation of the maximization/minimization parameter
 //		System.out.println("Maximise="+xmlIndicator.getChild("maximize")+", minimize="+xmlIndicator.getChild("minimize"));
-		final Element maximize = xmlIndicator.getChild("maximize");
-		final Element minimize = xmlIndicator.getChild("minimize");
+		final Element maximize = xmlIndicator.getChild(MAXIMIZE);
+		final Element minimize = xmlIndicator.getChild(MINIMIZE);
 		if (maximize != null) {
 			maximization = true;
 		}
