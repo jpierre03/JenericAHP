@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Test class for the AHP tree
@@ -130,40 +129,5 @@ public final class SampleAhpTest {
 		assertTrue(alternatives.get(5 - 1).getRank() == 3);
 		assertTrue(alternatives.get(4 - 1).getRank() == 4);
 		assertTrue(alternatives.get(2 - 1).getRank() == 5);
-	}
-
-	@Test
-	public void test200_NSP() {
-		URL resource = SampleAhpTest.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
-		File aFile = new File(resource.getFile());
-
-		final AHPRoot ahpRoot = new AHPRoot(aFile, AHPRoot.DEFAULT_INDICATOR_PATH);
-//		System.out.println(ahpRoot.toStringRecursive());
-		final ArrayList<TestingAlternative> alts = new ArrayList<>(4);
-		for (int index = 0; index < 1; index++) {
-			alts.add(new TestingAlternative("Alternative 1-" + index, 3, 3, 3, 3, 3, 3, 3, 3, 3));
-			alts.add(new TestingAlternative("Alternative 2-" + index, 1, 1, 1, 1, 1, 5, 5, 1, 5));
-			alts.add(new TestingAlternative("Alternative 3-" + index, 4, 4, 4, 4, 4, 2, 2, 4, 2));
-			alts.add(new TestingAlternative("Alternative 4-" + index, 2, 2, 2, 2, 2, 4, 4, 2, 4));
-			alts.add(new TestingAlternative("Alternative 5-" + index, 5, 5, 5, 5, 5, 1, 1, 5, 1));
-		}
-//		alts.add(new TestingAlternative("Alternative 1", 3, 5, 3, 1 / 2., 3, 1200, 1, 100, 1));
-//		alts.add(new TestingAlternative("Alternative 2", 3, 5, 3, 1 / 2., 1, 8638, 1, 250, 1));
-//		alts.add(new TestingAlternative("Alternative 3", 5, 5, 5, 2 / 3., 3, 1800, 1, 30, 1));
-//		alts.add(new TestingAlternative("Alternative 4", 3, 3, 3, 3 / 4., 3, 7136, 1, 300, 1));
-		System.out.println("Calculate Ranking =============");
-		ahpRoot.calculateRanking(alts);
-		fail("TODO");
-
-//		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
-//		alts.add(new TestingAlternative("Alternative "+Math.random(), Math.random(),Math.random(),Math.random(),Math.random(),Math.random(), Math.random(), Math.random(), Math.random(), Math.random()));
-//		ahpRoot.calculateRanking(alts);
-		System.out.println(
-				"======================================================");
-		System.out.println(ahpRoot.guiMethods.resultToString());
-		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
-		for (TestingAlternative currentAlt : alts) {
-			System.out.println(currentAlt.name + " = " + currentAlt.getRank());
-		}
 	}
 }
