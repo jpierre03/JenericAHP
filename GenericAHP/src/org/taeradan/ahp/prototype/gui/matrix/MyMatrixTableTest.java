@@ -8,7 +8,7 @@ import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * @author Jean-Pierre PRUNARET

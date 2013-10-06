@@ -31,40 +31,40 @@ import java.util.logging.Logger;
  * @author Jean-Pierre PRUNARET
  */
 public class InterfaceAHP
-		extends JFrame {
+	extends JFrame {
 
-	private final AHP_Data ahpData       = new AHP_Data();
-	private boolean  finSimulation = false;
-	private boolean  modeAnglais   = false;
-	private final JEP      monJep        = new JEP();
+	private final AHP_Data ahpData = new AHP_Data();
+	private boolean finSimulation = false;
+	private boolean modeAnglais = false;
+	private final JEP monJep = new JEP();
 	private CharSequenceAppender csa;
-	private String               file;
-	private String               fileHistorique;
-	private Meter                monHeure;
+	private String file;
+	private String fileHistorique;
+	private Meter monHeure;
 
 
 	private class AHP_Data {
 		private final double[] saatyValues = {1. / 9,
-											  1. / 8,
-											  1. / 7,
-											  1. / 6,
-											  1. / 5,
-											  1. / 4,
-											  1. / 3,
-											  1. / 2,
-											  1,
-											  2,
-											  3,
-											  4,
-											  5,
-											  6,
-											  7,
-											  8,
-											  9};
+			1. / 8,
+			1. / 7,
+			1. / 6,
+			1. / 5,
+			1. / 4,
+			1. / 3,
+			1. / 2,
+			1,
+			2,
+			3,
+			4,
+			5,
+			6,
+			7,
+			8,
+			9};
 
-		private MyMatrix           myMatrix         = new MyMatrix();
+		private MyMatrix myMatrix = new MyMatrix();
 		private MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
-		private double             saatyConsistency = Double.NaN;
+		private double saatyConsistency = Double.NaN;
 
 		public boolean isInSaatyScale(double value) {
 			boolean result = false;
@@ -105,8 +105,8 @@ public class InterfaceAHP
 		});
 
 		jTableMatrix.setModel(new DefaultTableModel(
-				new Object[][]{{}, {}, {}, {}},
-				new String[]{}
+			new Object[][]{{}, {}, {}, {}},
+			new String[]{}
 		));
 		jScrollPane1.setViewportView(jTableMatrix);
 
@@ -117,31 +117,31 @@ public class InterfaceAHP
 		makeRankingPanel();
 
 		saatyScaleTable.setModel(new DefaultTableModel(
-				new Object[][]{
-						{"1: Importance égale"},
-						{"3: Un peu plus important"},
-						{"5: Plus important"},
-						{"7: Beaucoup plus important"},
-						{"9: Absolument plus important"},
-						{"2,4,6: Valeurs intermédiaires"}
-				},
-				new String[]{"Scale of Saaty"}
+			new Object[][]{
+				{"1: Importance égale"},
+				{"3: Un peu plus important"},
+				{"5: Plus important"},
+				{"7: Beaucoup plus important"},
+				{"9: Absolument plus important"},
+				{"2,4,6: Valeurs intermédiaires"}
+			},
+			new String[]{"Scale of Saaty"}
 		));
 		saatyScaleScrollPane.setViewportView(saatyScaleTable);
 
 		reverseSaatyScaleTable.setModel(new DefaultTableModel(
-				new Object[][]{
-						{"1/1: 1"},
-						{"1/2: 0.5"},
-						{"1/3: 0.3333"},
-						{"1/4:0.25"},
-						{"1/5:0.2"},
-						{"1/6:0.1667"},
-						{"1/7:0.1429"},
-						{"1/8:0.125"},
-						{"1/9:0.1111"}
-				},
-				new String[]{"Reverse scale of Saaty"}
+			new Object[][]{
+				{"1/1: 1"},
+				{"1/2: 0.5"},
+				{"1/3: 0.3333"},
+				{"1/4:0.25"},
+				{"1/5:0.2"},
+				{"1/6:0.1667"},
+				{"1/7:0.1429"},
+				{"1/8:0.125"},
+				{"1/9:0.1111"}
+			},
+			new String[]{"Reverse scale of Saaty"}
 		));
 		reverseSaatyScaleScrollPane.setViewportView(reverseSaatyScaleTable);
 
@@ -381,10 +381,10 @@ public class InterfaceAHP
 					while (!ahpData.isInSaatyScale(newValue)) {
 						while (choix == false) {
 							final String val = JOptionPane.showInputDialog(
-									null,
-									"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
-									"Erreur saisi",
-									JOptionPane.QUESTION_MESSAGE);
+								null,
+								"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
+								"Erreur saisi",
+								JOptionPane.QUESTION_MESSAGE);
 							jTableMatrix.setValueAt(val, i + 1, j + 1);
 
 							if (val == null) { //si clik Annuler
@@ -392,10 +392,10 @@ public class InterfaceAHP
 							} else { //si clik Ok
 								if (val.equalsIgnoreCase("")) { //Si pas de saisi
 									JOptionPane.showMessageDialog(
-											null,
-											"Veuillez saisir une valeur",
-											"Information",
-											JOptionPane.INFORMATION_MESSAGE);
+										null,
+										"Veuillez saisir une valeur",
+										"Information",
+										JOptionPane.INFORMATION_MESSAGE);
 								} else { //si saisi on récup la valeur
 									choix = true;
 									//on récupère les valeurs saisies de la matrice
@@ -427,10 +427,10 @@ public class InterfaceAHP
 	 * Cette méthode permet de trouver les coefficients de saaty à changer
 	 */
 	public MatrixValue readSaatysRanking(Collection<MatrixValue> sortedMatrixValues,
-										 MyMatrix myPreferenceMatrix,
-										 String file)
-			throws
-			IOException {
+					     MyMatrix myPreferenceMatrix,
+					     String file)
+		throws
+		IOException {
 
 		final CharSequenceAppender csa = new CharSequenceAppender(file);
 		MatrixValue matrixValue = new MatrixValue();
@@ -448,7 +448,7 @@ public class InterfaceAHP
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
 			matrixValueToPrint.setValue(
-					myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.getColumn()));
+				myPreferenceMatrix.get(matrixValueToPrint.getRow(), matrixValueToPrint.getColumn()));
 			//on redessine la fenetre
 			this.repaint();
 
@@ -458,8 +458,8 @@ public class InterfaceAHP
 			//on ouvre un fenetre de dialogue pour afficher la valeur à modifier
 			JOptionPane jop = new JOptionPane();
 			int option = JOptionPane.showConfirmDialog(
-					null,
-					"Souhaitez-vous modifier la valeur "
+				null,
+				"Souhaitez-vous modifier la valeur "
 					+ matrixValueToPrint.getValue()
 					+ " ( "
 					+ (matrixValueToPrint.getRow() + 1)
@@ -467,8 +467,8 @@ public class InterfaceAHP
 					+ (matrixValueToPrint.getColumn() + 1)
 					+ " )"
 					+ " ?",
-					"Modification des valeurs",
-					JOptionPane.YES_NO_CANCEL_OPTION);
+				"Modification des valeurs",
+				JOptionPane.YES_NO_CANCEL_OPTION);
 
 			//si on clique sur ok on sort du while
 			if (option == JOptionPane.OK_OPTION) {
@@ -502,9 +502,9 @@ public class InterfaceAHP
 				PriorityVector tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
 				double BestFit = SaatyTools.calculateBestFit(tempMatrix,
-															 tempVector,
-															 tempMatrixValue.getRow(),
-															 tempMatrixValue.getColumn());
+					tempVector,
+					tempMatrixValue.getRow(),
+					tempMatrixValue.getColumn());
 				//écriture du best fit
 				String tempString = "" + BestFit;
 				csa.append(tempString);
@@ -606,13 +606,13 @@ public class InterfaceAHP
 		}
 		/*Interface graphique*/
 		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-																			   modeAnglais));
+			SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
+				modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrix.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		jLabel6.setText(
-				"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
+			"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
 		//on affiche la matrice
 		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
 		//on rempli les jComboBox par le nom des column pour le 1er classement
@@ -698,10 +698,10 @@ public class InterfaceAHP
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
 		if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 			csa.append(
-					"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR;SaatyC-CR\n");
+				"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR;SaatyC-CR\n");
 		} else {
 			csa.append(
-					"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
+				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		}
 
 		csa.appendLineFeed();
@@ -734,11 +734,11 @@ public class InterfaceAHP
 					try {
 						/*Writing of Saaty's propositions and of random ranking*/
 						RandomTools.writeRandomAndSaatyPropositions(
-								ahpData.myMatrix,
-								collectionOfSortedMatrixValues,
-								matrixValue,
-								priorityVector,
-								file);
+							ahpData.myMatrix,
+							collectionOfSortedMatrixValues,
+							matrixValue,
+							priorityVector,
+							file);
 					} catch (IOException ex) {
 						Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 					}
@@ -755,17 +755,17 @@ public class InterfaceAHP
 					while (test == false) {
 						JOptionPane jopValid = new JOptionPane();
 						String val = JOptionPane.showInputDialog(
-								null,
-								"Vous avez choisi de remplacer la valeur " + oldValue + " de coordonnées " + " ( "
+							null,
+							"Vous avez choisi de remplacer la valeur " + oldValue + " de coordonnées " + " ( "
 								+ coordRowVal + " , " + coordColVal + " ) par:", "Remplacement valeur",
-								JOptionPane.QUESTION_MESSAGE);
+							JOptionPane.QUESTION_MESSAGE);
 
 						if (val != null) {
 							if (val.equalsIgnoreCase("")) {
 								JOptionPane.showMessageDialog(
-										null,
-										"Veuillez saisir une valeur", "Information",
-										JOptionPane.INFORMATION_MESSAGE);
+									null,
+									"Veuillez saisir une valeur", "Information",
+									JOptionPane.INFORMATION_MESSAGE);
 							} else {
 								test = true;
 								monJep.parseExpression(val);
@@ -792,16 +792,16 @@ public class InterfaceAHP
 						while (choix == 0) {
 							JOptionPane jop = new JOptionPane();
 							String val = JOptionPane.showInputDialog(
-									null,
-									"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
-									"Erreur saisi",
-									JOptionPane.QUESTION_MESSAGE);
+								null,
+								"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
+								"Erreur saisi",
+								JOptionPane.QUESTION_MESSAGE);
 							if (val != null) {
 								if (val.equalsIgnoreCase("")) {
 									JOptionPane.showMessageDialog(
-											null,
-											"Veuillez saisir une valeur", "Information",
-											JOptionPane.INFORMATION_MESSAGE);
+										null,
+										"Veuillez saisir une valeur", "Information",
+										JOptionPane.INFORMATION_MESSAGE);
 								} else {
 									choix = 1;
 									monJep.parseExpression(val);
@@ -820,9 +820,9 @@ public class InterfaceAHP
 					if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
 						/*Calculer le placement dans le classement de Saaty*/
 						int location = SaatyTools.getLocationInRank(
-								collectionOfSortedMatrixValues,
-								matrixValue.getRow(),
-								matrixValue.getColumn());
+							collectionOfSortedMatrixValues,
+							matrixValue.getRow(),
+							matrixValue.getColumn());
 
 						tempString = "" + location;
 						csa.append(tempString);
@@ -848,8 +848,8 @@ public class InterfaceAHP
 
 					//Affichage nouvelle matrice
 					ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-													   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-																						   modeAnglais));
+						SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
+							modeAnglais));
 					jTableMatrix.setModel(ahpData.matrixTableModel);
 
 					//Réactualisation du vecteur de priorité associé à la nouvelle matrice
@@ -943,8 +943,8 @@ public class InterfaceAHP
 		//maTable = new MyMatrixTable();
 		/*Interface graphique*/
 		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-										   SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-																			   modeAnglais));
+			SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
+				modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		jTableMatrix.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
@@ -968,7 +968,7 @@ public class InterfaceAHP
 	 * Cette méthode permet de stocker les différentes matrices,les valeurs modifiées
 	 */
 	private void ecrirefichierHistorique(MyMatrix matrix, double oldValue, int coordx,
-										 int coordy, double newVal) {
+					     int coordy, double newVal) {
 		CharSequenceAppender csa = null;
 		String tempString;
 		try {
@@ -990,9 +990,11 @@ public class InterfaceAHP
 		csa.close();
 	}
 
-	/** This method returns the value which will be modified by the expert */
+	/**
+	 * This method returns the value which will be modified by the expert
+	 */
 	public MatrixValue getValueToModifiyByRanking(
-			Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
+		Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
 
 		int isValueChosen = 0;
 		MatrixValue matrixValue = new MatrixValue();
@@ -1013,8 +1015,8 @@ public class InterfaceAHP
 			//on ouvre un fenetre de dialogue pour afficher la valeur à modifier
 			JOptionPane jop = new JOptionPane();
 			int option = JOptionPane.showConfirmDialog(
-					null,
-					"Modifier la valeur "
+				null,
+				"Modifier la valeur "
 					+ matrixValue.getValue()
 					+ " ( "
 					+ (matrixValue.getRow() + 1)
@@ -1022,8 +1024,8 @@ public class InterfaceAHP
 					+ (matrixValue.getColumn() + 1)
 					+ " )"
 					+ " ?",
-					"Modification des valeurs",
-					JOptionPane.YES_NO_CANCEL_OPTION);
+				"Modification des valeurs",
+				JOptionPane.YES_NO_CANCEL_OPTION);
 			//si on clique sur ok on sor du while
 			if (option == JOptionPane.OK_OPTION) {
 				isValueChosen = 1;
@@ -1075,7 +1077,7 @@ public class InterfaceAHP
 
 			for (int i = 0; i < v.getRowDimension(); i++) {
 				String columnNames[] = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-																		   modeAnglais);
+					modeAnglais);
 				for (int j = 0; j < v.getRowDimension(); j++) {
 					int temp = j;
 					//on récupérer les critères classés
@@ -1214,87 +1216,87 @@ public class InterfaceAHP
 	}
 
 	// Variables declaration
-	private final ButtonGroup       consistencyMakerTypeButtonGroup       = new ButtonGroup();
-	private final ButtonGroup       datasetButtonGroup                    = new ButtonGroup();
-	private final JButton           setEnglishLangButton                  = new JButton();
-	private final JButton           setFrenchLangButton                   = new JButton();
-	private final JButton           newSimulationButton                   = new JButton();
-	private final JButton           saveFilePathOkButton                  = new JButton();
-	private final JButton           intuitiveRankingOKButton              = new JButton();
-	private final JButton           saveFilePathExploreButton             = new JButton();
-	private final JButton           jButtonValiderMatrice                 = new JButton();
-	private final JComboBox<String> intuitiveRanking_rank1_ComboBox       = new JComboBox();
-	private final JComboBox<String> intuitiveRanking_rank2_ComboBox       = new JComboBox();
-	private final JComboBox<String> intuitiveRanking_rank3_ComboBox       = new JComboBox();
-	private final JComboBox<String> intuitiveRanking_rank4_ComboBox       = new JComboBox();
-	private final JComboBox<String> intuitiveRanking_rank5_ComboBox       = new JComboBox();
-	private final JComboBox<String> intuitiveRanking_rank6_ComboBox       = new JComboBox();
-	private final JLabel            matrixSizeLabel                       = new JLabel();
-	private final JLabel            intuitiveRanking_rank5_Label          = new JLabel();
-	private final JLabel            intuitiveRanking_rank6_Label          = new JLabel();
-	private final JLabel            initialRanking_rank1_Label            = new JLabel();
-	private final JLabel            initialRanking_rank2_Label            = new JLabel();
-	private final JLabel            initialRanking_rank3_Label            = new JLabel();
-	private final JLabel            initialRanking_rank4_Label            = new JLabel();
-	private final JLabel            initialRanking_rank5_Label            = new JLabel();
-	private final JLabel            initialRanking_rank6_Label            = new JLabel();
-	private final JLabel            finalRanking_rank1_Label              = new JLabel();
-	private final JLabel            finalRanking_rank2_Label              = new JLabel();
-	private final JLabel            saveFilePathLabel                     = new JLabel();
-	private final JLabel            finalRanking_rank3_Label              = new JLabel();
-	private final JLabel            finalRanking_rank4_Label              = new JLabel();
-	private final JLabel            finalRanking_rank5_Label              = new JLabel();
-	private final JLabel            finalRanking_rank6_Label              = new JLabel();
-	private final JLabel            jLabel3                               = new JLabel();
-	private final JLabel            jLabel4                               = new JLabel();
-	private final JLabel            intuitiveRanking_rank1_Label          = new JLabel();
-	private final JLabel            jLabel6                               = new JLabel();
-	private final JLabel            intuitiveRanking_rank2_Label          = new JLabel();
-	private final JLabel            intuitiveRanking_rank3_Label          = new JLabel();
-	private final JLabel            intuitiveRanking_rank4_Label          = new JLabel();
-	private final JLabel            finalRanking_rank1_PercentLabel       = new JLabel();
-	private final JLabel            finalRanking_rank2_PercentLabel       = new JLabel();
-	private final JLabel            finalRanking_rank3_PercentLabel       = new JLabel();
-	private final JLabel            finalRanking_rank4_PercentLabel       = new JLabel();
-	private final JLabel            finalRanking_rank5_PercentLabel       = new JLabel();
-	private final JLabel            finalRanking_rank6_PercentLabel       = new JLabel();
-	private final JLabel            initialRanking_rank1_PercentLabel     = new JLabel();
-	private final JLabel            initialRanking_rank2_PercentLabel     = new JLabel();
-	private final JLabel            initialRanking_rank3_PercentLabel     = new JLabel();
-	private final JLabel            initialRanking_rank4_PercentLabel     = new JLabel();
-	private final JLabel            initialRanking_rank5_PercentLabel     = new JLabel();
-	private final JLabel            initialRanking_rank6_PercentLabel     = new JLabel();
-	private final JLabel            jLabelCompteur                        = new JLabel();
-	private final JLabel            jLabelTime                            = new JLabel();
-	private final JPanel            intuitiveRankingPanel                 = new JPanel();
-	private final JPanel            finalRankingPanel                     = new JPanel();
-	private final JPanel            initialRankingPanel                   = new JPanel();
-	private final JPanel            rankingPanel                          = new JPanel();
-	private final JPanel            initialisationPanel                   = new JPanel();
-	private final JRadioButton      consistencyMakerTypeRandomRadioButton = new JRadioButton();
-	private final JRadioButton      datasetP1RadioButton                  = new JRadioButton();
-	private final JRadioButton      datasetP2RadioButton                  = new JRadioButton();
-	private final JRadioButton      consistencyMakerTypeSaatyRadioButton  = new JRadioButton();
-	private final JScrollPane       jScrollPane1                          = new JScrollPane();
-	private final JScrollPane       saatyScaleScrollPane                  = new JScrollPane();
-	private final JScrollPane       reverseSaatyScaleScrollPane           = new JScrollPane();
-	private final JTable            saatyScaleTable                       = new JTable();
-	private final JTable            reverseSaatyScaleTable                = new JTable();
-	private final JTable            jTableMatrix                          = new JTable();
-	private final JTextField        jTextFieldCR                          = new JTextField();
-	private final JTextField        saveFilePathTextField                 = new JTextField();
-	private final JTextField        finalRanking_rank1_TextField          = new JTextField();
-	private final JTextField        finalRanking_rank2_TextField          = new JTextField();
-	private final JTextField        finalRanking_rank3_TextField          = new JTextField();
-	private final JTextField        finalRanking_rank4_TextField          = new JTextField();
-	private final JTextField        finalRanking_rank5_TextField          = new JTextField();
-	private final JTextField        finalRanking_rank6_TextField          = new JTextField();
-	private final JTextField        initialRanking_rank1_TextField        = new JTextField();
-	private final JTextField        initialRanking_rank2_TextField        = new JTextField();
-	private final JTextField        initialRanking_rank3_TextField        = new JTextField();
-	private final JTextField        initialRanking_rank4_TextField        = new JTextField();
-	private final JTextField        initialRanking_rank5_TextField        = new JTextField();
-	private final JTextField        initialRanking_rank6_TextField        = new JTextField();
-	private final JTextField        matrixSizeTextField                   = new JTextField();
+	private final ButtonGroup consistencyMakerTypeButtonGroup = new ButtonGroup();
+	private final ButtonGroup datasetButtonGroup = new ButtonGroup();
+	private final JButton setEnglishLangButton = new JButton();
+	private final JButton setFrenchLangButton = new JButton();
+	private final JButton newSimulationButton = new JButton();
+	private final JButton saveFilePathOkButton = new JButton();
+	private final JButton intuitiveRankingOKButton = new JButton();
+	private final JButton saveFilePathExploreButton = new JButton();
+	private final JButton jButtonValiderMatrice = new JButton();
+	private final JComboBox<String> intuitiveRanking_rank1_ComboBox = new JComboBox();
+	private final JComboBox<String> intuitiveRanking_rank2_ComboBox = new JComboBox();
+	private final JComboBox<String> intuitiveRanking_rank3_ComboBox = new JComboBox();
+	private final JComboBox<String> intuitiveRanking_rank4_ComboBox = new JComboBox();
+	private final JComboBox<String> intuitiveRanking_rank5_ComboBox = new JComboBox();
+	private final JComboBox<String> intuitiveRanking_rank6_ComboBox = new JComboBox();
+	private final JLabel matrixSizeLabel = new JLabel();
+	private final JLabel intuitiveRanking_rank5_Label = new JLabel();
+	private final JLabel intuitiveRanking_rank6_Label = new JLabel();
+	private final JLabel initialRanking_rank1_Label = new JLabel();
+	private final JLabel initialRanking_rank2_Label = new JLabel();
+	private final JLabel initialRanking_rank3_Label = new JLabel();
+	private final JLabel initialRanking_rank4_Label = new JLabel();
+	private final JLabel initialRanking_rank5_Label = new JLabel();
+	private final JLabel initialRanking_rank6_Label = new JLabel();
+	private final JLabel finalRanking_rank1_Label = new JLabel();
+	private final JLabel finalRanking_rank2_Label = new JLabel();
+	private final JLabel saveFilePathLabel = new JLabel();
+	private final JLabel finalRanking_rank3_Label = new JLabel();
+	private final JLabel finalRanking_rank4_Label = new JLabel();
+	private final JLabel finalRanking_rank5_Label = new JLabel();
+	private final JLabel finalRanking_rank6_Label = new JLabel();
+	private final JLabel jLabel3 = new JLabel();
+	private final JLabel jLabel4 = new JLabel();
+	private final JLabel intuitiveRanking_rank1_Label = new JLabel();
+	private final JLabel jLabel6 = new JLabel();
+	private final JLabel intuitiveRanking_rank2_Label = new JLabel();
+	private final JLabel intuitiveRanking_rank3_Label = new JLabel();
+	private final JLabel intuitiveRanking_rank4_Label = new JLabel();
+	private final JLabel finalRanking_rank1_PercentLabel = new JLabel();
+	private final JLabel finalRanking_rank2_PercentLabel = new JLabel();
+	private final JLabel finalRanking_rank3_PercentLabel = new JLabel();
+	private final JLabel finalRanking_rank4_PercentLabel = new JLabel();
+	private final JLabel finalRanking_rank5_PercentLabel = new JLabel();
+	private final JLabel finalRanking_rank6_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank1_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank2_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank3_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank4_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank5_PercentLabel = new JLabel();
+	private final JLabel initialRanking_rank6_PercentLabel = new JLabel();
+	private final JLabel jLabelCompteur = new JLabel();
+	private final JLabel jLabelTime = new JLabel();
+	private final JPanel intuitiveRankingPanel = new JPanel();
+	private final JPanel finalRankingPanel = new JPanel();
+	private final JPanel initialRankingPanel = new JPanel();
+	private final JPanel rankingPanel = new JPanel();
+	private final JPanel initialisationPanel = new JPanel();
+	private final JRadioButton consistencyMakerTypeRandomRadioButton = new JRadioButton();
+	private final JRadioButton datasetP1RadioButton = new JRadioButton();
+	private final JRadioButton datasetP2RadioButton = new JRadioButton();
+	private final JRadioButton consistencyMakerTypeSaatyRadioButton = new JRadioButton();
+	private final JScrollPane jScrollPane1 = new JScrollPane();
+	private final JScrollPane saatyScaleScrollPane = new JScrollPane();
+	private final JScrollPane reverseSaatyScaleScrollPane = new JScrollPane();
+	private final JTable saatyScaleTable = new JTable();
+	private final JTable reverseSaatyScaleTable = new JTable();
+	private final JTable jTableMatrix = new JTable();
+	private final JTextField jTextFieldCR = new JTextField();
+	private final JTextField saveFilePathTextField = new JTextField();
+	private final JTextField finalRanking_rank1_TextField = new JTextField();
+	private final JTextField finalRanking_rank2_TextField = new JTextField();
+	private final JTextField finalRanking_rank3_TextField = new JTextField();
+	private final JTextField finalRanking_rank4_TextField = new JTextField();
+	private final JTextField finalRanking_rank5_TextField = new JTextField();
+	private final JTextField finalRanking_rank6_TextField = new JTextField();
+	private final JTextField initialRanking_rank1_TextField = new JTextField();
+	private final JTextField initialRanking_rank2_TextField = new JTextField();
+	private final JTextField initialRanking_rank3_TextField = new JTextField();
+	private final JTextField initialRanking_rank4_TextField = new JTextField();
+	private final JTextField initialRanking_rank5_TextField = new JTextField();
+	private final JTextField initialRanking_rank6_TextField = new JTextField();
+	private final JTextField matrixSizeTextField = new JTextField();
 	// End of variables declaration
 }

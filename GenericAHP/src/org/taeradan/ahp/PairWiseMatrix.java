@@ -33,8 +33,8 @@ import java.util.logging.Logger;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
-		extends MyMatrix
-		implements XmlOutputable{
+	extends MyMatrix
+	implements XmlOutputable {
 
 	public PairWiseMatrix() {
 	}
@@ -65,8 +65,8 @@ public class PairWiseMatrix
 				final Element xmlElt = xmlEltsList.get(j);
 				/** Setting of an element of the temporary matrix */
 				final Attribute att = xmlElt.getAttribute("value");
-                /**	Creation of a math expression parser to handle fractions in the XML file
-				The expression contained in the String is passed to the parser and is evaluated */
+				/**        Creation of a math expression parser to handle fractions in the XML file
+				 The expression contained in the String is passed to the parser and is evaluated */
 				myParser.parseExpression(att.getValue());
 				final double value = myParser.getValue();
 				matrix.set(i, j, value);
@@ -132,7 +132,7 @@ public class PairWiseMatrix
 		final int newDimension = getRowDimension() - 1;
 		final MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
-										 + ", nouvelle=" + newDimension + "\n");
+			+ ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -141,7 +141,7 @@ public class PairWiseMatrix
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
-														 + "newI=" + newI + "newJ=" + newJ + "\n");
+							+ "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

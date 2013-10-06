@@ -26,24 +26,24 @@ import Jama.Matrix;
 public final class ConsistencyChecker {
 
 	private static final double[] randomIndex = {0.00,
-												 0.00,
-												 0.58,
-												 0.90,
-												 1.12,
-												 1.24,
-												 1.32,
-												 1.41,
-												 1.45,
-												 1.49,
-												 1.51,
-												 1.48,
-												 1.56,
-												 1.57,
-												 1.59};
+		0.00,
+		0.58,
+		0.90,
+		1.12,
+		1.24,
+		1.32,
+		1.41,
+		1.45,
+		1.49,
+		1.51,
+		1.48,
+		1.56,
+		1.57,
+		1.59};
 
-	private static final int             MAX_NORMAL_MATRIX_SIZE = 15;
-	private static final double          CONSISTENCY_THRESHOLD  = 10.0 / 100.0;
-	private final        ConsistencyData consistencyData        = new ConsistencyData();
+	private static final int MAX_NORMAL_MATRIX_SIZE = 15;
+	private static final double CONSISTENCY_THRESHOLD = 10.0 / 100.0;
+	private final ConsistencyData consistencyData = new ConsistencyData();
 
 
 	private class ConsistencyData {
@@ -73,7 +73,7 @@ public final class ConsistencyChecker {
 	}
 
 	public boolean isConsistent(final Matrix preferenceMatrix,
-								final Matrix priorityVector) {
+				    final Matrix priorityVector) {
 		assert preferenceMatrix != null : "preferenceMatrix should be not null";
 		assert preferenceMatrix.getRowDimension() > 0;
 		assert preferenceMatrix.getColumnDimension() > 0;
@@ -84,19 +84,19 @@ public final class ConsistencyChecker {
 		final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
 		if (preferenceMatrixDimension < 1) {
 			throw new IllegalArgumentException(
-					"Preference matrix is empty !!"
+				"Preference matrix is empty !!"
 					+ preferenceMatrixDimension);
 		}
 
 		if (preferenceMatrixDimension > MAX_NORMAL_MATRIX_SIZE) {
 			throw new IllegalArgumentException(
-					"Preference matrix is too wide (" + MAX_NORMAL_MATRIX_SIZE + " max)!!"
+				"Preference matrix is too wide (" + MAX_NORMAL_MATRIX_SIZE + " max)!!"
 					+ preferenceMatrixDimension);
 		}
 
 		if (preferenceMatrix.getRowDimension() != priorityVector.getRowDimension()) {
 			throw new IllegalArgumentException(
-					"The preference matrix and vector dimensions does not match (Row) !!"
+				"The preference matrix and vector dimensions does not match (Row) !!"
 					+ preferenceMatrix.getRowDimension() + "," + priorityVector.getRowDimension());
 		}
 
@@ -130,8 +130,8 @@ public final class ConsistencyChecker {
 	}
 
 	private void caseDimension_NormalRange(final Matrix preferenceMatrix,
-										   final Matrix priorityVector,
-										   int preferenceMatrixDimension) {
+					       final Matrix priorityVector,
+					       int preferenceMatrixDimension) {
 		final double[] lambdas = new double[preferenceMatrixDimension];
 
 		for (int i = 0; i < preferenceMatrixDimension; i++) {

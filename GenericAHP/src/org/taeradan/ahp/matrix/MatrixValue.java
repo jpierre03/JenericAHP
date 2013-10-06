@@ -7,8 +7,8 @@ package org.taeradan.ahp.matrix;
 public class MatrixValue {
 
 	private double value;
-	private int    row;
-	private int    column;
+	private int row;
+	private int column;
 
 	public MatrixValue(int row, int column, double value) {
 		this.row = row;

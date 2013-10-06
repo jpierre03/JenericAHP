@@ -22,9 +22,11 @@ import org.taeradan.ahp.matrix.MyMatrix;
 
 import java.math.BigDecimal;
 
-/** @author Yves Dubromelle */
+/**
+ * @author Yves Dubromelle
+ */
 public class PriorityVector
-		extends MyMatrix {
+	extends MyMatrix {
 
 	private static final int MAX_DIMENSION = 1000;
 	private static final int MAX_ITERATION = 150;
@@ -35,7 +37,7 @@ public class PriorityVector
 
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		assert dimension > 0: "Matrix dimension, can't be negative";
+		assert dimension > 0 : "Matrix dimension, can't be negative";
 		assert dimension <= MAX_DIMENSION : "So huge matrix, you should double check (size=" + dimension + ")";
 
 		final PriorityVector resultVector = new PriorityVector(dimension);

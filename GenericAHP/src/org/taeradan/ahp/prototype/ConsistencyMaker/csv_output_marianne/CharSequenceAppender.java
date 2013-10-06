@@ -18,8 +18,8 @@ public class CharSequenceAppender {
 	private PrintWriter output;
 
 	public CharSequenceAppender(String nomFichier)
-			throws
-			IOException {
+		throws
+		IOException {
 		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
 	}
 

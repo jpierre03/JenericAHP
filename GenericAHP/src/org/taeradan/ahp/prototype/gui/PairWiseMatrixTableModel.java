@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Jean-Pierre PRUNARET
  */
 public class PairWiseMatrixTableModel
-		extends DefaultTableModel {
+	extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
 

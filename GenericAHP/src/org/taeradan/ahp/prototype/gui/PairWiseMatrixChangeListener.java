@@ -19,7 +19,7 @@ package org.taeradan.ahp.prototype.gui;
 
 import org.nfunk.jep.JEP;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.util.logging.Logger;
@@ -31,9 +31,11 @@ import java.util.logging.Logger;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrixChangeListener
-		implements TableModelListener {
+	implements TableModelListener {
 
-	/** Handle of the event launched every time the JTable changes */
+	/**
+	 * Handle of the event launched every time the JTable changes
+	 */
 	@Override
 	public void tableChanged(TableModelEvent event) {
 		Logger.getAnonymousLogger().info("row=" + event.getFirstRow() + ",column" + event.getColumn());

@@ -10,8 +10,8 @@ import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
-import javax.swing.JFrame;
-import java.awt.HeadlessException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Scanner;
@@ -25,8 +25,8 @@ import java.util.Scanner;
 public final class RandomToolsTest {
 
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix)
-			throws
-			HeadlessException {
+		throws
+		HeadlessException {
 		// Show a frame with a table
 		JFrame maFenetre = new JFrame("Aperçu de la Matrice de Préférences");
 		maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,8 +36,8 @@ public final class RandomToolsTest {
 	}
 
 	public static void main(String[] args)
-			throws
-			IOException {
+		throws
+		IOException {
 
 		final Scanner userInput = new Scanner(System.in);
 		final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
@@ -94,7 +94,7 @@ public final class RandomToolsTest {
 
 		//Writing of the headers of the table in which events are memorised
 		csa.append(
-				"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
+			"BestFit;Saaty i;Saaty j;Saaty consistency;BestFit for random value;Random i;Random j;Position in Saaty's ranking;Random consistency;Expert Init Value;Expert Changed Value;CR\n");
 		csa.appendLineFeed();
 		csa.close();
 
@@ -105,17 +105,17 @@ public final class RandomToolsTest {
 			iterationCounter++;
 
 			System.out.println("\n**********          Matrice incohérente"
-							   + "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
-							   + "\n");
+				+ "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
+				+ "\n");
 
 			nonSortedMatrixValues = RandomTools.getRank(preferenceMatrix);
 			matrixValue = RandomTools.getValueToModifiyByRanking(nonSortedMatrixValues);
 
 			/*Writing of Saaty's propositions and of random ranking*/
 			RandomTools.writeRandomAndSaatyPropositions(preferenceMatrix,
-														nonSortedMatrixValues,
-														matrixValue,
-														priorityVector, file);
+				nonSortedMatrixValues,
+				matrixValue,
+				priorityVector, file);
 
 			/*Writing of the value, which will be changed by the expert*/
 			csa = new CharSequenceAppender(file);
@@ -124,7 +124,7 @@ public final class RandomToolsTest {
 			csa.appendCommaSeparator();
 
 			System.out.println(
-					"Vous avez choisi de remplacer la valeur "
+				"Vous avez choisi de remplacer la valeur "
 					+ matrixValue.getValue()
 					+ " de coordonnées "
 					+ " ( "
@@ -143,7 +143,7 @@ public final class RandomToolsTest {
 
 			while (!SaatyToolsTest.isInSaatyScale(newValue)) {
 				System.out.println(
-						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+					"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
 				myParser.parseExpression(expertsChoice);
 				newValue = myParser.getValue();
@@ -191,8 +191,8 @@ public final class RandomToolsTest {
 
 		System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 		System.out.println("***********************************************"
-						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
-						   + "***********************************************");
+			+ "\n**  Félicitation ! La matrice est cohérente  **\n"
+			+ "***********************************************");
 
 		csa = new CharSequenceAppender(file);
 		//Ecriture de la matrice et du vecteur de priorité dans le fichier

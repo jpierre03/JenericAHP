@@ -25,7 +25,7 @@ import org.taeradan.ahp.prototype.gui.PairWiseMatrixChangeListener;
 import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
 
 import javax.swing.*;
-import java.awt.Frame;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,13 +35,15 @@ import java.awt.event.ActionListener;
  * @author Yves Dubromelle
  */
 public final class RootDialog
-		extends JDialog {
+	extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private final AHPRoot                  AHPRoot;
+	private final AHPRoot AHPRoot;
 	private final PairWiseMatrixTableModel guiPrefMatrix;
 
-	/** Creates new form CriteriaDialog */
+	/**
+	 * Creates new form CriteriaDialog
+	 */
 	public RootDialog(Frame parent, boolean modal, AHPRoot AHPRoot) {
 		super(parent, modal);
 		this.AHPRoot = AHPRoot;
@@ -94,46 +96,46 @@ public final class RootDialog
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addGroup(layout.createSequentialGroup()
-									  .addContainerGap()
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-													  .addComponent(jScrollPane1,
-																	GroupLayout.DEFAULT_SIZE,
-																	383,
-																	Short.MAX_VALUE)
-													  .addGroup(GroupLayout.Alignment.TRAILING,
-																layout.createSequentialGroup()
-																	  .addComponent(jButtonSave)
-																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addComponent(jButtonReload))
-													  .addGroup(layout.createSequentialGroup()
-																	  .addComponent(jLabelObjective)
-																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addComponent(jTextFieldObjective,
-																					GroupLayout.DEFAULT_SIZE,
-																					286,
-																					Short.MAX_VALUE)))
-									  .addContainerGap())
-								 );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(jScrollPane1,
+							GroupLayout.DEFAULT_SIZE,
+							383,
+							Short.MAX_VALUE)
+						.addGroup(GroupLayout.Alignment.TRAILING,
+							layout.createSequentialGroup()
+								.addComponent(jButtonSave)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(jButtonReload))
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(jLabelObjective)
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+							.addComponent(jTextFieldObjective,
+								GroupLayout.DEFAULT_SIZE,
+								286,
+								Short.MAX_VALUE)))
+					.addContainerGap())
+		);
 		layout.setVerticalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addGroup(layout.createSequentialGroup()
-									  .addContainerGap()
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-													  .addComponent(jLabelObjective)
-													  .addComponent(jTextFieldObjective,
-																	GroupLayout.PREFERRED_SIZE,
-																	GroupLayout.DEFAULT_SIZE,
-																	GroupLayout.PREFERRED_SIZE))
-									  .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									  .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-									  .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-													  .addComponent(jButtonReload)
-													  .addComponent(jButtonSave))
-									  .addContainerGap())
-							   );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jLabelObjective)
+						.addComponent(jTextFieldObjective,
+							GroupLayout.PREFERRED_SIZE,
+							GroupLayout.DEFAULT_SIZE,
+							GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jButtonReload)
+						.addComponent(jButtonSave))
+					.addContainerGap())
+		);
 
 		pack();
 	}
@@ -146,7 +148,7 @@ public final class RootDialog
 	private void jButtonSaveActionPerformed() {
 		AHPRoot.guiMethods.setName(jTextFieldObjective.getText());
 		final PairWiseMatrix matrix =
-				new PairWiseMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
+			new PairWiseMatrix(guiPrefMatrix.getRowCount(), guiPrefMatrix.getColumnCount());
 		for (int i = 0; i < guiPrefMatrix.getRowCount(); i++) {
 			for (int j = 0; j < guiPrefMatrix.getColumnCount(); j++) {
 				double value = 0;
@@ -165,12 +167,12 @@ public final class RootDialog
 		this.dispose();
 	}
 
-	private JButton     jButtonReload;
-	private JButton     jButtonSave;
-	private JLabel      jLabelObjective;
+	private JButton jButtonReload;
+	private JButton jButtonSave;
+	private JLabel jLabelObjective;
 	private JScrollPane jScrollPane1;
-	private JTable      jTablePrefMatrix;
-	private JTextField  jTextFieldObjective;
+	private JTable jTablePrefMatrix;
+	private JTextField jTextFieldObjective;
 
 	private void initTable() {
 		final int matrixSize = AHPRoot.guiMethods.getCriteria().size();

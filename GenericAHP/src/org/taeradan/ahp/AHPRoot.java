@@ -31,7 +31,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +44,7 @@ import java.util.logging.Logger;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public class AHPRoot{
+public class AHPRoot {
 
 	/**
 	 * Contains the path to access indicators
@@ -54,7 +57,7 @@ public class AHPRoot{
 	private static final boolean DEBUG = false;
 
 	private class AHP_Structure
-			implements XmlOutputable {
+		implements XmlOutputable {
 		private String name = "";
 		private Matrix matrixAlternativesCriteria;
 		private PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
@@ -63,9 +66,9 @@ public class AHPRoot{
 		private Collection<Criterion> criteria = new ArrayList<>();
 
 		public void build(File inFile)
-				throws
-				JDOMException,
-				IOException {
+			throws
+			JDOMException,
+			IOException {
 			//			XML parser creation
 			final SAXBuilder parser = new SAXBuilder();
 //			JDOM document created from XML configuration file
@@ -88,7 +91,7 @@ public class AHPRoot{
 //			Verification that the number of criteria matches the size of the preference matrix
 			if (xmlCriteriaList.size() != xmlRowsList.size()) {
 				throw new IllegalArgumentException(
-						"Error : the number of criteria and the size of the preference matrix does not match !");
+					"Error : the number of criteria and the size of the preference matrix does not match !");
 			}
 
 			for (Element xmlCriteria : xmlCriteriaList) {
@@ -201,12 +204,12 @@ public class AHPRoot{
 	 */
 	public AHPRoot(final File inFile, final String indicatorPath) {
 		if (inFile == null
-				|| !inFile.exists()
-				|| !inFile.canRead()) {
+			|| !inFile.exists()
+			|| !inFile.canRead()) {
 			throw new IllegalArgumentException("File should exist and be read");
 		}
 		if (indicatorPath == null
-				|| indicatorPath.isEmpty()) {
+			|| indicatorPath.isEmpty()) {
 			throw new IllegalArgumentException("indicatorPath should be defined");
 		}
 
@@ -265,9 +268,9 @@ public class AHPRoot{
 		try {
 //			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
 			final Document outXmlDocument =
-					new Document(structure.toXml(),
-							new DocType("root",
-									getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
+				new Document(structure.toXml(),
+					new DocType("root",
+						getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 
 //			Use a write format easily readable by a human
 			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
@@ -306,7 +309,7 @@ public class AHPRoot{
 //		Calculation of the final alternatives priority vector
 		structure.vectorAlternativesGoal = new PriorityVector(structure.matrixAlternativesCriteria.getRowDimension());
 		structure.vectorAlternativesGoal.setMatrix(alternatives.size() - 1,
-				structure.matrixAlternativesCriteria.times(structure.vectorCriteriaGoal));
+			structure.matrixAlternativesCriteria.times(structure.vectorCriteriaGoal));
 
 //			Ranking of the alternatives with the MOg vector
 		final double[][] sortedVectorAlternativesGoal = structure.vectorAlternativesGoal.getArrayCopy();

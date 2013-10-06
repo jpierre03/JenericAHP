@@ -53,7 +53,7 @@ public final class SaatyTools {
 		while (!myTreeMap.isEmpty()) {
 			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
 			System.out.println(
-					+matrixValue.getValue()
+				+matrixValue.getValue()
 					+ " ( "
 					+ matrixValue.getRow()
 					+ " , "
@@ -85,10 +85,10 @@ public final class SaatyTools {
 	 * Calculates the espilon matrix of Saaty ; Epsilon[i][j]=A[i][j]*w[j]/w[j]
 	 */
 	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector) {
+						      MyMatrix priorityVector) {
 
 		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(),
-										myPreferenceMatrix.getColumnDimension());
+			myPreferenceMatrix.getColumnDimension());
 
 		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
 			for (int j = 0; j < myPreferenceMatrix.getColumnDimension(); j++) {
@@ -113,9 +113,9 @@ public final class SaatyTools {
 	}
 
 	public static double calculateBestFit(MyMatrix preferenceMatrix,
-										  MyMatrix priorityVector,
-										  int i,
-										  int j) {
+					      MyMatrix priorityVector,
+					      int i,
+					      int j) {
 
 		MatrixValue matrixValue;
 		MyMatrix tempMatrix = new MyMatrix();
@@ -147,8 +147,8 @@ public final class SaatyTools {
 	}
 
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector,
-												  MyMatrix epsilon) {
+						      MyMatrix priorityVector,
+						      MyMatrix epsilon) {
 
 
 		MatrixValue sortedMatrixValue;

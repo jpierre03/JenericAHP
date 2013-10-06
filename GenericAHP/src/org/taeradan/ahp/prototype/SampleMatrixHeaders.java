@@ -16,37 +16,37 @@ public final class SampleMatrixHeaders {
 		if (isTestB == true) {
 			if (isEnglish == false) {
 				String columnNames[] = {"Temps de transport",
-										"Coût",
-										"Confort",
-										"Pollution",
-										"Qualité de service",
-										"Sécurité"};
+					"Coût",
+					"Confort",
+					"Pollution",
+					"Qualité de service",
+					"Sécurité"};
 				return columnNames;
 			} else {
 				String columnNames[] = {"Travel time",
-										"Cost",
-										"Comfort",
-										"Pollution",
-										"Quality of Service",
-										"Security"};
+					"Cost",
+					"Comfort",
+					"Pollution",
+					"Quality of Service",
+					"Security"};
 				return columnNames;
 			}
 		} else {
 			if (isEnglish == false) {
 				String columnNames[] = {"Prix",
-										"Sécurité",
-										"Pollution",
-										"Design",
-										"Durée de vie",
-										"Taille"};
+					"Sécurité",
+					"Pollution",
+					"Design",
+					"Durée de vie",
+					"Taille"};
 				return columnNames;
 			} else {
 				String columnNames[] = {"Price",
-										"Security",
-										"Pollution",
-										"Design",
-										"Life",
-										"Size"};
+					"Security",
+					"Pollution",
+					"Design",
+					"Life",
+					"Size"};
 				return columnNames;
 			}
 		}

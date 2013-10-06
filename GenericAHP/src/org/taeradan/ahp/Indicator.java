@@ -30,29 +30,33 @@ import java.util.Collection;
  * @author Yves Dubromelle
  */
 public abstract class Indicator
-		implements XmlOutputable {
+	implements XmlOutputable {
 
-    private static final String MAXIMIZE = "maximize";
-    private static final String MINIMIZE = "minimize";
+	private static final String MAXIMIZE = "maximize";
+	private static final String MINIMIZE = "minimize";
 
-    //	AHP configuration attributes
+	//	AHP configuration attributes
 	private String identifier;
 	private String name;
 	private boolean maximization = true;
 
 	//	AHP execution attributes
-	private PriorityVector                    alternativeIndicatorVector;
-	private PairWiseMatrix                    alternativeAlternativeMatrix;
+	private PriorityVector alternativeIndicatorVector;
+	private PairWiseMatrix alternativeAlternativeMatrix;
 	private Collection<? extends Alternative> lastAlternatives;
 
-	/** Creates an Indicator from a JDOM Element */
+	/**
+	 * Creates an Indicator from a JDOM Element
+	 */
 	protected Indicator(final Element xmlIndicator) {
 		this.fromXml(xmlIndicator);
 	}
 
-	/** Method called by the criteria for the execution of the AHP algorithm. */
+	/**
+	 * Method called by the criteria for the execution of the AHP algorithm.
+	 */
 	public PriorityVector calculateAlternativesPriorityVector(
-			final Collection<? extends Alternative> alternatives) {
+		final Collection<? extends Alternative> alternatives) {
 
 		this.lastAlternatives = alternatives;
 		final int dimension = this.lastAlternatives.size();
@@ -97,15 +101,15 @@ public abstract class Indicator
 	 * @return Indicator value
 	 */
 	public abstract double calculateAlternativeValue(int alternativeIndex,
-													 Collection<? extends Alternative> alternatives);
+							 Collection<? extends Alternative> alternatives);
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Indicator " + identifier + " : " + name);
 
-        sb.append(", ");
+		sb.append(", ");
 		if (isMaximized()) {
-            sb.append(MAXIMIZE);
+			sb.append(MAXIMIZE);
 		} else {
 			sb.append(MINIMIZE);
 		}

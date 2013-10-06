@@ -2,8 +2,7 @@ package org.taeradan.ahp.prototype.gui.yannick;
 
 import org.taeradan.ahp.matrix.MyMatrix;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
+import javax.swing.*;
 
 public final class MonCellRendererTest {
 	private MonCellRendererTest() {

@@ -9,13 +9,12 @@ package org.taeradan.ahp.prototype.gui.yannick;
  * @author Yannick
  */
 
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 
 class MonCellRenderer
-		extends DefaultTableCellRenderer {
+	extends DefaultTableCellRenderer {
 
 	private int row;
 	private int col;
@@ -43,14 +42,14 @@ class MonCellRenderer
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table,
-												   Object value,
-												   boolean isSelected,
-												   boolean hasFocus,
-												   int row,
-												   int column) {
+						       Object value,
+						       boolean isSelected,
+						       boolean hasFocus,
+						       int row,
+						       int column) {
 
 		Component cell = super.getTableCellRendererComponent(table, value,
-															 isSelected, hasFocus, row, column);
+			isSelected, hasFocus, row, column);
 
 		if (row == this.row && column == this.col) {
 			cell.setBackground(Color.YELLOW);

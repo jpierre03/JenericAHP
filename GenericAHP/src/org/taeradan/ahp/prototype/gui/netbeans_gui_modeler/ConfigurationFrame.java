@@ -26,7 +26,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -42,7 +42,7 @@ import java.util.Collection;
  * @author Jean-Pierre PRUNARET
  */
 public final class ConfigurationFrame
-		extends JFrame {
+	extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final transient DefaultTreeModel guiAhpTree;
@@ -50,7 +50,9 @@ public final class ConfigurationFrame
 	private transient AHPRoot ahpAHPRoot;
 	private transient boolean fileOpened = false;
 
-	/** Creates new form ConfigurationFrame */
+	/**
+	 * Creates new form ConfigurationFrame
+	 */
 	private ConfigurationFrame() {
 		super();
 //		Instanciation of an empty TreeModel
@@ -129,13 +131,13 @@ public final class ConfigurationFrame
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
-								 );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+		);
 		layout.setVerticalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-							   );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+		);
 
 		pack();
 	}
@@ -151,8 +153,8 @@ public final class ConfigurationFrame
 		if (jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null) {
 //				Retrieve the selected node
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTreeAhp.getPathForLocation(
-					evt.getX(),
-					evt.getY()).getLastPathComponent();
+				evt.getX(),
+				evt.getY()).getLastPathComponent();
 //				Handling of the the left button double click
 			if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
 				final Object object = node.getUserObject();
@@ -249,7 +251,6 @@ public final class ConfigurationFrame
 
 	/**
 	 * Handles the event of the "Open" menu. Launch a file selector to choose a configuration file to open.
-	 *
 	 */
 	private void jMenuItemOpenActionPerformed() {
 		jFileChooser = new JFileChooser(currentFile);
@@ -277,7 +278,9 @@ public final class ConfigurationFrame
 		}
 	}
 
-	/** Handles the event of the "Save under" menu. Launch a file selector to choose a file to write. */
+	/**
+	 * Handles the event of the "Save under" menu. Launch a file selector to choose a file to write.
+	 */
 	private void jMenuItemSaveUnderActionPerformed() {
 		jFileChooser = new JFileChooser(currentFile);
 		jFileChooser.setApproveButtonText("Save");
@@ -308,10 +311,10 @@ public final class ConfigurationFrame
 
 	private void delRootActionPerformed() {
 		if (JOptionPane.showConfirmDialog(
-				this,
-				"Are you sure ? The whole tree will be destroyed.",
-				"Confirmation needed",
-				JOptionPane.YES_NO_OPTION) == 0) {
+			this,
+			"Are you sure ? The whole tree will be destroyed.",
+			"Confirmation needed",
+			JOptionPane.YES_NO_OPTION) == 0) {
 
 			ahpAHPRoot = new AHPRoot(null, AHPRoot.DEFAULT_INDICATOR_PATH);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
@@ -321,10 +324,10 @@ public final class ConfigurationFrame
 
 	private void delCriteriaActionPerformed(final Criterion criterion) {
 		if (JOptionPane.showConfirmDialog(
-				this,
-				"Are you sure ? The criterion and its indicators will be destroyed.",
-				"Confirmation needed",
-				JOptionPane.YES_NO_OPTION) == 0) {
+			this,
+			"Are you sure ? The criterion and its indicators will be destroyed.",
+			"Confirmation needed",
+			JOptionPane.YES_NO_OPTION) == 0) {
 
 			ahpAHPRoot.guiMethods.removeCriterion(criterion);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
@@ -333,10 +336,10 @@ public final class ConfigurationFrame
 
 	private void delIndicatorActionPerformed() {
 		if (JOptionPane.showConfirmDialog(
-				this,
-				"Are you sure ? The indicator will be destroyed.",
-				"Confirmation needed",
-				JOptionPane.YES_NO_OPTION) == 0) {
+			this,
+			"Are you sure ? The indicator will be destroyed.",
+			"Confirmation needed",
+			JOptionPane.YES_NO_OPTION) == 0) {
 		}
 	}
 
@@ -351,14 +354,14 @@ public final class ConfigurationFrame
 	}
 
 	private JFileChooser jFileChooser;
-	private JMenuBar     jMenuBar1;
-	private JMenu        jMenuFile;
-	private JMenuItem    jMenuItemOpen;
-	private JMenuItem    jMenuItemQuit;
-	private JMenuItem    jMenuItemSave;
-	private JMenuItem    jMenuItemSaveUnder;
-	private JScrollPane  jScrollPane1;
-	private JTree        jTreeAhp;
+	private JMenuBar jMenuBar1;
+	private JMenu jMenuFile;
+	private JMenuItem jMenuItemOpen;
+	private JMenuItem jMenuItemQuit;
+	private JMenuItem jMenuItemSave;
+	private JMenuItem jMenuItemSaveUnder;
+	private JScrollPane jScrollPane1;
+	private JTree jTreeAhp;
 
 	/**
 	 * Takes an initialized AHP root element and produces a tree by processing the AHP hierarchy
@@ -378,9 +381,9 @@ public final class ConfigurationFrame
 //			Criterion node attached to the root node
 			guiRoot.add(guiCriteria.get(i));
 			final Collection<Indicator> ahpIndicators = ((Criterion) ahpCriteria.toArray()[i]).
-																									  getIndicators();
+				getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators =
-					new ArrayList<>();
+				new ArrayList<>();
 //			For each indicator in the criteria
 			for (int j = 0; j < ahpIndicators.size(); j++) {
 //				Real indicator attached to an indicator node

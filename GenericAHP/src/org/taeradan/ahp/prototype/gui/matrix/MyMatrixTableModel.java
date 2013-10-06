@@ -27,7 +27,7 @@ import org.taeradan.ahp.prototype.gui.PairWiseMatrixTableModel;
  * @author Yves Dubromelle
  */
 public final class MyMatrixTableModel
-		extends PairWiseMatrixTableModel {
+	extends PairWiseMatrixTableModel {
 
 	private static final long serialVersionUID = 1L;
 
