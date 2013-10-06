@@ -33,6 +33,7 @@ import java.util.logging.Logger;
  * algorithm.
  *
  * @author Yves Dubromelle
+ * @author Jean-Pierre PRUNARET
  */
 public class Criterion
 	implements XmlOutputable {
@@ -48,6 +49,8 @@ public class Criterion
 	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 	private PriorityVector vectorAlternativesCriteria;
 
+	private final Logger logger = Logger.getAnonymousLogger();
+
 	/**
 	 * Creates a AHP Criterion from a JDOM Element
 	 *
@@ -56,16 +59,16 @@ public class Criterion
 	public Criterion(final Element xmlCriteria) {
 		/** Initialisation of the id of the criteria */
 		identifier = xmlCriteria.getAttributeValue("id");
-//		System.out.println("\tCriterion.id="+id);
+		info("\tCriterion.identifier=" + identifier);
 
 		/** Initialisation of the name */
 		name = xmlCriteria.getChildText("name");
-//		System.out.println("\tCriterion.name="+name);
+		info("\tCriterion.name=" + name);
 
 		/** Initialisation of the preference matrix */
 		final Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
 		matrixIndicatorIndicator = PairWiseMatrix.builder(xmlPrefMatrix);
-//		System.out.println("\tCriterion.matrixIndicatorIndicator="+matrixIndicatorIndicator);
+		info("\tCriterion.matrixIndicatorIndicator=" + matrixIndicatorIndicator);
 		vectorIndicatorCriteria = PriorityVector.build(matrixIndicatorIndicator);
 
 		/** Consistency verification */
@@ -87,8 +90,8 @@ public class Criterion
 		}
 		/** For each indicator declared in the configuration file */
 		for (Element xmlIndicator : xmlIndicatorsList) {
-			//				System.out.println("\tCriterion.xmlIndicator="+xmlIndicator);
-//				System.out.println("\tCriterion.xmlIndicator.attValue="+xmlIndicator.getAttributeValue("id"));
+			info("\tCriterion.xmlIndicator=" + xmlIndicator);
+			info("\tCriterion.xmlIndicator.attValue=" + xmlIndicator.getAttributeValue("id"));
 			final String indicatorName = AHPRoot.indicatorPath
 				+ Indicator.class.getSimpleName()
 				+ xmlIndicator.getAttributeValue("id");
@@ -96,14 +99,15 @@ public class Criterion
 				/** Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy" */
 				@SuppressWarnings("unchecked")
 				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(indicatorName);
-//					System.out.println("\t\tCriterion.indClass="+indClass);
+				info("\t\tCriterion.indClass=" + indClass);
 				/** Extraction of its constructor */
 				final Constructor<? extends Indicator> indConstruct = indClass.getConstructor(Element.class);
-//					System.out.println("\t\tCriterion.indConstruct="+indConstruct);
+				info("\t\tCriterion.indConstruct=" + indConstruct);
 				/** Instanciation of the indicator with its constructor */
-				indicators.add(indConstruct.newInstance(xmlIndicator));
+				Indicator indicator = indConstruct.newInstance(xmlIndicator);
+				indicators.add(indicator);
 
-//					System.out.println("\tCriterion.indicator="+indicators.get(i));
+				info("\tCriterion.indicator=" + indicator.toString());
 			} catch (NoSuchMethodException e) {
 				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : no such constructor :{0}", e);
 			} catch (ClassNotFoundException e) {
@@ -121,7 +125,7 @@ public class Criterion
 
 		final PairWiseMatrix matrixAlternativesIndicator = new PairWiseMatrix(alternatives.size(), indicators.size());
 
-//		Concatenation of the indicators' alternatives vectors
+		/** Concatenation of the indicators' alternatives vectors **/
 		final Iterator<Indicator> indicatorIterator = indicators.iterator();
 		int index = 0;
 		while (indicatorIterator.hasNext()) {
@@ -135,7 +139,7 @@ public class Criterion
 			index++;
 		}
 
-//		Calculation of the criteria's alternatives vector
+		/** Calculation of the criteria's alternatives vector */
 		vectorAlternativesCriteria = new PriorityVector(matrixAlternativesIndicator.getRowDimension());
 		vectorAlternativesCriteria.setMatrix(
 			matrixAlternativesIndicator.getRowDimension() - 1,
@@ -145,7 +149,7 @@ public class Criterion
 	}
 
 	/**
-	 * @return Ca string describing the criteria, but not its children
+	 * @return Criterion description alone (no child)
 	 */
 	@Override
 	public String toString() {
@@ -153,7 +157,7 @@ public class Criterion
 	}
 
 	/**
-	 * @return a string describing the criterion and all its children
+	 * @return Criterion description with all its children
 	 */
 	public String toStringRecursive() {
 		final StringBuilder sb = new StringBuilder(this.toString());
@@ -224,5 +228,9 @@ public class Criterion
 
 	public Collection<Indicator> getIndicators() {
 		return indicators;
+	}
+
+	private void info(String msg) {
+		logger.info(msg);
 	}
 }
