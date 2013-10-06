@@ -51,7 +51,7 @@ public class Criterion
 
 	private final Logger logger = Logger.getAnonymousLogger();
 
-	enum XmlKey{
+	enum XmlKey {
 		id, name, criteria, indicator, row, prefmatrix
 	}
 
@@ -63,46 +63,53 @@ public class Criterion
 	public Criterion(final Element xmlCriteria) {
 		/** Initialisation of the id of the criteria */
 		identifier = xmlCriteria.getAttributeValue(XmlKey.id.name());
-		info("\tCriterion.identifier=" + identifier);
 
 		/** Initialisation of the name */
 		name = xmlCriteria.getChildText(XmlKey.name.name());
-		info("\tCriterion.name=" + name);
 
 		/** Initialisation of the preference matrix */
 		final Element xmlPrefMatrix = xmlCriteria.getChild(XmlKey.prefmatrix.name());
 		matrixIndicatorIndicator = PairWiseMatrix.builder(xmlPrefMatrix);
-		info("\tCriterion.matrixIndicatorIndicator=" + matrixIndicatorIndicator);
 		vectorIndicatorCriteria = PriorityVector.build(matrixIndicatorIndicator);
+
+		info("\tCriterion.identifier=" + identifier);
+		info("\tCriterion.name=" + name);
+		info("\tCriterion.matrixIndicatorIndicator=" + matrixIndicatorIndicator);
+
 
 		/** Consistency verification */
 		if (!consistencyChecker.isConsistent(matrixIndicatorIndicator, vectorIndicatorCriteria)) {
-			logger.log(Level.SEVERE,
-				"Is not consistent (criteria {0})",
-				identifier);
+			logger.log(Level.SEVERE, "Is not consistent (criteria {0})", identifier);
+			throw new IllegalStateException("criterion not consistent");
 		}
+
 		/** Initialisation of the Indicators */
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren(XmlKey.indicator.name());
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(XmlKey.row.name());
-		indicators = new ArrayList<>(xmlIndicatorsList.size());
+
 		/** Verification that the number of indicators matches the size of the matrix */
 		if (xmlIndicatorsList.size() != xmlRowsList.size()) {
-			Logger.getAnonymousLogger().severe(
-				"Error : the number of Indicators and the size of the preference matrix does not match !");
+			final String msg = "Error : the number of Indicators and the size of the preference matrix does not match !";
+			logger.severe(msg);
+			throw new IllegalStateException(msg);
 		}
+
+		indicators = new ArrayList<>(xmlIndicatorsList.size());
 		/** For each indicator declared in the configuration file */
 		for (Element xmlIndicator : xmlIndicatorsList) {
 			info("\tCriterion.xmlIndicator=" + xmlIndicator);
 			info("\tCriterion.xmlIndicator.attValue=" + xmlIndicator.getAttributeValue(XmlKey.id.name()));
-			final String indicatorName = AHPRoot.indicatorPath
+
+			final String indicatorFullClassName = AHPRoot.indicatorPath
 				+ Indicator.class.getSimpleName()
 				+ xmlIndicator.getAttributeValue(XmlKey.id.name());
+
 			try {
 				/** Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy" */
 				@SuppressWarnings("unchecked")
-				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(indicatorName);
+				final Class<? extends Indicator> indClass = (Class<? extends Indicator>) Class.forName(indicatorFullClassName);
 				info("\t\tCriterion.indClass=" + indClass);
 				/** Extraction of its constructor */
 				final Constructor<? extends Indicator> indConstruct = indClass.getConstructor(Element.class);
@@ -113,13 +120,11 @@ public class Criterion
 
 				info("\tCriterion.indicator=" + indicator.toString());
 			} catch (NoSuchMethodException e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE, "Error : no such constructor :{0}", e);
+				logger.log(Level.SEVERE, "Error : no such constructor :{0}", e);
 			} catch (ClassNotFoundException e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE,
-					"Error : class {0} not found :{1}",
-					new Object[]{indicatorName, e});
+				logger.log(Level.SEVERE, "Error : class {0} not found :{1}", new Object[]{indicatorFullClassName, e});
 			} catch (Exception e) {
-				Logger.getAnonymousLogger().log(Level.SEVERE, "Error :{0}", e);
+				logger.log(Level.SEVERE, "Error :{0}", e);
 			}
 		}
 	}
@@ -127,27 +132,26 @@ public class Criterion
 	public PriorityVector calculateAlternativesPriorityVector(
 		final Collection<? extends Alternative> alternatives) {
 
-		final PairWiseMatrix matrixAlternativesIndicator = new PairWiseMatrix(alternatives.size(), indicators.size());
+		final PairWiseMatrix alternativesIndicatorMatrix = new PairWiseMatrix(alternatives.size(), indicators.size());
 
 		/** Concatenation of the indicators' alternatives vectors **/
-		final Iterator<Indicator> indicatorIterator = indicators.iterator();
 		int index = 0;
-		while (indicatorIterator.hasNext()) {
-			matrixAlternativesIndicator.setMatrix(
+		for (Indicator indicator : indicators) {
+			alternativesIndicatorMatrix.setMatrix(
 				0,
 				alternatives.size() - 1,
 				index,
 				index,
-				indicatorIterator.next().calculateAlternativesPriorityVector(alternatives));
+				indicator.calculateAlternativesPriorityVector(alternatives));
 
 			index++;
 		}
 
 		/** Calculation of the criteria's alternatives vector */
-		vectorAlternativesCriteria = new PriorityVector(matrixAlternativesIndicator.getRowDimension());
+		vectorAlternativesCriteria = new PriorityVector(alternativesIndicatorMatrix.getRowDimension());
 		vectorAlternativesCriteria.setMatrix(
-			matrixAlternativesIndicator.getRowDimension() - 1,
-			matrixAlternativesIndicator.times(vectorIndicatorCriteria));
+			alternativesIndicatorMatrix.getRowDimension() - 1,
+			alternativesIndicatorMatrix.times(vectorIndicatorCriteria));
 
 		return vectorAlternativesCriteria;
 	}
