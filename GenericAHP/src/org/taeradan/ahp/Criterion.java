@@ -51,6 +51,10 @@ public class Criterion
 
 	private final Logger logger = Logger.getAnonymousLogger();
 
+	enum XmlKey{
+		id, name, criteria, indicator, row, prefmatrix
+	}
+
 	/**
 	 * Creates a AHP Criterion from a JDOM Element
 	 *
@@ -58,30 +62,30 @@ public class Criterion
 	 */
 	public Criterion(final Element xmlCriteria) {
 		/** Initialisation of the id of the criteria */
-		identifier = xmlCriteria.getAttributeValue("id");
+		identifier = xmlCriteria.getAttributeValue(XmlKey.id.name());
 		info("\tCriterion.identifier=" + identifier);
 
 		/** Initialisation of the name */
-		name = xmlCriteria.getChildText("name");
+		name = xmlCriteria.getChildText(XmlKey.name.name());
 		info("\tCriterion.name=" + name);
 
 		/** Initialisation of the preference matrix */
-		final Element xmlPrefMatrix = xmlCriteria.getChild("prefmatrix");
+		final Element xmlPrefMatrix = xmlCriteria.getChild(XmlKey.prefmatrix.name());
 		matrixIndicatorIndicator = PairWiseMatrix.builder(xmlPrefMatrix);
 		info("\tCriterion.matrixIndicatorIndicator=" + matrixIndicatorIndicator);
 		vectorIndicatorCriteria = PriorityVector.build(matrixIndicatorIndicator);
 
 		/** Consistency verification */
 		if (!consistencyChecker.isConsistent(matrixIndicatorIndicator, vectorIndicatorCriteria)) {
-			Logger.getAnonymousLogger().log(Level.SEVERE,
+			logger.log(Level.SEVERE,
 				"Is not consistent (criteria {0})",
 				identifier);
 		}
 		/** Initialisation of the Indicators */
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren("indicator");
+		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren(XmlKey.indicator.name());
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren("row");
+		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(XmlKey.row.name());
 		indicators = new ArrayList<>(xmlIndicatorsList.size());
 		/** Verification that the number of indicators matches the size of the matrix */
 		if (xmlIndicatorsList.size() != xmlRowsList.size()) {
@@ -91,10 +95,10 @@ public class Criterion
 		/** For each indicator declared in the configuration file */
 		for (Element xmlIndicator : xmlIndicatorsList) {
 			info("\tCriterion.xmlIndicator=" + xmlIndicator);
-			info("\tCriterion.xmlIndicator.attValue=" + xmlIndicator.getAttributeValue("id"));
+			info("\tCriterion.xmlIndicator.attValue=" + xmlIndicator.getAttributeValue(XmlKey.id.name()));
 			final String indicatorName = AHPRoot.indicatorPath
 				+ Indicator.class.getSimpleName()
-				+ xmlIndicator.getAttributeValue("id");
+				+ xmlIndicator.getAttributeValue(XmlKey.id.name());
 			try {
 				/** Research of the class implementing the indicator , named "org.taeradan.ahp.ind.IndicatorCxIy" */
 				@SuppressWarnings("unchecked")
@@ -180,9 +184,9 @@ public class Criterion
 	 */
 	@Override
 	public Element toXml() {
-		final Element xmlCriteria = new Element("criteria");
-		xmlCriteria.setAttribute("id", identifier);
-		xmlCriteria.addContent(new Element("name").setText(name));
+		final Element xmlCriteria = new Element(XmlKey.criteria.name());
+		xmlCriteria.setAttribute(XmlKey.id.name(), identifier);
+		xmlCriteria.addContent(new Element(XmlKey.name.name()).setText(name));
 		xmlCriteria.addContent(matrixIndicatorIndicator.toXml());
 		for (Indicator indicator : indicators) {
 			xmlCriteria.addContent(indicator.toXml());
