@@ -28,7 +28,13 @@ import java.math.BigDecimal;
 public class PriorityVector
 	extends MyMatrix {
 
+	/**
+	 * A standard matrix should be far smaller than that.
+	 */
 	private static final int MAX_DIMENSION = 1000;
+	/**
+	 * high value (normal genetic operations require high value)
+	 */
 	private static final int MAX_ITERATION = 150;
 
 	public PriorityVector(int i) {
@@ -37,6 +43,7 @@ public class PriorityVector
 
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
+		assert matrix.getColumnDimension() == matrix.getRowDimension() : "the matrix should be square";
 		assert dimension > 0 : "Matrix dimension, can't be negative";
 		assert dimension <= MAX_DIMENSION : "So huge matrix, you should double check (size=" + dimension + ")";
 
@@ -45,7 +52,6 @@ public class PriorityVector
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
 
-		// high value (normal genetic operations require high value)
 
 		Matrix lastVector;
 		boolean isUnderTreshold;
@@ -60,7 +66,7 @@ public class PriorityVector
 			for (int i = 0; i < dimension; i++) {
 				double valeur0 = difference.get(i, 0);
 				if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
-//						difference en dessous du seuil
+					/** difference en dessous du seuil */
 					isUnderTreshold = false;
 				}
 			}
