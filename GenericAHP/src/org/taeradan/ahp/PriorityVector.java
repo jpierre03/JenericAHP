@@ -36,6 +36,10 @@ public class PriorityVector
 	 * high value (normal genetic operations require high value)
 	 */
 	private static final int MAX_ITERATION = 150;
+	/**
+	 * This treshold is used to stop iteration
+	 */
+	private static final double EQUALITY_TRESHOLD = 1E-16;
 
 	public PriorityVector(int i) {
 		super(i, 1);
@@ -65,7 +69,8 @@ public class PriorityVector
 			isUnderTreshold = true;
 			for (int i = 0; i < dimension; i++) {
 				double valeur0 = difference.get(i, 0);
-				if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
+
+				if (new BigDecimal(valeur0).abs().doubleValue() > EQUALITY_TRESHOLD) {
 					/** difference en dessous du seuil */
 					isUnderTreshold = false;
 				}
