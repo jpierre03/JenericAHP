@@ -17,18 +17,25 @@ public class CharSequenceAppender {
 
 	private PrintWriter output;
 
-	public CharSequenceAppender(String nomFichier)
-		throws
-		IOException {
-		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
+	public CharSequenceAppender(String fileName) throws IOException {
+		assert fileName != null;
+		assert !fileName.trim().isEmpty();
+
+		output = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+
+		assert output != null;
 	}
 
-	public void append(CharSequence object) {
-		output.append(object);
+	public void append(CharSequence sequence) {
+		assert sequence != null;
+
+		output.append(sequence);
 	}
 
-	public void append(MyMatrix myMatrix) {
-		appendMatrix(myMatrix);
+	public void append(MyMatrix matrix) {
+		assert matrix != null;
+
+		appendMatrix(matrix);
 	}
 
 	public void appendLineFeed() {
@@ -43,22 +50,19 @@ public class CharSequenceAppender {
 		output.close();
 	}
 
-	private void appendMatrix(MyMatrix myMatrix) {
-		String string = "";
+	private void appendMatrix(MyMatrix matrix) {
+		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
+		for (int i = 0; i < matrix.getRowDimension(); i++) {
+			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 
-
-				string += myMatrix.getMatrixValue(i, j).getValue() + ";";
+				sb.append(matrix.getMatrixValue(i, j).getValue());
+				sb.append(";");
 
 			}
-			output.append(string);
-			appendLineFeed();
-			string = "";
-
+			sb.append("\n");
 		}
+
+		output.append(sb);
 	}
-
-
 }
