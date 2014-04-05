@@ -42,7 +42,6 @@ public class InterfaceAHP
 	private String fileHistorique;
 	private Meter monHeure;
 
-
 	private class AHP_Data {
 		private final double[] saatyValues = {1. / 9,
 			1. / 8,
@@ -483,10 +482,10 @@ public class InterfaceAHP
 		}
 
 		// si l'expert n'a pas mit à la simulation
-		if (finSimulation == true) {
+		if (finSimulation) {
 			csa.close();
 		} else {
-			/*parcours de la liste pour l'écriture dans le fichier*/
+			/** parcours de la liste pour l'écriture dans le fichier */
 			valueIterator = sortedMatrixValues.iterator();
 
 			while ((valueIterator.hasNext()) && (!isFound)) {
@@ -494,7 +493,7 @@ public class InterfaceAHP
 				final MatrixValue tempMatrixValue = valueIterator.next();
 				csa.appendLineFeed();
 
-				/*écriture du best fit associé à la valeur proposée*/
+				/** écriture du best fit associé à la valeur proposée */
 				//copie de la matrice initiale
 				final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
 
@@ -567,7 +566,7 @@ public class InterfaceAHP
 		//maTable = new MyMatrixTable();
 
 		//on teste pour savoir quelle est le pb choisi
-		if (datasetP1RadioButton.isSelected() == true) {
+		if (datasetP1RadioButton.isSelected()) {
 			//on crée le fichier historique à partir de "file"
 			fileHistorique = file + "histI.csv";
 			file += "I.csv";
@@ -576,7 +575,7 @@ public class InterfaceAHP
 				csa.append("Probleme 1");
 				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
-				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
@@ -594,7 +593,7 @@ public class InterfaceAHP
 				csa.append("Probleme 2");
 				csa.appendCommaSeparator();
 				//On teste saaty ou aléatoire
-				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 					csa.append("Saaty");
 				} else {
 					csa.append("Aleatoire");
@@ -642,7 +641,8 @@ public class InterfaceAHP
 	 * Cette méthode ecrit dans le fichier csv
 	 */
 	private double creerFichierCsv() {
-		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+		final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+
 		PriorityVector priorityVector = PriorityVector.build(ahpData.myMatrix);
 		MyMatrix epsilon = new MyMatrix();
 		MatrixValue matrixValue = new MatrixValue();
@@ -777,7 +777,7 @@ public class InterfaceAHP
 					}
 
 					try {
-						/*Ecrire la valeur que souhaite modifier l'expert*/
+						/** Ecrire la valeur que souhaite modifier l'expert */
 						csa = new CharSequenceAppender(file);
 					} catch (IOException ex) {
 						Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
@@ -817,7 +817,7 @@ public class InterfaceAHP
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
-					if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+					if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 						/*Calculer le placement dans le classement de Saaty*/
 						int location = SaatyTools.getLocationInRank(
 							collectionOfSortedMatrixValues,
@@ -883,7 +883,7 @@ public class InterfaceAHP
 				jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 			}
 		}
-		if (finSimulation == true) {
+		if (finSimulation) {
 			jLabel4.setText("Bravo la matrice est cohérente!!!!!");
 		}
 		try {
@@ -1065,7 +1065,7 @@ public class InterfaceAHP
 	 */
 	private String[] classerCriteres(PriorityVector v) {
 		//on teste quel est le pb choisi
-		if (datasetP1RadioButton.isSelected() == true) {
+		if (datasetP1RadioButton.isSelected()) {
 
 			String[] classementString = new String[v.getRowDimension()];
 			double[] monClassement = new double[v.getRowDimension()];
