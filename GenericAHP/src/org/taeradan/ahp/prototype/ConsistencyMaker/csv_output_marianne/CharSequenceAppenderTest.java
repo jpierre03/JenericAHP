@@ -28,11 +28,21 @@ public final class CharSequenceAppenderTest {
 			appender.append("c");
 			appender.appendCommaSeparator();
 			appender.append("d");
+			appender.appendLineFeed();
+			appender.appendLineFeed();
 
-			MyMatrix matrix = new MyMatrix(2, 2);
-			for (int i = 0; i < 2; i++) {
-				for (int j = 0; j < 2; j++) {
-					matrix.set(i, j, i + 1);
+			final int rowCount = 40;
+			final int columnCount = 15;
+			MyMatrix matrix = new MyMatrix(rowCount, columnCount);
+
+			/**
+			 * Define matrix values
+			 */
+			for (int i = 0; i < rowCount; i++) {
+				for (int j = 0; j < columnCount; j++) {
+					final int value = i * j + 1;
+
+					matrix.set(i, j, value);
 				}
 			}
 			appender.append(matrix);
