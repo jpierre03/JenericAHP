@@ -84,14 +84,14 @@ public class InterfaceAHP
 	}
 
 	private void definePreferredFrameSize() {
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight() - 100);
 		this.setPreferredSize(screenSize);
 		this.setResizable(true);
 	}
 
 	private void initComponents() {
-
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(true);
 
@@ -133,12 +133,12 @@ public class InterfaceAHP
 				{"1/1: 1"},
 				{"1/2: 0.5"},
 				{"1/3: 0.3333"},
-				{"1/4:0.25"},
-				{"1/5:0.2"},
-				{"1/6:0.1667"},
-				{"1/7:0.1429"},
-				{"1/8:0.125"},
-				{"1/9:0.1111"}
+				{"1/4: 0.25"},
+				{"1/5: 0.2"},
+				{"1/6: 0.1667"},
+				{"1/7: 0.1429"},
+				{"1/8: 0.125"},
+				{"1/9: 0.1111"}
 			},
 			new String[]{"Reverse scale of Saaty"}
 		));
@@ -696,7 +696,7 @@ public class InterfaceAHP
 		csa.append("Tableau de changement des valeurs");
 		csa.appendLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
-		if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+		if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 			csa.append(
 				"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR;SaatyC-CR\n");
 		} else {
@@ -718,7 +718,7 @@ public class InterfaceAHP
 				iterationCounter++;
 
 				//on teste quelles méthode(aléaloire, saaty)
-				if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+				if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 					/*Calcul matrice epsilon*/
 					epsilon = SaatyTools.calculateEpsilonMatrix(ahpData.myMatrix, priorityVector);
 					/*Recherche de la valeur à modifier*/
@@ -862,7 +862,7 @@ public class InterfaceAHP
 					csa.append(tempString);
 					csa.appendCommaSeparator();
 					//uniquement si on fai la méthode saaty
-					if (consistencyMakerTypeSaatyRadioButton.isSelected() == true) {
+					if (consistencyMakerTypeSaatyRadioButton.isSelected()) {
 						tempString = String.valueOf(ahpData.saatyConsistency - consistencyChecker.getConsistencyRatio());
 						csa.append(tempString);
 					}
@@ -873,7 +873,7 @@ public class InterfaceAHP
 					myConsistent = consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 				}
 				//si il à mi fin on sort de la boucle
-				else if (finSimulation == true) {
+				else if (finSimulation) {
 					//on arrete le thread
 					monHeure.stop();
 					myConsistent = true;
@@ -967,27 +967,24 @@ public class InterfaceAHP
 	/*
 	 * Cette méthode permet de stocker les différentes matrices,les valeurs modifiées
 	 */
-	private void ecrirefichierHistorique(MyMatrix matrix, double oldValue, int coordx,
-					     int coordy, double newVal) {
+	private void ecrirefichierHistorique(MyMatrix matrix, double oldValue, int coordx, int coordy, double newValue) {
 		CharSequenceAppender csa = null;
-		String tempString;
+
 		try {
 			csa = new CharSequenceAppender(fileHistorique);
+
+			csa.append("Ancienne valeur: " + oldValue);
+			csa.appendCommaSeparator();
+			csa.append(coordx + "," + coordy);
+			csa.appendCommaSeparator();
+			csa.append("Nouvelle valeur: " + newValue);
+			csa.appendLineFeed();
+			csa.append(matrix);
+			csa.appendLineFeed();
+			csa.close();
 		} catch (IOException ex) {
 			Logger.getLogger(InterfaceAHP.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		tempString = "Ancienne valeur: " + oldValue;
-		csa.append(tempString);
-		csa.appendCommaSeparator();
-		tempString = coordx + "," + coordy;
-		csa.append(tempString);
-		csa.appendCommaSeparator();
-		tempString = "Nouvelle valeur: " + newVal;
-		csa.append(tempString);
-		csa.appendLineFeed();
-		csa.append(matrix);
-		csa.appendLineFeed();
-		csa.close();
 	}
 
 	/**

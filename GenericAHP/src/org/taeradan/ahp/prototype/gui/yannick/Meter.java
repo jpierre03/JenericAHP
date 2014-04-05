@@ -46,6 +46,7 @@ class Meter implements ActionListener {
 		return label.getText();
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		cpS += 1;
