@@ -1,7 +1,5 @@
 package org.taeradan.ahp.prototype.gui.yannick;
 
-import org.taeradan.ahp.matrix.MyMatrix;
-
 import javax.swing.*;
 
 public final class MonCellRendererTest {
@@ -9,14 +7,11 @@ public final class MonCellRendererTest {
 	}
 
 	public static void main(String args[]) {
-		MyMatrix MyMatrix = new MyMatrix(5, 5);
 		JTable table = new JTable(5, 5);
-		int j = 0;
 		MonCellRenderer cellRenderer = new MonCellRenderer(0, 0);
 		for (int i = 0; i < 5; i++) {
-			int value = i;
-			cellRenderer.setRow(value);
-			cellRenderer.setCol(value);
+			cellRenderer.setRow(i);
+			cellRenderer.setCol(i);
 		}
 
 		table.setDefaultRenderer(Object.class, cellRenderer);
