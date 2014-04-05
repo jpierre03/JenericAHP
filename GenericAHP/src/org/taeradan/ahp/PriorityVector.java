@@ -53,9 +53,9 @@ public class PriorityVector
 
 		final PriorityVector resultVector = new PriorityVector(dimension);
 		final Matrix e = new Matrix(1, dimension, 1);
+
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
-
 
 		Matrix lastVector;
 		boolean isUnderTreshold;
@@ -64,8 +64,10 @@ public class PriorityVector
 			lastVector = workVector;
 			final Matrix numerator = multiplyMatrix.times(e.transpose());
 			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
+
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
 			Matrix difference = workVector.minus(lastVector);
+
 			isUnderTreshold = true;
 			for (int i = 0; i < dimension; i++) {
 				double valeur0 = difference.get(i, 0);
