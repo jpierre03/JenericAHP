@@ -990,8 +990,7 @@ public class InterfaceAHP
 	/**
 	 * This method returns the value which will be modified by the expert
 	 */
-	public MatrixValue getValueToModifiyByRanking(
-		Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
+	public MatrixValue getValueToModifiyByRanking(Collection<MatrixValue> collectionOfNonSortedMatrixValues) {
 
 		int isValueChosen = 0;
 		MatrixValue matrixValue = new MatrixValue();
@@ -1073,14 +1072,14 @@ public class InterfaceAHP
 			Arrays.sort(monClassement);
 
 			for (int i = 0; i < v.getRowDimension(); i++) {
-				String columnNames[] = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-					modeAnglais);
+				final String columnNames[] = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
+
 				for (int j = 0; j < v.getRowDimension(); j++) {
 					int temp = j;
 					//on récupérer les critères classés
 					if (monClassement[i] == v.get(j, 0)) {
 						classementString[i] = columnNames[j];
-						//on sor du for
+						//on sort du for
 						j = v.getRowDimension();
 						if (i != 0) {
 							//on teste l'ancienne valeur du classement pour éviter lesdoublons
