@@ -26,14 +26,13 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.awt.*;
+import javax.swing.tree.TreeNode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Graphical user interface to configure the AHP tree and the preference matrix
@@ -53,7 +52,7 @@ public final class ConfigurationFrame
 	/**
 	 * Creates new form ConfigurationFrame
 	 */
-	private ConfigurationFrame() {
+	ConfigurationFrame() {
 		super();
 		/** Instanciation of an empty TreeModel */
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
@@ -349,16 +348,6 @@ public final class ConfigurationFrame
 		}
 	}
 
-	public static void main(final String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				new ConfigurationFrame().setVisible(true);
-			}
-		});
-	}
-
 	private JFileChooser jFileChooser;
 	private JMenuBar jMenuBar1;
 	private JMenu jMenuFile;
@@ -375,29 +364,29 @@ public final class ConfigurationFrame
 	 * @param ahpAHPRoot Initialised AHP root
 	 * @return node containing a AHP tree
 	 */
-	private static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
-		/** Creation of the root node */
-		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
-		final Collection<Criterion> ahpCriteria = ahpAHPRoot.guiMethods.getCriteria();
-		ArrayList<DefaultMutableTreeNode> guiCriteria = new ArrayList<>();
+	private static TreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
+		/** Create the root node */
+		final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(ahpAHPRoot);
+		final ArrayList<Criterion> ahpCriteria = new ArrayList<>(ahpAHPRoot.guiMethods.getCriteria());
+
 		/** For each criteria in root */
-		for (int i = 0; i < ahpCriteria.size(); i++) {
-			/** Real criteria attached to a criteria node */
-			guiCriteria.add(new DefaultMutableTreeNode(ahpCriteria.toArray()[i]));
+		for (Criterion criterion : ahpCriteria) {
+			final DefaultMutableTreeNode criterionNode = new DefaultMutableTreeNode(criterion);
+
 			/** Criterion node attached to the root node */
-			guiRoot.add(guiCriteria.get(i));
-			final Collection<Indicator> ahpIndicators = ((Criterion) ahpCriteria.toArray()[i]).
-				getIndicators();
-			ArrayList<DefaultMutableTreeNode> guiIndicators =
-				new ArrayList<>();
+			rootNode.add(criterionNode);
+
+			final ArrayList<Indicator> ahpIndicators = new ArrayList<>(criterion.getIndicators());
+
 			/** For each indicator in the criteria */
-			for (int j = 0; j < ahpIndicators.size(); j++) {
-				/** Real indicator attached to an indicator node */
-				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.toArray()[j]));
+			for (Indicator indicator : ahpIndicators) {
+				final DefaultMutableTreeNode indicatorNode = new DefaultMutableTreeNode(indicator);
+
 				/** Indicator node attached to the criteria node */
-				guiCriteria.get(i).add(guiIndicators.get(j));
+				criterionNode.add(indicatorNode);
 			}
 		}
-		return guiRoot;
+
+		return rootNode;
 	}
 }
