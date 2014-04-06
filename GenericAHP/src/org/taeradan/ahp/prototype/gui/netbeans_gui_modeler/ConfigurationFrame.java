@@ -55,11 +55,11 @@ public final class ConfigurationFrame
 	 */
 	private ConfigurationFrame() {
 		super();
-//		Instanciation of an empty TreeModel
+		/** Instanciation of an empty TreeModel */
 		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
-//		Instantiation of an empty AHP root to use as default while no file is loaded
+		/** Instantiation of an empty AHP root to use as default while no file is loaded */
 		ahpAHPRoot = new EmptyAHPRoot();
-//		The real AHP tree is attached to the graphical TreeModel to be displayed dynamically
+		/** The real AHP tree is attached to the graphical TreeModel to be displayed dynamically */
 		guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
 		initComponents();
 	}
@@ -149,18 +149,18 @@ public final class ConfigurationFrame
 	 */
 	private void jTreeAhpMouseClicked(MouseEvent evt) {
 //			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
-//			If the mouse is over a valid tree node...
+		/** If the mouse is over a valid tree node... */
 		if (jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null) {
-//				Retrieve the selected node
+			/** Retrieve the selected node */
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTreeAhp.getPathForLocation(
 				evt.getX(),
 				evt.getY()).getLastPathComponent();
-//				Handling of the the left button double click
+			/** Handling of the the left button double click */
 			if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
 				final Object object = node.getUserObject();
 				editActionPerformed(object);
 			}
-//				Handling of the right button double click
+			/** Handling of the right button double click */
 			if (evt.getButton() == MouseEvent.BUTTON3) {
 				final Object object = node.getUserObject();
 				final JPopupMenu contextMenu = new JPopupMenu();
@@ -323,11 +323,14 @@ public final class ConfigurationFrame
 	}
 
 	private void delCriteriaActionPerformed(final Criterion criterion) {
-		if (JOptionPane.showConfirmDialog(
+
+		final int result = JOptionPane.showConfirmDialog(
 			this,
 			"Are you sure ? The criterion and its indicators will be destroyed.",
 			"Confirmation needed",
-			JOptionPane.YES_NO_OPTION) == 0) {
+			JOptionPane.YES_NO_OPTION);
+
+		if (result == JOptionPane.YES_OPTION) {
 
 			ahpAHPRoot.guiMethods.removeCriterion(criterion);
 			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
@@ -335,11 +338,14 @@ public final class ConfigurationFrame
 	}
 
 	private void delIndicatorActionPerformed() {
-		if (JOptionPane.showConfirmDialog(
+
+		final int result = JOptionPane.showConfirmDialog(
 			this,
 			"Are you sure ? The indicator will be destroyed.",
 			"Confirmation needed",
-			JOptionPane.YES_NO_OPTION) == 0) {
+			JOptionPane.YES_NO_OPTION);
+
+		if (result == JOptionPane.YES_OPTION) {
 		}
 	}
 
@@ -370,25 +376,25 @@ public final class ConfigurationFrame
 	 * @return node containing a AHP tree
 	 */
 	private static DefaultMutableTreeNode processAhpHierarchy(final AHPRoot ahpAHPRoot) {
-//		Creation of the root node
+		/** Creation of the root node */
 		final DefaultMutableTreeNode guiRoot = new DefaultMutableTreeNode(ahpAHPRoot);
 		final Collection<Criterion> ahpCriteria = ahpAHPRoot.guiMethods.getCriteria();
 		ArrayList<DefaultMutableTreeNode> guiCriteria = new ArrayList<>();
-//		For each criteria in root
+		/** For each criteria in root */
 		for (int i = 0; i < ahpCriteria.size(); i++) {
-//			Real criteria attached to a criteria node
+			/** Real criteria attached to a criteria node */
 			guiCriteria.add(new DefaultMutableTreeNode(ahpCriteria.toArray()[i]));
-//			Criterion node attached to the root node
+			/** Criterion node attached to the root node */
 			guiRoot.add(guiCriteria.get(i));
 			final Collection<Indicator> ahpIndicators = ((Criterion) ahpCriteria.toArray()[i]).
 				getIndicators();
 			ArrayList<DefaultMutableTreeNode> guiIndicators =
 				new ArrayList<>();
-//			For each indicator in the criteria
+			/** For each indicator in the criteria */
 			for (int j = 0; j < ahpIndicators.size(); j++) {
-//				Real indicator attached to an indicator node
+				/** Real indicator attached to an indicator node */
 				guiIndicators.add(new DefaultMutableTreeNode(ahpIndicators.toArray()[j]));
-//				Indicator node attached to the criteria node
+				/** Indicator node attached to the criteria node */
 				guiCriteria.get(i).add(guiIndicators.get(j));
 			}
 		}

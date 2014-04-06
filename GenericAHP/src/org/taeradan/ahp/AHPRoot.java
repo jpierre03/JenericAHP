@@ -140,6 +140,8 @@ public class AHPRoot {
 	public class AHP_GUI_methods {
 		@Deprecated
 		public void removeCriterion(final Criterion criterion) {
+			assert criterion != null;
+
 			if (structure.criteria.contains(criterion)) {
 
 				final int criterionIndex = new ArrayList<>(structure.criteria).lastIndexOf(criterion);
