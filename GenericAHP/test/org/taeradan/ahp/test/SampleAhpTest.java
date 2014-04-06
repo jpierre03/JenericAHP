@@ -42,12 +42,12 @@ import static org.junit.Assert.assertTrue;
 public final class SampleAhpTest {
 
 	private static AHPRoot ahpRoot;
-	private static final String                   ALTERNATIVE_1 = "Alternative 1";
-	private static final String                   ALTERNATIVE_2 = "Alternative 2";
-	private static final String                   ALTERNATIVE_3 = "Alternative 3";
-	private static final String                   ALTERNATIVE_4 = "Alternative 4";
-	private static final String                   ALTERNATIVE_5 = "Alternative 5";
-	private static List<TestingAlternative>       ALTERNATIVES  = makeAlternatives();
+	private static final String ALTERNATIVE_1 = "Alternative 1";
+	private static final String ALTERNATIVE_2 = "Alternative 2";
+	private static final String ALTERNATIVE_3 = "Alternative 3";
+	private static final String ALTERNATIVE_4 = "Alternative 4";
+	private static final String ALTERNATIVE_5 = "Alternative 5";
+	private static List<TestingAlternative> ALTERNATIVES = makeAlternatives();
 
 	public SampleAhpTest() {
 	}
@@ -75,7 +75,7 @@ public final class SampleAhpTest {
 
 	@Before
 	public void setUp() {
-        ALTERNATIVES = makeAlternatives();
+		ALTERNATIVES = makeAlternatives();
 
 		URL resource = SampleAhpTest.class.getResource("/org/taeradan/ahp/conf/ahp_conf.xml");
 		File aFile = new File(resource.getFile());

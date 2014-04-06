@@ -14,43 +14,50 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-/** @author Jean-Pierre PRUNARET */
+/**
+ * @author Jean-Pierre PRUNARET
+ */
 public class ControversialTest {
 
-	private static final double                  TEMOIN_MAX    = 1000;
-	private static final double                  VARIABLE_MAX  = 1000000000;
-	private static final double                  DECALAGE      = 0;
-	private static final String                  ALTERNATIVE_1 = "Alternative 1";
-	private static final String                  ALTERNATIVE_2 = "Alternative 2";
-	private static final String                  ALTERNATIVE_3 = "Alternative 3";
-	private static final String                  ALTERNATIVE_4 = "Alternative 4";
-	private static final String                  ALTERNATIVE_5 = "Alternative 5";
-	private final List<ControversialAlternative> alternatives  = new ArrayList<>(makeAlternatives());
-    private static AHPRoot ahpRoot;
+	private static final double TEMOIN_MAX = 1000;
+	private static final double VARIABLE_MAX = 1000000000;
+	private static final double DECALAGE = 0;
+	private static final String ALTERNATIVE_1 = "Alternative 1";
+	private static final String ALTERNATIVE_2 = "Alternative 2";
+	private static final String ALTERNATIVE_3 = "Alternative 3";
+	private static final String ALTERNATIVE_4 = "Alternative 4";
+	private static final String ALTERNATIVE_5 = "Alternative 5";
+	private final List<ControversialAlternative> alternatives = new ArrayList<>(makeAlternatives());
+	private static AHPRoot ahpRoot;
 
 	private static List<ControversialAlternative> makeAlternatives() {
 		final List<ControversialAlternative> alts = new ArrayList<>(5);
 
 
-		boolean add = alts.add(new ControversialAlternative(ALTERNATIVE_1,
-															(1 / 5.) * TEMOIN_MAX,
-															((1 / 5.) * VARIABLE_MAX) + DECALAGE));
+		boolean add = alts.add(new ControversialAlternative(
+			ALTERNATIVE_1,
+			(1 / 5.) * TEMOIN_MAX,
+			((1 / 5.) * VARIABLE_MAX) + DECALAGE));
 
-		alts.add(new ControversialAlternative(ALTERNATIVE_2,
-											  (2 / 5.) * TEMOIN_MAX,
-											  ((2 / 5.) * VARIABLE_MAX) + DECALAGE));
+		alts.add(new ControversialAlternative(
+			ALTERNATIVE_2,
+			(2 / 5.) * TEMOIN_MAX,
+			((2 / 5.) * VARIABLE_MAX) + DECALAGE));
 
-		alts.add(new ControversialAlternative(ALTERNATIVE_3,
-											  (3 / 5.) * TEMOIN_MAX,
-											  ((3 / 5.) * VARIABLE_MAX) + DECALAGE));
+		alts.add(new ControversialAlternative(
+			ALTERNATIVE_3,
+			(3 / 5.) * TEMOIN_MAX,
+			((3 / 5.) * VARIABLE_MAX) + DECALAGE));
 
-		alts.add(new ControversialAlternative(ALTERNATIVE_4,
-											  (4 / 5.) * TEMOIN_MAX,
-											  ((4 / 5.) * VARIABLE_MAX) + DECALAGE));
+		alts.add(new ControversialAlternative(
+			ALTERNATIVE_4,
+			(4 / 5.) * TEMOIN_MAX,
+			((4 / 5.) * VARIABLE_MAX) + DECALAGE));
 
-		alts.add(new ControversialAlternative(ALTERNATIVE_5,
-											  (5 / 5.) * TEMOIN_MAX,
-											  ((5 / 5.) * VARIABLE_MAX) + DECALAGE));
+		alts.add(new ControversialAlternative(
+			ALTERNATIVE_5,
+			(5 / 5.) * TEMOIN_MAX,
+			((5 / 5.) * VARIABLE_MAX) + DECALAGE));
 		return Collections.unmodifiableList(alts);
 	}
 
@@ -72,15 +79,11 @@ public class ControversialTest {
 	public MethodRule rule = new TimeConsumeRule();
 
 	@BeforeClass
-	public static void setUpClass()
-			throws
-			Exception {
+	public static void setUpClass() throws Exception {
 	}
 
 	@AfterClass
-	public static void tearDownClass()
-			throws
-			Exception {
+	public static void tearDownClass() throws Exception {
 	}
 
 	@Before
@@ -92,8 +95,8 @@ public class ControversialTest {
 
 		ahpRoot = new AHPRoot(aFile, "org.taeradan.ahp.controversial.");
 
-        alternatives.clear();
-        alternatives.addAll(makeAlternatives());
+		alternatives.clear();
+		alternatives.addAll(makeAlternatives());
 	}
 
 	@After
