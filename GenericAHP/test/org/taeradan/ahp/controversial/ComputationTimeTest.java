@@ -22,42 +22,22 @@ public class ComputationTimeTest {
 	private static final double TEMOIN_MAX = 1000;
 	private static final double VARIABLE_MAX = 1000000000;
 	private static final double DECALAGE = 0;
-	private static final String ALTERNATIVE_1 = "Alternative 1";
-	private static final String ALTERNATIVE_2 = "Alternative 2";
-	private static final String ALTERNATIVE_3 = "Alternative 3";
-	private static final String ALTERNATIVE_4 = "Alternative 4";
-	private static final String ALTERNATIVE_5 = "Alternative 5";
 	private final List<ControversialAlternative> alternatives = new ArrayList<>(makeAlternatives());
 	private static AHPRoot ahpRoot;
 
 	private static List<ControversialAlternative> makeAlternatives() {
-		final List<ControversialAlternative> alts = new ArrayList<>(5);
+		final int maxAlternatives = 2000;
+		final List<ControversialAlternative> alts = new ArrayList<>(maxAlternatives);
 
+		for (int i = 0; i < maxAlternatives; i++) {
+			final double value = ((double) i + 1) / (maxAlternatives + 1);
 
-		alts.add(new ControversialAlternative(
-			ALTERNATIVE_1,
-			(1 / 5.) * TEMOIN_MAX,
-			((1 / 5.) * VARIABLE_MAX) + DECALAGE));
+			alts.add(new ControversialAlternative(
+				"Alternative " + i,
+				value * TEMOIN_MAX,
+				(value * VARIABLE_MAX) + DECALAGE));
+		}
 
-		alts.add(new ControversialAlternative(
-			ALTERNATIVE_2,
-			(2 / 5.) * TEMOIN_MAX,
-			((2 / 5.) * VARIABLE_MAX) + DECALAGE));
-
-		alts.add(new ControversialAlternative(
-			ALTERNATIVE_3,
-			(3 / 5.) * TEMOIN_MAX,
-			((3 / 5.) * VARIABLE_MAX) + DECALAGE));
-
-		alts.add(new ControversialAlternative(
-			ALTERNATIVE_4,
-			(4 / 5.) * TEMOIN_MAX,
-			((4 / 5.) * VARIABLE_MAX) + DECALAGE));
-
-		alts.add(new ControversialAlternative(
-			ALTERNATIVE_5,
-			(5 / 5.) * TEMOIN_MAX,
-			((5 / 5.) * VARIABLE_MAX) + DECALAGE));
 		return Collections.unmodifiableList(alts);
 	}
 
@@ -105,26 +85,7 @@ public class ComputationTimeTest {
 
 
 	@Test
-	public void test100_initialState() {
-		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(this.alternatives);
-
-		assertTrue(alternatives.size() == 5);
-
-		assertTrue(alternatives.get(1 - 1).name.equalsIgnoreCase(ALTERNATIVE_1));
-		assertTrue(alternatives.get(2 - 1).name.equalsIgnoreCase(ALTERNATIVE_2));
-		assertTrue(alternatives.get(3 - 1).name.equalsIgnoreCase(ALTERNATIVE_3));
-		assertTrue(alternatives.get(4 - 1).name.equalsIgnoreCase(ALTERNATIVE_4));
-		assertTrue(alternatives.get(5 - 1).name.equalsIgnoreCase(ALTERNATIVE_5));
-
-		assertTrue(alternatives.get(1 - 1).getRank() == Integer.MAX_VALUE);
-		assertTrue(alternatives.get(2 - 1).getRank() == Integer.MAX_VALUE);
-		assertTrue(alternatives.get(3 - 1).getRank() == Integer.MAX_VALUE);
-		assertTrue(alternatives.get(4 - 1).getRank() == Integer.MAX_VALUE);
-		assertTrue(alternatives.get(5 - 1).getRank() == Integer.MAX_VALUE);
-	}
-
-	@Test
-	public void test200_ranking() {
+	public void ranking() {
 		final ArrayList<ControversialAlternative> alternatives = new ArrayList<>(this.alternatives);
 
 		ahpRoot.calculateRanking(alternatives);
@@ -133,20 +94,6 @@ public class ComputationTimeTest {
 //		System.out.println(ahpRoot.resultToString());
 //		System.out.println("Valeurs de \"rank\" pour chaque alternative:");
 
-		printRanking(this.alternatives);
-
-		assertTrue(alternatives.size() == 5);
-
-		assertTrue(alternatives.get(1 - 1).name.equalsIgnoreCase(ALTERNATIVE_1));
-		assertTrue(alternatives.get(2 - 1).name.equalsIgnoreCase(ALTERNATIVE_2));
-		assertTrue(alternatives.get(3 - 1).name.equalsIgnoreCase(ALTERNATIVE_3));
-		assertTrue(alternatives.get(4 - 1).name.equalsIgnoreCase(ALTERNATIVE_4));
-		assertTrue(alternatives.get(5 - 1).name.equalsIgnoreCase(ALTERNATIVE_5));
-
-		assertTrue(alternatives.get(1 - 1).getRank() == 5);
-		assertTrue(alternatives.get(2 - 1).getRank() == 4);
-		assertTrue(alternatives.get(3 - 1).getRank() == 3);
-		assertTrue(alternatives.get(4 - 1).getRank() == 2);
-		assertTrue(alternatives.get(5 - 1).getRank() == 1);
+		//printRanking(this.alternatives);
 	}
 }
