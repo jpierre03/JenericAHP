@@ -60,10 +60,10 @@ public class AHPRoot {
 	private class AHP_Structure implements XmlOutputable {
 
 		private String name = "";
-		private Matrix matrixAlternativesCriteria;
-		private PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
-		private PriorityVector vectorAlternativesGoal;
-		private PriorityVector vectorCriteriaGoal;
+		private Matrix alternativesCriteriaMatrix;
+		private PairWiseMatrix criteriaCriteriaMatrix = new PairWiseMatrix();
+		private PriorityVector alternativesGoalVector;
+		private PriorityVector criteriaGoalVector;
 		private Collection<Criterion> criteria = new ArrayList<>();
 
 		public void build(File inFile) throws JDOMException, IOException {
@@ -78,8 +78,8 @@ public class AHPRoot {
 			structure.name = xmlRoot.getChildText("name");
 			/** Initialisation of the preference matrix */
 			final Element xmlCriteriaCriteriaPreferenceMatrix = xmlRoot.getChild("prefmatrix");
-			structure.matrixCriteriaCriteria = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
-			structure.vectorCriteriaGoal = PriorityVector.build(structure.matrixCriteriaCriteria);
+			structure.criteriaCriteriaMatrix = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
+			structure.criteriaGoalVector = PriorityVector.build(structure.criteriaCriteriaMatrix);
 
 			/** Initialisation of the criteria */
 			@SuppressWarnings("unchecked")
@@ -102,7 +102,7 @@ public class AHPRoot {
 		public Element toXml() {
 			final Element xmlRoot = new Element("root");
 			xmlRoot.addContent(new Element("name").setText(name));
-			xmlRoot.addContent(matrixCriteriaCriteria.toXml());
+			xmlRoot.addContent(criteriaCriteriaMatrix.toXml());
 			for (Criterion aCriteria : criteria) {
 				xmlRoot.addContent(aCriteria.toXml());
 			}
@@ -130,7 +130,7 @@ public class AHPRoot {
 		}
 
 		public void assertConsistency() {
-			if (!isConsistent(structure.matrixCriteriaCriteria, structure.vectorCriteriaGoal)) {
+			if (!isConsistent(structure.criteriaCriteriaMatrix, structure.criteriaGoalVector)) {
 				throw new IllegalArgumentException("AHP preference matrix not consistent (root)");
 			}
 		}
@@ -146,7 +146,7 @@ public class AHPRoot {
 
 				final int criterionIndex = new ArrayList<>(structure.criteria).lastIndexOf(criterion);
 				structure.criteria.remove(criterion);
-				structure.matrixCriteriaCriteria.remove(criterionIndex);
+				structure.criteriaCriteriaMatrix.remove(criterionIndex);
 			} else {
 				Logger.getAnonymousLogger().severe("Criterion not found");
 			}
@@ -161,8 +161,8 @@ public class AHPRoot {
 					sb.append("\n\t");
 					sb.append(aCriteria.resultToString());
 				}
-				sb.append("\nvectorAlternativesGoal=\n");
-				sb.append(PairWiseMatrix.toString(structure.vectorAlternativesGoal, null));
+				sb.append("\nalternativesGoalVector=\n");
+				sb.append(PairWiseMatrix.toString(structure.alternativesGoalVector, null));
 			} else {
 				sb.append("There is no result, please do a ranking first");
 			}
@@ -183,12 +183,12 @@ public class AHPRoot {
 			assert matrix.getColumnDimension() > 0;
 			assert matrix.getRowDimension() > 0;
 
-			structure.matrixCriteriaCriteria = matrix;
+			structure.criteriaCriteriaMatrix = matrix;
 		}
 
 		@Deprecated
 		public PairWiseMatrix getMatrixCriteriaCriteria() {
-			return structure.matrixCriteriaCriteria;
+			return structure.criteriaCriteriaMatrix;
 		}
 
 		@Deprecated
@@ -245,13 +245,13 @@ public class AHPRoot {
 		final StringBuilder sb = new StringBuilder();
 
 		sb.append(this.toString());
-		sb.append("\n").append(structure.matrixCriteriaCriteria);
+		sb.append("\n").append(structure.criteriaCriteriaMatrix);
 		final DecimalFormat printFormat = new DecimalFormat("0.000");
 		int index = 0;
 
 		for (Criterion criterion : structure.criteria) {
 			sb.append("\n\t(");
-			sb.append(printFormat.format(structure.vectorCriteriaGoal.get(index, 0)));
+			sb.append(printFormat.format(structure.criteriaGoalVector.get(index, 0)));
 			sb.append(") ");
 			sb.append(criterion.toStringRecursive());
 			index++;
@@ -292,35 +292,39 @@ public class AHPRoot {
 	 * This is the main method of this project.
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		structure.matrixAlternativesCriteria = new Matrix(alternatives.size(), structure.criteria.size());
-		/** Concatenation in a matrix of the vectors calculated by the criteria */
-		int index = 0;
+		structure.alternativesCriteriaMatrix = new Matrix(alternatives.size(), structure.criteria.size());
+
 		if (DEBUG) {
 			info("alternatives = " + alternatives.size());
 			info("criteria = " + structure.criteria.size());
 		}
 
+		/** Concatenation in a matrix of the vectors calculated by the criteria */
+		int index = 0;
 		for (Criterion criterion : structure.criteria) {
 			final PriorityVector priorityVector = criterion.calculateAlternativesPriorityVector(alternatives);
+
 			if (DEBUG) {
 				info("criterion n= " + index);
 				info("alternatives vector n= " + priorityVector.getRowDimension());
 				priorityVector.print(5, 4);
-				structure.matrixAlternativesCriteria.print(5, 4);
+				structure.alternativesCriteriaMatrix.print(5, 4);
 			}
-			structure.matrixAlternativesCriteria.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
+
+			structure.alternativesCriteriaMatrix.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
 			index++;
 		}
 
 		/** Calculation of the final alternatives priority vector */
-		structure.vectorAlternativesGoal = new PriorityVector(structure.matrixAlternativesCriteria.getRowDimension());
-		structure.vectorAlternativesGoal.setMatrix(alternatives.size() - 1,
-			structure.matrixAlternativesCriteria.times(structure.vectorCriteriaGoal));
+		structure.alternativesGoalVector = new PriorityVector(structure.alternativesCriteriaMatrix.getRowDimension());
+		structure.alternativesGoalVector.setMatrix(
+			alternatives.size() - 1,
+			structure.alternativesCriteriaMatrix.times(structure.criteriaGoalVector));
 
 		/** Ranking of the alternatives with the MOg vector */
-		final double[][] sortedVectorAlternativesGoal = structure.vectorAlternativesGoal.getArrayCopy();
+		final double[][] sortedVectorAlternativesGoal = structure.alternativesGoalVector.getArrayCopy();
 
-		// vectorAlternativesGoal.getVector().print(6, 4);
+		// alternativesGoalVector.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
@@ -364,7 +368,7 @@ public class AHPRoot {
 		return structure.name;
 	}
 
-	private  void info(String string){
+	private void info(String string) {
 		Logger.getAnonymousLogger().info(string);
 	}
 }

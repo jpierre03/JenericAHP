@@ -129,8 +129,7 @@ public class Criterion
 		}
 	}
 
-	public PriorityVector calculateAlternativesPriorityVector(
-		final Collection<? extends Alternative> alternatives) {
+	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alternatives) {
 
 		final PairWiseMatrix alternativesIndicatorMatrix = new PairWiseMatrix(alternatives.size(), indicators.size());
 
