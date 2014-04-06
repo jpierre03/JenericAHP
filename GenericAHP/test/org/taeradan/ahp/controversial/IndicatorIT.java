@@ -30,7 +30,7 @@ import java.util.Collection;
  * @author Yves Dubromelle
  */
 public class IndicatorIT
-		extends Indicator {
+	extends Indicator {
 
 	public IndicatorIT(final Element xmlIndicator) {
 		super(xmlIndicator);
@@ -38,7 +38,7 @@ public class IndicatorIT
 
 	@Override
 	public double calculateAlternativeValue(final int alternativeIndex,
-											final Collection<? extends Alternative> alternatives) {
+						final Collection<? extends Alternative> alternatives) {
 		return ((ControversialAlternative) alternatives.toArray()[alternativeIndex]).valueIT;
 	}
 }
