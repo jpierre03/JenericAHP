@@ -102,7 +102,6 @@ public final class SaatyTools {
 				wj = priorityVector.get(j, 0);
 				wi = priorityVector.get(i, 0);
 
-
 				eij = aij * wj / wi;
 
 				final MatrixValue epsilonValue = new MatrixValue(i, j, eij);
@@ -157,7 +156,7 @@ public final class SaatyTools {
 		/*Creation du TreeMap à partir de la matrice epsilon*/
 		final TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
 
-		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
+		/** Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
 		while (!myTreeMap.isEmpty()) {
 			sortedMatrixValue = myTreeMap.pollLastEntry().getValue();
 
@@ -165,16 +164,16 @@ public final class SaatyTools {
 			int column = sortedMatrixValue.getColumn();
 			double value = sortedMatrixValue.getValue();
 
-			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
+			/** Si la valeur à modifier est dans la partie inférieure de la matrice */
 			if (row > column) {
-				/*On retient la valeur réciproque*/
+				/** Define associated (réciproque) value */
 
 				sortedMatrixValue.setRow(column);
 				sortedMatrixValue.setColumn(row);
 				sortedMatrixValue.setValue(1 / value);
 			}
 
-			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
+			/** Avant d'ajouter, on teste si l'élément n'est pas déjà présent */
 			for (MatrixValue matrixValue1 : matrixValues) {
 				if (Math.abs(sortedMatrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
 					isPresent = true;
