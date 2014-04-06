@@ -47,9 +47,10 @@ import java.util.logging.Logger;
 public class AHPRoot {
 
 	/**
-	 * Contains the path to access indicators
+	 * Contains the default path to access indicators
 	 */
 	public static final String DEFAULT_INDICATOR_PATH = "org.taeradan.ahp.test.ind.";
+
 	public static String indicatorPath = DEFAULT_INDICATOR_PATH;
 	private final AHP_Structure structure = new AHP_Structure();
 	private final AHP_Execution execution = new AHP_Execution();
@@ -67,26 +68,26 @@ public class AHPRoot {
 
 		public void build(File inFile) throws JDOMException, IOException {
 
-			//			XML parser creation
+			/** XML parser creation */
 			final SAXBuilder parser = new SAXBuilder();
-//			JDOM document created from XML configuration file
+			/** JDOM document created from XML configuration file */
 			final Document inXmlDocument = parser.build(inFile);
-//			Extraction of the root element from the JDOM document
+			/** Extraction of the root element from the JDOM document */
 			final Element xmlRoot = inXmlDocument.getRootElement();
-//			Initialisation of the AHP tree name
+			/** Initialisation of the AHP tree name */
 			structure.name = xmlRoot.getChildText("name");
-//			Initialisation of the preference matrix
+			/** Initialisation of the preference matrix */
 			final Element xmlCriteriaCriteriaPreferenceMatrix = xmlRoot.getChild("prefmatrix");
 			structure.matrixCriteriaCriteria = PairWiseMatrix.builder(xmlCriteriaCriteriaPreferenceMatrix);
 			structure.vectorCriteriaGoal = PriorityVector.build(structure.matrixCriteriaCriteria);
 
-			//			Initialisation of the criteria
+			/** Initialisation of the criteria */
 			@SuppressWarnings("unchecked")
 			final List<Element> xmlCriteriaList = (List<Element>) xmlRoot.getChildren("criteria");
 			@SuppressWarnings("unchecked")
 			final List<Element> xmlRowsList = (List<Element>) xmlCriteriaCriteriaPreferenceMatrix.getChildren("row");
 			structure.criteria = new ArrayList<>(xmlCriteriaList.size());
-//			Verification that the number of criteria matches the size of the preference matrix
+			/** Verification that the number of criteria matches the size of the preference matrix */
 			if (xmlCriteriaList.size() != xmlRowsList.size()) {
 				throw new IllegalArgumentException(
 					"Error : the number of criteria and the size of the preference matrix does not match !");
@@ -281,8 +282,12 @@ public class AHPRoot {
 	}
 
 	/**
-	 * Root method of the AHP execution. Calculates the final alternatives ranking with the alternatives priority vectors
+	 * Root method of the AHP execution.
+	 * <p/>
+	 * Calculates the final alternatives ranking with the alternatives priority vectors
 	 * from the criteria and the criteria priority vectors.
+	 * <p/>
+	 * This is the main method of this project.
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
 		structure.matrixAlternativesCriteria = new Matrix(alternatives.size(), structure.criteria.size());
@@ -313,7 +318,7 @@ public class AHPRoot {
 		/** Ranking of the alternatives with the MOg vector */
 		final double[][] sortedVectorAlternativesGoal = structure.vectorAlternativesGoal.getArrayCopy();
 
-//			vectorAlternativesGoal.getVector().print(6, 4);
+		// vectorAlternativesGoal.getVector().print(6, 4);
 		int[] originIndexes = new int[alternatives.size()];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
@@ -330,15 +335,16 @@ public class AHPRoot {
 					minIndex = j;
 				}
 			}
-//				indexes[i] <-> indexes[minIndex]
+			/** swap indexes[i] <-> indexes[minIndex] */
 			tmpIndex = originIndexes[i];
 			originIndexes[i] = originIndexes[minIndex];
 			originIndexes[minIndex] = tmpIndex;
 			tmpValue = sortedVectorAlternativesGoal[i][0];
-//				vector[i] <-> vector[minIndex]
+			/** swap vector[i] <-> vector[minIndex] */
 			sortedVectorAlternativesGoal[i][0] = sortedVectorAlternativesGoal[minIndex][0];
 			sortedVectorAlternativesGoal[minIndex][0] = tmpValue;
 			ranks[alternatives.size() - i - 1] = originIndexes[i];
+
 //				System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
 //							   + sortedVectorAlternativesGoal[i][0]);
 		}
