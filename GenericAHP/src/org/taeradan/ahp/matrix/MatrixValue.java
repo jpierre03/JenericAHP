@@ -20,8 +20,8 @@ public class MatrixValue {
 		this(0, 0, 0);
 	}
 
-	public MatrixValue(final MatrixValue toClone) {
-		this(toClone.getRow(), toClone.getColumn(), toClone.getValue());
+	public MatrixValue clone() {
+		return new MatrixValue(getRow(), getColumn(), getValue());
 	}
 
 	private static double round(double what, int precision) {

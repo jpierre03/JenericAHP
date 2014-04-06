@@ -36,7 +36,7 @@ public class MyMatrix
 			originalMatrix.getColumnDimension());
 		for (int i = 0; i < originalMatrix.getRowDimension(); i++) {
 			for (int j = 0; j < originalMatrix.getColumnDimension(); j++) {
-				duplicateMatrix.setMatrixValue(new MatrixValue(originalMatrix.getMatrixValue(i, j)));
+				duplicateMatrix.setMatrixValue(originalMatrix.getMatrixValue(i, j).clone());
 			}
 		}
 
