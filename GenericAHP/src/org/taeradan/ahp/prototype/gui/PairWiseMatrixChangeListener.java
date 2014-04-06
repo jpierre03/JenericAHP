@@ -36,6 +36,10 @@ import java.util.logging.Logger;
 public class PairWiseMatrixChangeListener
 	implements TableModelListener {
 
+	final JEP jep = new JEP();
+	final static String WRONG_ZERO_VALUE = "The value \"0\" is not allowed here\nEnter a new value :";
+	final static String WRONG_EMPTY_VALUE = "This can't be leaved blank\nPlease enter a value :";
+
 	/**
 	 * Handle of the event launched every time the JTable changes
 	 */
@@ -44,7 +48,7 @@ public class PairWiseMatrixChangeListener
 		assert event != null;
 		assert event.getSource() instanceof PairWiseMatrixTableModel;
 
-		Logger.getAnonymousLogger().info("row=" + event.getFirstRow() + ",column" + event.getColumn());
+		info("row=" + event.getFirstRow() + ",column" + event.getColumn());
 
 		final boolean isValidRow = event.getFirstRow() >= 0;
 		final boolean isValidColumn = event.getColumn() >= 0;
@@ -59,53 +63,59 @@ public class PairWiseMatrixChangeListener
 		if (!invalidSituation) {
 			final TableModel preferenceMatrix = (PairWiseMatrixTableModel) event.getSource();
 			final Object nonParsedValue = preferenceMatrix.getValueAt(event.getFirstRow(), event.getColumn());
-			final JEP myParser = new JEP();
 
-			Logger.getAnonymousLogger().info("Non parsed value = " + nonParsedValue);
+			info("Non parsed value = " + nonParsedValue);
 
-			Double value = null;
-			boolean conversionDone = false;
+			Double value = parseValue(nonParsedValue);
 
-			/** If the changed value is a String, convert to Double */
-			if (nonParsedValue instanceof String) {
-				/** Use the parser to detect and evaluate basic operations (+ - * /) in the String */
-				myParser.parseExpression((String) nonParsedValue);
-				value = myParser.getValue();
-				conversionDone = true;
-			}
-			/** If the changed value is a Double, just write it */
-			if (nonParsedValue instanceof Double) {
-				value = (Double) nonParsedValue;
-				conversionDone = true;
-			}
-
-			assert conversionDone;
-			assert value != null;
-			Logger.getAnonymousLogger().info("Parsed value = " + value);
+			info("Parsed value = " + value);
 
 			/** Case where the value is "0". Must be avoid because there will be a division later */
 			if (value <= 1E-14) {
-				String newValue = JOptionPane.showInputDialog("The value \"0\" is not allowed here\nEnter a new value :");
+				String newValue = JOptionPane.showInputDialog(WRONG_ZERO_VALUE);
 				if (newValue == null) {
 					newValue = "1";
 				}
-				myParser.parseExpression(newValue);
-				value = myParser.getValue();
+				value = parseValue(newValue);
 				preferenceMatrix.setValueAt(value, event.getFirstRow(), event.getColumn());
 			}
 
-			/** Case where the value is not entered : DON'T WORK FOR NOW */
-			/** TODO */
+			/** Case where the value is not entered */
 			if (Double.isNaN(value)) {
-				String newValue = JOptionPane.showInputDialog("This can't be leaved blank\nPlease enter a value :");
+				String newValue = JOptionPane.showInputDialog(WRONG_EMPTY_VALUE);
 				if (newValue == null) {
 					newValue = "1";
 				}
-				myParser.parseExpression(newValue);
-				value = myParser.getValue();
+				value = parseValue(newValue);
 				preferenceMatrix.setValueAt(value, event.getFirstRow(), event.getColumn());
 			}
 			preferenceMatrix.setValueAt((1 / value), event.getColumn(), event.getFirstRow());
 		}
+	}
+
+	private Double parseValue(Object nonParsedValue) {
+		Double value = null;
+		boolean conversionDone = false;
+
+		/** If the changed value is a String, convert to Double */
+		if (nonParsedValue instanceof String) {
+			/** Use the parser to detect and evaluate basic operations (+ - * /) in the String */
+			jep.parseExpression((String) nonParsedValue);
+			value = jep.getValue();
+			conversionDone = true;
+		}
+		/** If the changed value is a Double, just write it */
+		if (nonParsedValue instanceof Double) {
+			value = (Double) nonParsedValue;
+			conversionDone = true;
+		}
+
+		assert conversionDone;
+		assert value != null;
+		return value;
+	}
+
+	private void info(String string) {
+		Logger.getAnonymousLogger().info(string);
 	}
 }
