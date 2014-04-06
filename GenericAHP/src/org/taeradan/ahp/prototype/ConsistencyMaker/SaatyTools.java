@@ -49,9 +49,9 @@ public final class SaatyTools {
 		return myTreeMap;
 	}
 
-	public static void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
-		while (!myTreeMap.isEmpty()) {
-			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
+	public static void printTreeMap(TreeMap<Double, MatrixValue> map) {
+		while (!map.isEmpty()) {
+			MatrixValue matrixValue = map.pollLastEntry().getValue();
 			System.out.println(
 				+matrixValue.getValue()
 					+ " ( "
@@ -84,21 +84,21 @@ public final class SaatyTools {
 	/*
 	 * Calculates the espilon matrix of Saaty ; Epsilon[i][j]=A[i][j]*w[j]/w[j]
 	 */
-	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
+	public static MyMatrix calculateEpsilonMatrix(MyMatrix preferenceMatrix,
 						      MyMatrix priorityVector) {
 
-		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(),
-			myPreferenceMatrix.getColumnDimension());
+		MyMatrix epsilon = new MyMatrix(preferenceMatrix.getRowDimension(),
+			preferenceMatrix.getColumnDimension());
 
-		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myPreferenceMatrix.getColumnDimension(); j++) {
+		for (int i = 0; i < preferenceMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < preferenceMatrix.getColumnDimension(); j++) {
 
 				double aij;
 				double wj;
 				double wi;
 				double eij;
 
-				aij = myPreferenceMatrix.get(i, j);
+				aij = preferenceMatrix.get(i, j);
 				wj = priorityVector.get(j, 0);
 				wi = priorityVector.get(i, 0);
 
@@ -146,7 +146,7 @@ public final class SaatyTools {
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 	}
 
-	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
+	public static Collection<MatrixValue> getRank(MyMatrix preferenceMatrix,
 						      MyMatrix priorityVector,
 						      MyMatrix epsilon) {
 
@@ -192,12 +192,12 @@ public final class SaatyTools {
 		return matrixValues;
 	}
 
-	public static int getLocationInRank(Collection<MatrixValue> sortedMatrixValues, int i, int j) {
+	public static int getLocationInRank(Collection<MatrixValue> matrixValues, int i, int j) {
 
 		int counter = 0;
 		boolean isFound = false;
 		MatrixValue matrixValue;
-		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
+		Iterator<MatrixValue> valueIterator = matrixValues.iterator();
 
 		while ((valueIterator.hasNext()) && (!isFound)) {
 			matrixValue = valueIterator.next();

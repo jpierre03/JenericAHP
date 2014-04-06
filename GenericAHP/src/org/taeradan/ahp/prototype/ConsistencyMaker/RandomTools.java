@@ -18,6 +18,7 @@ import java.util.*;
  * @author Jean-Pierre PRUNARET
  */
 public final class RandomTools {
+
 	private RandomTools() {
 	}
 
@@ -118,11 +119,8 @@ public final class RandomTools {
 
 
 		/*Build Saaty's ranking*/
-		epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix,
-			priorityVector);
-		sortedMatrixValues = SaatyTools.getRank(preferenceMatrix,
-			priorityVector,
-			epsilon);
+		epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
+		sortedMatrixValues = SaatyTools.getRank(preferenceMatrix, priorityVector, epsilon);
 
 		/*Simultaneous reading of the 2 classifications as the value to edit is not found in the random ranking*/
 
@@ -142,17 +140,17 @@ public final class RandomTools {
 			/*Writing of de the best fit related to the proposed value*/
 			//Copy of the original matrix
 			saatyMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
-			//saatyMatrix's eigenvector calculation
+			//saatyMatrix's eigen vector calculation
 			saatyVector = PriorityVector.build(saatyMatrix);
 			//best fit calculation
-			double BestFit = SaatyTools.calculateBestFit(
+			double bestFit = SaatyTools.calculateBestFit(
 				saatyMatrix,
 				saatyVector,
 				saatyMatrixValue.getRow(),
 				saatyMatrixValue.getColumn());
 
 			//best fit writing
-			tempString = "" + BestFit;
+			tempString = "" + bestFit;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
 
@@ -166,16 +164,17 @@ public final class RandomTools {
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
-			//remplacement de la valeur (i,j) par BestFit
-			MatrixValue newMatrixValue = new MatrixValue(saatyMatrixValue.getRow(),
+			//remplacement de la valeur (i,j) par bestFit
+			MatrixValue newMatrixValue = new MatrixValue(
+				saatyMatrixValue.getRow(),
 				saatyMatrixValue.getColumn(),
-				BestFit);
+				bestFit);
 			saatyMatrix.setMatrixValue(newMatrixValue);
 
-			//remplacement de la valeur (j,i) par 1/BestFit
+			//remplacement de la valeur (j,i) par 1/bestFit
 			newMatrixValue.setRow(saatyMatrixValue.getColumn());
 			newMatrixValue.setColumn(saatyMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
+			newMatrixValue.setValue(1. / bestFit);
 			saatyMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité
@@ -197,11 +196,11 @@ public final class RandomTools {
 			randomsVector = PriorityVector.build(randomsMatrix);
 
 			/*écriture best fit pour la méthode aléatoire*/
-			BestFit = SaatyTools.calculateBestFit(randomsMatrix,
+			bestFit = SaatyTools.calculateBestFit(randomsMatrix,
 				randomsVector,
 				randomsMatrixValue.getRow(),
 				randomsMatrixValue.getColumn());
-			tempString = "" + BestFit;
+			tempString = "" + bestFit;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
 
@@ -223,16 +222,16 @@ public final class RandomTools {
 
 			/*écriture de la cohérence après modification de la valeur aléatoire par le bestfit*/
 
-			//remplacement de la valeur (i,j) par BestFit
+			//remplacement de la valeur (i,j) par bestFit
 			newMatrixValue = new MatrixValue(randomsMatrixValue.getRow(),
 				randomsMatrixValue.getColumn(),
-				BestFit);
+				bestFit);
 			randomsMatrix.setMatrixValue(newMatrixValue);
 
-			//remplacement de la valeur (j,i) par 1/BestFit
+			//remplacement de la valeur (j,i) par 1/bestFit
 			newMatrixValue = new MatrixValue(randomsMatrixValue.getColumn(),
 				randomsMatrixValue.getRow(),
-				1. / BestFit);
+				1. / bestFit);
 			randomsMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité

@@ -44,7 +44,7 @@ public final class SaatyToolsTest {
 	}
 
 	private static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
-						    MyMatrix myPreferenceMatrix,
+						    MyMatrix preferenceMatrix,
 						    String file)
 		throws
 		IOException {
@@ -62,7 +62,7 @@ public final class SaatyToolsTest {
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(),
+			matrixValueToPrint.setValue(preferenceMatrix.get(matrixValueToPrint.getRow(),
 				matrixValueToPrint.getColumn()));
 
 			System.out.println("Souhaitez-vous modifier la valeur "
@@ -94,17 +94,17 @@ public final class SaatyToolsTest {
 
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
-			final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
+			final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
 			//calcul du vecteur propre associé à tempMatrix
 			PriorityVector tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
-			double BestFit = SaatyTools.calculateBestFit(tempMatrix,
+			double bestFit = SaatyTools.calculateBestFit(tempMatrix,
 				tempVector,
 				tempMatrixValue.getRow(),
 				tempMatrixValue.getColumn());
 			//écriture du best fit
-			String tempString = "" + BestFit;
+			String tempString = "" + bestFit;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
 
@@ -118,17 +118,17 @@ public final class SaatyToolsTest {
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
-			//remplacement de la valeur (i,j) par BestFit
+			//remplacement de la valeur (i,j) par bestFit
 			MatrixValue newMatrixValue = new MatrixValue();
 			newMatrixValue.setRow(tempMatrixValue.getRow());
 			newMatrixValue.setColumn(tempMatrixValue.getColumn());
-			newMatrixValue.setValue(BestFit);
+			newMatrixValue.setValue(bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
-			//remplacement de la valeur (j,i) par 1/BestFit
+			//remplacement de la valeur (j,i) par 1/bestFit
 			newMatrixValue.setRow(tempMatrixValue.getColumn());
 			newMatrixValue.setColumn(tempMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
+			newMatrixValue.setValue(1. / bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité
