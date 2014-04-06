@@ -53,6 +53,7 @@ public class PriorityVector
 
 		final PriorityVector resultVector = new PriorityVector(dimension);
 		final Matrix e = new Matrix(1, dimension, 1);
+		final Matrix eTranspose = e.transpose();
 
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
@@ -62,8 +63,8 @@ public class PriorityVector
 		int iteration = 0;
 		do {
 			lastVector = workVector;
-			final Matrix numerator = multiplyMatrix.times(e.transpose());
-			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
+			final Matrix numerator = multiplyMatrix.times(eTranspose);
+			final Matrix denominator = e.times(multiplyMatrix).times(eTranspose);
 
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
 			Matrix difference = workVector.minus(lastVector);

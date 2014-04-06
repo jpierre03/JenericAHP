@@ -17,6 +17,7 @@
  */
 package org.taeradan.ahp;
 
+import Jama.Matrix;
 import org.jdom.Element;
 
 import java.lang.reflect.Constructor;
@@ -131,26 +132,28 @@ public class Criterion
 
 	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alternatives) {
 
-		final PairWiseMatrix alternativesIndicatorMatrix = new PairWiseMatrix(alternatives.size(), indicators.size());
+		final PairWiseMatrix alternativesIndicator = new PairWiseMatrix(alternatives.size(), indicators.size());
 
 		/** Concatenation of the indicators' alternatives vectors **/
 		int index = 0;
 		for (Indicator indicator : indicators) {
-			alternativesIndicatorMatrix.setMatrix(
+			final PriorityVector alternativesPriorityVector = indicator.calculateAlternativesPriorityVector(alternatives);
+
+			alternativesIndicator.setMatrix(
 				0,
 				alternatives.size() - 1,
 				index,
 				index,
-				indicator.calculateAlternativesPriorityVector(alternatives));
+				alternativesPriorityVector);
 
 			index++;
 		}
 
 		/** Calculation of the criteria's alternatives vector */
-		vectorAlternativesCriteria = new PriorityVector(alternativesIndicatorMatrix.getRowDimension());
-		vectorAlternativesCriteria.setMatrix(
-			alternativesIndicatorMatrix.getRowDimension() - 1,
-			alternativesIndicatorMatrix.times(vectorIndicatorCriteria));
+		final Matrix value = alternativesIndicator.times(vectorIndicatorCriteria);
+
+		vectorAlternativesCriteria = new PriorityVector(alternativesIndicator.getRowDimension());
+		vectorAlternativesCriteria.setMatrix(alternativesIndicator.getRowDimension() - 1, value);
 
 		return vectorAlternativesCriteria;
 	}

@@ -292,10 +292,11 @@ public class AHPRoot {
 	 * This is the main method of this project.
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
-		structure.alternativesCriteriaMatrix = new Matrix(alternatives.size(), structure.criteria.size());
+		final int alternativeSize = alternatives.size();
+		structure.alternativesCriteriaMatrix = new Matrix(alternativeSize, structure.criteria.size());
 
 		if (DEBUG) {
-			info("alternatives = " + alternatives.size());
+			info("alternatives = " + alternativeSize);
 			info("criteria = " + structure.criteria.size());
 		}
 
@@ -311,48 +312,44 @@ public class AHPRoot {
 				structure.alternativesCriteriaMatrix.print(5, 4);
 			}
 
-			structure.alternativesCriteriaMatrix.setMatrix(0, alternatives.size() - 1, index, index, priorityVector);
+			structure.alternativesCriteriaMatrix.setMatrix(0, alternativeSize - 1, index, index, priorityVector);
 			index++;
 		}
 
 		/** Calculation of the final alternatives priority vector */
 		structure.alternativesGoalVector = new PriorityVector(structure.alternativesCriteriaMatrix.getRowDimension());
 		structure.alternativesGoalVector.setMatrix(
-			alternatives.size() - 1,
+			alternativeSize - 1,
 			structure.alternativesCriteriaMatrix.times(structure.criteriaGoalVector));
 
 		/** Ranking of the alternatives with the MOg vector */
 		final double[][] sortedVectorAlternativesGoal = structure.alternativesGoalVector.getArrayCopy();
 
 		// alternativesGoalVector.getVector().print(6, 4);
-		int[] originIndexes = new int[alternatives.size()];
+		int[] originIndexes = new int[alternativeSize];
 		for (int i = 0; i < originIndexes.length; i++) {
 			originIndexes[i] = i;
 		}
 
-		int minIndex;
-		double tmpValue;
-		int tmpIndex;
-		int[] ranks = new int[alternatives.size()];
-		for (int i = 0; i < alternatives.size(); i++) {
-			minIndex = i;
-			for (int j = i + 1; j < alternatives.size(); j++) {
+		int[] ranks = new int[alternativeSize];
+
+		for (int i = 0; i < alternativeSize; i++) {
+			int minIndex = i;
+			for (int j = i + 1; j < alternativeSize; j++) {
 				if (sortedVectorAlternativesGoal[j][0] < sortedVectorAlternativesGoal[minIndex][0]) {
 					minIndex = j;
 				}
 			}
 			/** swap indexes[i] <-> indexes[minIndex] */
-			tmpIndex = originIndexes[i];
+			final int tmpIndex = originIndexes[i];
 			originIndexes[i] = originIndexes[minIndex];
 			originIndexes[minIndex] = tmpIndex;
-			tmpValue = sortedVectorAlternativesGoal[i][0];
+			final double tmpValue = sortedVectorAlternativesGoal[i][0];
+
 			/** swap vector[i] <-> vector[minIndex] */
 			sortedVectorAlternativesGoal[i][0] = sortedVectorAlternativesGoal[minIndex][0];
 			sortedVectorAlternativesGoal[minIndex][0] = tmpValue;
-			ranks[alternatives.size() - i - 1] = originIndexes[i];
-
-//				System.out.println("ranks[" + i + "]=" + originIndexes[i] + " : "
-//							   + sortedVectorAlternativesGoal[i][0]);
+			ranks[alternativeSize - i - 1] = originIndexes[i];
 		}
 
 		index = 0;

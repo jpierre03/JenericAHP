@@ -55,32 +55,31 @@ public abstract class Indicator
 	/**
 	 * Method called by the criteria for the execution of the AHP algorithm.
 	 */
-	public PriorityVector calculateAlternativesPriorityVector(
-		final Collection<? extends Alternative> alternatives) {
+	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alternatives) {
 
 		this.lastAlternatives = alternatives;
-		final int dimension = this.lastAlternatives.size();
+		final int dimension = lastAlternatives.size();
 		double[] altValues = new double[dimension];
 
 		alternativeAlternativeMatrix = new PairWiseMatrix(dimension, dimension);
 
-//		For each alternative, evaluation of its value for the indicator
+		/** For each alternative, evaluation of its value for the indicator */
 		for (int i = 0; i < this.lastAlternatives.size(); i++) {
 			altValues[i] = calculateAlternativeValue(i, this.lastAlternatives);
 		}
 
-//		Construction of the alternative/alternative matrix
+		/** Construction of the alternative/alternative matrix */
 		buildAlternativeAlternativeMatrix(dimension, altValues);
 
-//		Conversion from pairwise matrix to priority vector
+		/** Conversion from pairwise matrix to priority vector */
 		alternativeIndicatorVector = PriorityVector.build(alternativeAlternativeMatrix);
 
 		return alternativeIndicatorVector;
 	}
 
-	private void buildAlternativeAlternativeMatrix(int dimension, double[] altValues) {
+	private void buildAlternativeAlternativeMatrix(final int dimension, final double[] altValues) {
 		for (int i = 0; i < dimension; i++) {
-			alternativeAlternativeMatrix.set(i, i, 1);
+			alternativeAlternativeMatrix.set(i, i, 1.);
 			for (int j = 0; j < i; j++) {
 				if (maximization) {
 					alternativeAlternativeMatrix.set(i, j, altValues[i] / altValues[j]);
