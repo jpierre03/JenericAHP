@@ -296,15 +296,15 @@ public class AHPRoot {
 		/** Concatenation in a matrix of the vectors calculated by the criteria */
 		int index = 0;
 		if (DEBUG) {
-			Logger.getAnonymousLogger().info("alternatives = " + alternatives.size());
-			Logger.getAnonymousLogger().info("criteria = " + structure.criteria.size());
+			info("alternatives = " + alternatives.size());
+			info("criteria = " + structure.criteria.size());
 		}
 
 		for (Criterion criterion : structure.criteria) {
 			final PriorityVector priorityVector = criterion.calculateAlternativesPriorityVector(alternatives);
 			if (DEBUG) {
-				Logger.getAnonymousLogger().info("criterion n= " + index);
-				Logger.getAnonymousLogger().info("alternatives vector n= " + priorityVector.getRowDimension());
+				info("criterion n= " + index);
+				info("alternatives vector n= " + priorityVector.getRowDimension());
 				priorityVector.print(5, 4);
 				structure.matrixAlternativesCriteria.print(5, 4);
 			}
@@ -362,5 +362,9 @@ public class AHPRoot {
 
 	public String getName() {
 		return structure.name;
+	}
+
+	private  void info(String string){
+		Logger.getAnonymousLogger().info(string);
 	}
 }
