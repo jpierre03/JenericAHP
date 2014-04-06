@@ -56,8 +56,8 @@ public class AHPRoot {
 	public final AHP_GUI_methods guiMethods = new AHP_GUI_methods();
 	private static final boolean DEBUG = false;
 
-	private class AHP_Structure
-		implements XmlOutputable {
+	private class AHP_Structure implements XmlOutputable {
+
 		private String name = "";
 		private Matrix matrixAlternativesCriteria;
 		private PairWiseMatrix matrixCriteriaCriteria = new PairWiseMatrix();
@@ -65,10 +65,8 @@ public class AHPRoot {
 		private PriorityVector vectorCriteriaGoal;
 		private Collection<Criterion> criteria = new ArrayList<>();
 
-		public void build(File inFile)
-			throws
-			JDOMException,
-			IOException {
+		public void build(File inFile) throws JDOMException, IOException {
+
 			//			XML parser creation
 			final SAXBuilder parser = new SAXBuilder();
 //			JDOM document created from XML configuration file
@@ -231,7 +229,7 @@ public class AHPRoot {
 	 */
 	@Override
 	public String toString() {
-		return " AHP Root : " + structure.name + ", " + structure.criteria.size() + " criteria";
+		return " AHP Root: " + structure.name + ", " + structure.criteria.size() + " criteria";
 	}
 
 	/**
@@ -266,15 +264,16 @@ public class AHPRoot {
 	 */
 	public void saveConfiguration(final String outputFile) {
 		try {
-//			Save the AHP tree in a XML document matching the Doctype "ahp_conf.dtd"
+			/** Save the AHP tree in a XML document matching the document definition "ahp_conf.dtd" */
 			final Document outXmlDocument =
 				new Document(structure.toXml(),
-					new DocType("root",
+					new DocType(
+						"root",
 						getClass().getResource("/org/taeradan/ahp/conf/ahp_conf.dtd").getFile()));
 
-//			Use a write format easily readable by a human
+			/** Use a write format easily readable by a human */
 			final XMLOutputter output = new XMLOutputter(Format.getPrettyFormat());
-//			Write the output into the specified file
+			/** Write the output into the specified file */
 			output.output(outXmlDocument, new FileOutputStream(outputFile));
 		} catch (IOException ex) {
 			Logger.getLogger(AHPRoot.class.getName()).log(Level.SEVERE, null, ex);
@@ -287,7 +286,7 @@ public class AHPRoot {
 	 */
 	public void calculateRanking(final Collection<? extends Alternative> alternatives) {
 		structure.matrixAlternativesCriteria = new Matrix(alternatives.size(), structure.criteria.size());
-//		Concatenation in a matrix of the vectors calculated by the criteria
+		/** Concatenation in a matrix of the vectors calculated by the criteria */
 		int index = 0;
 		if (DEBUG) {
 			Logger.getAnonymousLogger().info("alternatives = " + alternatives.size());
@@ -306,12 +305,12 @@ public class AHPRoot {
 			index++;
 		}
 
-//		Calculation of the final alternatives priority vector
+		/** Calculation of the final alternatives priority vector */
 		structure.vectorAlternativesGoal = new PriorityVector(structure.matrixAlternativesCriteria.getRowDimension());
 		structure.vectorAlternativesGoal.setMatrix(alternatives.size() - 1,
 			structure.matrixAlternativesCriteria.times(structure.vectorCriteriaGoal));
 
-//			Ranking of the alternatives with the MOg vector
+		/** Ranking of the alternatives with the MOg vector */
 		final double[][] sortedVectorAlternativesGoal = structure.vectorAlternativesGoal.getArrayCopy();
 
 //			vectorAlternativesGoal.getVector().print(6, 4);
