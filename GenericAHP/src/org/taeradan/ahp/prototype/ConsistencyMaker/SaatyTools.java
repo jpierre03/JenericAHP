@@ -150,13 +150,12 @@ public final class SaatyTools {
 						      MyMatrix priorityVector,
 						      MyMatrix epsilon) {
 
-
 		MatrixValue sortedMatrixValue;
 		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		boolean isPresent = false;
 
 		/*Creation du TreeMap à partir de la matrice epsilon*/
-		TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
+		final TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
 
 		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
 		while (!myTreeMap.isEmpty()) {
@@ -192,17 +191,19 @@ public final class SaatyTools {
 		return matrixValues;
 	}
 
-	public static int getLocationInRank(Collection<MatrixValue> matrixValues, int i, int j) {
+	public static int getLocationInRank(Collection<MatrixValue> matrixValues, int row, int column) {
+		assert matrixValues != null;
+		assert row >= 0;
+		assert column >= 0;
 
+		final Iterator<MatrixValue> iterator = matrixValues.iterator();
 		int counter = 0;
 		boolean isFound = false;
-		MatrixValue matrixValue;
-		Iterator<MatrixValue> valueIterator = matrixValues.iterator();
 
-		while ((valueIterator.hasNext()) && (!isFound)) {
-			matrixValue = valueIterator.next();
+		while ((iterator.hasNext()) && (!isFound)) {
+			final MatrixValue matrixValue = iterator.next();
 
-			if ((i == matrixValue.getRow()) && (j == matrixValue.getColumn())) {
+			if ((row == matrixValue.getRow()) && (column == matrixValue.getColumn())) {
 				isFound = true;
 			}
 			counter++;
