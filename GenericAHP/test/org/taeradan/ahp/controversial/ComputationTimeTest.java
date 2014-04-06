@@ -7,10 +7,7 @@ import org.taeradan.ahp.TimeConsumeRule;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,9 +16,10 @@ import static org.junit.Assert.assertTrue;
  */
 public class ComputationTimeTest {
 
-	private static final double TEMOIN_MAX = 1000;
-	private static final double VARIABLE_MAX = 1000000000;
-	private static final double DECALAGE = 0;
+	private static final double TEMOIN_MAX = new Random().nextInt(100 * 1000);
+	private static final double VARIABLE_MAX = new Random().nextInt(100 * 1000);
+	private static final double DECALAGE = new Random().nextInt(100 * 1000);
+
 	private final List<ControversialAlternative> alternatives = new ArrayList<>(makeAlternatives());
 	private static AHPRoot ahpRoot;
 
