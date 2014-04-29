@@ -68,7 +68,6 @@ public final class RandomToolsTest {
 		/*WIP*/
 		System.out.println("Merci de patienter.");
 
-		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
 		boolean isFirstProblem = true;
 		boolean isEnglish = false;
 		matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(isFirstProblem, isEnglish));
