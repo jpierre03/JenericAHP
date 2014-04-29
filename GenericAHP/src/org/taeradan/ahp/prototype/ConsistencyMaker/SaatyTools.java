@@ -111,43 +111,27 @@ public final class SaatyTools {
 		return epsilon;
 	}
 
-	public static double calculateBestFit(MyMatrix preferenceMatrix,
-					      MyMatrix priorityVector,
-					      int i,
-					      int j) {
+	public static double calculateBestFit(MyMatrix preferenceMatrix, MyMatrix priorityVector, int i, int j) {
 
-		MatrixValue matrixValue;
-		MyMatrix tempMatrix = new MyMatrix();
+		final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
-		tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
+		/** Remplacer aii et ajj par 2*/
+		tempMatrix.setMatrixValue(new MatrixValue(i, i, 2));
 
-		/*Remplacer aii et ajj par 2*/
-		matrixValue = preferenceMatrix.getMatrixValue(i, i);
-		matrixValue.setValue(2);
-		tempMatrix.setMatrixValue(matrixValue);
+		tempMatrix.setMatrixValue(new MatrixValue(j, j, 2));
 
-		matrixValue = preferenceMatrix.getMatrixValue(j, j);
-		matrixValue.setValue(2);
-		tempMatrix.setMatrixValue(matrixValue);
+		/** Remplacer aij et aji par 0 */
+		/** TODO: Vérifier que 0 est la bonne valeur */
+		tempMatrix.setMatrixValue(new MatrixValue(i, j, 0));
+		tempMatrix.setMatrixValue(new MatrixValue(j, i, 0));
 
-		/*Remplacer aij et aji par 0*/
-		matrixValue = preferenceMatrix.getMatrixValue(i, j);
-		matrixValue.setValue(0);
-		tempMatrix.setMatrixValue(matrixValue);
-
-		matrixValue = preferenceMatrix.getMatrixValue(j, i);
-		matrixValue.setValue(0);
-		tempMatrix.setMatrixValue(matrixValue);
-
-		/*Recalculer vecteur priorité*/
+		/** Recalculer vecteur priorité */
 		priorityVector = PriorityVector.build(tempMatrix);
 
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 	}
 
-	public static Collection<MatrixValue> getRank(MyMatrix preferenceMatrix,
-						      MyMatrix priorityVector,
-						      MyMatrix epsilon) {
+	public static Collection<MatrixValue> getRank(MyMatrix preferenceMatrix, MyMatrix priorityVector, MyMatrix epsilon) {
 
 		MatrixValue sortedMatrixValue;
 		Collection<MatrixValue> matrixValues = new ArrayList<>();
