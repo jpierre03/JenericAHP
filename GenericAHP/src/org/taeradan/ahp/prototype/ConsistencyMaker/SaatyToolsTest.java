@@ -276,7 +276,7 @@ public final class SaatyToolsTest {
 			MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
 
 			/*Recherche de la valeur à modifier*/
-			collectionOfSortedMatrixValues = SaatyTools.getRank(preferenceMatrix, priorityVector, epsilon);
+			collectionOfSortedMatrixValues = SaatyTools.getRank(epsilon);
 			MatrixValue matrixValue = readSaatyRanking(collectionOfSortedMatrixValues, preferenceMatrix, file);
 
 			System.out.println(

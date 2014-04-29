@@ -131,7 +131,7 @@ public final class SaatyTools {
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 	}
 
-	public static Collection<MatrixValue> getRank(MyMatrix preferenceMatrix, MyMatrix priorityVector, MyMatrix epsilon) {
+	public static Collection<MatrixValue> getRank(MyMatrix epsilon) {
 
 		MatrixValue sortedMatrixValue;
 		Collection<MatrixValue> matrixValues = new ArrayList<>();

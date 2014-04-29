@@ -721,7 +721,7 @@ public class InterfaceAHP
 					/*Calcul matrice epsilon*/
 					epsilon = SaatyTools.calculateEpsilonMatrix(ahpData.myMatrix, priorityVector);
 					/*Recherche de la valeur à modifier*/
-					collectionOfSortedMatrixValues = SaatyTools.getRank(ahpData.myMatrix, priorityVector, epsilon);
+					collectionOfSortedMatrixValues = SaatyTools.getRank(epsilon);
 					try {
 						matrixValue = readSaatysRanking(collectionOfSortedMatrixValues, ahpData.myMatrix, file);
 					} catch (IOException ex) {

@@ -107,7 +107,7 @@ public final class RandomTools {
 
 		/** Build Saaty's ranking */
 		final MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
-		final Collection<MatrixValue> sortedMatrixValues = SaatyTools.getRank(preferenceMatrix, priorityVector, epsilon);
+		final Collection<MatrixValue> sortedMatrixValues = SaatyTools.getRank(epsilon);
 
 		/* Simultaneous reading of the 2 classifications as the value to edit is not found in the random ranking */
 
