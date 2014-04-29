@@ -24,6 +24,9 @@ import java.util.Scanner;
  */
 public final class RandomToolsTest {
 
+	private RandomToolsTest() {
+	}
+
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix)
 		throws
 		HeadlessException {
@@ -52,7 +55,7 @@ public final class RandomToolsTest {
 		Collection<MatrixValue> nonSortedMatrixValues;
 		String tempString;
 
-		/*Select the file, in which simulation will be saved*/
+		/** Select the file, in which simulation results  will be saved */
 		System.out.println("Saisir le nom du fichier permettant de garder la trace des actions");
 		String file = userInput.next();
 		file += ".csv";
@@ -66,7 +69,9 @@ public final class RandomToolsTest {
 		System.out.println("Merci de patienter.");
 
 		//Attention true si c'est le 1er pb false si deuxième et false si langue francaise
-		matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(true, false));
+		boolean isFirstProblem = true;
+		boolean isEnglish = false;
+		matrixTableModel.setMatrix(preferenceMatrix, SampleMatrixHeaders.getColumnHeader(isFirstProblem, isEnglish));
 		maTable.setModel(matrixTableModel);
 
 		/*Print a matrix view*/
@@ -112,10 +117,12 @@ public final class RandomToolsTest {
 			matrixValue = RandomTools.getValueToModifiyByRanking(nonSortedMatrixValues);
 
 			/*Writing of Saaty's propositions and of random ranking*/
-			RandomTools.writeRandomAndSaatyPropositions(preferenceMatrix,
+			RandomTools.writeRandomAndSaatyPropositions(
+				preferenceMatrix,
 				nonSortedMatrixValues,
 				matrixValue,
-				priorityVector, file);
+				priorityVector,
+				file);
 
 			/*Writing of the value, which will be changed by the expert*/
 			csa = new CharSequenceAppender(file);
@@ -215,8 +222,5 @@ public final class RandomToolsTest {
 		csa.append(tempString);
 
 		csa.close();
-	}
-
-	private RandomToolsTest() {
 	}
 }
