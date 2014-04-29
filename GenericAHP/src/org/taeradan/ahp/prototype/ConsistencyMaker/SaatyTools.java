@@ -111,7 +111,7 @@ public final class SaatyTools {
 		return epsilon;
 	}
 
-	public static double calculateBestFit(MyMatrix preferenceMatrix, MyMatrix priorityVector, int i, int j) {
+	public static double calculateBestFit(MyMatrix preferenceMatrix, int i, int j) {
 
 		final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
@@ -126,7 +126,7 @@ public final class SaatyTools {
 		tempMatrix.setMatrixValue(new MatrixValue(j, i, 0));
 
 		/** Recalculer vecteur priorité */
-		priorityVector = PriorityVector.build(tempMatrix);
+		final PriorityVector priorityVector = PriorityVector.build(tempMatrix);
 
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 	}

@@ -100,7 +100,6 @@ public final class SaatyToolsTest {
 			PriorityVector tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
 			double bestFit = SaatyTools.calculateBestFit(tempMatrix,
-				tempVector,
 				tempMatrixValue.getRow(),
 				tempMatrixValue.getColumn());
 			//écriture du best fit

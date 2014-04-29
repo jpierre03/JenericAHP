@@ -501,7 +501,6 @@ public class InterfaceAHP
 				PriorityVector tempVector = PriorityVector.build(tempMatrix);
 				//calcul du best fit
 				double BestFit = SaatyTools.calculateBestFit(tempMatrix,
-					tempVector,
 					tempMatrixValue.getRow(),
 					tempMatrixValue.getColumn());
 				//écriture du best fit

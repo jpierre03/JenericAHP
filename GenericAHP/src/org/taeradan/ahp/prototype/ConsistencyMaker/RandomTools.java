@@ -143,7 +143,7 @@ public final class RandomTools {
 		//saatyMatrix's eigen vector calculation
 		MyMatrix saatyVector = PriorityVector.build(saatyMatrix);
 		//best fit calculation
-		final double bestFit_saaty = SaatyTools.calculateBestFit(saatyMatrix, saatyVector, i_saaty, j_saaty);
+		final double bestFit_saaty = SaatyTools.calculateBestFit(saatyMatrix, i_saaty, j_saaty);
 
 		//best fit writing
 		csa.append("" + bestFit_saaty);
@@ -187,7 +187,6 @@ public final class RandomTools {
 		/*écriture best fit pour la méthode aléatoire*/
 		final double bestFit_random = SaatyTools.calculateBestFit(
 			randomsMatrix,
-			randomsVector,
 			randomsValue.getRow(),
 			randomsValue.getColumn());
 		csa.append("" + bestFit_random);
