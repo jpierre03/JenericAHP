@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * @author Marianne
  */
-public final class CharSequenceAppenderTest {
+final class CharSequenceAppenderTest {
 
 	private CharSequenceAppenderTest() {
 	}

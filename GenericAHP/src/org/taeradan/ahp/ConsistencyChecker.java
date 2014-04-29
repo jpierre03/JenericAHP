@@ -40,40 +40,12 @@ public final class ConsistencyChecker {
 		1.56,
 		1.57,
 		1.59};
-
 	private static final int MAX_NORMAL_MATRIX_SIZE = 15;
 	private static final double CONSISTENCY_THRESHOLD = 10.0 / 100.0;
 	private final ConsistencyData consistencyData = new ConsistencyData();
 
-
-	private class ConsistencyData {
-
-		private Double consistencyRatio = null;
-		private boolean isConsistent;
-
-		public Double getConsistencyRatio() {
-			return consistencyRatio;
-		}
-
-		public void setConsistencyRatio(Double consistencyRatio) {
-			this.consistencyRatio = consistencyRatio;
-
-			if (this.consistencyRatio < CONSISTENCY_THRESHOLD) {
-				setConsistent(true);
-			}
-		}
-
-		public boolean isConsistent() {
-			return isConsistent;
-		}
-
-		public void setConsistent(boolean consistent) {
-			isConsistent = consistent;
-		}
-	}
-
-	public boolean isConsistent(final Matrix preferenceMatrix,
-				    final Matrix priorityVector) {
+	public void computeConsistency(final Matrix preferenceMatrix,
+				       final Matrix priorityVector) {
 		assert preferenceMatrix != null : "preferenceMatrix should be not null";
 		assert preferenceMatrix.getRowDimension() > 0;
 		assert preferenceMatrix.getColumnDimension() > 0;
@@ -113,6 +85,11 @@ public final class ConsistencyChecker {
 		if (preferenceMatrixDimension > 2 && preferenceMatrixDimension <= MAX_NORMAL_MATRIX_SIZE) {
 			caseDimension_NormalRange(preferenceMatrix, priorityVector, preferenceMatrixDimension);
 		}
+	}
+
+	public boolean isConsistent(final Matrix preferenceMatrix,
+				    final Matrix priorityVector) {
+		computeConsistency(preferenceMatrix, priorityVector);
 
 		return consistencyData.isConsistent();
 	}
@@ -155,16 +132,44 @@ public final class ConsistencyChecker {
 	}
 
 	public double getConsistencyRatio() {
-		if (consistencyData.getConsistencyRatio() == null) {
+		final Double consistencyRatio = consistencyData.getConsistencyRatio();
+
+		if (consistencyRatio == null) {
 			throw new RuntimeException("computing method have to be invoked first");
 		}
-		assert consistencyData.getConsistencyRatio() != null;
-		assert consistencyData.getConsistencyRatio().isInfinite() == false;
-		assert consistencyData.getConsistencyRatio().isNaN() == false;
+		assert consistencyRatio != null;
+		assert consistencyRatio.isInfinite() == false;
+		assert consistencyRatio.isNaN() == false;
 
-		assert consistencyData.getConsistencyRatio() <= 100.0 / 100.0;
-		assert consistencyData.getConsistencyRatio() >= 0.0 / 100.0;
+		assert consistencyRatio <= 100.0 / 100.0;
+		assert consistencyRatio >= 0.0 / 100.0;
 
-		return consistencyData.getConsistencyRatio();
+		return consistencyRatio;
+	}
+
+	private class ConsistencyData {
+
+		private Double consistencyRatio = null;
+		private boolean isConsistent;
+
+		public Double getConsistencyRatio() {
+			return consistencyRatio;
+		}
+
+		public void setConsistencyRatio(Double consistencyRatio) {
+			this.consistencyRatio = consistencyRatio;
+
+			if (this.consistencyRatio < CONSISTENCY_THRESHOLD) {
+				setConsistent(true);
+			}
+		}
+
+		public boolean isConsistent() {
+			return isConsistent;
+		}
+
+		public void setConsistent(boolean consistent) {
+			isConsistent = consistent;
+		}
 	}
 }

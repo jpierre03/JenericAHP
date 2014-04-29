@@ -86,7 +86,7 @@ public final class RandomToolsTest {
 		csa.appendLineFeed();
 
 		//Writing of the CR
-//		tempBoolean = consistencyChecker.isConsistent(preferenceMatrix, priorityVector);
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
 		tempString = "" + consistencyChecker.getConsistencyRatio();
 		csa.append(tempString);
 		csa.appendLineFeed();
