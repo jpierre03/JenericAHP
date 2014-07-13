@@ -7,6 +7,7 @@ package org.taeradan.ahp.prototype.gui.matrix;
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.SampleMatrixHeaders;
+import org.taeradan.ahp.gui.component.MonCellRenderer;
 
 import javax.swing.*;
 
@@ -24,6 +25,8 @@ public final class MyMatrixTableTest {
 		final MyMatrixTable table = new MyMatrixTable();
 		final MyMatrix matrix = new MyMatrix(MyMatrixTable.ROWS, MyMatrixTable.COLUMN);
 
+		table.setDefaultRenderer(Object.class, new MonCellRenderer(MyMatrixTable.ROWS, MyMatrixTable.COLUMN));
+
 		setTableFromMatrix(table, matrix);
 
 		showTableInFrame(27 * matrix.getRowDimension(), table);
@@ -33,7 +36,7 @@ public final class MyMatrixTableTest {
 		for (int i = 0; i < MyMatrixTable.ROWS; i++) {
 			for (int j = 0; j < MyMatrixTable.COLUMN; j++) {
 				MatrixValue matrixValue = new MatrixValue();
-				matrixValue.setValue((i - j) * (j + i));
+				matrixValue.setValue(Math.abs((i - j) * (j + i)) % 8 + 1);
 				matrixValue.setRow(i);
 				matrixValue.setColumn(j);
 
@@ -41,10 +44,9 @@ public final class MyMatrixTableTest {
 			}
 		}
 
-
 		MyMatrixTableModel tableModel = new MyMatrixTableModel();
 
-		//Attention true si c'est le 1er pb false si deuxième et false si la langue est francais
+		/** Attention true si c'est le 1er pb false si deuxième et false si la langue est français */
 		tableModel.setMatrix(matrix, SampleMatrixHeaders.getColumnHeader(true, false));
 
 		table.setModel(tableModel);

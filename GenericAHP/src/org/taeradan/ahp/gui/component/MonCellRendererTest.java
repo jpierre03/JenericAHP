@@ -1,4 +1,4 @@
-package org.taeradan.ahp.prototype.gui.yannick;
+package org.taeradan.ahp.gui.component;
 
 import javax.swing.*;
 

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.taeradan.ahp.prototype.gui.yannick;
+package org.taeradan.ahp.gui.component;
 
 /**
  *
@@ -13,17 +13,39 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-class MonCellRenderer
+public final class MonCellRenderer
 	extends DefaultTableCellRenderer {
 
-	private int row;
-	private int col;
+	private int row = 0;
+	private int col = 0;
+
+	public MonCellRenderer(int row, int col) {
+		checkPositiveStrictly(row);
+		checkPositiveStrictly(col);
+		this.row = row;
+		this.col = col;
+	}
+
+	private static void checkPositive(int value) {
+		boolean isValid = value >= 0;
+		if (!isValid) {
+			throw new IllegalArgumentException("value must be Positive (>=0)");
+		}
+	}
+
+	private static void checkPositiveStrictly(int value) {
+		boolean isValid = value > 0;
+		if (!isValid) {
+			throw new IllegalArgumentException("value must be Positive (>0)");
+		}
+	}
 
 	public int getCol() {
 		return col;
 	}
 
 	public void setCol(int col) {
+		checkPositive(col);
 		this.col = col;
 	}
 
@@ -32,12 +54,8 @@ class MonCellRenderer
 	}
 
 	public void setRow(int row) {
+		checkPositive(row);
 		this.row = row;
-	}
-
-	public MonCellRenderer(int row, int col) {
-		this.row = row;
-		this.col = col;
 	}
 
 	@Override
@@ -47,14 +65,17 @@ class MonCellRenderer
 						       boolean hasFocus,
 						       int row,
 						       int column) {
+		checkPositive(row);
+		checkPositive(column);
+		if (table == null) {
+			throw new NullPointerException("table not defined");
+		}
 
-		Component cell = super.getTableCellRendererComponent(table, value,
-			isSelected, hasFocus, row, column);
+		Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-		if (row == this.row && column == this.col) {
+		if ((this.row == row)
+			&& (this.col == column)) {
 			cell.setBackground(Color.YELLOW);
-		} else {
-			cell.setBackground(Color.WHITE);
 		}
 		for (int r = 0; r < table.getRowCount(); r++) {
 			for (int c = 0; c < table.getColumnCount(); c++) {
@@ -64,10 +85,12 @@ class MonCellRenderer
 					cell.setBackground(Color.GRAY);
 				} else if (column == 0) {
 					cell.setBackground(Color.GRAY);
+				} else {
+					cell.setBackground(Color.WHITE);
 				}
-				//else cell.setBackground(Color.WHITE);
 			}
 		}
+
 		return cell;
 	}
 }

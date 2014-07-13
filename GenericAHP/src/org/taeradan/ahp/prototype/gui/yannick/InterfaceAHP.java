@@ -3,6 +3,7 @@ package org.taeradan.ahp.prototype.gui.yannick;
 import org.nfunk.jep.JEP;
 import org.taeradan.ahp.ConsistencyChecker;
 import org.taeradan.ahp.PriorityVector;
+import org.taeradan.ahp.gui.component.MonCellRenderer;
 import org.taeradan.ahp.matrix.MatrixValue;
 import org.taeradan.ahp.matrix.MyMatrix;
 import org.taeradan.ahp.prototype.ConsistencyMaker.RandomTools;
