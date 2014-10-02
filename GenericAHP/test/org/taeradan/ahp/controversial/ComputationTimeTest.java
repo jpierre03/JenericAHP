@@ -24,7 +24,7 @@ public class ComputationTimeTest {
 	private static AHPRoot ahpRoot;
 
 	private static List<ControversialAlternative> makeAlternatives() {
-		final int maxAlternatives = 2000;
+		final int maxAlternatives = 100;
 		final List<ControversialAlternative> alts = new ArrayList<>(maxAlternatives);
 
 		for (int i = 0; i < maxAlternatives; i++) {

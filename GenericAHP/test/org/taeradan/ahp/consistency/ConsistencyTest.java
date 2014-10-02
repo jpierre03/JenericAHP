@@ -35,20 +35,19 @@ import static org.junit.Assert.*;
  */
 public final class ConsistencyTest {
 	private static final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
-
 	@Rule
 	public MethodRule rule = new TimeConsumeRule();
 
 	@BeforeClass
 	public static void setUpClass()
-			throws
-			Exception {
+		throws
+		Exception {
 	}
 
 	@AfterClass
 	public static void tearDownClass()
-			throws
-			Exception {
+		throws
+		Exception {
 	}
 
 	@Before
@@ -73,7 +72,7 @@ public final class ConsistencyTest {
 
 			assertTrue(isConsistent);
 		} catch (Exception ex) {
-			fail("Exception");
+			fail("Exception " + ex.getLocalizedMessage());
 		}
 	}
 
@@ -89,7 +88,7 @@ public final class ConsistencyTest {
 
 			assertFalse(isConsistent);
 		} catch (Exception ex) {
-			fail("Exception");
+			fail("Exception " + ex.getLocalizedMessage());
 		}
 	}
 }
