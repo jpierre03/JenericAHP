@@ -78,6 +78,26 @@ public final class ConsistencyTest {
 	}
 
 	@Test
+	public void test110_consistentMatrix_value() {
+
+		final SAXBuilder parser = new SAXBuilder();
+		try {
+			final Document inDocument = parser.build(ConsistencyTest.class.getResource("consistent-matrix.xml"));
+			final PairWiseMatrix matrix = PairWiseMatrix.builder(inDocument.getRootElement());
+			final PriorityVector vector = PriorityVector.build(matrix);
+
+
+			final double consistencyRatio = consistencyChecker.getConsistencyRatio();
+			final double expectedRatio = 0;
+			final double delta = 1E-10;
+
+			assertEquals(expectedRatio, consistencyRatio, delta);
+		} catch (Exception ex) {
+			fail("Exception " + ex.getLocalizedMessage());
+		}
+	}
+
+	@Test
 	public void test200_unconsistentMatrix() {
 		final SAXBuilder parser = new SAXBuilder();
 		try {
@@ -86,8 +106,10 @@ public final class ConsistencyTest {
 			final PriorityVector vector = PriorityVector.build(matrix);
 
 			final boolean isConsistent = consistencyChecker.isConsistent(matrix, vector);
-
+			final double consistencyRatio = consistencyChecker.getConsistencyRatio();
 			assertFalse(isConsistent);
+
+			assertTrue(consistencyRatio > 1E-3);
 		} catch (Exception ex) {
 			fail("Exception " + ex.getLocalizedMessage());
 		}
