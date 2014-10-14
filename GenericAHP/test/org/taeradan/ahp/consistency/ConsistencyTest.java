@@ -17,6 +17,7 @@
  */
 package org.taeradan.ahp.consistency;
 
+import Jama.Matrix;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.junit.*;
@@ -90,5 +91,53 @@ public final class ConsistencyTest {
 		} catch (Exception ex) {
 			fail("Exception " + ex.getLocalizedMessage());
 		}
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void preference_matrix_too_big() {
+		final Matrix preferenceMatrix = new Matrix(100, 100);
+		final Matrix priorityVector = new Matrix(100, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void preference_matrices_size_mismatch() {
+		final Matrix preferenceMatrix = new Matrix(100, 100);
+		final Matrix priorityVector = new Matrix(15, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void preference_matrices_non_square_caseA() {
+		final Matrix preferenceMatrix = new Matrix(10, 2);
+		final Matrix priorityVector = new Matrix(10, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void preference_matrices_non_square_caseB() {
+		final Matrix preferenceMatrix = new Matrix(2, 10);
+		final Matrix priorityVector = new Matrix(10, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void preference_matrices_non_square_caseC() {
+		final Matrix preferenceMatrix = new Matrix(10, 10);
+		final Matrix priorityVector = new Matrix(2, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void preference_matrices_non_square_caseD() {
+		final Matrix preferenceMatrix = new Matrix(10, 10);
+		final Matrix priorityVector = new Matrix(10, 1);
+
+		consistencyChecker.computeConsistency(preferenceMatrix, priorityVector);
 	}
 }

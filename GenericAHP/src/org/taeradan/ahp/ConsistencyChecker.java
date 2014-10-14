@@ -46,14 +46,6 @@ public final class ConsistencyChecker {
 
 		checkMatricesDimensions(preferenceMatrix, priorityVector);
 
-		if (!(preferenceMatrixDimension <= randomIndex.length)) {
-			throw new IllegalStateException(String.format(
-				"Saaty random index not defined for this size (known size: %d) current size: %d)",
-				randomIndex.length,
-				preferenceMatrixDimension)
-			);
-		}
-
 		consistencyData.setConsistent(false);
 
 		final boolean isCaseOne = preferenceMatrixDimension == 1;
@@ -118,9 +110,17 @@ public final class ConsistencyChecker {
 			}
 		}
 
-		assert lambdaMax > Double.MIN_VALUE;
-		assert lambdaMax < Double.MAX_VALUE;
-		assert preferenceMatrixDimension - 1 != 0.0 : "Otherwise, divide by 0";
+		if (lambdaMax <= Double.MIN_VALUE) {
+			throw new IllegalStateException(
+				String.format("LambdaMax should be defined (nor MIN_VALUE, nor MAX_Value). Value: %f", lambdaMax));
+		}
+		if (lambdaMax >= Double.MAX_VALUE) {
+			throw new IllegalStateException(
+				String.format("LambdaMax should be defined (nor MIN_VALUE, nor MAX_Value). Value: %f", lambdaMax));
+		}
+		if (preferenceMatrixDimension - 1 == 0.0) {
+			throw new IllegalStateException("Preference matrix size must be greater than 1. Otherwise, divide by 0");
+		}
 
 		final double consistencyIndex = (lambdaMax - preferenceMatrixDimension) / (preferenceMatrixDimension - 1);
 		final double consistencyRatio = (consistencyIndex / randomIndex[preferenceMatrixDimension]);
@@ -130,10 +130,28 @@ public final class ConsistencyChecker {
 	private void checkMatricesDimensions(Matrix preferenceMatrix, Matrix priorityVector) {
 		final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
 
-		assert preferenceMatrix.getRowDimension() > 0;
-		assert preferenceMatrix.getColumnDimension() > 0;
-		assert priorityVector.getRowDimension() > 0;
-		assert priorityVector.getColumnDimension() > 0;
+		/** matrices properties */
+		{
+			if (preferenceMatrix.getRowDimension() <= 0) {
+				throw new IllegalArgumentException();
+			}
+			if (preferenceMatrix.getColumnDimension() <= 0) {
+				throw new IllegalArgumentException();
+			}
+			if (preferenceMatrix.getColumnDimension() != preferenceMatrix.getRowDimension()) {
+				throw new IllegalArgumentException();
+			}
+
+			if (priorityVector.getRowDimension() <= 0) {
+				throw new IllegalArgumentException();
+			}
+			if (priorityVector.getColumnDimension() <= 0) {
+				throw new IllegalArgumentException();
+			}
+			if (priorityVector.getColumnDimension() != 1) {
+				throw new IllegalArgumentException();
+			}
+		}
 
 		if (preferenceMatrixDimension < 1) {
 			throw new IllegalArgumentException(
@@ -152,6 +170,15 @@ public final class ConsistencyChecker {
 				String.format("The preference matrix and vector dimensions does not match (Row) !!%d,%d",
 					preferenceMatrix.getRowDimension(),
 					priorityVector.getRowDimension()));
+		}
+
+		final boolean preferenceSizeGood = preferenceMatrixDimension <= randomIndex.length;
+		if (!preferenceSizeGood) {
+			throw new IllegalArgumentException(String.format(
+				"Saaty random index not defined for this size (known size: %d) current size: %d)",
+				randomIndex.length,
+				preferenceMatrixDimension)
+			);
 		}
 	}
 
