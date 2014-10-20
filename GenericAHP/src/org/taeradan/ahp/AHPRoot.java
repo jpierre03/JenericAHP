@@ -94,7 +94,7 @@ public class AHPRoot {
 			}
 
 			for (Element xmlCriteria : xmlCriteriaList) {
-				final Criterion criterion = Criterion.buildCriterion(xmlCriteria);
+				final Criterion criterion = Criterion.fromXml(xmlCriteria);
 				structure.criteria.add(criterion);
 			}
 		}

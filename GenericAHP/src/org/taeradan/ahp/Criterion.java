@@ -67,9 +67,9 @@ public class Criterion
 	/**
 	 * Creates a AHP Criterion from a JDOM Element
 	 *
-	 * @param xmlCriteria
+	 * @param xml
 	 */
-	public static Criterion buildCriterion(final Element xmlCriteria) throws Exception {
+	public static Criterion fromXml(final Element xml) throws Exception {
 
 		final PriorityVector vectorIndicatorCriteria;
 		final Collection<Indicator> indicators;
@@ -79,13 +79,13 @@ public class Criterion
 		final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 
 		/** Initialisation of the id of the criteria */
-		identifier = xmlCriteria.getAttributeValue(XmlKey.id.name());
+		identifier = xml.getAttributeValue(XmlKey.id.name());
 
 		/** Initialisation of the name */
-		name = xmlCriteria.getChildText(XmlKey.name.name());
+		name = xml.getChildText(XmlKey.name.name());
 
 		/** Initialisation of the preference matrix */
-		final Element xmlPrefMatrix = xmlCriteria.getChild(XmlKey.prefmatrix.name());
+		final Element xmlPrefMatrix = xml.getChild(XmlKey.prefmatrix.name());
 		matrixIndicatorIndicator = PairWiseMatrix.builder(xmlPrefMatrix);
 		vectorIndicatorCriteria = PriorityVector.build(matrixIndicatorIndicator);
 
@@ -102,7 +102,7 @@ public class Criterion
 
 		/** Initialisation of the Indicators */
 		@SuppressWarnings("unchecked")
-		final List<Element> xmlIndicatorsList = (List<Element>) xmlCriteria.getChildren(XmlKey.indicator.name());
+		final List<Element> xmlIndicatorsList = (List<Element>) xml.getChildren(XmlKey.indicator.name());
 		@SuppressWarnings("unchecked")
 		final List<Element> xmlRowsList = (List<Element>) xmlPrefMatrix.getChildren(XmlKey.row.name());
 
