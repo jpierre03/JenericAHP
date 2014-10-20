@@ -66,7 +66,7 @@ public class AHPRoot {
 		private PriorityVector criteriaGoalVector;
 		private Collection<Criterion> criteria = new ArrayList<>();
 
-		public void build(File inFile) throws JDOMException, IOException {
+		public void build(File inFile) throws JDOMException, IOException, Exception {
 
 			/** XML parser creation */
 			final SAXBuilder parser = new SAXBuilder();
@@ -94,7 +94,8 @@ public class AHPRoot {
 			}
 
 			for (Element xmlCriteria : xmlCriteriaList) {
-				structure.criteria.add(new Criterion(xmlCriteria));
+				final Criterion criterion = Criterion.buildCriterion(xmlCriteria);
+				structure.criteria.add(criterion);
 			}
 		}
 
@@ -222,7 +223,7 @@ public class AHPRoot {
 			execution.assertConsistency();
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("File not found : " + inFile.getAbsolutePath(), e);
-		} catch (JDOMException | IOException e) {
+		} catch (Exception e) {
 			throw new IllegalArgumentException("AHPRoot instantiation error", e);
 		}
 	}

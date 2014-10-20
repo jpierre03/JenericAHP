@@ -39,21 +39,29 @@ import java.util.logging.Logger;
 public class Criterion
 	implements XmlOutputable {
 
+	private static final Logger logger = Logger.getAnonymousLogger();
 	//	AHP configuration attributes
 	private final PriorityVector vectorIndicatorCriteria;
 	private final Collection<Indicator> indicators;
+	//	AHP execution attributes
+	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 	private String identifier;
 	private String name;
 	private PairWiseMatrix matrixIndicatorIndicator;
-
-	//	AHP execution attributes
-	private final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 	private PriorityVector vectorAlternativesCriteria;
 
-	private final Logger logger = Logger.getAnonymousLogger();
+	public Criterion(String identifier, Collection<Indicator> indicators, PairWiseMatrix matrixIndicatorIndicator, String name, PriorityVector vectorAlternativesCriteria, PriorityVector vectorIndicatorCriteria) {
+		this.identifier = identifier;
+		this.indicators = indicators;
+		this.matrixIndicatorIndicator = matrixIndicatorIndicator;
+		this.name = name;
+		this.vectorAlternativesCriteria = vectorAlternativesCriteria;
+		this.vectorIndicatorCriteria = vectorIndicatorCriteria;
+	}
 
-	enum XmlKey {
-		id, name, criteria, indicator, row, prefmatrix
+	@Deprecated
+	public Criterion(final Element xmlCriteria) {
+		throw new IllegalStateException("This constusctor is no more supported. Instead use builder.");
 	}
 
 	/**
@@ -61,7 +69,15 @@ public class Criterion
 	 *
 	 * @param xmlCriteria
 	 */
-	public Criterion(final Element xmlCriteria) {
+	public static Criterion buildCriterion(final Element xmlCriteria) throws Exception {
+
+		final PriorityVector vectorIndicatorCriteria;
+		final Collection<Indicator> indicators;
+		String identifier;
+		String name;
+		PairWiseMatrix matrixIndicatorIndicator;
+		final ConsistencyChecker consistencyChecker = new ConsistencyChecker();
+
 		/** Initialisation of the id of the criteria */
 		identifier = xmlCriteria.getAttributeValue(XmlKey.id.name());
 
@@ -128,6 +144,11 @@ public class Criterion
 				logger.log(Level.SEVERE, "Error :{0}", e);
 			}
 		}
+		return new Criterion(identifier, indicators, matrixIndicatorIndicator, name, vectorIndicatorCriteria, vectorIndicatorCriteria);
+	}
+
+	private static void info(String msg) {
+		logger.info(msg);
 	}
 
 	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alternatives) {
@@ -240,7 +261,7 @@ public class Criterion
 		return indicators;
 	}
 
-	private void info(String msg) {
-		logger.info(msg);
+	enum XmlKey {
+		id, name, criteria, indicator, row, prefmatrix
 	}
 }
