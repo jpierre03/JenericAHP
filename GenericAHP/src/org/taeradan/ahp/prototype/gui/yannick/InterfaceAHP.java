@@ -45,7 +45,7 @@ public class InterfaceAHP
 	private final JButton saveFilePathOkButton = new JButton();
 	private final JButton intuitiveRankingOKButton = new JButton();
 	private final JButton saveFilePathExploreButton = new JButton();
-	private final JButton jButtonValiderMatrice = new JButton();
+	private final JButton validateMatrixButton = new JButton();
 	private final JComboBox<String> intuitiveRanking_rank1_ComboBox = new JComboBox<>();
 	private final JComboBox<String> intuitiveRanking_rank2_ComboBox = new JComboBox<>();
 	private final JComboBox<String> intuitiveRanking_rank3_ComboBox = new JComboBox<>();
@@ -184,8 +184,8 @@ public class InterfaceAHP
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(true);
 
-		jButtonValiderMatrice.setText("Valider Matrice");
-		jButtonValiderMatrice.addActionListener(new ActionListener() {
+		validateMatrixButton.setText("Valider Matrice");
+		validateMatrixButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				jButtonValiderMatriceActionPerformed();
@@ -275,7 +275,7 @@ public class InterfaceAHP
 		p.add(jLabel4);
 		p.add(saatyScaleScrollPane);
 		p.add(reverseSaatyScaleScrollPane);
-		p.add(jButtonValiderMatrice);
+		p.add(validateMatrixButton);
 		p.add(jScrollPane1);
 		p.add(rankingPanel);
 
@@ -1110,7 +1110,7 @@ public class InterfaceAHP
 				isValueChosen = 1;
 				finSimulation = true;
 			} else if (!valueIterator.hasNext()) {
-				//System.out.println("Retour en haut du classement");
+				// Retour en haut du classement
 				valueIterator = collectionOfNonSortedMatrixValues.iterator();
 			}
 		}
@@ -1227,7 +1227,7 @@ public class InterfaceAHP
 		initialRankingPanel.setBorder(BorderFactory.createTitledBorder("Initial classement"));
 		finalRankingPanel.setBorder(BorderFactory.createTitledBorder("Final classement"));
 		//bouton valider matrice
-		jButtonValiderMatrice.setText("Validate Matrix");
+		validateMatrixButton.setText("Validate Matrix");
 		//Jlabel dans panel classement
 		intuitiveRanking_rank1_Label.setText("1st:");
 		initialRanking_rank1_Label.setText("1st:");
@@ -1292,5 +1292,4 @@ public class InterfaceAHP
 			return result;
 		}
 	}
-	// End of variables declaration
 }
