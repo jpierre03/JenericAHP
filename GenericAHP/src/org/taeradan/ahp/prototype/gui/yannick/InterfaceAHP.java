@@ -183,18 +183,21 @@ public class InterfaceAHP
 		p.add(initialisationPanel);
 		p.add(jLabel3);
 		p.add(jTextFieldCR);
+		p.add(jLabelCompteur);
 		p.add(jLabel4);
 		p.add(saatyScaleScrollPane);
 		p.add(reverseSaatyScaleScrollPane);
-		p.add(setFrenchLangButton);
-		p.add(setEnglishLangButton);
 		p.add(jButtonValiderMatrice);
-		p.add(jLabelCompteur);
 		p.add(jScrollPane1);
 		p.add(rankingPanel);
 
+		final JPanel south=new JPanel(new GridLayout(1, 2, 20, 20));
+		south.add(setEnglishLangButton);
+		south.add(setFrenchLangButton);
+
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(p, BorderLayout.CENTER);
+		getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
 	private void makeRankingPanel() {
