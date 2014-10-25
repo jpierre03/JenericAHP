@@ -44,7 +44,7 @@ public final class ConfigurationFrame
 	extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private final transient DefaultTreeModel guiAhpTree;
+	private final transient DefaultTreeModel ahpTreeModel;
 	private transient File currentFile = new File(System.getProperty("user.dir"));
 	private transient AHPRoot ahpAHPRoot;
 	private transient boolean fileOpened = false;
@@ -54,12 +54,12 @@ public final class ConfigurationFrame
 	 */
 	ConfigurationFrame() {
 		super();
-		/** Instanciation of an empty TreeModel */
-		guiAhpTree = new DefaultTreeModel(new DefaultMutableTreeNode());
+		/** Instantiation of an empty TreeModel */
+		ahpTreeModel = new DefaultTreeModel(new DefaultMutableTreeNode());
 		/** Instantiation of an empty AHP root to use as default while no file is loaded */
 		ahpAHPRoot = new EmptyAHPRoot();
 		/** The real AHP tree is attached to the graphical TreeModel to be displayed dynamically */
-		guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
+		ahpTreeModel.setRoot(processAhpHierarchy(ahpAHPRoot));
 		initComponents();
 	}
 
@@ -69,61 +69,61 @@ public final class ConfigurationFrame
 	 */
 	private void initComponents() {
 
-		jFileChooser = new JFileChooser();
+		fileChooser = new JFileChooser();
 		jScrollPane1 = new JScrollPane();
-		jTreeAhp = new JTree();
+		ahpTree = new JTree();
 		jMenuBar1 = new JMenuBar();
-		jMenuFile = new JMenu();
-		jMenuItemOpen = new JMenuItem();
-		jMenuItemSave = new JMenuItem();
-		jMenuItemSaveUnder = new JMenuItem();
-		jMenuItemQuit = new JMenuItem();
+		fileMenu = new JMenu();
+		openMenuItem = new JMenuItem();
+		saveMenuItem = new JMenuItem();
+		saveUnderMenuItem = new JMenuItem();
+		quitMenuItem = new JMenuItem();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("AHP Tree Configuration");
 
-		jTreeAhp.setModel(guiAhpTree);
-		jTreeAhp.addMouseListener(new MouseAdapter() {
+		ahpTree.setModel(ahpTreeModel);
+		ahpTree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent evt) {
 				jTreeAhpMouseClicked(evt);
 			}
 		});
-		jScrollPane1.setViewportView(jTreeAhp);
+		jScrollPane1.setViewportView(ahpTree);
 
-		jMenuFile.setText("File");
+		fileMenu.setText("File");
 
-		jMenuItemOpen.setText("Open");
-		jMenuItemOpen.addActionListener(new ActionListener() {
+		openMenuItem.setText("Open");
+		openMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItemOpenActionPerformed();
 			}
 		});
-		jMenuFile.add(jMenuItemOpen);
+		fileMenu.add(openMenuItem);
 
-		jMenuItemSave.setText("Save");
-		jMenuItemSave.addActionListener(new ActionListener() {
+		saveMenuItem.setText("Save");
+		saveMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItemSaveActionPerformed(evt);
 			}
 		});
-		jMenuFile.add(jMenuItemSave);
+		fileMenu.add(saveMenuItem);
 
-		jMenuItemSaveUnder.setText("Save under...");
-		jMenuItemSaveUnder.addActionListener(new ActionListener() {
+		saveUnderMenuItem.setText("Save under...");
+		saveUnderMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItemSaveUnderActionPerformed();
 			}
 		});
-		jMenuFile.add(jMenuItemSaveUnder);
+		fileMenu.add(saveUnderMenuItem);
 
-		jMenuItemQuit.setText("Quit");
-		jMenuFile.add(jMenuItemQuit);
+		quitMenuItem.setText("Quit");
+		fileMenu.add(quitMenuItem);
 
-		jMenuBar1.add(jMenuFile);
+		jMenuBar1.add(fileMenu);
 
 		setJMenuBar(jMenuBar1);
 
@@ -149,9 +149,9 @@ public final class ConfigurationFrame
 	private void jTreeAhpMouseClicked(MouseEvent evt) {
 //			System.out.println("bouton="+evt.getButton()+"nbClick"+evt.getClickCount());
 		/** If the mouse is over a valid tree node... */
-		if (jTreeAhp.getPathForLocation(evt.getX(), evt.getY()) != null) {
+		if (ahpTree.getPathForLocation(evt.getX(), evt.getY()) != null) {
 			/** Retrieve the selected node */
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTreeAhp.getPathForLocation(
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) ahpTree.getPathForLocation(
 				evt.getX(),
 				evt.getY()).getLastPathComponent();
 			/** Handling of the the left button double click */
@@ -243,7 +243,7 @@ public final class ConfigurationFrame
 					});
 					contextMenu.add(delItem);
 				}
-				contextMenu.show(jTreeAhp, evt.getX(), evt.getY());
+				contextMenu.show(ahpTree, evt.getX(), evt.getY());
 			}
 		}
 	}
@@ -252,13 +252,13 @@ public final class ConfigurationFrame
 	 * Handles the event of the "Open" menu. Launch a file selector to choose a configuration file to open.
 	 */
 	private void jMenuItemOpenActionPerformed() {
-		jFileChooser = new JFileChooser(currentFile);
-		jFileChooser.setApproveButtonText("Open");
-		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
-		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			currentFile = jFileChooser.getSelectedFile();
+		fileChooser = new JFileChooser(currentFile);
+		fileChooser.setApproveButtonText("Open");
+		fileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			currentFile = fileChooser.getSelectedFile();
 			ahpAHPRoot = new AHPRoot(new File(currentFile.getAbsolutePath()), AHPRoot.DEFAULT_INDICATOR_PATH);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
+			ahpTreeModel.setRoot(processAhpHierarchy(ahpAHPRoot));
 			fileOpened = true;
 		}
 	}
@@ -281,11 +281,11 @@ public final class ConfigurationFrame
 	 * Handles the event of the "Save under" menu. Launch a file selector to choose a file to write.
 	 */
 	private void jMenuItemSaveUnderActionPerformed() {
-		jFileChooser = new JFileChooser(currentFile);
-		jFileChooser.setApproveButtonText("Save");
-		jFileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
-		if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			currentFile = jFileChooser.getSelectedFile();
+		fileChooser = new JFileChooser(currentFile);
+		fileChooser.setApproveButtonText("Save");
+		fileChooser.setFileFilter(new FileNameExtensionFilter("XML document", "xml"));
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			currentFile = fileChooser.getSelectedFile();
 			ahpAHPRoot.saveConfiguration(currentFile.getAbsolutePath());
 		}
 	}
@@ -316,7 +316,7 @@ public final class ConfigurationFrame
 			JOptionPane.YES_NO_OPTION) == 0) {
 
 			ahpAHPRoot = new AHPRoot(null, AHPRoot.DEFAULT_INDICATOR_PATH);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
+			ahpTreeModel.setRoot(processAhpHierarchy(ahpAHPRoot));
 			editActionPerformed(ahpAHPRoot);
 		}
 	}
@@ -332,7 +332,7 @@ public final class ConfigurationFrame
 		if (result == JOptionPane.YES_OPTION) {
 
 			ahpAHPRoot.guiMethods.removeCriterion(criterion);
-			guiAhpTree.setRoot(processAhpHierarchy(ahpAHPRoot));
+			ahpTreeModel.setRoot(processAhpHierarchy(ahpAHPRoot));
 		}
 	}
 
@@ -348,15 +348,15 @@ public final class ConfigurationFrame
 		}
 	}
 
-	private JFileChooser jFileChooser;
+	private JFileChooser fileChooser;
 	private JMenuBar jMenuBar1;
-	private JMenu jMenuFile;
-	private JMenuItem jMenuItemOpen;
-	private JMenuItem jMenuItemQuit;
-	private JMenuItem jMenuItemSave;
-	private JMenuItem jMenuItemSaveUnder;
+	private JMenu fileMenu;
+	private JMenuItem openMenuItem;
+	private JMenuItem quitMenuItem;
+	private JMenuItem saveMenuItem;
+	private JMenuItem saveUnderMenuItem;
 	private JScrollPane jScrollPane1;
-	private JTree jTreeAhp;
+	private JTree ahpTree;
 
 	/**
 	 * Takes an initialized AHP root element and produces a tree by processing the AHP hierarchy
