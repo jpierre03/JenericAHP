@@ -1150,7 +1150,7 @@ public class InterfaceAHP
 						//on sort du for
 						j = v.getRowDimension();
 						if (i != 0) {
-							//on teste l'ancienne valeur du classement pour éviter lesdoublons
+							//on teste l'ancienne valeur du classement pour éviter les doublons
 							if (monClassement[i] != monClassement[i - 1]) {
 								j = temp;
 							}
@@ -1180,7 +1180,7 @@ public class InterfaceAHP
 						//on sor du for
 						j = v.getRowDimension();
 						if (i != 0) {
-							//on teste l'ancienne valeur du classement pour éviter lesdoublons
+							//on teste l'ancienne valeur du classement pour éviter les doublons
 							if (monClassement[i] != monClassement[i - 1]) {
 								j = temp;
 							}
