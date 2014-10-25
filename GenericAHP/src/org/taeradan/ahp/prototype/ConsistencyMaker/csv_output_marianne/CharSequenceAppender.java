@@ -26,31 +26,47 @@ public class CharSequenceAppender {
 		assert output != null;
 	}
 
-	public void append(CharSequence sequence) {
+	public CharSequenceAppender append(CharSequence sequence) {
 		assert sequence != null;
 
 		output.append(sequence);
+
+		return this;
 	}
 
-	public void append(MyMatrix matrix) {
+	public CharSequenceAppender append(double value) {
+		output.append(value + "");
+
+		return this;
+	}
+
+	public CharSequenceAppender append(MyMatrix matrix) {
 		assert matrix != null;
 
 		appendMatrix(matrix);
+
+		return this;
 	}
 
-	public void appendLineFeed() {
+	public CharSequenceAppender appendLineFeed() {
 		output.append("\n");
+
+		return this;
 	}
 
-	public void appendCommaSeparator() {
+	public CharSequenceAppender appendCommaSeparator() {
 		output.append(";");
+
+		return this;
 	}
 
-	public void close() {
+	public CharSequenceAppender close() {
 		output.close();
+
+		return this;
 	}
 
-	private void appendMatrix(MyMatrix matrix) {
+	private CharSequenceAppender appendMatrix(MyMatrix matrix) {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < matrix.getRowDimension(); i++) {
@@ -64,5 +80,7 @@ public class CharSequenceAppender {
 		}
 
 		output.append(sb);
+
+		return this;
 	}
 }

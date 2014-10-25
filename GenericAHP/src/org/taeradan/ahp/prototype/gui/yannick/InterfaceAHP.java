@@ -1061,11 +1061,11 @@ public class InterfaceAHP
 		try {
 			csa = new CharSequenceAppender(fileHistorique);
 
-			csa.append("Ancienne valeur: " + oldValue);
+			csa.append("Ancienne valeur: ").append(oldValue);
 			csa.appendCommaSeparator();
-			csa.append(coordx + "," + coordy);
+			csa.append(coordx).append(",").append(coordy);
 			csa.appendCommaSeparator();
-			csa.append("Nouvelle valeur: " + newValue);
+			csa.append("Nouvelle valeur: ").append(newValue);
 			csa.appendLineFeed();
 			csa.append(matrix);
 			csa.appendLineFeed();
@@ -1100,14 +1100,7 @@ public class InterfaceAHP
 			JOptionPane jop = new JOptionPane();
 			int option = JOptionPane.showConfirmDialog(
 				null,
-				"Modifier la valeur "
-					+ matrixValue.getValue()
-					+ " ( "
-					+ (matrixValue.getRow() + 1)
-					+ " , "
-					+ (matrixValue.getColumn() + 1)
-					+ " )"
-					+ " ?",
+				String.format("Modifier la valeur %s ( %d , %d ) ?", matrixValue.getValue(), matrixValue.getRow() + 1, matrixValue.getColumn() + 1),
 				"Modification des valeurs",
 				JOptionPane.YES_NO_CANCEL_OPTION);
 			//si on clique sur ok on sor du while
@@ -1156,7 +1149,6 @@ public class InterfaceAHP
 							}
 						}
 					}
-
 				}
 			}
 			return classementString;
