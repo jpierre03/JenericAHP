@@ -1215,7 +1215,6 @@ public class InterfaceAHP
 	}
 
 	private void setEnglishLangButtonActionPerformed() {
-		// TODO add your handling code here:
 		modeAnglais = true;
 		setFrenchLangButton.setText("French");
 		//Panel init
@@ -1261,7 +1260,7 @@ public class InterfaceAHP
 	}
 
 	private void setFrenchLangButtonActionPerformed() {
-		//on repass à false le mode anglais
+		//on repasse à false le mode anglais
 		modeAnglais = false;
 		initComponents();
 		this.dispose();
