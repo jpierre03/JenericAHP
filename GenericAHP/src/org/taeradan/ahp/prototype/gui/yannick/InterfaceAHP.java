@@ -650,7 +650,7 @@ public class InterfaceAHP
 	private void saveFilePathOkButtonActionPerformed() {
 		//on crée et lance le thread pour afficher un compteur
 
-		monHeure = new Meter(timeLabel, this);
+		monHeure = new Meter(timeLabel);
 		monHeure.setCommencerAZero(false);
 		monHeure.start();
 

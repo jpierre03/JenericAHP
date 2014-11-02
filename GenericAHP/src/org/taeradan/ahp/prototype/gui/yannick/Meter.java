@@ -20,7 +20,7 @@ class Meter implements ActionListener {
 	private int secondCounter = 0;
 	private boolean commencerAZero = false;
 
-	public Meter(JLabel label, InterfaceAHP frame) {
+	public Meter(JLabel label) {
 		this.label = label;
 		label.setText("00:00");
 
