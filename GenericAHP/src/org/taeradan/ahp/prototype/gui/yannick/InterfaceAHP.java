@@ -1219,23 +1219,10 @@ public class InterfaceAHP
 	}
 
 	private class AHP_Data {
-		private final double[] saatyValues = {1. / 9,
-			1. / 8,
-			1. / 7,
-			1. / 6,
-			1. / 5,
-			1. / 4,
-			1. / 3,
-			1. / 2,
-			1,
-			2,
-			3,
-			4,
-			5,
-			6,
-			7,
-			8,
-			9};
+
+		private final double[] saatyValues = {
+			1. / 9, 1. / 8, 1. / 7, 1. / 6, 1. / 5, 1. / 4, 1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9
+		};
 		private MyMatrix myMatrix = new MyMatrix();
 		private MyMatrixTableModel matrixTableModel = new MyMatrixTableModel();
 		private double saatyConsistency = Double.NaN;
