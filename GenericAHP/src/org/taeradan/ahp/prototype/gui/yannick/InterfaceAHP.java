@@ -48,7 +48,7 @@ public class InterfaceAHP
 	private final JButton validateMatrixButton = new JButton();
 	private final JLabel matrixSizeLabel = new JLabel();
 	private final JLabel saveFilePathLabel = new JLabel();
-	private final JLabel jLabel3 = new JLabel();
+	private final JLabel crLabel = new JLabel();
 	private final JLabel jLabel4 = new JLabel();
 	private final JLabel jLabel6 = new JLabel();
 	private final JLabel counterLabel = new JLabel();
@@ -148,7 +148,7 @@ public class InterfaceAHP
 		));
 		jScrollPane1.setViewportView(matrixTable);
 
-		jLabel3.setText("CR:");
+		crLabel.setText("CR:");
 
 		makeInitialisationPanel();
 
@@ -219,7 +219,7 @@ public class InterfaceAHP
 		p.add(timeLabel);
 		p.add(jLabel6);
 		p.add(initialisationPanel);
-		p.add(jLabel3);
+		p.add(crLabel);
 		p.add(crTextField);
 		p.add(counterLabel);
 		p.add(jLabel4);
