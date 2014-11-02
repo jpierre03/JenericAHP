@@ -87,8 +87,8 @@ public class InterfaceAHP
 	private final JLabel initialRanking_rank4_PercentLabel = new JLabel();
 	private final JLabel initialRanking_rank5_PercentLabel = new JLabel();
 	private final JLabel initialRanking_rank6_PercentLabel = new JLabel();
-	private final JLabel jLabelCompteur = new JLabel();
-	private final JLabel jLabelTime = new JLabel();
+	private final JLabel counterLabel = new JLabel();
+	private final JLabel timeLabel = new JLabel();
 	private final JPanel intuitiveRankingPanel = new JPanel();
 	private final JPanel finalRankingPanel = new JPanel();
 	private final JPanel initialRankingPanel = new JPanel();
@@ -103,8 +103,8 @@ public class InterfaceAHP
 	private final JScrollPane reverseSaatyScaleScrollPane = new JScrollPane();
 	private final JTable saatyScaleTable = new JTable();
 	private final JTable reverseSaatyScaleTable = new JTable();
-	private final JTable jTableMatrix = new JTable();
-	private final JTextField jTextFieldCR = new JTextField();
+	private final JTable matrixTable = new JTable();
+	private final JTextField crTextField = new JTextField();
 	private final JTextField saveFilePathTextField = new JTextField();
 	private final JTextField finalRanking_rank1_TextField = new JTextField();
 	private final JTextField finalRanking_rank2_TextField = new JTextField();
@@ -119,11 +119,11 @@ public class InterfaceAHP
 	private final JTextField initialRanking_rank5_TextField = new JTextField();
 	private final JTextField initialRanking_rank6_TextField = new JTextField();
 	private final JTextField matrixSizeTextField = new JTextField();
-	private boolean finSimulation = false;
+	private boolean isEndSimulation = false;
 	private boolean modeAnglais = false;
 	private CharSequenceAppender csa;
 	private String file;
-	private String fileHistorique;
+	private String fistoryFile;
 	private Meter monHeure;
 
 	public InterfaceAHP() {
@@ -165,9 +165,7 @@ public class InterfaceAHP
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-
 				new InterfaceAHP().setVisible(true);
-
 			}
 		});
 	}
@@ -188,15 +186,15 @@ public class InterfaceAHP
 		validateMatrixButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				jButtonValiderMatriceActionPerformed();
+				validateMatrixActionPerformed();
 			}
 		});
 
-		jTableMatrix.setModel(new DefaultTableModel(
+		matrixTable.setModel(new DefaultTableModel(
 			new Object[][]{{}, {}, {}, {}},
 			new String[]{}
 		));
-		jScrollPane1.setViewportView(jTableMatrix);
+		jScrollPane1.setViewportView(matrixTable);
 
 		jLabel3.setText("CR:");
 
@@ -266,12 +264,12 @@ public class InterfaceAHP
 
 		final JPanel p = new JPanel(new GridLayout(5, 3, 20, 20));
 		p.add(newSimulationButton);
-		p.add(jLabelTime);
+		p.add(timeLabel);
 		p.add(jLabel6);
 		p.add(initialisationPanel);
 		p.add(jLabel3);
-		p.add(jTextFieldCR);
-		p.add(jLabelCompteur);
+		p.add(crTextField);
+		p.add(counterLabel);
 		p.add(jLabel4);
 		p.add(saatyScaleScrollPane);
 		p.add(reverseSaatyScaleScrollPane);
@@ -471,7 +469,7 @@ public class InterfaceAHP
 					boolean choix = false;
 
 					//on récupère les valeurs saisies de la matrice
-					monJep.parseExpression(jTableMatrix.getValueAt(i + 1, j + 1).toString());
+					monJep.parseExpression(matrixTable.getValueAt(i + 1, j + 1).toString());
 					//on la stocke
 					double newValue = monJep.getValue();
 					//Si la valeur n'appartient pas à l'échelle de Saaty. On demande a l'expert de la modifier
@@ -482,7 +480,7 @@ public class InterfaceAHP
 								"Erreur avec la valeur " + newValue + " veuillez la re-saisir la valeur:",
 								"Erreur saisi",
 								JOptionPane.QUESTION_MESSAGE);
-							jTableMatrix.setValueAt(val, i + 1, j + 1);
+							matrixTable.setValueAt(val, i + 1, j + 1);
 
 							if (val == null) { //si clik Annuler
 								choix = true;
@@ -538,7 +536,7 @@ public class InterfaceAHP
 		boolean isFound = false;
 
 		MonCellRenderer monCell = new MonCellRenderer(0, 0);
-		jTableMatrix.setDefaultRenderer(Object.class, monCell);
+		matrixTable.setDefaultRenderer(Object.class, monCell);
 
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
@@ -572,7 +570,7 @@ public class InterfaceAHP
 				isValueChosen = 1;
 			} else if (option == JOptionPane.CANCEL_OPTION) {
 				isValueChosen = 1;
-				finSimulation = true;
+				isEndSimulation = true;
 			} else if (!valueIterator.hasNext()) {
 				System.out.println("Retour en haut du classement");
 				valueIterator = sortedMatrixValues.iterator();
@@ -580,7 +578,7 @@ public class InterfaceAHP
 		}
 
 		// si l'expert n'a pas mit à la simulation
-		if (finSimulation) {
+		if (isEndSimulation) {
 			csa.close();
 		} else {
 			/** parcours de la liste pour l'écriture dans le fichier */
@@ -652,7 +650,7 @@ public class InterfaceAHP
 	private void saveFilePathOkButtonActionPerformed() {
 		//on crée et lance le thread pour afficher un compteur
 
-		monHeure = new Meter(jLabelTime, this);
+		monHeure = new Meter(timeLabel, this);
 		monHeure.setCommencerAZero(false);
 		monHeure.start();
 
@@ -665,7 +663,7 @@ public class InterfaceAHP
 		//on teste pour savoir quelle est le pb choisi
 		if (datasetP1RadioButton.isSelected()) {
 			//on crée le fichier historique à partir de "file"
-			fileHistorique = file + "histI.csv";
+			fistoryFile = file + "histI.csv";
 			file += "I.csv";
 			try {
 				csa = new CharSequenceAppender(file);
@@ -683,7 +681,7 @@ public class InterfaceAHP
 			}
 		} else {
 			//on crée le fichier historique à partir de "file"
-			fileHistorique = file + "histII.csv";
+			fistoryFile = file + "histII.csv";
 			file += "II.csv";
 			try {
 				csa = new CharSequenceAppender(file);
@@ -705,7 +703,7 @@ public class InterfaceAHP
 			SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 				modeAnglais));
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrix.setModel(ahpData.matrixTableModel);
+		matrixTable.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
 		jLabel6.setText(
 			"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
@@ -722,7 +720,7 @@ public class InterfaceAHP
 		remplirJComboBox(intuitiveRanking_rank6_ComboBox, mesColonnes);
 		//on modifie l'affichage de la table
 		MonCellRenderer monCellRenderer = new MonCellRenderer(0, 0);
-		jTableMatrix.setDefaultRenderer(Object.class, monCellRenderer);
+		matrixTable.setDefaultRenderer(Object.class, monCellRenderer);
 	}
 
 	/*
@@ -752,7 +750,7 @@ public class InterfaceAHP
 		csa.appendLineFeed();
 
 		//on crée le fichier et on l'initialise avec la 1ère matrice
-		this.ecrirefichierHistorique(ahpData.myMatrix, 0, 0, 0, 0);
+		this.writeHistoryFile(ahpData.myMatrix, 0, 0, 0, 0);
 
 		//on va afficher le classement des critères de la 1ere matrice
 		String[] classement = this.classerCriteres(priorityVector);
@@ -780,7 +778,7 @@ public class InterfaceAHP
 		csa.appendLineFeed();
 
 		//On affiche le cr
-		jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
+		crTextField.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 		csa.append("Tableau de changement des valeurs");
 		csa.appendLineFeed();
 		//en-tête du tableau, on teste quelle est la méthode chosi(Aléatoire, Saaty)
@@ -801,7 +799,7 @@ public class InterfaceAHP
 		while (!myConsistent) {
 
 			//On continue si l'expert n'a pas choisi de mettre fin à la simulation
-			if (finSimulation == false) {
+			if (isEndSimulation == false) {
 				//incrémentation du compteur du nombre d'itération
 				iterationCounter++;
 
@@ -833,7 +831,7 @@ public class InterfaceAHP
 
 				}
 				//si l'expert n'a pas mis fin è la simulation et veut changer le coeff
-				if (finSimulation == false) {
+				if (isEndSimulation == false) {
 					//on stocke les différentes valeur pour le fichier historique
 					oldValue = ahpData.myMatrix.get(matrixValue.getRow(), matrixValue.getColumn());
 					coordRowVal = (matrixValue.getRow() + 1);
@@ -938,7 +936,7 @@ public class InterfaceAHP
 					ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
 						SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
 							modeAnglais));
-					jTableMatrix.setModel(ahpData.matrixTableModel);
+					matrixTable.setModel(ahpData.matrixTableModel);
 
 					//Réactualisation du vecteur de priorité associé à la nouvelle matrice
 					priorityVector = PriorityVector.build(ahpData.myMatrix);
@@ -956,22 +954,22 @@ public class InterfaceAHP
 					}
 					csa.close();
 					//on va ecrire dans le fichier historique
-					this.ecrirefichierHistorique(ahpData.myMatrix, oldValue, coordRowVal, coordColVal, newValue);
+					this.writeHistoryFile(ahpData.myMatrix, oldValue, coordRowVal, coordColVal, newValue);
 					//on récupére la nouvelle valeur
 					myConsistent = consistencyChecker.isConsistent(ahpData.myMatrix, priorityVector);
 				}
 				//si il à mi fin on sort de la boucle
-				else if (finSimulation) {
+				else if (isEndSimulation) {
 					//on arrete le thread
 					monHeure.stop();
 					myConsistent = true;
 				}
 				//on affiche un cpt pour les observations avec un coeff de 7.5
-				jLabelCompteur.setText(String.valueOf(iterationCounter * 7.5));
-				jTextFieldCR.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
+				counterLabel.setText(String.valueOf(iterationCounter * 7.5));
+				crTextField.setText(String.valueOf(consistencyChecker.getConsistencyRatio()));
 			}
 		}
-		if (finSimulation) {
+		if (isEndSimulation) {
 			jLabel4.setText("Bravo la matrice est cohérente!!!!!");
 		}
 		try {
@@ -1023,29 +1021,30 @@ public class InterfaceAHP
 		return consistencyChecker.getConsistencyRatio();
 	}
 
-	private void jButtonValiderMatriceActionPerformed() {
+	private void validateMatrixActionPerformed() {
 		ahpData.myMatrix = new MyMatrix();
 		ahpData.matrixTableModel = new MyMatrixTableModel();
 		//On crée la matrice rempli
 		ahpData.myMatrix = createMatrix(Integer.parseInt(matrixSizeTextField.getText()), 1);
-		//maTable = new MyMatrixTable();
+
 		/*Interface graphique*/
-		ahpData.matrixTableModel.setMatrix(ahpData.myMatrix,
-			SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(),
-				modeAnglais));
+		ahpData.matrixTableModel.setMatrix(
+			ahpData.myMatrix,
+			SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais)
+		);
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
-		jTableMatrix.setModel(ahpData.matrixTableModel);
-		//maTable.setModel(matrixTableModel);
+		matrixTable.setModel(ahpData.matrixTableModel);
+
 		//on va cree le fichier .csv et le modifier et on récupérer le CR et afficher
-		jTextFieldCR.setText(String.valueOf(creerFichierCsv()));
+		crTextField.setText(String.valueOf(creerFichierCsv()));
 		//on affiche la matrice
 		//showMatrixTable( (MyMatrixTable) jTable1,myMatrix);
 		//on ferme le flux
 		csa.close();
 		//on remet à 0 l'attribut
-		finSimulation = false;
+		isEndSimulation = false;
 		//on arrete le thread si c pas déja fait
-		if (finSimulation == false) {
+		if (isEndSimulation == false) {
 			monHeure.stop();
 		}
 		//on réaffiche le classement intuitif
@@ -1055,11 +1054,11 @@ public class InterfaceAHP
 	/*
 	 * Cette méthode permet de stocker les différentes matrices,les valeurs modifiées
 	 */
-	private void ecrirefichierHistorique(MyMatrix matrix, double oldValue, int coordx, int coordy, double newValue) {
+	private void writeHistoryFile(MyMatrix matrix, double oldValue, int coordx, int coordy, double newValue) {
 		CharSequenceAppender csa = null;
 
 		try {
-			csa = new CharSequenceAppender(fileHistorique);
+			csa = new CharSequenceAppender(fistoryFile);
 
 			csa.append("Ancienne valeur: ").append(oldValue);
 			csa.appendCommaSeparator();
@@ -1088,7 +1087,7 @@ public class InterfaceAHP
 		 */
 		valueIterator = collectionOfNonSortedMatrixValues.iterator();
 		MonCellRenderer monCell = new MonCellRenderer(0, 0);
-		jTableMatrix.setDefaultRenderer(Object.class, monCell);
+		matrixTable.setDefaultRenderer(Object.class, monCell);
 		while (isValueChosen == 0) {
 			matrixValue = valueIterator.next();
 			//on redessine la fenetre
@@ -1108,7 +1107,7 @@ public class InterfaceAHP
 				isValueChosen = 1;
 			} else if (option == JOptionPane.CANCEL_OPTION) {
 				isValueChosen = 1;
-				finSimulation = true;
+				isEndSimulation = true;
 			} else if (!valueIterator.hasNext()) {
 				// Retour en haut du classement
 				valueIterator = collectionOfNonSortedMatrixValues.iterator();
@@ -1193,8 +1192,8 @@ public class InterfaceAHP
 	private void saveFilePathExploreButtonActionPerformed() {
 		JFileChooser jfc = new JFileChooser();
 		jfc.setVisible(true);
-		int choix = jfc.showSaveDialog(this);
-		if (JFileChooser.APPROVE_OPTION == choix) {
+		final int option = jfc.showSaveDialog(this);
+		if (JFileChooser.APPROVE_OPTION == option) {
 			//On récup le chemin
 			file = jfc.getSelectedFile().getAbsolutePath();
 			//On affiche le chemin de sauvegarde
