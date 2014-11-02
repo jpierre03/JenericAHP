@@ -49,7 +49,7 @@ public class InterfaceAHP
 	private final JLabel matrixSizeLabel = new JLabel();
 	private final JLabel saveFilePathLabel = new JLabel();
 	private final JLabel crLabel = new JLabel();
-	private final JLabel jLabel4 = new JLabel();
+	private final JLabel finishLabel = new JLabel();
 	private final JLabel jLabel6 = new JLabel();
 	private final JLabel counterLabel = new JLabel();
 	private final JLabel timeLabel = new JLabel();
@@ -222,18 +222,23 @@ public class InterfaceAHP
 		p.add(crLabel);
 		p.add(crTextField);
 		p.add(counterLabel);
-		p.add(jLabel4);
+
 		p.add(saatyScaleScrollPane);
 		p.add(reverseSaatyScaleScrollPane);
 		p.add(validateMatrixButton);
 		p.add(jScrollPane1);
 		p.add(rankingPanel);
 
-		final JPanel south = new JPanel(new GridLayout(1, 2, 20, 20));
-		south.add(setEnglishLangButton);
-		south.add(setFrenchLangButton);
+		final JPanel north = new JPanel(new GridLayout(1, 2, 20, 20));
+		north.add(setEnglishLangButton);
+		north.add(setFrenchLangButton);
+
+		final JPanel south = new JPanel(new GridLayout(1, 1, 20, 20));
+		south.add(finishLabel);
+
 
 		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(north, BorderLayout.SOUTH);
 		getContentPane().add(p, BorderLayout.CENTER);
 		getContentPane().add(south, BorderLayout.SOUTH);
 	}
@@ -900,7 +905,7 @@ public class InterfaceAHP
 			}
 		}
 		if (isEndSimulation) {
-			jLabel4.setText("Bravo la matrice est cohérente!!!!!");
+			finishLabel.setText("Bravo la matrice est cohérente!!!!!");
 		}
 		try {
 			csa = new CharSequenceAppender(file);
