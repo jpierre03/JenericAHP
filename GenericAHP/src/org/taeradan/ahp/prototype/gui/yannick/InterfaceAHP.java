@@ -50,7 +50,7 @@ public class InterfaceAHP
 	private final JLabel saveFilePathLabel = new JLabel();
 	private final JLabel crLabel = new JLabel();
 	private final JLabel finishLabel = new JLabel();
-	private final JLabel jLabel6 = new JLabel();
+	private final JLabel matrixCommentLabel = new JLabel();
 	private final JLabel counterLabel = new JLabel();
 	private final JLabel timeLabel = new JLabel();
 	private final JPanel rankingPanel = new JPanel();
@@ -221,7 +221,7 @@ public class InterfaceAHP
 		final JPanel p = new JPanel(new GridLayout(4, 3, 20, 20));
 
 		p.add(timeLabel);
-		p.add(jLabel6);
+		p.add(matrixCommentLabel);
 		p.add(initialisationPanel);
 		p.add(crPanel);
 		p.add(counterLabel);
@@ -644,13 +644,12 @@ public class InterfaceAHP
 		//on ajoute directement matrixTableModel à jTable1 bugg??????
 		matrixTable.setModel(ahpData.matrixTableModel);
 		//maTable.setModel(matrixTableModel);
-		jLabel6.setText(
+		matrixCommentLabel.setText(
 			"Veuillez remplir la partie supérieure (cases blanches) de la matrice avec les coefficients de SAATY:");
 		//on affiche la matrice
 		//showMatrixTable((MyMatrixTable) jTable1,myMatrix);
 		//on rempli les jComboBox par le nom des column pour le 1er classement
-		String[] mesColonnes = new String[ahpData.myMatrix.getColumnDimension()];
-		mesColonnes = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
+		String[] mesColonnes = SampleMatrixHeaders.getColumnHeader(datasetP1RadioButton.isSelected(), modeAnglais);
 		remplirJComboBox(intuitiveRanking.rank1_ComboBox, mesColonnes);
 		remplirJComboBox(intuitiveRanking.rank2_ComboBox, mesColonnes);
 		remplirJComboBox(intuitiveRanking.rank3_ComboBox, mesColonnes);
