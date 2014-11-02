@@ -13,27 +13,24 @@ import java.awt.event.ActionListener;
  * @author Beal Yannick
  */
 class Meter implements ActionListener {
+
 	private final Timer timer;
 	private final JLabel label;
-	private final InterfaceAHP frame;
-	private int cpM = 0;
-	private int cpS = 0;
+	private int minuteCounter = 0;
+	private int secondCounter = 0;
 	private boolean commencerAZero = false;
 
 	public Meter(JLabel label, InterfaceAHP frame) {
-		this.frame = frame;
 		this.label = label;
 		label.setText("00:00");
 
 		timer = new Timer(1000, this);
-
-		//timer.schedule(new MeterTask(label), 1);
 	}
 
 	public void start() {
 		if (!commencerAZero) {
-			cpM = 0;
-			cpS = 0;
+			minuteCounter = 0;
+			secondCounter = 0;
 		}
 		timer.start();
 	}
@@ -49,29 +46,32 @@ class Meter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		cpS += 1;
-		if (cpS >= 60) {
-			cpS = 0;
-			cpM++;
+		secondCounter += 1;
+		if (secondCounter >= 60) {
+			secondCounter = 0;
+			minuteCounter++;
 		}
-		if (cpM >= 60) {
-			cpS = 0;
-			cpM = 0;
+		if (minuteCounter >= 60) {
+			secondCounter = 0;
+			minuteCounter = 0;
 		}
 
-		String stS, stM;
+		final String secondString, minuteString;
 
-		if (cpS < 10)
-			stS = "0" + cpS;
-		else
-			stS = "" + cpS;
-		if (cpM < 10)
-			stM = "0" + cpM;
-		else
-			stM = "" + cpM;
+		if (secondCounter < 10) {
+			secondString = "0" + secondCounter;
+		} else {
+			secondString = "" + secondCounter;
+		}
 
-		String time = stM + ":" + stS;
-		label.setText(time);
+		if (minuteCounter < 10) {
+			minuteString = "0" + minuteCounter;
+		} else {
+			minuteString = "" + minuteCounter;
+		}
+
+		final String formattedDuration = minuteString + ":" + secondString;
+		label.setText(formattedDuration);
 	}
 
 	public void setCommencerAZero(boolean commencerAZero) {
