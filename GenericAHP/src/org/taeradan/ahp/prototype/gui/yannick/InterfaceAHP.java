@@ -241,42 +241,48 @@ public class InterfaceAHP
 	private void makeRankingPanel() {
 		rankingPanel.setBorder(BorderFactory.createTitledBorder("Classement"));
 
+		rankingPanel.setLayout(new GridLayout(1, 3));
+
 		{
-			intuitiveRanking.panel.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
-			intuitiveRanking.panel.setLayout(new GridLayout(6 + 1, 2));
+			final RankingGui gui = intuitiveRanking;
+			{
+				gui.panel.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
+				gui.panel.setLayout(new GridLayout(6 + 1, 2));
 
-			intuitiveRanking.rank1_Label.setText("1er:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank1_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank1_ComboBox);
+				gui.rank1_Label.setText("1er:");
+				gui.panel.add(gui.rank1_Label);
+				gui.panel.add(gui.rank1_ComboBox);
 
-			intuitiveRanking.rank2_Label.setText("2ème:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank2_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank2_ComboBox);
+				gui.rank2_Label.setText("2ème:");
+				gui.panel.add(gui.rank2_Label);
+				gui.panel.add(gui.rank2_ComboBox);
 
-			intuitiveRanking.rank3_Label.setText("3ème:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank3_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank3_ComboBox);
+				gui.rank3_Label.setText("3ème:");
+				gui.panel.add(gui.rank3_Label);
+				gui.panel.add(gui.rank3_ComboBox);
 
-			intuitiveRanking.rank4_Label.setText("4ème:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank4_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank4_ComboBox);
+				gui.rank4_Label.setText("4ème:");
+				gui.panel.add(gui.rank4_Label);
+				gui.panel.add(gui.rank4_ComboBox);
 
-			intuitiveRanking.rank5_Label.setText("5ème:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank5_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank5_ComboBox);
+				gui.rank5_Label.setText("5ème:");
+				gui.panel.add(gui.rank5_Label);
+				gui.panel.add(gui.rank5_ComboBox);
 
-			intuitiveRanking.rank6_Label.setText("6ème:");
-			intuitiveRanking.panel.add(intuitiveRanking.rank6_Label);
-			intuitiveRanking.panel.add(intuitiveRanking.rank6_ComboBox);
+				gui.rank6_Label.setText("6ème:");
+				gui.panel.add(gui.rank6_Label);
+				gui.panel.add(gui.rank6_ComboBox);
 
-			intuitiveRankingOKButton.setText("OK");
-			intuitiveRankingOKButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent event) {
-					intuitiveRankingOKActionPerformed();
-				}
-			});
-			intuitiveRanking.panel.add(intuitiveRankingOKButton);
+				intuitiveRankingOKButton.setText("OK");
+				intuitiveRankingOKButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						intuitiveRankingOKActionPerformed();
+					}
+				});
+				gui.panel.add(intuitiveRankingOKButton);
+			}
+			rankingPanel.add(gui.panel);
 		}
 
 		{
@@ -357,10 +363,6 @@ public class InterfaceAHP
 			}
 			rankingPanel.add(gui.panel);
 		}
-
-		rankingPanel.setLayout(new GridLayout(1, 3));
-		rankingPanel.add(intuitiveRanking.panel);
-
 	}
 
 	private void makeInitialisationPanel() {
