@@ -245,8 +245,9 @@ public class InterfaceAHP
 
 		{
 			final RankingGui gui = intuitiveRanking;
+			final String rankingTitle = "Classement intuitif";
 			{
-				gui.panel.setBorder(BorderFactory.createTitledBorder("Classement intuitif"));
+				gui.panel.setBorder(BorderFactory.createTitledBorder(rankingTitle));
 				gui.panel.setLayout(new GridLayout(6 + 1, 2));
 
 				gui.rank1_Label.setText("1er:");
@@ -287,39 +288,9 @@ public class InterfaceAHP
 
 		{
 			final RankingGui gui = finalRanking;
+			final String rankingTitle = "Classement Final";
 			{
-				gui.panel.setBorder(BorderFactory.createTitledBorder("Classement Final"));
-				gui.panel.setLayout(new GridLayout(6 + 1, 3));
-
-				gui.rank1_Label.setText("1er:");
-				gui.panel.add(gui.rank1_Label);
-				gui.panel.add(gui.rank1_TextField);
-				gui.panel.add(gui.rank1_PercentLabel);
-
-				gui.rank2_Label.setText("2ème:");
-				gui.panel.add(gui.rank2_Label);
-				gui.panel.add(gui.rank2_TextField);
-				gui.panel.add(gui.rank2_PercentLabel);
-
-				gui.rank3_Label.setText("3ème:");
-				gui.panel.add(gui.rank3_Label);
-				gui.panel.add(gui.rank3_TextField);
-				gui.panel.add(gui.rank3_PercentLabel);
-
-				gui.rank4_Label.setText("4ème:");
-				gui.panel.add(gui.rank4_Label);
-				gui.panel.add(gui.rank4_TextField);
-				gui.panel.add(gui.rank4_PercentLabel);
-
-				gui.rank5_Label.setText("5ème:");
-				gui.panel.add(gui.rank5_Label);
-				gui.panel.add(gui.rank5_TextField);
-				gui.panel.add(gui.rank5_PercentLabel);
-
-				gui.rank6_Label.setText("6ème:");
-				gui.panel.add(gui.rank6_Label);
-				gui.panel.add(gui.rank6_TextField);
-				gui.panel.add(gui.rank6_PercentLabel);
+				buildRankingArea(gui, rankingTitle);
 			}
 
 			rankingPanel.add(gui.panel);
@@ -327,42 +298,47 @@ public class InterfaceAHP
 
 		{
 			final RankingGui gui = initialRanking;
+			final String rankingTitle = "Classement initial";
 			{
-				gui.panel.setBorder(BorderFactory.createTitledBorder("Classement initial"));
-				gui.panel.setLayout(new GridLayout(6 + 1, 3));
-
-				gui.rank1_Label.setText("1er:");
-				gui.panel.add(gui.rank1_Label);
-				gui.panel.add(gui.rank1_TextField);
-				gui.panel.add(gui.rank1_PercentLabel);
-
-				gui.rank2_Label.setText("2ème:");
-				gui.panel.add(gui.rank2_Label);
-				gui.panel.add(gui.rank2_TextField);
-				gui.panel.add(gui.rank2_PercentLabel);
-
-				gui.rank3_Label.setText("3ème:");
-				gui.panel.add(gui.rank3_Label);
-				gui.panel.add(gui.rank3_TextField);
-				gui.panel.add(gui.rank3_PercentLabel);
-
-				gui.rank4_Label.setText("4ème:");
-				gui.panel.add(gui.rank4_Label);
-				gui.panel.add(gui.rank4_TextField);
-				gui.panel.add(gui.rank4_PercentLabel);
-
-				gui.rank5_Label.setText("5ème:");
-				gui.panel.add(gui.rank5_Label);
-				gui.panel.add(gui.rank5_TextField);
-				gui.panel.add(gui.rank5_PercentLabel);
-
-				gui.rank6_Label.setText("6ème:");
-				gui.panel.add(gui.rank6_Label);
-				gui.panel.add(gui.rank6_TextField);
-				gui.panel.add(gui.rank6_PercentLabel);
+				buildRankingArea(gui, rankingTitle);
 			}
 			rankingPanel.add(gui.panel);
 		}
+	}
+
+	private void buildRankingArea(RankingGui gui, String rankingTitle) {
+		gui.panel.setBorder(BorderFactory.createTitledBorder(rankingTitle));
+		gui.panel.setLayout(new GridLayout(6 + 1, 3));
+
+		gui.rank1_Label.setText("1er:");
+		gui.panel.add(gui.rank1_Label);
+		gui.panel.add(gui.rank1_TextField);
+		gui.panel.add(gui.rank1_PercentLabel);
+
+		gui.rank2_Label.setText("2ème:");
+		gui.panel.add(gui.rank2_Label);
+		gui.panel.add(gui.rank2_TextField);
+		gui.panel.add(gui.rank2_PercentLabel);
+
+		gui.rank3_Label.setText("3ème:");
+		gui.panel.add(gui.rank3_Label);
+		gui.panel.add(gui.rank3_TextField);
+		gui.panel.add(gui.rank3_PercentLabel);
+
+		gui.rank4_Label.setText("4ème:");
+		gui.panel.add(gui.rank4_Label);
+		gui.panel.add(gui.rank4_TextField);
+		gui.panel.add(gui.rank4_PercentLabel);
+
+		gui.rank5_Label.setText("5ème:");
+		gui.panel.add(gui.rank5_Label);
+		gui.panel.add(gui.rank5_TextField);
+		gui.panel.add(gui.rank5_PercentLabel);
+
+		gui.rank6_Label.setText("6ème:");
+		gui.panel.add(gui.rank6_Label);
+		gui.panel.add(gui.rank6_TextField);
+		gui.panel.add(gui.rank6_PercentLabel);
 	}
 
 	private void makeInitialisationPanel() {
