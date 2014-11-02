@@ -1200,22 +1200,21 @@ public class InterfaceAHP
 		final JComboBox<String> rank6_ComboBox = new JComboBox<>();
 
 		void setEnglish() {
-
-			rank1_Label.setText("1st:");
-			rank2_Label.setText("2nd:");
-			rank3_Label.setText("3th:");
-			rank4_Label.setText("4th:");
-			rank5_Label.setText("5th:");
-			rank6_Label.setText("6th:");
+			rank1_Label.setText("1 st  ");
+			rank2_Label.setText("2 nd  ");
+			rank3_Label.setText("3 th  ");
+			rank4_Label.setText("4 th  ");
+			rank5_Label.setText("5 th  ");
+			rank6_Label.setText("6 th  ");
 		}
 
 		void setFrench() {
-			rank1_Label.setText("1er :");
-			rank2_Label.setText("2nd :");
-			rank3_Label.setText("3ème:");
-			rank4_Label.setText("4ème:");
-			rank5_Label.setText("5ème:");
-			rank6_Label.setText("6ème:");
+			rank1_Label.setText("1 er  ");
+			rank2_Label.setText("2 nd  ");
+			rank3_Label.setText("3 ème ");
+			rank4_Label.setText("4 ème ");
+			rank5_Label.setText("5 ème ");
+			rank6_Label.setText("6 ème ");
 		}
 	}
 
