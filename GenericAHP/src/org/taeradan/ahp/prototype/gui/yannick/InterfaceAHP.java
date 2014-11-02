@@ -214,13 +214,16 @@ public class InterfaceAHP
 
 	private void makeGlobalLayout() {
 
-		final JPanel p = new JPanel(new GridLayout(5, 3, 20, 20));
-		p.add(newSimulationButton);
+		final JPanel crPanel = new JPanel(new BorderLayout());
+		crPanel.add(crLabel, BorderLayout.WEST);
+		crPanel.add(crTextField, BorderLayout.CENTER);
+
+		final JPanel p = new JPanel(new GridLayout(4, 3, 20, 20));
+
 		p.add(timeLabel);
 		p.add(jLabel6);
 		p.add(initialisationPanel);
-		p.add(crLabel);
-		p.add(crTextField);
+		p.add(crPanel);
 		p.add(counterLabel);
 
 		p.add(saatyScaleScrollPane);
@@ -231,6 +234,7 @@ public class InterfaceAHP
 
 		final JPanel north = new JPanel(new GridLayout(1, 2, 20, 20));
 		north.add(setEnglishLangButton);
+		north.add(newSimulationButton);
 		north.add(setFrenchLangButton);
 
 		final JPanel south = new JPanel(new GridLayout(1, 1, 20, 20));
@@ -238,7 +242,7 @@ public class InterfaceAHP
 
 
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(north, BorderLayout.SOUTH);
+		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(p, BorderLayout.CENTER);
 		getContentPane().add(south, BorderLayout.SOUTH);
 	}
