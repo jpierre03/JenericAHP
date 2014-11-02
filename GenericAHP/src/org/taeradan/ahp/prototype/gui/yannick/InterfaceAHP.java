@@ -250,29 +250,25 @@ public class InterfaceAHP
 				gui.panel.setBorder(BorderFactory.createTitledBorder(rankingTitle));
 				gui.panel.setLayout(new GridLayout(6 + 1, 2));
 
-				gui.rank1_Label.setText("1er:");
 				gui.panel.add(gui.rank1_Label);
 				gui.panel.add(gui.rank1_ComboBox);
 
-				gui.rank2_Label.setText("2ème:");
 				gui.panel.add(gui.rank2_Label);
 				gui.panel.add(gui.rank2_ComboBox);
 
-				gui.rank3_Label.setText("3ème:");
 				gui.panel.add(gui.rank3_Label);
 				gui.panel.add(gui.rank3_ComboBox);
 
-				gui.rank4_Label.setText("4ème:");
 				gui.panel.add(gui.rank4_Label);
 				gui.panel.add(gui.rank4_ComboBox);
 
-				gui.rank5_Label.setText("5ème:");
 				gui.panel.add(gui.rank5_Label);
 				gui.panel.add(gui.rank5_ComboBox);
 
-				gui.rank6_Label.setText("6ème:");
 				gui.panel.add(gui.rank6_Label);
 				gui.panel.add(gui.rank6_ComboBox);
+
+				gui.setFrench();
 
 				intuitiveRankingOKButton.setText("OK");
 				intuitiveRankingOKButton.addActionListener(new ActionListener() {
@@ -310,35 +306,31 @@ public class InterfaceAHP
 		gui.panel.setBorder(BorderFactory.createTitledBorder(rankingTitle));
 		gui.panel.setLayout(new GridLayout(6 + 1, 3));
 
-		gui.rank1_Label.setText("1er:");
 		gui.panel.add(gui.rank1_Label);
 		gui.panel.add(gui.rank1_TextField);
 		gui.panel.add(gui.rank1_PercentLabel);
 
-		gui.rank2_Label.setText("2ème:");
 		gui.panel.add(gui.rank2_Label);
 		gui.panel.add(gui.rank2_TextField);
 		gui.panel.add(gui.rank2_PercentLabel);
 
-		gui.rank3_Label.setText("3ème:");
 		gui.panel.add(gui.rank3_Label);
 		gui.panel.add(gui.rank3_TextField);
 		gui.panel.add(gui.rank3_PercentLabel);
 
-		gui.rank4_Label.setText("4ème:");
 		gui.panel.add(gui.rank4_Label);
 		gui.panel.add(gui.rank4_TextField);
 		gui.panel.add(gui.rank4_PercentLabel);
 
-		gui.rank5_Label.setText("5ème:");
 		gui.panel.add(gui.rank5_Label);
 		gui.panel.add(gui.rank5_TextField);
 		gui.panel.add(gui.rank5_PercentLabel);
 
-		gui.rank6_Label.setText("6ème:");
 		gui.panel.add(gui.rank6_Label);
 		gui.panel.add(gui.rank6_TextField);
 		gui.panel.add(gui.rank6_PercentLabel);
+
+		gui.setFrench();
 	}
 
 	private void makeInitialisationPanel() {
@@ -1165,27 +1157,10 @@ public class InterfaceAHP
 		finalRanking.panel.setBorder(BorderFactory.createTitledBorder("Final classement"));
 		//bouton valider matrice
 		validateMatrixButton.setText("Validate Matrix");
-		//Jlabel dans panel classement
-		intuitiveRanking.rank1_Label.setText("1st:");
-		initialRanking.rank1_Label.setText("1st:");
-		finalRanking.rank1_Label.setText("1st:");
-		intuitiveRanking.rank2_Label.setText("2nd:");
-		initialRanking.rank2_Label.setText("2nd:");
-		finalRanking.rank2_Label.setText("2nd:");
-		intuitiveRanking.rank3_Label.setText("3th:");
-		initialRanking.rank3_Label.setText("3th:");
-		finalRanking.rank3_Label.setText("3th:");
-		intuitiveRanking.rank4_Label.setText("4th:");
-		initialRanking.rank4_Label.setText("4th:");
-		finalRanking.rank4_Label.setText("4th:");
-		intuitiveRanking.rank5_Label.setText("5th:");
-		initialRanking.rank5_Label.setText("5th:");
-		finalRanking.rank5_Label.setText("5th:");
-		intuitiveRanking.rank6_Label.setText("6th:");
-		initialRanking.rank6_Label.setText("6th:");
-		finalRanking.rank6_Label.setText("6th:");
-		finalRanking.rank3_Label.setText("3th:");
-		finalRanking.rank3_Label.setText("3th:");
+
+		intuitiveRanking.setEnglish();
+		initialRanking.setEnglish();
+		finalRanking.setEnglish();
 	}
 
 	private void setFrenchLangButtonActionPerformed() {
@@ -1223,6 +1198,25 @@ public class InterfaceAHP
 		final JComboBox<String> rank4_ComboBox = new JComboBox<>();
 		final JComboBox<String> rank5_ComboBox = new JComboBox<>();
 		final JComboBox<String> rank6_ComboBox = new JComboBox<>();
+
+		void setEnglish() {
+
+			rank1_Label.setText("1st:");
+			rank2_Label.setText("2nd:");
+			rank3_Label.setText("3th:");
+			rank4_Label.setText("4th:");
+			rank5_Label.setText("5th:");
+			rank6_Label.setText("6th:");
+		}
+
+		void setFrench() {
+			rank1_Label.setText("1er :");
+			rank2_Label.setText("2nd :");
+			rank3_Label.setText("3ème:");
+			rank4_Label.setText("4ème:");
+			rank5_Label.setText("5ème:");
+			rank6_Label.setText("6ème:");
+		}
 	}
 
 	private class AHP_Data {
