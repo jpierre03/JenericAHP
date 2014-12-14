@@ -6,6 +6,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jdom.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jep-2.4.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/Jama-1.0.3.jar" path-in-jar="/" />
+      <element id="module-test-output" name="JenericAHP" />
     </root>
   </artifact>
 </component>
