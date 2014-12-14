@@ -1,4 +1,5 @@
 JenericAHP
 ==========
 
-A Java library implementing the AHP multicriteria method
+A Java library implementing the AHP multicriteria method.
+
