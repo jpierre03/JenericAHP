@@ -17,48 +17,70 @@ public class CharSequenceAppender {
 
 	private PrintWriter output;
 
-	public CharSequenceAppender(String nomFichier)
-			throws
-			IOException {
-		output = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier, true)));
+	public CharSequenceAppender(String fileName) throws IOException {
+		assert fileName != null;
+		assert !fileName.trim().isEmpty();
+
+		output = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+
+		assert output != null;
 	}
 
-	public void append(CharSequence object) {
-		output.append(object);
+	public CharSequenceAppender append(CharSequence sequence) {
+		assert sequence != null;
+
+		output.append(sequence);
+
+		return this;
 	}
 
-	public void append(MyMatrix myMatrix) {
-		appendMatrix(myMatrix);
+	public CharSequenceAppender append(double value) {
+		output.append(value + "");
+
+		return this;
 	}
 
-	public void appendLineFeed() {
+	public CharSequenceAppender append(MyMatrix matrix) {
+		assert matrix != null;
+
+		appendMatrix(matrix);
+
+		return this;
+	}
+
+	public CharSequenceAppender appendLineFeed() {
 		output.append("\n");
+
+		return this;
 	}
 
-	public void appendCommaSeparator() {
+	public CharSequenceAppender appendCommaSeparator() {
 		output.append(";");
+
+		return this;
 	}
 
-	public void close() {
+	public CharSequenceAppender close() {
 		output.close();
+
+		return this;
 	}
 
-	private void appendMatrix(MyMatrix myMatrix) {
-		String string = "";
+	private CharSequenceAppender appendMatrix(MyMatrix matrix) {
+		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myMatrix.getColumnDimension(); j++) {
+		for (int i = 0; i < matrix.getRowDimension(); i++) {
+			for (int j = 0; j < matrix.getColumnDimension(); j++) {
 
-
-				string += myMatrix.getMatrixValue(i, j).getValue() + ";";
+				sb.append(matrix.getMatrixValue(i, j).getValue());
+				sb.append(";");
 
 			}
-			output.append(string);
-			appendLineFeed();
-			string = "";
-
+			sb.append("\n");
 		}
+
+		output.append(sb);
+
+		return this;
 	}
-
-
 }

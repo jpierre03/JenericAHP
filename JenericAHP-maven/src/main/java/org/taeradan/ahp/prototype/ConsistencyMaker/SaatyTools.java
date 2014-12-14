@@ -26,14 +26,14 @@ public final class SaatyTools {
 	private SaatyTools() {
 	}
 
-	public static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix epsilon) {
+	private static TreeMap<Double, MatrixValue> createTreeMap(MyMatrix epsilon) {
 
 		int rows = epsilon.getRowDimension();
 		int columns = epsilon.getColumnDimension();
-		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<Double, MatrixValue>();
+		TreeMap<Double, MatrixValue> myTreeMap = new TreeMap<>();
 
 		/*Création d'une collection de MatrixValue*/
-		Collection<MatrixValue> matrixValues = new ArrayList<MatrixValue>();
+		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				if (i != j) {
@@ -43,18 +43,17 @@ public final class SaatyTools {
 		}
 
 		/*Remplit myTreeMap de MatrixValue stockées dans la collection*/
-		for (Iterator<MatrixValue> valueIterator = matrixValues.iterator(); valueIterator.hasNext(); ) {
-			MatrixValue matrixValue = valueIterator.next();
+		for (MatrixValue matrixValue : matrixValues) {
 			myTreeMap.put(matrixValue.getValue(), matrixValue);
 		}
 		return myTreeMap;
 	}
 
-	public static void printTreeMap(TreeMap<Double, MatrixValue> myTreeMap) {
-		while (!myTreeMap.isEmpty()) {
-			MatrixValue matrixValue = myTreeMap.pollLastEntry().getValue();
+	public static void printTreeMap(TreeMap<Double, MatrixValue> map) {
+		while (!map.isEmpty()) {
+			MatrixValue matrixValue = map.pollLastEntry().getValue();
 			System.out.println(
-					+matrixValue.getValue()
+				+matrixValue.getValue()
 					+ " ( "
 					+ matrixValue.getRow()
 					+ " , "
@@ -85,24 +84,23 @@ public final class SaatyTools {
 	/*
 	 * Calculates the espilon matrix of Saaty ; Epsilon[i][j]=A[i][j]*w[j]/w[j]
 	 */
-	public static MyMatrix calculateEpsilonMatrix(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector) {
+	public static MyMatrix calculateEpsilonMatrix(MyMatrix preferenceMatrix,
+						      MyMatrix priorityVector) {
 
-		MyMatrix epsilon = new MyMatrix(myPreferenceMatrix.getRowDimension(),
-										myPreferenceMatrix.getColumnDimension());
+		MyMatrix epsilon = new MyMatrix(preferenceMatrix.getRowDimension(),
+			preferenceMatrix.getColumnDimension());
 
-		for (int i = 0; i < myPreferenceMatrix.getRowDimension(); i++) {
-			for (int j = 0; j < myPreferenceMatrix.getColumnDimension(); j++) {
+		for (int i = 0; i < preferenceMatrix.getRowDimension(); i++) {
+			for (int j = 0; j < preferenceMatrix.getColumnDimension(); j++) {
 
 				double aij;
 				double wj;
 				double wi;
 				double eij;
 
-				aij = myPreferenceMatrix.get(i, j);
+				aij = preferenceMatrix.get(i, j);
 				wj = priorityVector.get(j, 0);
 				wi = priorityVector.get(i, 0);
-
 
 				eij = aij * wj / wi;
 
@@ -113,53 +111,36 @@ public final class SaatyTools {
 		return epsilon;
 	}
 
-	public static double calculateBestFit(MyMatrix preferenceMatrix,
-										  MyMatrix priorityVector,
-										  int i,
-										  int j) {
+	public static double calculateBestFit(MyMatrix preferenceMatrix, int i, int j) {
 
-		MatrixValue matrixValue;
-		MyMatrix tempMatrix = new MyMatrix();
+		final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
-		tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
+		/** Remplacer aii et ajj par 2*/
+		tempMatrix.setMatrixValue(new MatrixValue(i, i, 2));
 
-		/*Remplacer aii et ajj par 2*/
-		matrixValue = preferenceMatrix.getMatrixValue(i, i);
-		matrixValue.setValue(2);
-		tempMatrix.setMatrixValue(matrixValue);
+		tempMatrix.setMatrixValue(new MatrixValue(j, j, 2));
 
-		matrixValue = preferenceMatrix.getMatrixValue(j, j);
-		matrixValue.setValue(2);
-		tempMatrix.setMatrixValue(matrixValue);
+		/** Remplacer aij et aji par 0 */
+		/** TODO: Vérifier que 0 est la bonne valeur */
+		tempMatrix.setMatrixValue(new MatrixValue(i, j, 0));
+		tempMatrix.setMatrixValue(new MatrixValue(j, i, 0));
 
-		/*Remplacer aij et aji par 0*/
-		matrixValue = preferenceMatrix.getMatrixValue(i, j);
-		matrixValue.setValue(0);
-		tempMatrix.setMatrixValue(matrixValue);
-
-		matrixValue = preferenceMatrix.getMatrixValue(j, i);
-		matrixValue.setValue(0);
-		tempMatrix.setMatrixValue(matrixValue);
-
-		/*Recalculer vecteur priorité*/
-		priorityVector = PriorityVector.build(tempMatrix);
+		/** Recalculer vecteur priorité */
+		final PriorityVector priorityVector = PriorityVector.build(tempMatrix);
 
 		return priorityVector.get(i, 0) / priorityVector.get(j, 0);
 	}
 
-	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix,
-												  MyMatrix priorityVector,
-												  MyMatrix epsilon) {
-
+	public static Collection<MatrixValue> getRank(MyMatrix epsilon) {
 
 		MatrixValue sortedMatrixValue;
 		Collection<MatrixValue> matrixValues = new ArrayList<>();
 		boolean isPresent = false;
 
 		/*Creation du TreeMap à partir de la matrice epsilon*/
-		TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
+		final TreeMap<Double, MatrixValue> myTreeMap = createTreeMap(epsilon);
 
-		/*Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
+		/** Recopie dans une collection, du TreeMap dans l'ordre décroissantTant*/
 		while (!myTreeMap.isEmpty()) {
 			sortedMatrixValue = myTreeMap.pollLastEntry().getValue();
 
@@ -167,16 +148,16 @@ public final class SaatyTools {
 			int column = sortedMatrixValue.getColumn();
 			double value = sortedMatrixValue.getValue();
 
-			/*Si la valeur à modifier est dans la partie inférieure de la matrice*/
+			/** Si la valeur à modifier est dans la partie inférieure de la matrice */
 			if (row > column) {
-				/*On retient la valeur réciproque*/
+				/** Define associated (réciproque) value */
 
 				sortedMatrixValue.setRow(column);
 				sortedMatrixValue.setColumn(row);
 				sortedMatrixValue.setValue(1 / value);
 			}
 
-			/*Avant d'ajouter, on teste si l'élément n'est pas déjà présent*/
+			/** Avant d'ajouter, on teste si l'élément n'est pas déjà présent */
 			for (MatrixValue matrixValue1 : matrixValues) {
 				if (Math.abs(sortedMatrixValue.getValue() - matrixValue1.getValue()) < 0.000000001) {
 					isPresent = true;
@@ -193,17 +174,19 @@ public final class SaatyTools {
 		return matrixValues;
 	}
 
-	public static int getLocationInRank(Collection<MatrixValue> sortedMatrixValues, int i, int j) {
+	public static int getLocationInRank(Collection<MatrixValue> matrixValues, int row, int column) {
+		assert matrixValues != null;
+		assert row >= 0;
+		assert column >= 0;
 
+		final Iterator<MatrixValue> iterator = matrixValues.iterator();
 		int counter = 0;
 		boolean isFound = false;
-		MatrixValue matrixValue;
-		Iterator<MatrixValue> valueIterator = sortedMatrixValues.iterator();
 
-		while ((valueIterator.hasNext()) && (!isFound)) {
-			matrixValue = valueIterator.next();
+		while ((iterator.hasNext()) && (!isFound)) {
+			final MatrixValue matrixValue = iterator.next();
 
-			if ((i == matrixValue.getRow()) && (j == matrixValue.getColumn())) {
+			if ((row == matrixValue.getRow()) && (column == matrixValue.getColumn())) {
 				isFound = true;
 			}
 			counter++;

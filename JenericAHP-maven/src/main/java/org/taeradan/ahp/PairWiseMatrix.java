@@ -33,7 +33,8 @@ import java.util.logging.Logger;
  * @author Yves Dubromelle
  */
 public class PairWiseMatrix
-		extends MyMatrix {
+	extends MyMatrix
+	implements XmlOutputable {
 
 	public PairWiseMatrix() {
 	}
@@ -55,17 +56,17 @@ public class PairWiseMatrix
 		PairWiseMatrix matrix = new PairWiseMatrix(size, size);
 		final JEP myParser = new JEP();
 		for (int i = 0; i < size; i++) {
-//			Extraction of a row from the matrix
+			/** Extraction of a row from the matrix */
 			final Element xmlRow = xmlRowsList.get(i);
 			@SuppressWarnings("unchecked")
 			final List<Element> xmlEltsList = (List<Element>) xmlRow.getChildren("elt");
 			for (int j = 0; j < xmlEltsList.size(); j++) {
-//				Extraction of an element from a row
+				/** Extraction of an element from a row */
 				final Element xmlElt = xmlEltsList.get(j);
-//				Setting of an element of the temporary matrix
+				/** Setting of an element of the temporary matrix */
 				final Attribute att = xmlElt.getAttribute("value");
-//				Creation of a math expression parser to handle fractions in the XML file
-//				The expression contained in the String is passed to the parser and is evaluated
+				/**        Creation of a math expression parser to handle fractions in the XML file
+				 The expression contained in the String is passed to the parser and is evaluated */
 				myParser.parseExpression(att.getValue());
 				final double value = myParser.getValue();
 				matrix.set(i, j, value);
@@ -92,17 +93,17 @@ public class PairWiseMatrix
 		final int nRows = matrix.getRowDimension();
 		final int nCols = matrix.getColumnDimension();
 		DecimalFormat printFormat = new DecimalFormat("0.00000000");
-//		For each row in the matrix
+		/** For each row in the matrix */
 		for (int i = 0; i < nRows; i++) {
 			if (prefix != null) {
 				sb.append(prefix);
 			}
-//			For each element of the row
+			/** For each element of the row */
 			for (int j = 0; j < nCols; j++) {
 				sb.append(" ");
 				sb.append(printFormat.format(matrix.get(i, j)));
 			}
-//			Last row line return
+			/** Last row line return */
 			if (i < nRows - 1) {
 				sb.append("\n");
 			}
@@ -110,17 +111,13 @@ public class PairWiseMatrix
 		return sb.toString();
 	}
 
-	/**
-	 * Returns a JDOM element that represents the preference matrix
-	 *
-	 * @return JDOM element representing the preference matrix
-	 */
+	@Override
 	public Element toXml() {
 		final Element xmlPrefMatrix = new Element("prefmatrix");
-//		For each row in the matrix
+		/** For each row in the matrix */
 		for (int i = 0; i < getRowDimension(); i++) {
 			final Element xmlRow = new Element("row");
-//			For each element in the row
+			/** For each element in the row */
 			for (int j = 0; j < getColumnDimension(); j++) {
 				final Element xmlElt = new Element("elt");
 				xmlElt.setAttribute("value", Double.toString(getMatrixValue(i, j).getValue()));
@@ -135,7 +132,7 @@ public class PairWiseMatrix
 		final int newDimension = getRowDimension() - 1;
 		final MyMatrix newMatrix = new MyMatrix(newDimension, newDimension);
 		Logger.getAnonymousLogger().info("Ancienne dimension =" + getRowDimension()
-										 + ", nouvelle=" + newDimension + "\n");
+			+ ", nouvelle=" + newDimension + "\n");
 		int newI = 0;
 		int newJ = 0;
 		for (int i = 0; i < getRowDimension(); i++) {
@@ -144,7 +141,7 @@ public class PairWiseMatrix
 					if (j != index) {
 						final double newValue = getMatrixValue(i, j).getValue();
 						Logger.getAnonymousLogger().info("i=" + i + "j=" + j + "value=" + newValue
-														 + "newI=" + newI + "newJ=" + newJ + "\n");
+							+ "newI=" + newI + "newJ=" + newJ + "\n");
 						newMatrix.set(newI, newJ, newValue);
 						newJ++;
 					}

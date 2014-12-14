@@ -22,9 +22,24 @@ import org.taeradan.ahp.matrix.MyMatrix;
 
 import java.math.BigDecimal;
 
-/** @author Yves Dubromelle */
+/**
+ * @author Yves Dubromelle
+ */
 public class PriorityVector
-		extends MyMatrix {
+	extends MyMatrix {
+
+	/**
+	 * A standard matrix should be far smaller than that.
+	 */
+	private static final int MAX_DIMENSION = 1000;
+	/**
+	 * high value (normal genetic operations require high value)
+	 */
+	private static final int MAX_ITERATION = 150;
+	/**
+	 * This treshold is used to stop iteration
+	 */
+	private static final double EQUALITY_TRESHOLD = 1E-16;
 
 	public PriorityVector(int i) {
 		super(i, 1);
@@ -32,34 +47,35 @@ public class PriorityVector
 
 	public static PriorityVector build(final Matrix matrix) {
 		final int dimension = matrix.getRowDimension();
-		assert dimension > 0;
-		assert dimension <= 1000 : "So huge matrix, you should double check (size=" + dimension + ")";
+		assert matrix.getColumnDimension() == matrix.getRowDimension() : "the matrix should be square";
+		assert dimension > 0 : "Matrix dimension, can't be negative";
+		assert dimension <= MAX_DIMENSION : "So huge matrix, you should double check (size=" + dimension + ")";
 
 		final PriorityVector resultVector = new PriorityVector(dimension);
 		final Matrix e = new Matrix(1, dimension, 1);
+		final Matrix eTranspose = e.transpose();
+
 		Matrix workVector = new PriorityVector(dimension);
 		Matrix multiplyMatrix = (Matrix) matrix.clone();
 
-		final int MAX_ITERATION = 150; // high value (normal genetic operation require high value)
 		Matrix lastVector;
-		boolean isUnderTreshold = true;
+		boolean isUnderTreshold;
 		int iteration = 0;
 		do {
 			lastVector = workVector;
-			final Matrix numerator = multiplyMatrix.times(e.transpose());
-			final Matrix denominator = e.times(multiplyMatrix).times(e.transpose());
+			final Matrix numerator = multiplyMatrix.times(eTranspose);
+			final Matrix denominator = e.times(multiplyMatrix).times(eTranspose);
+
 			workVector = numerator.timesEquals(1 / denominator.get(0, 0));
-			if (lastVector == null) {
-				isUnderTreshold = false;
-			} else {
-				Matrix difference = workVector.minus(lastVector);
-				isUnderTreshold = true;
-				for (int i = 0; i < dimension; i++) {
-					double valeur0 = difference.get(i, 0);
-					if (new BigDecimal(valeur0).abs().doubleValue() > 1E-16) {
-//						difference en dessous du seuil
-						isUnderTreshold = false;
-					}
+			Matrix difference = workVector.minus(lastVector);
+
+			isUnderTreshold = true;
+			for (int i = 0; i < dimension; i++) {
+				double valeur0 = difference.get(i, 0);
+
+				if (new BigDecimal(valeur0).abs().doubleValue() > EQUALITY_TRESHOLD) {
+					/** difference en dessous du seuil */
+					isUnderTreshold = false;
 				}
 			}
 			multiplyMatrix = multiplyMatrix.times(matrix);

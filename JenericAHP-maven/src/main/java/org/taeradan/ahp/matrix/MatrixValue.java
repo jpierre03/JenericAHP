@@ -7,8 +7,8 @@ package org.taeradan.ahp.matrix;
 public class MatrixValue {
 
 	private double value;
-	private int    row;
-	private int    column;
+	private int row;
+	private int column;
 
 	public MatrixValue(int row, int column, double value) {
 		this.row = row;
@@ -20,8 +20,8 @@ public class MatrixValue {
 		this(0, 0, 0);
 	}
 
-	public MatrixValue(final MatrixValue toClone) {
-		this(toClone.getRow(), toClone.getColumn(), toClone.getValue());
+	public MatrixValue clone() {
+		return new MatrixValue(getRow(), getColumn(), getValue());
 	}
 
 	private static double round(double what, int precision) {
@@ -85,16 +85,7 @@ public class MatrixValue {
 	}
 
 	@Override
-	public int hashCode() {
-		int hash = 3;
-		hash = 97 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
-		hash = 97 * hash + this.row;
-		hash = 97 * hash + this.column;
-		return hash;
-	}
-
-	@Override
 	public String toString() {
-		return value + " ";
+		return value + "";
 	}
 }

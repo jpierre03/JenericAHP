@@ -7,7 +7,7 @@ import Jama.Matrix;
  * @author Marianne
  */
 public class MyMatrix
-		extends Matrix {
+	extends Matrix {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,10 @@ public class MyMatrix
 
 	public final void setMatrixValue(MatrixValue matrixValue) {
 		super.set(
-				matrixValue.getRow(),
-				matrixValue.getColumn(),
-				matrixValue.getValue()
-				 );
+			matrixValue.getRow(),
+			matrixValue.getColumn(),
+			matrixValue.getValue()
+		);
 	}
 
 	public final MatrixValue getMatrixValue(int i, int j) {
@@ -33,10 +33,10 @@ public class MyMatrix
 
 	public static MyMatrix copyMyMatrix(final MyMatrix originalMatrix) {
 		final MyMatrix duplicateMatrix = new MyMatrix(originalMatrix.getRowDimension(),
-													  originalMatrix.getColumnDimension());
+			originalMatrix.getColumnDimension());
 		for (int i = 0; i < originalMatrix.getRowDimension(); i++) {
 			for (int j = 0; j < originalMatrix.getColumnDimension(); j++) {
-				duplicateMatrix.setMatrixValue(new MatrixValue(originalMatrix.getMatrixValue(i, j)));
+				duplicateMatrix.setMatrixValue(originalMatrix.getMatrixValue(i, j).clone());
 			}
 		}
 

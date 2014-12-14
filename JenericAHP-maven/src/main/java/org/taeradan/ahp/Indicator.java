@@ -29,7 +29,11 @@ import java.util.Collection;
  * @author Jean-Pierre PRUNARET
  * @author Yves Dubromelle
  */
-public abstract class Indicator {
+public abstract class Indicator
+	implements XmlOutputable {
+
+	private static final String MAXIMIZE = "maximize";
+	private static final String MINIMIZE = "minimize";
 
 	//	AHP configuration attributes
 	private String identifier;
@@ -37,43 +41,45 @@ public abstract class Indicator {
 	private boolean maximization = true;
 
 	//	AHP execution attributes
-	private PriorityVector                    alternativeIndicatorVector;
-	private PairWiseMatrix                    alternativeAlternativeMatrix;
+	private PriorityVector alternativeIndicatorVector;
+	private PairWiseMatrix alternativeAlternativeMatrix;
 	private Collection<? extends Alternative> lastAlternatives;
 
-	/** Creates an Indicator from a JDOM Element */
+	/**
+	 * Creates an Indicator from a JDOM Element
+	 */
 	protected Indicator(final Element xmlIndicator) {
 		this.fromXml(xmlIndicator);
 	}
 
-	/** Method called by the criteria for the execution of the AHP algorithm. */
-	public PriorityVector calculateAlternativesPriorityVector(
-			final Collection<? extends Alternative> alternatives) {
+	/**
+	 * Method called by the criteria for the execution of the AHP algorithm.
+	 */
+	public PriorityVector calculateAlternativesPriorityVector(final Collection<? extends Alternative> alternatives) {
 
 		this.lastAlternatives = alternatives;
-		final int dimension = this.lastAlternatives.size();
+		final int dimension = lastAlternatives.size();
 		double[] altValues = new double[dimension];
 
 		alternativeAlternativeMatrix = new PairWiseMatrix(dimension, dimension);
 
-//		For each alternative, evaluation of its value for the indicator
+		/** For each alternative, evaluation of its value for the indicator */
 		for (int i = 0; i < this.lastAlternatives.size(); i++) {
-//			Logger.getAnonymousLogger().info(" -- (" + toString() + ")");
 			altValues[i] = calculateAlternativeValue(i, this.lastAlternatives);
 		}
 
-//		Construction of the alternative/alternative matrix
+		/** Construction of the alternative/alternative matrix */
 		buildAlternativeAlternativeMatrix(dimension, altValues);
 
-//		Conversion from pairwise matrix to priority vector
+		/** Conversion from pairwise matrix to priority vector */
 		alternativeIndicatorVector = PriorityVector.build(alternativeAlternativeMatrix);
 
 		return alternativeIndicatorVector;
 	}
 
-	private void buildAlternativeAlternativeMatrix(int dimension, double[] altValues) {
+	private void buildAlternativeAlternativeMatrix(final int dimension, final double[] altValues) {
 		for (int i = 0; i < dimension; i++) {
-			alternativeAlternativeMatrix.set(i, i, 1);
+			alternativeAlternativeMatrix.set(i, i, 1.);
 			for (int j = 0; j < i; j++) {
 				if (maximization) {
 					alternativeAlternativeMatrix.set(i, j, altValues[i] / altValues[j]);
@@ -94,28 +100,30 @@ public abstract class Indicator {
 	 * @return Indicator value
 	 */
 	public abstract double calculateAlternativeValue(int alternativeIndex,
-													 Collection<? extends Alternative> alternatives);
+							 Collection<? extends Alternative> alternatives);
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("Indicator " + identifier + " : " + name);
-		if (maximization) {
-			sb.append(", maximize");
+
+		sb.append(", ");
+		if (isMaximized()) {
+			sb.append(MAXIMIZE);
 		} else {
-			sb.append(", minimize");
+			sb.append(MINIMIZE);
 		}
 		return sb.toString();
 	}
 
-	/** @return JDOM Element representing the indicator */
+	@Override
 	public Element toXml() {
 		final Element xmlIndicator = new Element("indicator");
 		xmlIndicator.setAttribute("id", identifier);
 		xmlIndicator.addContent(new Element("name").setText(name));
-		if (maximization) {
-			xmlIndicator.addContent(new Element("maximize"));
+		if (isMaximized()) {
+			xmlIndicator.addContent(new Element(MAXIMIZE));
 		} else {
-			xmlIndicator.addContent(new Element("maximize"));
+			xmlIndicator.addContent(new Element(MINIMIZE));
 		}
 		return xmlIndicator;
 	}
@@ -132,8 +140,8 @@ public abstract class Indicator {
 
 //		Initialisation of the maximization/minimization parameter
 //		System.out.println("Maximise="+xmlIndicator.getChild("maximize")+", minimize="+xmlIndicator.getChild("minimize"));
-		final Element maximize = xmlIndicator.getChild("maximize");
-		final Element minimize = xmlIndicator.getChild("minimize");
+		final Element maximize = xmlIndicator.getChild(MAXIMIZE);
+		final Element minimize = xmlIndicator.getChild(MINIMIZE);
 		if (maximize != null) {
 			maximization = true;
 		}
@@ -142,7 +150,9 @@ public abstract class Indicator {
 		}
 	}
 
-	/** @return  */
+	/**
+	 * @return
+	 */
 	public String resultToString() {
 		final int LIMIT_ALTERNATIVES = 30;
 

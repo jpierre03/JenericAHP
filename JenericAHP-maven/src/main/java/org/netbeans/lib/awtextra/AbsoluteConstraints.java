@@ -33,19 +33,19 @@ public class AbsoluteConstraints implements Serializable {
 	/**
 	 * The X position of the component
 	 */
-	public int x;
+	public final int x;
 	/**
 	 * The Y position of the component
 	 */
-	public int y;
+	public final int y;
 	/**
 	 * The width of the component or -1 if the component's preferred width should be used
 	 */
-	public int width = -1;
+	private int width = -1;
 	/**
 	 * The height of the component or -1 if the component's preferred height should be used
 	 */
-	public int height = -1;
+	private int height = -1;
 
 	/**
 	 * Creates a new AbsoluteConstraints for specified position.
@@ -62,7 +62,7 @@ public class AbsoluteConstraints implements Serializable {
 	 * @param x The X position to be represented by this AbsoluteConstraints
 	 * @param y The Y position to be represented by this AbsoluteConstraints
 	 */
-	public AbsoluteConstraints(int x, int y) {
+	private AbsoluteConstraints(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

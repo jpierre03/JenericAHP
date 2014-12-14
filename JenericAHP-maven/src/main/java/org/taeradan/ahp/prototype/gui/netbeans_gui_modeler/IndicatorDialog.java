@@ -20,7 +20,7 @@ package org.taeradan.ahp.prototype.gui.netbeans_gui_modeler;
 import org.taeradan.ahp.Indicator;
 
 import javax.swing.*;
-import java.awt.Frame;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,14 +31,16 @@ import java.awt.event.ActionListener;
  * @author Jean-Pierre PRUNARET
  */
 public final class IndicatorDialog
-		extends JDialog {
+	extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final transient Indicator indicator;
 
-	/** Creates new form IndicatorDialog */
+	/**
+	 * Creates new form IndicatorDialog
+	 */
 	public IndicatorDialog(final Frame parent, final boolean modal,
-						   final Indicator indicator) {
+			       final Indicator indicator) {
 		super(parent, modal);
 		this.indicator = indicator;
 		initComponents();
@@ -71,7 +73,7 @@ public final class IndicatorDialog
 		jButtonSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed(evt);
+				jButtonSaveActionPerformed();
 			}
 		});
 
@@ -79,80 +81,80 @@ public final class IndicatorDialog
 		jButtonReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed(evt);
+				jButtonReloadActionPerformed();
 			}
 		});
 
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addGroup(layout.createSequentialGroup()
-									  .addContainerGap()
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-													  .addGroup(layout.createSequentialGroup()
-																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-																					  .addComponent(jLabelId)
-																					  .addComponent(jLabelName))
-																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-																					  .addComponent(jTextFieldId,
-																									GroupLayout.DEFAULT_SIZE,
-																									272,
-																									Short.MAX_VALUE)
-																					  .addComponent(jTextFieldName,
-																									GroupLayout.DEFAULT_SIZE,
-																									272,
-																									Short.MAX_VALUE)))
-													  .addGroup(GroupLayout.Alignment.TRAILING,
-																layout.createSequentialGroup()
-																	  .addComponent(jButtonSave)
-																	  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																	  .addComponent(jButtonReload)))
-									  .addContainerGap())
-								 );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addComponent(jLabelId)
+								.addComponent(jLabelName))
+							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+								.addComponent(jTextFieldId,
+									GroupLayout.DEFAULT_SIZE,
+									272,
+									Short.MAX_VALUE)
+								.addComponent(jTextFieldName,
+									GroupLayout.DEFAULT_SIZE,
+									272,
+									Short.MAX_VALUE)))
+						.addGroup(GroupLayout.Alignment.TRAILING,
+							layout.createSequentialGroup()
+								.addComponent(jButtonSave)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(jButtonReload)))
+					.addContainerGap())
+		);
 		layout.setVerticalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-					  .addGroup(layout.createSequentialGroup()
-									  .addContainerGap()
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-													  .addComponent(jLabelId)
-													  .addComponent(jTextFieldId,
-																	GroupLayout.PREFERRED_SIZE,
-																	GroupLayout.DEFAULT_SIZE,
-																	GroupLayout.PREFERRED_SIZE))
-									  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-													  .addComponent(jLabelName)
-													  .addComponent(jTextFieldName,
-																	GroupLayout.PREFERRED_SIZE,
-																	GroupLayout.DEFAULT_SIZE,
-																	GroupLayout.PREFERRED_SIZE))
-									  .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-									  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-													  .addComponent(jButtonReload)
-													  .addComponent(jButtonSave))
-									  .addContainerGap())
-							   );
+			layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jLabelId)
+						.addComponent(jTextFieldId,
+							GroupLayout.PREFERRED_SIZE,
+							GroupLayout.DEFAULT_SIZE,
+							GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jLabelName)
+						.addComponent(jTextFieldName,
+							GroupLayout.PREFERRED_SIZE,
+							GroupLayout.DEFAULT_SIZE,
+							GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jButtonReload)
+						.addComponent(jButtonSave))
+					.addContainerGap())
+		);
 
 		pack();
 	}
 
-	private void jButtonSaveActionPerformed(ActionEvent evt) {
+	private void jButtonSaveActionPerformed() {
 		indicator.setIdentifier(jTextFieldId.getText());
 		indicator.setName(jTextFieldName.getText());
 		this.dispose();
 	}
 
-	private void jButtonReloadActionPerformed(ActionEvent evt) {
+	private void jButtonReloadActionPerformed() {
 		jTextFieldId.setText(indicator.getIdentifier());
 		jTextFieldName.setText(indicator.getName());
 	}
 
-	private JButton    jButtonReload;
-	private JButton    jButtonSave;
-	private JLabel     jLabelId;
-	private JLabel     jLabelName;
+	private JButton jButtonReload;
+	private JButton jButtonSave;
+	private JLabel jLabelId;
+	private JLabel jLabelName;
 	private JTextField jTextFieldId;
 	private JTextField jTextFieldName;
 }

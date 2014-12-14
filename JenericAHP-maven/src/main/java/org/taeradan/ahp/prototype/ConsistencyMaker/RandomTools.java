@@ -18,10 +18,13 @@ import java.util.*;
  * @author Jean-Pierre PRUNARET
  */
 public final class RandomTools {
+
 	private RandomTools() {
 	}
 
-	/** This method returns the value which will be modified by the expert */
+	/**
+	 * This method returns the value which will be modified by the expert
+	 */
 	public static MatrixValue getValueToModifiyByRanking(Collection<MatrixValue> nonSortedMatrixValues) {
 		if (nonSortedMatrixValues == null
 			|| nonSortedMatrixValues.size() <= 0) {
@@ -37,7 +40,7 @@ public final class RandomTools {
 		while (isValueChosen == false) {
 			resultMatrixValue = valueIterator.next();
 
-			final StringBuffer sb = new StringBuffer();
+			final StringBuilder sb = new StringBuilder();
 			sb.append("Souhaitez-vous modifier la valeur ");
 			sb.append(resultMatrixValue.getValue());
 			sb.append(" ( ");
@@ -62,7 +65,9 @@ public final class RandomTools {
 		return resultMatrixValue;
 	}
 
-	/** Build randomly a rank of MatrixValue from a MyMatrix */
+	/**
+	 * Build randomly a rank of MatrixValue from a MyMatrix
+	 */
 	public static Collection<MatrixValue> getRank(MyMatrix myPreferenceMatrix) {
 
 		final Collection<MatrixValue> collectionOfNonSortedMatrixValues = new ArrayList<>();
@@ -85,162 +90,148 @@ public final class RandomTools {
 		return collectionOfNonSortedMatrixValues;
 	}
 
-	/** Write the rank which is printed on screen (Random rank), in a csv file Write also Saaty's method propositions */
-	public static void writeRandomAndSaatyPropositions(MyMatrix preferenceMatrix,
-													   Collection<MatrixValue> nonSortedMatrixValues,
-													   MatrixValue chosenValueToBeModified,
-													   MyMatrix priorityVector,
-													   String file)
-			throws
-			IOException {
+	/**
+	 * Write the rank which is printed on screen (Random rank), in a csv fileName Write also Saaty's method propositions
+	 */
+	public static void writeRandomAndSaatyPropositions(final MyMatrix preferenceMatrix,
+							   final Collection<MatrixValue> nonSortedMatrixValues,
+							   final MatrixValue chosenValueToBeModified,
+							   final MyMatrix priorityVector,
+							   String fileName)
+		throws
+		IOException {
 
-		MyMatrix epsilon = new MyMatrix();
-		Collection<MatrixValue> sortedMatrixValues = new ArrayList<MatrixValue>();
-		Iterator<MatrixValue> saatyIterator;
-		Iterator<MatrixValue> randomsIterator;
-		CharSequenceAppender csa = new CharSequenceAppender(file);
-		MyMatrix saatyMatrix = new MyMatrix();
-		MyMatrix saatyVector = new MyMatrix();
-		MyMatrix randomsMatrix = new MyMatrix();
-		MyMatrix randomsVector = new MyMatrix();
-		String tempString;
+		final CharSequenceAppender csa = new CharSequenceAppender(fileName);
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		boolean isFound = false;
-		boolean tempBoolean;
-		MatrixValue saatyMatrixValue = new MatrixValue();
-		MatrixValue randomsMatrixValue = new MatrixValue();
 
+		/** Build Saaty's ranking */
+		final MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
+		final Collection<MatrixValue> sortedMatrixValues = SaatyTools.getRank(epsilon);
 
-		/*Build Saaty's ranking*/
-		epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix,
-													priorityVector);
-		sortedMatrixValues = SaatyTools.getRank(preferenceMatrix,
-												priorityVector,
-												epsilon);
+		/* Simultaneous reading of the 2 classifications as the value to edit is not found in the random ranking */
 
-		/*Simultaneous reading of the 2 classifications as the value to edit is not found in the random ranking*/
+		/** iterator to read Saaty's ranking */
+		final Iterator<MatrixValue> saatyIterator = sortedMatrixValues.iterator();
+		/** iterator to read random ranking */
+		final Iterator<MatrixValue> randomsIterator = nonSortedMatrixValues.iterator();
 
-
-		//iterator to read Saaty's ranking
-		saatyIterator = sortedMatrixValues.iterator();
-		//iterator to read random ranking
-		randomsIterator = nonSortedMatrixValues.iterator();
-
-		/*reading of the list to write in the csv file*/
+		/*reading of the list to write in the csv fileName*/
 		while ((randomsIterator.hasNext()) && (!isFound)) {
 
-			// SAATY'S PART
+			saatyPart(preferenceMatrix, csa, consistencyChecker, saatyIterator);
 
-			saatyMatrixValue = saatyIterator.next();
-			csa.appendLineFeed();
-			/*Writing of de the best fit related to the proposed value*/
-			//Copy of the original matrix
-			saatyMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
-			//saatyMatrix's eigenvector calculation
-			saatyVector = PriorityVector.build(saatyMatrix);
-			//best fit calculation
-			double BestFit = SaatyTools.calculateBestFit(
-					saatyMatrix,
-					saatyVector,
-					saatyMatrixValue.getRow(),
-					saatyMatrixValue.getColumn());
-
-			//best fit writing
-			tempString = "" + BestFit;
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			/*écriture des indices de la valeur proposée par Saaty dans le fichier*/
-			tempString = "" + (saatyMatrixValue.getRow() + 1);
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-			tempString = "" + (saatyMatrixValue.getColumn() + 1);
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
-
-			//remplacement de la valeur (i,j) par BestFit
-			MatrixValue newMatrixValue = new MatrixValue(saatyMatrixValue.getRow(),
-														 saatyMatrixValue.getColumn(),
-														 BestFit);
-			saatyMatrix.setMatrixValue(newMatrixValue);
-
-			//remplacement de la valeur (j,i) par 1/BestFit
-			newMatrixValue.setRow(saatyMatrixValue.getColumn());
-			newMatrixValue.setColumn(saatyMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
-			saatyMatrix.setMatrixValue(newMatrixValue);
-
-			//rafraîchissement du vecteur de priorité
-			saatyVector = PriorityVector.build(saatyMatrix);
-			//calcul et écriture de la cohérence
-			tempBoolean = consistencyChecker.isConsistent(saatyMatrix, saatyVector);
-			tempString = "" + consistencyChecker.getConsistencyRatio();
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-
-			//PARTIE ALEATOIRE
-
-			randomsMatrixValue = randomsIterator.next();
-
-			//copie de la matrice initiale
-			randomsMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
-			//calcul du vecteur propre associé à randomsMatrix
-			randomsVector = PriorityVector.build(randomsMatrix);
-
-			/*écriture best fit pour la méthode aléatoire*/
-			BestFit = SaatyTools.calculateBestFit(randomsMatrix,
-												  randomsVector,
-												  randomsMatrixValue.getRow(),
-												  randomsMatrixValue.getColumn());
-			tempString = "" + BestFit;
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			/*écriture des indices de la valeur aléatoire proposé*/
-			tempString = "" + (randomsMatrixValue.getRow() + 1);
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			tempString = "" + (randomsMatrixValue.getColumn() + 1);
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			/*écriture du placement de la valeur aléatoire dans le classement de Saaty*/
-			tempString = "" + SaatyTools.getLocationInRank(sortedMatrixValues,
-														   randomsMatrixValue.getRow(),
-														   randomsMatrixValue.getColumn());
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			/*écriture de la cohérence après modification de la valeur aléatoire par le bestfit*/
-
-			//remplacement de la valeur (i,j) par BestFit
-			newMatrixValue = new MatrixValue(randomsMatrixValue.getRow(),
-											 randomsMatrixValue.getColumn(),
-											 BestFit);
-			randomsMatrix.setMatrixValue(newMatrixValue);
-
-			//remplacement de la valeur (j,i) par 1/BestFit
-			newMatrixValue = new MatrixValue(randomsMatrixValue.getColumn(),
-											 randomsMatrixValue.getRow(),
-											 1. / BestFit);
-			randomsMatrix.setMatrixValue(newMatrixValue);
-
-			//rafraîchissement du vecteur de priorité
-			randomsVector = PriorityVector.build(randomsMatrix);
-			//calcul et écriture de la cohérence
-			tempBoolean = consistencyChecker.isConsistent(randomsMatrix, randomsVector);
-			tempString = "" + consistencyChecker.getConsistencyRatio();
-			csa.append(tempString);
-			csa.appendCommaSeparator();
-
-			if (chosenValueToBeModified.equals(randomsMatrixValue)) {
-				isFound = true;
-			}
+			isFound = randomPart(preferenceMatrix, chosenValueToBeModified, csa, consistencyChecker, isFound, sortedMatrixValues, randomsIterator);
 		}
 		csa.close();
+	}
+
+	/**
+	 * SAATY'S PART
+	 */
+	private static void saatyPart(MyMatrix preferenceMatrix, CharSequenceAppender csa, ConsistencyChecker consistencyChecker, Iterator<MatrixValue> saatyIterator) {
+
+
+		final MatrixValue saatyValue = saatyIterator.next();
+		final int i_saaty = saatyValue.getRow();
+		final int j_saaty = saatyValue.getColumn();
+
+		csa.appendLineFeed();
+		/*Writing of de the best fit related to the proposed value */
+		//Copy of the original matrix
+		final MyMatrix saatyMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
+		//saatyMatrix's eigen vector calculation
+		MyMatrix saatyVector = PriorityVector.build(saatyMatrix);
+		//best fit calculation
+		final double bestFit_saaty = SaatyTools.calculateBestFit(saatyMatrix, i_saaty, j_saaty);
+
+		//best fit writing
+		csa.append("" + bestFit_saaty);
+		csa.appendCommaSeparator();
+
+		/*écriture des indices de la valeur proposée par Saaty dans le fichier */
+		csa.append("" + (i_saaty + 1));
+		csa.appendCommaSeparator();
+		csa.append("" + (j_saaty + 1));
+		csa.appendCommaSeparator();
+
+		/*écriture de la cohérence si l'expert suivait les conseils de Saaty */
+
+		//remplacement de la valeur (i,j) par bestFit
+		saatyMatrix.setMatrixValue(new MatrixValue(i_saaty, j_saaty, bestFit_saaty));
+
+		//remplacement de la valeur (j,i) par 1/bestFit
+		saatyMatrix.setMatrixValue(new MatrixValue(j_saaty, i_saaty, 1. / bestFit_saaty));
+
+		//rafraîchissement du vecteur de priorité
+		saatyVector = PriorityVector.build(saatyMatrix);
+		//calcul et écriture de la cohérence
+		final boolean isSaatyConsistent = consistencyChecker.isConsistent(saatyMatrix, saatyVector);
+		csa.append("" + consistencyChecker.getConsistencyRatio());
+		csa.appendCommaSeparator();
+
+		assert isSaatyConsistent : "should be consistent";
+	}
+
+	/**
+	 * RANDOM PART
+	 */
+	private static boolean randomPart(MyMatrix preferenceMatrix, MatrixValue chosenValueToBeModified, CharSequenceAppender csa, ConsistencyChecker consistencyChecker, boolean found, Collection<MatrixValue> sortedMatrixValues, Iterator<MatrixValue> randomsIterator) {
+		final MatrixValue randomsValue = randomsIterator.next();
+
+		//copie de la matrice initiale
+		final MyMatrix randomsMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
+		//calcul du vecteur propre associé à randomsMatrix
+		MyMatrix randomsVector = PriorityVector.build(randomsMatrix);
+
+		/*écriture best fit pour la méthode aléatoire*/
+		final double bestFit_random = SaatyTools.calculateBestFit(
+			randomsMatrix,
+			randomsValue.getRow(),
+			randomsValue.getColumn());
+		csa.append("" + bestFit_random);
+		csa.appendCommaSeparator();
+
+		/*écriture des indices de la valeur aléatoire proposé*/
+		csa.append("" + (randomsValue.getRow() + 1));
+		csa.appendCommaSeparator();
+
+		csa.append("" + (randomsValue.getColumn() + 1));
+		csa.appendCommaSeparator();
+
+		/*écriture du placement de la valeur aléatoire dans le classement de Saaty*/
+		csa.append(""
+			+ SaatyTools.getLocationInRank(
+			sortedMatrixValues,
+			randomsValue.getRow(),
+			randomsValue.getColumn())
+		);
+		csa.appendCommaSeparator();
+
+		/*écriture de la cohérence après modification de la valeur aléatoire par le bestfit*/
+
+		final int i_rand = randomsValue.getRow();
+		final int j_rand = randomsValue.getColumn();
+
+		//remplacement de la valeur (i,j) par bestFit
+		randomsMatrix.setMatrixValue(new MatrixValue(i_rand, j_rand, bestFit_random));
+
+		//remplacement de la valeur (j,i) par 1/bestFit
+		randomsMatrix.setMatrixValue(new MatrixValue(j_rand, i_rand, 1. / bestFit_random));
+
+		//rafraîchissement du vecteur de priorité
+		randomsVector = PriorityVector.build(randomsMatrix);
+		//calcul et écriture de la cohérence
+		final boolean isRandomConsistent = consistencyChecker.isConsistent(randomsMatrix, randomsVector);
+		csa.append("" + consistencyChecker.getConsistencyRatio());
+		csa.appendCommaSeparator();
+
+		assert isRandomConsistent : "should be consistent";
+
+		if (chosenValueToBeModified.equals(randomsValue)) {
+			found = true;
+		}
+
+		return found;
 	}
 }

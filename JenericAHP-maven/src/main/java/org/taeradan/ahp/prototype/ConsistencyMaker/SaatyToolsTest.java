@@ -10,8 +10,8 @@ import org.taeradan.ahp.prototype.SampleMatrixHeaders;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTable;
 import org.taeradan.ahp.prototype.gui.matrix.MyMatrixTableModel;
 
-import javax.swing.JFrame;
-import java.awt.HeadlessException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -27,7 +27,7 @@ import java.util.Scanner;
 public final class SaatyToolsTest {
 
 	private static final double[] SAATY_VALUES = {1. / 9, 1. / 8, 1. / 7, 1. / 6, 1. / 5, 1. / 4,
-												  1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		1. / 3, 1. / 2, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 	private SaatyToolsTest() {
 	}
@@ -43,11 +43,11 @@ public final class SaatyToolsTest {
 		return result;
 	}
 
-	public static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
-											   MyMatrix myPreferenceMatrix,
-											   String file)
-			throws
-			IOException {
+	private static MatrixValue readSaatyRanking(Collection<MatrixValue> sortedMatrixValues,
+						    MyMatrix preferenceMatrix,
+						    String file)
+		throws
+		IOException {
 
 		Scanner userInput = new Scanner(System.in);
 		CharSequenceAppender csa = new CharSequenceAppender(file);
@@ -62,17 +62,17 @@ public final class SaatyToolsTest {
 			matrixValue = valueIterator.next();
 			matrixValueToPrint.setRow(matrixValue.getRow());
 			matrixValueToPrint.setColumn(matrixValue.getColumn());
-			matrixValueToPrint.setValue(myPreferenceMatrix.get(matrixValueToPrint.getRow(),
-															   matrixValueToPrint.getColumn()));
+			matrixValueToPrint.setValue(preferenceMatrix.get(matrixValueToPrint.getRow(),
+				matrixValueToPrint.getColumn()));
 
 			System.out.println("Souhaitez-vous modifier la valeur "
-							   + matrixValueToPrint.getValue()
-							   + " ( "
-							   + (matrixValueToPrint.getRow() + 1)
-							   + " , "
-							   + (matrixValueToPrint.getColumn() + 1)
-							   + " )"
-							   + " ? O/N");
+				+ matrixValueToPrint.getValue()
+				+ " ( "
+				+ (matrixValueToPrint.getRow() + 1)
+				+ " , "
+				+ (matrixValueToPrint.getColumn() + 1)
+				+ " )"
+				+ " ? O/N");
 
 			String expertsChoice = userInput.nextLine();
 
@@ -94,17 +94,16 @@ public final class SaatyToolsTest {
 
 			/*écriture du best fit associé à la valeur proposée*/
 			//copie de la matrice initiale
-			final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(myPreferenceMatrix);
+			final MyMatrix tempMatrix = MyMatrix.copyMyMatrix(preferenceMatrix);
 
 			//calcul du vecteur propre associé à tempMatrix
 			PriorityVector tempVector = PriorityVector.build(tempMatrix);
 			//calcul du best fit
-			double BestFit = SaatyTools.calculateBestFit(tempMatrix,
-														 tempVector,
-														 tempMatrixValue.getRow(),
-														 tempMatrixValue.getColumn());
+			double bestFit = SaatyTools.calculateBestFit(tempMatrix,
+				tempMatrixValue.getRow(),
+				tempMatrixValue.getColumn());
 			//écriture du best fit
-			String tempString = "" + BestFit;
+			String tempString = "" + bestFit;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
 
@@ -118,17 +117,17 @@ public final class SaatyToolsTest {
 
 			/*écriture de la cohérence si l'expert suivait les conseils de Saaty*/
 
-			//remplacement de la valeur (i,j) par BestFit
+			//remplacement de la valeur (i,j) par bestFit
 			MatrixValue newMatrixValue = new MatrixValue();
 			newMatrixValue.setRow(tempMatrixValue.getRow());
 			newMatrixValue.setColumn(tempMatrixValue.getColumn());
-			newMatrixValue.setValue(BestFit);
+			newMatrixValue.setValue(bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
-			//remplacement de la valeur (j,i) par 1/BestFit
+			//remplacement de la valeur (j,i) par 1/bestFit
 			newMatrixValue.setRow(tempMatrixValue.getColumn());
 			newMatrixValue.setColumn(tempMatrixValue.getRow());
-			newMatrixValue.setValue(1. / BestFit);
+			newMatrixValue.setValue(1. / bestFit);
 			tempMatrix.setMatrixValue(newMatrixValue);
 
 			//rafraîchissement du vecteur de priorité
@@ -164,7 +163,7 @@ public final class SaatyToolsTest {
 		for (int i = 0; i < myMatrix.getRowDimension(); i++) {
 			for (int j = i + 1; j < myMatrix.getColumnDimension(); j++) {
 				System.out.println(
-						"Pondération entre Critère "
+					"Pondération entre Critère "
 						+ (i + 1)
 						+ " et Critère  "
 						+ (j + 1));
@@ -177,7 +176,7 @@ public final class SaatyToolsTest {
 				/*Test la validité de la valeur (doit appartenir à l'échelle de Saaty)*/
 				while (!isInSaatyScale(newValue)) {
 					System.out.println(
-							"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 					expertsChoice = userInput.next();
 					myParser.parseExpression(expertsChoice);
 					newValue = myParser.getValue();
@@ -209,8 +208,8 @@ public final class SaatyToolsTest {
 	}
 
 	public static void main(String[] args)
-			throws
-			IOException {
+		throws
+		IOException {
 
 		ConsistencyChecker consistencyChecker = new ConsistencyChecker();
 		Scanner userInput = new Scanner(System.in);
@@ -259,7 +258,7 @@ public final class SaatyToolsTest {
 
 		//Writing of the headers of the table in which events are memorised
 		csa.append(
-				"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR\n");
+			"BestFit;Saaty i;Saaty j; Saaty consistency;Expert Init Value;Expert Changed Value ; Expert Position in Saaty's ranking;CR\n");
 		csa.appendLineFeed();
 		csa.close();
 
@@ -270,18 +269,18 @@ public final class SaatyToolsTest {
 			iterationCounter++;
 
 			System.out.println("\n**********          Matrice incohérente"
-							   + "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
-							   + "\n");
+				+ "          **********\n CR = " + consistencyChecker.getConsistencyRatio()
+				+ "\n");
 
 			/*Calcul matrice epsilon*/
 			MyMatrix epsilon = SaatyTools.calculateEpsilonMatrix(preferenceMatrix, priorityVector);
 
 			/*Recherche de la valeur à modifier*/
-			collectionOfSortedMatrixValues = SaatyTools.getRank(preferenceMatrix, priorityVector, epsilon);
+			collectionOfSortedMatrixValues = SaatyTools.getRank(epsilon);
 			MatrixValue matrixValue = readSaatyRanking(collectionOfSortedMatrixValues, preferenceMatrix, file);
 
 			System.out.println(
-					"Vous avez choisi de remplacer la valeur "
+				"Vous avez choisi de remplacer la valeur "
 					+ preferenceMatrix.get(matrixValue.getRow(), matrixValue.getColumn())
 					+ " de coordonnées "
 					+ " ( "
@@ -305,7 +304,7 @@ public final class SaatyToolsTest {
 
 			while (!isInSaatyScale(newValue)) {
 				System.out.println(
-						"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
+					"Erreur : cette valeur n'appartient à l'échelle de Saaty. Retapez votre valeur.");
 				expertsChoice = userInput.next();
 				myParser.parseExpression(expertsChoice);
 				newValue = myParser.getValue();
@@ -318,8 +317,8 @@ public final class SaatyToolsTest {
 
 			/*Calculer le placement dans le classement de Saaty*/
 			int location = SaatyTools.getLocationInRank(collectionOfSortedMatrixValues,
-														matrixValue.getRow(),
-														matrixValue.getColumn());
+				matrixValue.getRow(),
+				matrixValue.getColumn());
 			tempString = "" + location;
 			csa.append(tempString);
 			csa.appendCommaSeparator();
@@ -361,8 +360,8 @@ public final class SaatyToolsTest {
 
 		System.out.println("CR = " + consistencyChecker.getConsistencyRatio());
 		System.out.println("***********************************************"
-						   + "\n**  Félicitation ! La matrice est cohérente  **\n"
-						   + "***********************************************");
+			+ "\n**  Félicitation ! La matrice est cohérente  **\n"
+			+ "***********************************************");
 
 		csa = new CharSequenceAppender(file);
 		//Ecriture de la matrice et du vecteur de priorité dans le fichier
@@ -388,8 +387,8 @@ public final class SaatyToolsTest {
 	}
 
 	private static void showMatrixTable(MyMatrixTable maTable, MyMatrix myMatrix)
-			throws
-			HeadlessException {
+		throws
+		HeadlessException {
 
 		// Show a frame with a table
 		JFrame maFenetre = new JFrame("Aperçu de la Matrice de Préférences");
