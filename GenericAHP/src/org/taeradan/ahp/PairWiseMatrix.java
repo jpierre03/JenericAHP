@@ -36,6 +36,8 @@ public class PairWiseMatrix
 	extends MyMatrix
 	implements XmlOutputable {
 
+	private static final long serialVersionUID = -6842038294829162973L;
+
 	public PairWiseMatrix() {
 	}
 

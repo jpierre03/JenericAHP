@@ -83,20 +83,10 @@ public final class CriteriaDialog
 		jScrollPane1.setViewportView(jTablePrefMatrix);
 
 		jButtonReload.setText("Reload");
-		jButtonReload.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed();
-			}
-		});
+		jButtonReload.addActionListener(evt -> jButtonReloadActionPerformed());
 
 		jButtonSave.setText("Save");
-		jButtonSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed();
-			}
-		});
+		jButtonSave.addActionListener(evt -> jButtonSaveActionPerformed());
 
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);

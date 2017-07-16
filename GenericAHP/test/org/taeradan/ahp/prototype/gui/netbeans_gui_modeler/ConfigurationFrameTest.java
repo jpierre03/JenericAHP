@@ -30,13 +30,7 @@ public final class ConfigurationFrameTest {
 	private ConfigurationFrameTest() {
 	}
 
-	public static void main(final String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				new ConfigurationFrame().setVisible(true);
-			}
-		});
+	public static void main(final String... args) {
+		EventQueue.invokeLater(() -> new ConfigurationFrame().setVisible(true));
 	}
 }

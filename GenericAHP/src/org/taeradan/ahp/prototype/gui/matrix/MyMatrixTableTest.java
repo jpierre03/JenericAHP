@@ -20,7 +20,7 @@ public final class MyMatrixTableTest {
 	private MyMatrixTableTest() {
 	}
 
-	public static void main(String[] args) {
+	public static void main(String... args) {
 
 		final MyMatrixTable table = new MyMatrixTable();
 		final MyMatrix matrix = new MyMatrix(MyMatrixTable.ROWS, MyMatrixTable.COLUMN);

@@ -70,20 +70,10 @@ public final class IndicatorDialog
 		jLabelName.setText("Name");
 
 		jButtonSave.setText("Save");
-		jButtonSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonSaveActionPerformed();
-			}
-		});
+		jButtonSave.addActionListener(evt -> jButtonSaveActionPerformed());
 
 		jButtonReload.setText("Reload");
-		jButtonReload.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jButtonReloadActionPerformed();
-			}
-		});
+		jButtonReload.addActionListener(evt -> jButtonReloadActionPerformed());
 
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);

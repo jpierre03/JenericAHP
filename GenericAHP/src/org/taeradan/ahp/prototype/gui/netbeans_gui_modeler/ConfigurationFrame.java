@@ -94,30 +94,15 @@ public final class ConfigurationFrame
 		fileMenu.setText("File");
 
 		openMenuItem.setText("Open");
-		openMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItemOpenActionPerformed();
-			}
-		});
+		openMenuItem.addActionListener(evt -> jMenuItemOpenActionPerformed());
 		fileMenu.add(openMenuItem);
 
 		saveMenuItem.setText("Save");
-		saveMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItemSaveActionPerformed(evt);
-			}
-		});
+		saveMenuItem.addActionListener(evt -> jMenuItemSaveActionPerformed(evt));
 		fileMenu.add(saveMenuItem);
 
 		saveUnderMenuItem.setText("Save under...");
-		saveUnderMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItemSaveUnderActionPerformed();
-			}
-		});
+		saveUnderMenuItem.addActionListener(evt -> jMenuItemSaveUnderActionPerformed());
 		fileMenu.add(saveUnderMenuItem);
 
 		quitMenuItem.setText("Quit");
@@ -166,81 +151,39 @@ public final class ConfigurationFrame
 				if (object instanceof AHPRoot) {
 					final AHPRoot AHPRoot = (AHPRoot) object;
 					final JMenuItem addItem = new JMenuItem("Add criteria");
-					addItem.addActionListener(new ActionListener() {
+					addItem.addActionListener(evt18 -> {
 
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-
-						}
 					});
 //						addItem.addActionListener(this);
 					contextMenu.add(addItem);
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-							editActionPerformed(object);
-						}
-					});
+					editItem.addActionListener(evt17 -> editActionPerformed(object));
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-							delRootActionPerformed();
-						}
-					});
+					delItem.addActionListener(evt16 -> delRootActionPerformed());
 					contextMenu.add(delItem);
 				}
 				if (object instanceof Criterion) {
 					final Criterion criterion = (Criterion) object;
 					final JMenuItem addItem = new JMenuItem("Add indicator");
-					addItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-						}
+					addItem.addActionListener(evt15 -> {
 					});
 					contextMenu.add(addItem);
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-							editActionPerformed(object);
-						}
-					});
+					editItem.addActionListener(evt14 -> editActionPerformed(object));
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-							delCriteriaActionPerformed(criterion);
-						}
-					});
+					delItem.addActionListener(evt13 -> delCriteriaActionPerformed(criterion));
 					contextMenu.add(delItem);
 				}
 				if (object instanceof Indicator) {
 					Indicator indicator = (Indicator) object;
 					final JMenuItem editItem = new JMenuItem("Edit");
-					editItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-						}
+					editItem.addActionListener(evt12 -> {
 					});
 					contextMenu.add(editItem);
 					final JMenuItem delItem = new JMenuItem("Delete");
-					delItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent evt) {
-							editActionPerformed(object);
-						}
-					});
+					delItem.addActionListener(evt1 -> editActionPerformed(object));
 					contextMenu.add(delItem);
 				}
 				contextMenu.show(ahpTree, evt.getX(), evt.getY());

@@ -40,17 +40,12 @@ public final class RandomTools {
 		while (isValueChosen == false) {
 			resultMatrixValue = valueIterator.next();
 
-			final StringBuilder sb = new StringBuilder();
-			sb.append("Souhaitez-vous modifier la valeur ");
-			sb.append(resultMatrixValue.getValue());
-			sb.append(" ( ");
-			sb.append((resultMatrixValue.getRow() + 1));
-			sb.append(" , ");
-			sb.append((resultMatrixValue.getColumn() + 1));
-			sb.append(" )");
-			sb.append(" ? O/N");
+			String sb = String.format("Souhaitez-vous modifier la valeur %s ( %d , %d ) ? O/N",
+									  resultMatrixValue.getValue(),
+									  resultMatrixValue.getRow() + 1,
+									  resultMatrixValue.getColumn() + 1);
 
-			System.out.println(sb.toString());
+			System.out.println(sb);
 
 			final String expertsChoice = sc.nextLine();
 

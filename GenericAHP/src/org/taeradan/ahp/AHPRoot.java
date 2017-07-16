@@ -366,7 +366,7 @@ public class AHPRoot {
 		return structure.name;
 	}
 
-	private void info(String string) {
-		Logger.getAnonymousLogger().info(string);
+	private static void info(String s) {
+		Logger.getAnonymousLogger().info(s);
 	}
 }

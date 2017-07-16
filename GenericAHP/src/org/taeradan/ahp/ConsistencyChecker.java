@@ -127,7 +127,7 @@ public final class ConsistencyChecker {
 		consistencyData.setConsistencyRatio(consistencyRatio);
 	}
 
-	private void checkMatricesDimensions(Matrix preferenceMatrix, Matrix priorityVector) {
+	private static void checkMatricesDimensions(Matrix preferenceMatrix, Matrix priorityVector) {
 		final int preferenceMatrixDimension = preferenceMatrix.getRowDimension();
 
 		/** matrices properties */

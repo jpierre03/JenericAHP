@@ -6,7 +6,7 @@ public final class MonCellRendererTest {
 	private MonCellRendererTest() {
 	}
 
-	public static void main(String args[]) {
+	public static void main(String... args) {
 		JTable table = new JTable(5, 5);
 		MonCellRenderer cellRenderer = new MonCellRenderer(0, 0);
 		for (int i = 0; i < 5; i++) {

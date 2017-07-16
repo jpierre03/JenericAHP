@@ -38,7 +38,7 @@ public final class RandomToolsTest {
 		maFenetre.setVisible(true);
 	}
 
-	public static void main(String[] args)
+	public static void main(String... args)
 		throws
 		IOException {
 

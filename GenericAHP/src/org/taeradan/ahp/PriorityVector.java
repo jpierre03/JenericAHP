@@ -40,6 +40,7 @@ public class PriorityVector
 	 * This treshold is used to stop iteration
 	 */
 	private static final double EQUALITY_TRESHOLD = 1E-16;
+	private static final long serialVersionUID = -106687122127441372L;
 
 	public PriorityVector(int i) {
 		super(i, 1);

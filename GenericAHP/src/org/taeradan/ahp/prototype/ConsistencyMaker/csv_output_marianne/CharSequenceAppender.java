@@ -35,7 +35,7 @@ public class CharSequenceAppender {
 	}
 
 	public CharSequenceAppender append(double value) {
-		output.append(value + "");
+		output.append(String.format("%s", value));
 
 		return this;
 	}

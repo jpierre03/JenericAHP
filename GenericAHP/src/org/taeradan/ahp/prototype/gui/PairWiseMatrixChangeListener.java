@@ -115,7 +115,7 @@ public class PairWiseMatrixChangeListener
 		return value;
 	}
 
-	private void info(String string) {
+	private static void info(String string) {
 		Logger.getAnonymousLogger().info(string);
 	}
 }

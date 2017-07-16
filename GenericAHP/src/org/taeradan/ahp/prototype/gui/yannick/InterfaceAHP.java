@@ -113,13 +113,8 @@ public class InterfaceAHP
 		return (double) ((int) (what * Math.pow(10, howmuch) + .5)) / Math.pow(10, howmuch);
 	}
 
-	public static void main(String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new InterfaceAHP().setVisible(true);
-			}
-		});
+	public static void main(String... args) {
+		EventQueue.invokeLater(() -> new InterfaceAHP().setVisible(true));
 	}
 
 	private void definePreferredFrameSize() {
@@ -135,12 +130,7 @@ public class InterfaceAHP
 		setResizable(true);
 
 		validateMatrixButton.setText("Valider Matrice");
-		validateMatrixButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				validateMatrixActionPerformed();
-			}
-		});
+		validateMatrixButton.addActionListener(event -> validateMatrixActionPerformed());
 
 		matrixTable.setModel(new DefaultTableModel(
 			new Object[][]{{}, {}, {}, {}},
@@ -184,28 +174,13 @@ public class InterfaceAHP
 		reverseSaatyScaleScrollPane.setViewportView(reverseSaatyScaleTable);
 
 		newSimulationButton.setText("Nouvelle Simulation");
-		newSimulationButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				newSimulationButtonActionPerformed();
-			}
-		});
+		newSimulationButton.addActionListener(event -> newSimulationButtonActionPerformed());
 
 		setEnglishLangButton.setText("English");
-		setEnglishLangButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				setEnglishLangButtonActionPerformed();
-			}
-		});
+		setEnglishLangButton.addActionListener(event -> setEnglishLangButtonActionPerformed());
 
 		setFrenchLangButton.setText("Français");
-		setFrenchLangButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				setFrenchLangButtonActionPerformed();
-			}
-		});
+		setFrenchLangButton.addActionListener(event -> setFrenchLangButtonActionPerformed());
 
 		makeGlobalLayout();
 
@@ -280,12 +255,7 @@ public class InterfaceAHP
 				gui.setFrench();
 
 				intuitiveRankingOKButton.setText("OK");
-				intuitiveRankingOKButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						intuitiveRankingOKActionPerformed();
-					}
-				});
+				intuitiveRankingOKButton.addActionListener(event -> intuitiveRankingOKActionPerformed());
 				gui.panel.add(intuitiveRankingOKButton);
 			}
 			rankingPanel.add(gui.panel);
@@ -376,21 +346,11 @@ public class InterfaceAHP
 		initialisationPanel.add(new JPanel());
 
 		saveFilePathOkButton.setText("Ok");
-		saveFilePathOkButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				saveFilePathOkButtonActionPerformed();
-			}
-		});
+		saveFilePathOkButton.addActionListener(event -> saveFilePathOkButtonActionPerformed());
 		initialisationPanel.add(saveFilePathOkButton);
 
 		saveFilePathExploreButton.setText("Parcourir");
-		saveFilePathExploreButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				saveFilePathExploreButtonActionPerformed();
-			}
-		});
+		saveFilePathExploreButton.addActionListener(event -> saveFilePathExploreButtonActionPerformed());
 		initialisationPanel.add(saveFilePathExploreButton);
 	}
 
